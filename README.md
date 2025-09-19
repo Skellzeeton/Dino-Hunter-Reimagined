@@ -1,2 +1,2 @@
-# COM-Dino-Hunter
-this is pain
+# Dino-Hunter-Reimagined
+this is peak
