@@ -10,7 +10,7 @@ public class MeshSimplifierEditor : EditorWindow
     private float mergeThreshold = 0.001f;
     private bool simplifyVertices = true;
     private bool simplifyTriangles = true;
-    private int matchModeIndex = 1; // 0 = Strict, 1 = Balanced, 2 = Loose
+    private int matchModeIndex = 1; 
     private string[] matchModes = new string[] { "Low", "Balanced", "Loose" };
 
     [MenuItem("Tools/Mesh Simplifier")]
