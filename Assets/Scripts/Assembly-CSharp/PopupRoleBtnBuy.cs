@@ -45,7 +45,7 @@ public class PopupRoleBtnBuy : MonoBehaviour
 		}
 		btn_state = PopupRoleBuyState.State_Unlock;
 		label_normal.Text = "UNLOCK";
-		label_press.Text = "UNLOCK";
+		label_press.Text = "...";
 		img_normal.texture = string.Empty;
 		img_press.texture = string.Empty;
 	}
@@ -59,7 +59,7 @@ public class PopupRoleBtnBuy : MonoBehaviour
 		}
 		btn_state = PopupRoleBuyState.State_Buy;
 		label_normal.Text = "BUY";
-		label_press.Text = "BUY";
+		label_press.Text = "...";
 		img_normal.texture = string.Empty;
 		img_press.texture = string.Empty;
 	}

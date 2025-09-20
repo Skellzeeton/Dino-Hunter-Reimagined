@@ -39,7 +39,7 @@ public class DailyMissionsScrollList : MonoBehaviour
 			{
 				dailyMissionsItem.transform.parent = base.transform;
 				dailyMissionsItem.transform.localPosition = new Vector3(0f, 0f, 0f);
-				dailyMissionsItem.DoCreate(daily_missions_list[i], m_go_invoke);
+				dailyMissionsItem.DoCreate(daily_missions_list[i], (i % 2 != 0) ? true : false, m_go_invoke);
 				scrollist.Add(dailyMissionsItem.GetComponent<TUIControl>());
 			}
 			else

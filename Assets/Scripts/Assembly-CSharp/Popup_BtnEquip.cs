@@ -17,12 +17,12 @@ public class Popup_BtnEquip : MonoBehaviour
 	public void SetEquip()
 	{
 		label_normal.Text = "Equip";
-		label_press.Text = "Equip";
+		label_press.Text = "...";
 	}
 
 	public void SetUnEquip()
 	{
 		label_normal.Text = "Demount";
-		label_press.Text = "Demount";
+		label_press.Text = "...";
 	}
 }

@@ -15,6 +15,8 @@ public class DailyMissionsItem : MonoBehaviour
 	public TUIMeshSprite img_texture;
 
 	public TUIMeshSprite img_arrow;
+	
+	public TUIMeshSprite img_bg;
 
 	private TUIOneDailyMissionsInfo daily_missions_info;
 
@@ -36,7 +38,7 @@ public class DailyMissionsItem : MonoBehaviour
 	{
 	}
 
-	public void DoCreate(TUIOneDailyMissionsInfo m_daily_mission_info, GameObject m_go_invoke = null)
+	public void DoCreate(TUIOneDailyMissionsInfo m_daily_mission_info,  bool m_change_bg = false, GameObject m_go_invoke = null)
 	{
 		daily_missions_info = m_daily_mission_info;
 		if (daily_missions_info == null)
@@ -86,6 +88,10 @@ public class DailyMissionsItem : MonoBehaviour
 		else
 		{
 			Debug.Log("no reward?");
+		}
+		if (img_bg != null)
+		{
+			img_bg.gameObject.SetActiveRecursive(!m_change_bg);
 		}
 	}
 
