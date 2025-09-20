@@ -42,6 +42,7 @@ public class iTexture2D : MonoBehaviour
 		int[] triangles = new int[6] { 0, 3, 1, 1, 3, 2 };
 		m_MeshFilter.mesh.vertices = vertices;
 		m_MeshFilter.mesh.uv = uv;
+		m_MeshFilter.mesh.normals = new Vector3[0];
 		m_MeshFilter.mesh.triangles = triangles;
 	}
 
