@@ -150,13 +150,6 @@ public class TAudioManager : MonoBehaviour
 
         audioListener = listener;
         s_instance = this;
-
-        // Apply the saved volumes to all currently tracked audio sources
-        //foreach (var pair in m_playAudios)
-       //{
-       //     var info = pair.Value;
-       //     pair.Key.volume = info.volume * (info.sfx ? m_soundVolume : m_musicVolume);
-       // }
     }
 
     private void OnDestroy()

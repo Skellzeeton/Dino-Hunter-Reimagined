@@ -141,7 +141,12 @@ MonoBehaviour:
   isSfx: 1
   audioClips:
   - {fileID: 8300000, guid: b450446197163954ba016d5fd0c64a62, type: 3}
-  probability: []
+  - {fileID: 8300000, guid: 23ad3c822eab64c4f8734e159164645b, type: 3}
+  - {fileID: 8300000, guid: 402fd4fa7e3e25547a5e6a4b50de88d4, type: 3}
+  probability:
+  - 1
+  - 1
+  - 0.0001
   volumOffset: 0.05
   pitchOffset: 0.1
   loopMode: 0
@@ -152,3 +157,6 @@ MonoBehaviour:
   maxIntervalTime: 0
   intervalRangeMin: 0
   intervalRangeMax: 0
+  forceDeleteOnSceneChange: 0
+  preserveOnSceneChange: 0
+  useProbabilityAsChance: 1

@@ -48,7 +48,7 @@ public class iCameraTrail : iCamera
 		m_Target = target;
 		m_fMaxCameraDis = Vector3.Distance(camera_offset_normal, camera_offset_block);
 		m_fCurCameraDis = m_fMaxCameraDis;
-		m_fSmoothSpeed = 1f;
+		m_fSmoothSpeed = 0.8f;
 		Quaternion quaternion = Quaternion.Euler(0f - m_fPitch, m_fYaw, 0f);
 		m_CameraController.Position = m_Target.Pos + quaternion * camera_offset_normal;
 	}
@@ -131,7 +131,7 @@ public class iCameraTrail : iCamera
 
 	public void SetViewMelee(bool on)
 	{
-		m_fSmoothSpeed = 5f;
+		m_fSmoothSpeed = 4f;
 		if (on)
 		{
 			m_v3Camera_Offset_Far = camera_offset_melee;
@@ -146,12 +146,12 @@ public class iCameraTrail : iCamera
 	{
 		if (on)
 		{
-			m_fSmoothSpeed = 8f;
+			m_fSmoothSpeed = 6f;
 			m_v3Camera_Offset_Far = camera_offset_shoot;
 		}
 		else
 		{
-			m_fSmoothSpeed = 5f;
+			m_fSmoothSpeed = 4f;
 			m_v3Camera_Offset_Far = camera_offset_normal;
 		}
 	}

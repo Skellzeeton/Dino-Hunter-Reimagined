@@ -4,10 +4,10 @@ using UnityEngine;
 public class Camera_Village : MonoBehaviour
 {
     public float rotation_damping = 0.5f;
-    public float angle_min = 125f;
-    public float angle_max = 195f;
-    public float border_min = 120f;
-    public float border_max = 200f;
+    public float angle_min = 80f;
+    public float angle_max = 305f;
+    public float border_min = 80f;
+    public float border_max = 305f;
 
     private float target_angle;
     private bool open_closer;

@@ -1527,26 +1527,26 @@ public class Scene_MainMenu : MonoBehaviour
 			Debug.Log("error!");
 			return;
 		}
+
 		float num = 0.37f;
 		float num2 = 0.65f;
 		float persentAngle = camera_village.GetPersentAngle();
-		if (persentAngle > num)
+
+		// Left arrow
+		MeshRenderer leftRenderer = img_arrow_left.GetComponent<MeshRenderer>();
+		if (leftRenderer != null)
 		{
-			img_arrow_left.gameObject.SetActiveRecursive(true);
+			leftRenderer.enabled = (persentAngle > num);
 		}
-		else
+
+		// Right arrow
+		MeshRenderer rightRenderer = img_arrow_right.GetComponent<MeshRenderer>();
+		if (rightRenderer != null)
 		{
-			img_arrow_left.gameObject.SetActiveRecursive(false);
-		}
-		if (persentAngle < num2)
-		{
-			img_arrow_right.gameObject.SetActiveRecursive(true);
-		}
-		else
-		{
-			img_arrow_right.gameObject.SetActiveRecursive(false);
+			rightRenderer.enabled = (persentAngle < num2);
 		}
 	}
+
 
 	private void OpenMapBlink(bool m_open)
 	{
