@@ -13,7 +13,7 @@ public class RenderToTextureSetting : MonoBehaviour
         m_camera = base.gameObject.GetComponent<Camera>();
         if (!(m_camera == null))
         {
-            RenderTextureFormat format = RenderTextureFormat.ARGB1555;
+            RenderTextureFormat format = RenderTextureFormat.ARGB32;
             if (!SystemInfo.SupportsRenderTextureFormat(format))
             {
                 format = RenderTextureFormat.Default;

@@ -477,7 +477,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1374132241147412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -71.50136, y: 0, z: -16.004276}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4011618570626256}
@@ -711,6 +711,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
+  m_bLava: 0
+  m_bIce: 0
+  m_bZombie: 0
 --- !u!114 &114872086719128516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -751,7 +754,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: db3e3aa616957b84e8b02e9bd7cf99f0, type: 2}
+  - {fileID: 2100000, guid: 2ac209a63125a45e9873b9456c734218, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

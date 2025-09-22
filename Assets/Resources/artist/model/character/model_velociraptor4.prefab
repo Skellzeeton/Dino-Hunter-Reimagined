@@ -1386,6 +1386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
+  m_bLava: 0
+  m_bIce: 0
+  m_bZombie: 0
 --- !u!114 &114537280548165562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1453,7 +1456,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 0
-  m_MotionVectors: 0
+  m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:

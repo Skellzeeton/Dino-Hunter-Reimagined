@@ -1278,7 +1278,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1183698875183184}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -31.828531, y: -0, z: -46.387634}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4912478390389964}
@@ -1337,8 +1337,8 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: a388183249bcd6141b1ae4895c6f2117, type: 2}
   - {fileID: 7400000, guid: 4197c6e1e2af10549853dedfb9df4162, type: 2}
-  - {fileID: 7400000, guid: 4a503a77f624a134a9ca8caef5d50277, type: 2}
-  - {fileID: 7400000, guid: 3e9f9585d5abf2940a4c5cf3efb3e9b1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 7400000, guid: 9fae3a7ee54d4a84eb051493963f62c9, type: 2}
   - {fileID: 7400000, guid: b14d97187e57a4349902d6ac67fb82be, type: 2}
   - {fileID: 7400000, guid: 1496b9ed8f895fe4b927c32b8ba4e491, type: 2}
@@ -1350,7 +1350,7 @@ Animation:
   - {fileID: 7400000, guid: a2f3c034c3cce9f4382456f5bb875d3d, type: 2}
   - {fileID: 7400000, guid: 5899811258338f74ea84ccaaf1998eab, type: 2}
   - {fileID: 7400000, guid: dcb70492762840247994a636f7c52c10, type: 2}
-  - {fileID: 7400000, guid: 5aebde0598895a1478b5e84eba00e29f, type: 2}
+  - {fileID: 0}
   - {fileID: 7400000, guid: 4ee73bffff3a09640b831979f6f305cc, type: 2}
   - {fileID: 7400000, guid: 414571b7d0e788b40a92bcf6b51fc954, type: 2}
   - {fileID: 7400000, guid: 8181d6336dfd9274d850adf3e21438cc, type: 2}
@@ -1397,6 +1397,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
+  m_bLava: 0
+  m_bIce: 0
+  m_bZombie: 0
 --- !u!114 &114489448644210906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1479,7 +1482,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0

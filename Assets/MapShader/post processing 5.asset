@@ -81,10 +81,10 @@ MonoBehaviour:
     value: 0
   shutterAngle:
     overrideState: 1
-    value: 145
+    value: 135
   sampleCount:
     overrideState: 1
-    value: 10
+    value: 7
 --- !u!114 &114994841255138500
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -108,7 +108,7 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 1
+    overrideState: 0
     value: 3
   toneCurveToeStrength:
     overrideState: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   toneCurveGamma:
-    overrideState: 1
+    overrideState: 0
     value: 0.6
   ldrLut:
     overrideState: 0
@@ -142,8 +142,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   colorFilter:
-    overrideState: 0
-    value: {r: 0.6397059, g: 1, b: 1, a: 1}
+    overrideState: 1
+    value: {r: 0.85, g: 0.85, b: 0.85, a: 1}
   hueShift:
     overrideState: 0
     value: 0
@@ -157,8 +157,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   contrast:
-    overrideState: 0
-    value: 25
+    overrideState: 1
+    value: 5
   mixerRedOutRedIn:
     overrideState: 0
     value: 200

@@ -133,7 +133,7 @@ public class PopupWeaponUpdate : MonoBehaviour
 			if (label_sale_sign != null)
 			{
 				label_sale_sign.gameObject.SetActiveRecursive(true);
-				label_sale_sign.Text = "Free";
+				label_sale_sign.Text = "Free!!!";
 			}
 			return;
 		}

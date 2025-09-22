@@ -9,8 +9,6 @@ Properties {
 SubShader {
     Tags { "RenderType" = "Opaque" }
     LOD 200
-
-    // Surface Shader Pass
     CGPROGRAM
     #pragma surface surf Standard fullforwardshadows
     #pragma target 3.0
@@ -25,11 +23,9 @@ SubShader {
     void surf(Input IN, inout SurfaceOutputStandard o) {
         fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
         o.Albedo = c.rgb;
-        o.Emission = c.rgb * 1; // Optional brightness boost
+        o.Emission = c.rgb * 1.5;
     }
     ENDCG
-
-    // Outline Pass
     Pass {
         Name "OUTLINE"
         Cull Front

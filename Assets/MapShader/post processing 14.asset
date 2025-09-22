@@ -77,6 +77,9 @@ MonoBehaviour:
   enabled:
     overrideState: 1
     value: 1
+  fastMode:
+    overrideState: 0
+    value: 0
   shutterAngle:
     overrideState: 1
     value: 270
@@ -140,8 +143,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   colorFilter:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    overrideState: 1
+    value: {r: 0.85, g: 0.85, b: 0.85, a: 1}
   hueShift:
     overrideState: 0
     value: 5
@@ -156,7 +159,7 @@ MonoBehaviour:
     value: 1.25
   contrast:
     overrideState: 1
-    value: 17.5
+    value: 2.5
   mixerRedOutRedIn:
     overrideState: 0
     value: 100

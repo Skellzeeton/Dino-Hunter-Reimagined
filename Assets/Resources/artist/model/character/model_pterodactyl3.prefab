@@ -702,7 +702,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781242624340330}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -30.254112, y: 1.5613098, z: -29.405005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4842711394718910}
@@ -1005,6 +1005,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
+  m_bLava: 0
+  m_bIce: 0
+  m_bZombie: 0
 --- !u!114 &114706303283667094
 MonoBehaviour:
   m_ObjectHideFlags: 1

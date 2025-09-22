@@ -63,38 +63,38 @@
 		<RewardMaterial material="100010,800006,800009" mincount="2,-10,-25" maxcount="6,1,1"/>
 				<recommand recommandtype="1" recommandid="3" recommandlevel="1" islimit="false" />
 	</gamelevel>
-	<gamelevel id="1010" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="42" desc="Hunt Triterrortops x 1" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="1010" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="42" desc="Hunt Triterrortops x 1" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit> 
 			<limit type="1" maxnumber="18"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100014,100015,8000011" mincount="-1,-1,-25" maxcount="1,1,1"/>
 				<recommand recommandtype="1" recommandid="3" recommandlevel="1" islimit="false" />
 	</gamelevel>
-	<gamelevel id="2001" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2001001,2001002" task="2001" sp_cfg_ground="40111" cutscene="yanjiang01_open" exp="28" gold="14" desc="Kill all dinos\nMelee weapons only" limitmelee="true" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2001" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2001001,2001002" task="2001" sp_cfg_ground="40111" cutscene="yanjiang01_open" exp="28" gold="14" desc="Kill all dinos\nMelee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2002" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2002001,2002002,2002003" task="2002" sp_cfg_ground="40111" exp="28" gold="14" desc="Survive a Horde of Dinosaurs for 1:40" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2002" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2002001,2002002,2002003" task="2002" sp_cfg_ground="40111" exp="28" gold="14" desc="Survive a Horde of Dinosaurs for 1:40" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="29" gold="14" desc="Retrieve x 3 Dinosaur Eggs" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="29" gold="14" desc="Snatch and Defend x 2 Dinosaur Eggs" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2004001,2004002,2004003,2004004" task="2004" sp_cfg_ground="40111" exp="30" gold="15" desc="Kill all dinos" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2004001,2004002,2004003,2004004" task="2004" sp_cfg_ground="40111" exp="30" gold="15" desc="Kill all dinos" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004" task="2005" sp_cfg_ground="40111" exp="30" gold="15" desc="Hunt Megaraptor x1\nHunt Terrordactyl x1" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004" task="2005" sp_cfg_ground="40111" exp="30" gold="15" desc="Hunt Killosaurus x 8" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="21"/>
 		</MonsterNumLimit>
@@ -106,7 +106,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100007" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="2007" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2007001,2007002" task="2007" sp_cfg_ground="30111" exp="32" gold="15" desc="Survive a Horde of Dinosaurs for 2:20" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2007" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2007001,2007002" task="2007" sp_cfg_ground="30111" exp="32" gold="15" desc="Survive a Horde of Dinosaurs for 2:20" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
@@ -118,13 +118,13 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100008" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="40111" exp="33" gold="15" desc="Kill all dinos\nMelee weapons only" limitmelee="true" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="40111" exp="33" gold="15" desc="Kill all dinos\nMelee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="2010" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007" task="2010" sp_cfg_ground="40111" exp="34" gold="15" desc="Hunt Killosaurus Rex x 1\nHunt Corrupted Spikesaurus x 2" limitmelee="false" sp_cfg_sky="40201" hp_cfg_def="40501">
+	<gamelevel id="2010" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007" task="2010" sp_cfg_ground="40111" exp="34" gold="15" desc="Hunt Killosaurus Rex x 1\nHunt Corrupted Spikesaurus x 2" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
