@@ -15,6 +15,11 @@ public class CControlWindows : CControlBase
 	}
 
 	private bool m_TutorialActive = false;
+	
+	private float mouseSensitivity;
+	private const float minSensitivity = 0.5f;
+	private const float maxSensitivity = 5f;
+
 
 	private void SetPause(bool pause)
 	{
@@ -44,7 +49,7 @@ public class CControlWindows : CControlBase
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
-		if (Input.GetKeyDown(KeyCode.T))
+		/*if (Input.GetKeyDown(KeyCode.T))
 		{
 			if (!m_TutorialActive)
 			{
@@ -62,7 +67,20 @@ public class CControlWindows : CControlBase
 				m_GameScene.FinishTutorial();
 				m_TutorialActive = false;
 			}
+		}*/
+		if (Input.GetKeyDown(KeyCode.O))
+		{
+			mouseSensitivity = Mathf.Clamp(mouseSensitivity + 0.25f, minSensitivity, maxSensitivity);
+			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
+			Debug.Log("Sensitivity increased: " + mouseSensitivity);
 		}
+		else if (Input.GetKeyDown(KeyCode.I))
+		{
+			mouseSensitivity = Mathf.Clamp(mouseSensitivity - 0.25f, minSensitivity, maxSensitivity);
+			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
+			Debug.Log("Sensitivity decreased: " + mouseSensitivity);
+		}
+
 		if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.CutScene && Input.GetKeyDown(KeyCode.Space))
 			CCameraRoam.GetInstance().Stop();
 		if (m_User == null || (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing && m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime))
@@ -158,7 +176,7 @@ public class CControlWindows : CControlBase
 			float axis = Input.GetAxis("Mouse X");
 			if (axis != 0f)
 			{
-				m_Camera.Yaw(axis * 270f * Time.deltaTime);
+				m_Camera.Yaw(axis * 270f * Time.deltaTime * mouseSensitivity);
 				if (m_User.IsCanAim())
 				{
 					m_User.SetYaw(m_Camera.GetYaw());
@@ -167,7 +185,7 @@ public class CControlWindows : CControlBase
 			float axis2 = Input.GetAxis("Mouse Y");
 			if (axis2 != 0f)
 			{
-				m_Camera.Pitch(axis2 * 270f * Time.deltaTime);
+				m_Camera.Pitch(axis2 * 270f * Time.deltaTime * mouseSensitivity);
 			}
 			if (Input.GetMouseButton(1))
 			{
