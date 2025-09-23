@@ -23,7 +23,7 @@ SubShader {
     void surf(Input IN, inout SurfaceOutputStandard o) {
         fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
         o.Albedo = c.rgb;
-        o.Emission = c.rgb * 1.5;
+        o.Emission = c.rgb * 1.35;
     }
     ENDCG
     Pass {

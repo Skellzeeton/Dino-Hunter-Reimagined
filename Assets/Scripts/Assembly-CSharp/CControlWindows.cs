@@ -12,6 +12,12 @@ public class CControlWindows : CControlBase
 	public override void Initialize()
 	{
 		base.Initialize();
+		mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", 1f);
+		if (mouseSensitivity < minSensitivity)
+		{
+			mouseSensitivity = 1f;
+			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
+		}
 	}
 
 	private bool m_TutorialActive = false;
@@ -72,15 +78,16 @@ public class CControlWindows : CControlBase
 		{
 			mouseSensitivity = Mathf.Clamp(mouseSensitivity + 0.25f, minSensitivity, maxSensitivity);
 			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
+			PlayerPrefs.Save();
 			Debug.Log("Sensitivity increased: " + mouseSensitivity);
 		}
 		else if (Input.GetKeyDown(KeyCode.I))
 		{
 			mouseSensitivity = Mathf.Clamp(mouseSensitivity - 0.25f, minSensitivity, maxSensitivity);
 			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
+			PlayerPrefs.Save();
 			Debug.Log("Sensitivity decreased: " + mouseSensitivity);
 		}
-
 		if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.CutScene && Input.GetKeyDown(KeyCode.Space))
 			CCameraRoam.GetInstance().Stop();
 		if (m_User == null || (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing && m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime))
