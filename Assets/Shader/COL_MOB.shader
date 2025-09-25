@@ -1,49 +1,34 @@
 Shader "Triniti/Character/COL_AB-PLUS" {
 Properties {
     _Color ("Main Color", Color) = (1,1,1,1)
-    _MainTex ("MainTex(RGB)", 2D) = "white" {}
+    _MainTex ("MainTex", 2D) = "white" {}
     _Brightness ("Brightness", Float) = 1.25
 }
 SubShader {
     Tags { "RenderType"="Opaque" }
     LOD 50
 
-    Pass {
-        Tags { "LightMode"="Always" }
+    CGPROGRAM
+    #pragma surface surf Lambert noforwardadd nolightmap noshadow
+    #pragma target 3.0
 
-        CGPROGRAM
-        #pragma vertex vert
-        #pragma fragment frag
-        #include "UnityCG.cginc"
+    sampler2D _MainTex;
+    fixed4 _Color;
+    float _Brightness;
 
-        sampler2D _MainTex;
-        float4 _Color;
-        float _Brightness;
+    struct Input {
+        float2 uv_MainTex;
+    };
 
-        struct appdata {
-            float4 vertex : POSITION;
-            float2 uv : TEXCOORD0;
-        };
+    void surf(Input IN, inout SurfaceOutput o) {
+        fixed4 tex = tex2D(_MainTex, IN.uv_MainTex);
+        fixed3 finalColor = tex.rgb * _Color.rgb * _Brightness;
 
-        struct v2f {
-            float4 pos : SV_POSITION;
-            float2 uv : TEXCOORD0;
-        };
-
-        v2f vert(appdata v) {
-            v2f o;
-            o.pos = UnityObjectToClipPos(v.vertex);
-            o.uv = v.uv;
-            return o;
-        }
-
-        fixed4 frag(v2f i) : SV_Target {
-            fixed4 tex = tex2D(_MainTex, i.uv);
-            fixed3 finalColor = tex.rgb * _Color.rgb * _Brightness;
-            return fixed4(finalColor, tex.a * _Color.a);
-        }
-        ENDCG
+        o.Albedo = 0;
+        o.Emission = finalColor;
+        o.Alpha = tex.a * _Color.a;
     }
+    ENDCG
 }
 Fallback Off
 }

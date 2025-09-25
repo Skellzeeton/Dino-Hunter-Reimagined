@@ -3,8 +3,7 @@ Properties {
  _Color ("Main Color", Color) = (1,1,1,1)
  _MainTex ("MainTex(RGB)", 2D) = "" {}
 }
-	//DummyShaderTextExporter
-	
+
 	SubShader{
 		Tags { "RenderType" = "Opaque" }
 		LOD 200
