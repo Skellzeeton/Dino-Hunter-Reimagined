@@ -80,6 +80,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4514865294580600}
   - component: {fileID: 137352675369858864}
+  - component: {fileID: 114603242601102178}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -368,6 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4596991194565864}
   - component: {fileID: 137466199629331630}
+  - component: {fileID: 114359768649881284}
   m_Layer: 0
   m_Name: role_102
   m_TagString: Untagged
@@ -1057,6 +1059,30 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &114359768649881284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630173673031708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
+--- !u!114 &114603242601102178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1108637801399894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!114 &114981291781841232
 MonoBehaviour:
   m_ObjectHideFlags: 1

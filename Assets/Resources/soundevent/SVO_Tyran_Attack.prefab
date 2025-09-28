@@ -140,9 +140,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSfx: 1
   audioClips:
-  - {fileID: 8300000, guid: bf1991ccce14947deb88f46d88998bc1, type: 3}
-  - {fileID: 8300000, guid: d78a46591287245e19e96a3b009b146e, type: 3}
-  - {fileID: 8300000, guid: 0bd067ff29da14137bd7d6f25c94a774, type: 3}
+  - {fileID: 8300000, guid: e08d2a5b4e4c749108796485bf4e054b, type: 3}
+  - {fileID: 8300000, guid: 14efbc34f841d487890c79adfa0935a2, type: 3}
+  - {fileID: 8300000, guid: 2f4d134a3e1984658bd2a07526ffe726, type: 3}
   probability: []
   volumOffset: 0.05
   pitchOffset: 0.05
@@ -154,3 +154,5 @@ MonoBehaviour:
   maxIntervalTime: 0
   intervalRangeMin: 0
   intervalRangeMax: 0
+  forceDeleteOnSceneChange: 0
+  preserveOnSceneChange: 0

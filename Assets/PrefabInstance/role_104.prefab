@@ -277,6 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4574950242339644}
   - component: {fileID: 137899689727568788}
+  - component: {fileID: 114984237722097654}
   m_Layer: 0
   m_Name: role_104
   m_TagString: Untagged
@@ -308,6 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4925875751182778}
   - component: {fileID: 137880019934205944}
+  - component: {fileID: 114405784404739642}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -1057,6 +1059,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &114405784404739642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587225819533692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!114 &114837682704276520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1069,6 +1083,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_hand: {fileID: 4403266758923144}
+--- !u!114 &114984237722097654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542068438740692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!137 &137880019934205944
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

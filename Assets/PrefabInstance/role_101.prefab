@@ -307,6 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4544336250495928}
   - component: {fileID: 137453699511624198}
+  - component: {fileID: 114819419956874530}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -398,6 +399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4466750819325808}
   - component: {fileID: 137075894357833826}
+  - component: {fileID: 114219026380631400}
   m_Layer: 0
   m_Name: role_101
   m_TagString: Untagged
@@ -645,7 +647,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063174472993606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.282864, y: -0.73559, z: -29.90541}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4301828544918772}
@@ -1114,6 +1116,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &114219026380631400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623426340652342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!114 &114672070369908058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1126,6 +1140,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_hand: {fileID: 4173567960145066}
+--- !u!114 &114819419956874530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1434053993667562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!137 &137075894357833826
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

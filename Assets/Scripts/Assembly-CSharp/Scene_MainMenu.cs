@@ -99,10 +99,10 @@ public class Scene_MainMenu : MonoBehaviour
 	public PopupNewHelp popup_new_help;
 	
 	private const float MinMusicVolume = 0f;
-	private const float MaxMusicVolume = 0.5f;
+	private const float MaxMusicVolume = 1f;
 
 	private const float MinSFXVolume = 0f;
-	private const float MaxSFXVolume = 0.5f;
+	private const float MaxSFXVolume = 1f;
 
 	private const float VolumeDecrement = 0.1f;
 
@@ -926,7 +926,7 @@ public class Scene_MainMenu : MonoBehaviour
                 resetCounter++;
                 if (resetCounter >= 2)
                 {
-                    current = 0.5f;
+                    current = 1f;
                     resetCounter = 0;
                 }
                 else
@@ -965,7 +965,7 @@ public class Scene_MainMenu : MonoBehaviour
                 resetCounter++;
                 if (resetCounter >= 2)
                 {
-                    current = 0.5f;
+                    current = 1f;
                     resetCounter = 0;
                 }
                 else

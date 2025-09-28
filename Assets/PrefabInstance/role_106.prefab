@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4959463803583302}
   - component: {fileID: 137072042985714460}
+  - component: {fileID: 114786133375231298}
   m_Layer: 0
   m_Name: role_106_hat
   m_TagString: Untagged
@@ -141,6 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4600770751687486}
   - component: {fileID: 137971264904323076}
+  - component: {fileID: 114715131367348192}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -264,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4617468354165628}
   - component: {fileID: 137081673483891828}
+  - component: {fileID: 114599972936643274}
   m_Layer: 0
   m_Name: role_106
   m_TagString: Untagged
@@ -663,7 +666,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1322495918713238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.173166, y: 1.353882, z: 22.21076}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4011194357325178}
@@ -1145,6 +1148,30 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &114599972936643274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1366458041260064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
+--- !u!114 &114715131367348192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187617162411402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!114 &114747549951977090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1157,6 +1184,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_hand: {fileID: 4081103012321834}
+--- !u!114 &114786133375231298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1015673137754016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: 1.25
 --- !u!137 &137072042985714460
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
