@@ -3048,6 +3048,11 @@ public class iGameSceneBase
 	
 	public void SetGamePause(bool bPause)
 	{
+		if (bPause && isTutorialStage)
+		{
+			return;
+		}
+
 		if ((bPause && m_Status != kGameStatus.Gameing) || (bPause && TNetManager.GetInstance().Connection != null))
 		{
 			return;

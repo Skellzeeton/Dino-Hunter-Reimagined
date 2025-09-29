@@ -68,6 +68,7 @@ public class Ground_Preloader : MonoBehaviour
         {
             case 1:
                 return sceneName == "SceneForest" ||
+                       sceneName == "SceneForest_Boss" ||
                        sceneName == "SceneForest_Dusk" || 
                        sceneName == "SceneForest_Night" || 
                        sceneName == "Yulin_shaguai01" ||
@@ -88,7 +89,7 @@ public class Ground_Preloader : MonoBehaviour
                 return sceneName == "SceneGorge" || sceneName == "SceneGorge_DeathValley";
 
             case 3:
-                return sceneName == "SceneForest_Rainy";
+                return sceneName == "SceneForest_Rainy" || sceneName == "SceneForest_Boss";
             
             case 4:
                 return sceneName == "SceneLava" || sceneName == "SceneLava2" ||

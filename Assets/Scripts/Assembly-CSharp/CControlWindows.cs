@@ -20,7 +20,7 @@ public class CControlWindows : CControlBase
 		}
 	}
 
-	private bool m_TutorialActive = false;
+	//private bool m_TutorialActive = false;
 	
 	private float mouseSensitivity;
 	private const float minSensitivity = 0.5f;
@@ -174,12 +174,12 @@ public class CControlWindows : CControlBase
 		else
 		{
 			m_User.MoveByCompass(zero.x, zero.y);
+			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
+			m_User.LookAt(ray.GetPoint(1000f));
 
 		}
 		if (Screen.lockCursor)
 		{
-			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
-			m_User.LookAt(ray.GetPoint(1000f));
 			float axis = Input.GetAxis("Mouse X");
 			if (axis != 0f)
 			{
@@ -187,6 +187,8 @@ public class CControlWindows : CControlBase
 				if (m_User.IsCanAim())
 				{
 					m_User.SetYaw(m_Camera.GetYaw());
+					Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
+					m_User.LookAt(ray.GetPoint(1000f));
 				}
 			}
 			float axis2 = Input.GetAxis("Mouse Y");
