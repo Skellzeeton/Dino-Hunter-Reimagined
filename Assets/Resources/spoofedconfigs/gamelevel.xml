@@ -21,7 +21,7 @@
 		<RewardMaterial material="100025,100003,700006,800009" mincount="1,4,0,-25" maxcount="1,9,2,1"/>
 				<recommand recommandtype="1" recommandid="3" recommandlevel="1" islimit="false" />
 	</gamelevel>
-	<gamelevel id="1004" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1004001,1004002,1004003" task="1004" sp_cfg_ground="20111" exp="69" gold="21" desc="Kill all dinos\nMelee weapons only" limitmelee="true">
+	<gamelevel id="1004" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1004001,1004002,1004003" task="1004" sp_cfg_ground="20111" exp="69" gold="14" desc="Kill all dinos\nMelee weapons only" limitmelee="true">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
@@ -82,7 +82,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100005,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="29" gold="28" desc="Snatch and Defend two Dinosaur Eggs\nEGG HP: 75" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="29" gold="28" desc="Snatch and defend two Dino Eggs\nEGG HP: 75" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
@@ -112,7 +112,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100007,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2008" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2008001,2008002,2008003,2008004" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="32" gold="15" desc="Snatch and defend one Dinosaur Egg\nEGG HP: 50" limitmelee="false">
+	<gamelevel id="2008" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2008001,2008002,2008003,2008004" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="32" gold="15" desc="Snatch and defend one Dino Egg\nEGG HP: 50" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
@@ -120,7 +120,7 @@
 	</gamelevel>
 	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="40111" exp="33" gold="15" desc="Kill all dinos\nMelee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="8"/>
+			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>

@@ -65,9 +65,11 @@
 			<!-- ������ -->
 		<ai id="70101" skill="50006" skillrate="100" behavior="1" />	
 	<!-- ���������� -->
-		<ai id="70201" skill="" skillrate="" behavior="3" />	
-		
-				<!-- ���������� -->
+		<ai id="70201" skill="" skillrate="" behavior="3" />
+
+		<ai id="70301" skill="50007" skillrate="100" behavior="1" />
+
+		<!-- ���������� -->
 		<ai id="80101" skill="50007" skillrate="100" behavior="1" />	
 	<!-- �������������� -->
 		<ai id="80201" skill="" skillrate="" behavior="3" />	
@@ -267,7 +269,7 @@
 			<aimanager id="702" ai="70201" />	
 			
 			<!-- ���������� -->
-			<aimanager id="801" ai="70101" />		
+			<aimanager id="801" ai="70301" />		
 				<!-- �������������� -->
 			<aimanager id="802" ai="70201" />				
 	

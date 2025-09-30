@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: weapon_015_016_m
-  m_Shader: {fileID: 4800000, guid: 650437422999eb34eba8556d75b7362a, type: 3}
+  m_Shader: {fileID: 4800000, guid: be4171bef22176549aa023cc4dae8fe0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -23,9 +23,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: cd6572b2924be47dda373b9badd81ed3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5a8b0b2a860334942bf74a54f4b8bea9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    - _SkinTex:
+        m_Texture: {fileID: 2800000, guid: f3e2daa46243040a888ae78f689c80e1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Brightness: 1.75
+    - _MainBrightness: 1.75
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SkinColor: {r: 1, g: 1, b: 1, a: 1}
