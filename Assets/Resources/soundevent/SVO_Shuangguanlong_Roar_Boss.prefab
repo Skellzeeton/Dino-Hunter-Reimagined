@@ -61,7 +61,7 @@ AudioSource:
   Priority: 90
   DopplerLevel: 0
   MinDistance: 30
-  MaxDistance: 120
+  MaxDistance: 75
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -158,3 +158,5 @@ MonoBehaviour:
   maxIntervalTime: 0
   intervalRangeMin: 0
   intervalRangeMax: 0
+  forceDeleteOnSceneChange: 0
+  preserveOnSceneChange: 0

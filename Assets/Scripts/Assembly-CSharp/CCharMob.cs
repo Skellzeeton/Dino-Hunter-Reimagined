@@ -810,7 +810,7 @@ public class CCharMob : CCharBase
 	
 	public void SetFreeze(bool bFreeze, float fTime = 0f)
 	{
-		if (ID == 7 || ID == 8 || ID == 9 || ID == 14 || ID == 3 )
+		if (ID == 7 || ID == 8 || ID == 9 || ID == 14 || ID == 3 || ID == 6 )
 		{
 			//fTime = Mathf.Min(fTime, 3.25f);
 			return;

@@ -180,26 +180,32 @@
 	<gamewave id="2009004" trigger="0" triggervalue="52" delay="0" interval="8" number="2" loop="-1" israndom="true" mobcount="3" moblevel_default="8">
 		<mob mob_id="1,18,15" startpoint="0" random="1,1,1"/>
 	</gamewave>
-	<gamewave id="2010001" trigger="0" triggervalue="4" delay="0" interval="11" number="2" loop="-1" israndom="true" mobcount="12" moblevel_default="13">
+	<gamewave id="2010001" trigger="0" triggervalue="4" delay="0" interval="1" number="1" loop="-1" israndom="true" mobcount="4" moblevel_default="11">
 		<mob mob_id="1" startpoint="0" random="1"/>
 	</gamewave>
-	<gamewave id="2010002" trigger="0" triggervalue="500" delay="0" interval="10" number="12" loop="-1" israndom="true" mobcount="24" moblevel_default="11">
-		<mob mob_id="2,4" startpoint="0" random="1,1"/>
+	<gamewave id="2010002" trigger="0" triggervalue="205" delay="0" interval="1" number="2" loop="-1" israndom="true" mobcount="8" moblevel_default="9">
+		<mob mob_id="2,4,8" startpoint="0" random="1,1"/>
 	</gamewave>
-	<gamewave id="2010003" trigger="0" triggervalue="40" delay="6" interval="10" number="1" loop="-1" cutscene="yanjiang2_boss" cutscene_BGM="BGM_Map04" cutscene_ambience="Amb_Volcano_Boss_Show" israndom="true" mobcount="1" moblevel_default="14">
+	<gamewave id="2010003" trigger="0" triggervalue="40" delay="6" interval="10" number="1" loop="-1" cutscene="yanjiang_cave_boss" cutscene_BGM="BGM_Map04" cutscene_ambience="Amb_Volcano_Boss_Show" israndom="true" mobcount="1" moblevel_default="10">
 		<mob mob_id="6" startpoint="2" random="1"/>
 	</gamewave>
-	<gamewave id="2010004" trigger="0" triggervalue="10" delay="0" interval="15" number="1" loop="-1" israndom="true" mobcount="2" moblevel_default="10">
-		<mob mob_id="1,2" startpoint="0" random="1,1"/>
+	<gamewave id="2010004" trigger="0" triggervalue="10" delay="0" interval="15" number="2" loop="-1" israndom="true" mobcount="2" moblevel_default="10">
+		<mob mob_id="1,2,4" startpoint="0" random="1,1"/>
 	</gamewave>
-	<gamewave id="2010005" trigger="1" triggervalue="2010003,0,2,60102" delay="8" interval="1" number="2" loop="-1" israndom="true" mobcount="2" moblevel_default="5">
+	<gamewave id="2010005" trigger="1" triggervalue="2010003,0,2,60102" delay="8" interval="1" number="2" loop="-1" israndom="true" mobcount="2" moblevel_default="10">
 		<mob mob_id="17,18" startpoint="0" random="1"/>
 	</gamewave>
-	<gamewave id="2010006" trigger="1" triggervalue="2010003,0,2,60102" delay="0" interval="5" number="4" loop="-1" israndom="true" mobcount="72" moblevel_default="17">
+	<gamewave id="2010006" trigger="1" triggervalue="2010003,0,2,60102" delay="0" interval="1" number="1" loop="-1" israndom="true" mobcount="3" moblevel_default="9">
 		<mob mob_id="4" startpoint="0" random="1"/>
 	</gamewave>
-	<gamewave id="2010007" trigger="1" triggervalue="2010003,0,2,60103" delay="24" interval="7" number="1" loop="-1" israndom="true" mobcount="40" moblevel_default="16">
-		<mob mob_id="4,15,11" startpoint="0" random="1"/>
+	<gamewave id="2010007" trigger="1" triggervalue="2010003,0,2,60103" delay="4" interval="1" number="1" loop="-1" israndom="true" mobcount="2" moblevel_default="9">
+		<mob mob_id="15,1" startpoint="0" random="1"/>
+	</gamewave>
+	<gamewave id="2010008" trigger="1" triggervalue="2010003,0,2,60103" delay="0" interval="1" number="1" loop="-1" israndom="true" mobcount="1" moblevel_default="14">
+		<mob mob_id="6" startpoint="1" random="1"/>
+	</gamewave>
+	<gamewave id="2010009" trigger="1" triggervalue="2010008,0,2,60103" delay="4" interval="1" number="1" loop="-1" israndom="true" mobcount="8" moblevel_default="10">
+		<mob mob_id="4,1" startpoint="0" random="1"/>
 	</gamewave>
 	<gamewave id="3001001" trigger="0" triggervalue="0" delay="0" interval="10" number="1" loop="-1" israndom="true" mobcount="12" moblevel_default="11">
 		<mob mob_id="10" startpoint="0" random="1"/>

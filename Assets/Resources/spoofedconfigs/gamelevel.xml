@@ -86,7 +86,7 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100006,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<RewardMaterial material="100006,700006,800009" mincount="4,0,-25" maxcount="6,2,1"/>
 	</gamelevel>
 	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2004001,2004002,2004003,2004004" task="2004" sp_cfg_ground="40111" exp="30" gold="15" desc="Kill all dinos" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
@@ -116,17 +116,17 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100008,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<RewardMaterial material="100008,700006,800009" mincount="4,0,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="40111" exp="33" gold="15" desc="Kill all dinos\nMelee weapons only" limitmelee="true"  hp_cfg_def="40501">
+	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="40111" exp="33" gold="30" desc="Kill all dinos\nMelee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2010" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007" task="2010" sp_cfg_ground="40111" exp="34" gold="15" desc="Hunt Killosaurus Rex x 1\nHunt Corrupted Spikesaurus x 2" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2010" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="34" gold="45" desc="Hunt Killosaurus Rex x 2" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="10"/>
+			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100018,100019,8000011" mincount="-2,-2,-75" maxcount="1,1,1"/>
 	</gamelevel>

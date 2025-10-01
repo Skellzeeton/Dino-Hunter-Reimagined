@@ -83,7 +83,7 @@ public class iGameUIWeapon : MonoBehaviour
 
 	public void ShowPurchase(bool bShow)
 	{
-		if (mPurchase == null)
+		/*if (mPurchase == null)
 		{
 			return;
 		}
@@ -107,7 +107,7 @@ public class iGameUIWeapon : MonoBehaviour
 				component.Stop();
 			}
 		}
-		mPurchase.SetActiveRecursive(bShow);
+		mPurchase.SetActiveRecursive(bShow);*/
 	}
 
 	public void PlayFullBulletAnim()
