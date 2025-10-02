@@ -306,8 +306,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4544336250495928}
-  - component: {fileID: 137453699511624198}
   - component: {fileID: 114819419956874530}
+  - component: {fileID: 33543815930617310}
+  - component: {fileID: 23712595288179370}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -1090,6 +1091,47 @@ Transform:
   m_Father: {fileID: 4277895752021054}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -5.334547, y: 3.93356, z: 29.144932}
+--- !u!23 &23712595288179370
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1434053993667562}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
+  m_MotionVectors: 2
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: bd303e2ea276dc64c873ed6f5fd5f303, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &33543815930617310
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1434053993667562}
+  m_Mesh: {fileID: 4300000, guid: 9a9b2e1fcb94f468a8b63d8e9c0fb354, type: 2}
 --- !u!111 &111432669582480046
 Animation:
   m_ObjectHideFlags: 1
@@ -1115,7 +1157,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
 --- !u!114 &114219026380631400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1127,7 +1169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brightness: 1.25
 --- !u!114 &114672070369908058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1151,7 +1192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brightness: 1.25
 --- !u!137 &137075894357833826
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1214,51 +1254,4 @@ SkinnedMeshRenderer:
   m_AABB:
     m_Center: {x: 0.0020214915, y: 0.04190454, z: 0.47850493}
     m_Extent: {x: 1.1382804, y: 0.8509246, z: 0.92539227}
-  m_DirtyAABB: 0
---- !u!137 &137453699511624198
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1434053993667562}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 0
-  m_MotionVectors: 2
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_Materials:
-  - {fileID: 2100000, guid: bd303e2ea276dc64c873ed6f5fd5f303, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 1
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 0
-  m_Mesh: {fileID: 4300000, guid: 9a9b2e1fcb94f468a8b63d8e9c0fb354, type: 2}
-  m_Bones:
-  - {fileID: 4544336250495928}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: 0.015473306, y: 0.0035291463, z: -0.0007815063}
-    m_Extent: {x: 0.21999636, y: 0.15935674, z: 0.20644112}
   m_DirtyAABB: 0

@@ -133,7 +133,7 @@ public class ScrollList_WeaponItem : MonoBehaviour
 				label_sale.gameObject.SetActiveRecursive(true);
 				if (bActive)
 				{
-					label_sale.Text = "Free";
+					label_sale.Text = "Free!!!";
 				}
 			}
 		}

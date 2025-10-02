@@ -2672,7 +2672,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4661144535052760}
-  - component: {fileID: 114119611856174326}
   m_Layer: 31
   m_Name: DinoCapWorld2
   m_TagString: Untagged
@@ -24825,17 +24824,3 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114119611856174326
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1455037694929254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d0d7947affd4ae791c5c23edbd72a77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combineOnStart: 1
-  castShadows: 0
-  receiveShadows: 0

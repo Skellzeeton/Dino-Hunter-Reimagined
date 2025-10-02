@@ -308,8 +308,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4925875751182778}
-  - component: {fileID: 137880019934205944}
   - component: {fileID: 114405784404739642}
+  - component: {fileID: 33579571570356582}
+  - component: {fileID: 23206184061715026}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -1033,70 +1034,8 @@ Transform:
   m_Father: {fileID: 4444691126660744}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -2.0764828e-35, y: 1.09474373e-13, z: 180}
---- !u!111 &111251353210116848
-Animation:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398289936885194}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: f49b502b077772c4e9ede5a238f45f12, type: 2}
-  - {fileID: 7400000, guid: bab28c00c6b6b214e950f69da7dd755e, type: 2}
-  - {fileID: 7400000, guid: 9826e40c866e1a94e823b22f526deb2b, type: 2}
-  - {fileID: 7400000, guid: c3d95633f77ff06468fd7edd4c47274c, type: 2}
-  - {fileID: 7400000, guid: 1aa672a6cde4360439a2b8e1d968efed, type: 2}
-  - {fileID: 7400000, guid: 74830ff9faacaec4284449578f09cfe2, type: 2}
-  - {fileID: 7400000, guid: 0748724bac608e94e9a5cd4a5c9e237a, type: 2}
-  - {fileID: 7400000, guid: 6e5c92c68d9983444ae250b60df08d89, type: 2}
-  - {fileID: 7400000, guid: e91dc575438183c40874fd9bd976a84f, type: 2}
-  - {fileID: 7400000, guid: 9119e7685af62fa48be398f120a2dde8, type: 2}
-  - {fileID: 7400000, guid: d11927dcc7a9e1146a7eaed672e3748a, type: 2}
-  - {fileID: 7400000, guid: dcfd6c69788709644a9b546259cec890, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 1
---- !u!114 &114405784404739642
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587225819533692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightness: 1.25
---- !u!114 &114837682704276520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398289936885194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbea9ab4ed117741b7893b7eeac321f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  go_hand: {fileID: 4403266758923144}
---- !u!114 &114984237722097654
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1542068438740692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brightness: 1.25
---- !u!137 &137880019934205944
-SkinnedMeshRenderer:
+--- !u!23 &23206184061715026
+MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -1129,19 +1068,73 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 1
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 0
+--- !u!33 &33579571570356582
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587225819533692}
   m_Mesh: {fileID: 4300000, guid: fabc38f74a645d145b671aea91de6e4e, type: 2}
-  m_Bones:
-  - {fileID: 4925875751182778}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: 0.015473306, y: 0.0035291463, z: -0.0007815063}
-    m_Extent: {x: 0.21999636, y: 0.15935674, z: 0.20644112}
-  m_DirtyAABB: 0
+--- !u!111 &111251353210116848
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398289936885194}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: f49b502b077772c4e9ede5a238f45f12, type: 2}
+  - {fileID: 7400000, guid: bab28c00c6b6b214e950f69da7dd755e, type: 2}
+  - {fileID: 7400000, guid: 9826e40c866e1a94e823b22f526deb2b, type: 2}
+  - {fileID: 7400000, guid: c3d95633f77ff06468fd7edd4c47274c, type: 2}
+  - {fileID: 7400000, guid: 1aa672a6cde4360439a2b8e1d968efed, type: 2}
+  - {fileID: 7400000, guid: 74830ff9faacaec4284449578f09cfe2, type: 2}
+  - {fileID: 7400000, guid: 0748724bac608e94e9a5cd4a5c9e237a, type: 2}
+  - {fileID: 7400000, guid: 6e5c92c68d9983444ae250b60df08d89, type: 2}
+  - {fileID: 7400000, guid: e91dc575438183c40874fd9bd976a84f, type: 2}
+  - {fileID: 7400000, guid: 9119e7685af62fa48be398f120a2dde8, type: 2}
+  - {fileID: 7400000, guid: d11927dcc7a9e1146a7eaed672e3748a, type: 2}
+  - {fileID: 7400000, guid: dcfd6c69788709644a9b546259cec890, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &114405784404739642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587225819533692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114837682704276520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398289936885194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbea9ab4ed117741b7893b7eeac321f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go_hand: {fileID: 4403266758923144}
+--- !u!114 &114984237722097654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542068438740692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c63310258d41b28fd40865c550c430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &137899689727568788
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

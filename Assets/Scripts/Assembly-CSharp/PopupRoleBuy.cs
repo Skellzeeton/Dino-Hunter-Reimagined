@@ -65,7 +65,7 @@ public class PopupRoleBuy : MonoBehaviour
 			if (label_sale_sign != null)
 			{
 				label_sale_sign.gameObject.SetActiveRecursive(true);
-				label_sale_sign.Text = "FREE";
+				label_sale_sign.Text = "Free!!!";
 			}
 			if (label_introduce != null)
 			{

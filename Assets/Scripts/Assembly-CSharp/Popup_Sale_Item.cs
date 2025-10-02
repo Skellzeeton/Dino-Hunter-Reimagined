@@ -132,7 +132,7 @@ public class Popup_Sale_Item : MonoBehaviour
 		{
 			if (discount == 0f)
 			{
-				label_off.Text = "Free";
+				label_off.Text = "Free!!!";
 				img_off.texture = img_off_texture02;
 			}
 			else
