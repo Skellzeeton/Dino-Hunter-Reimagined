@@ -25,9 +25,6 @@ public class gyUIGamePauseDialog : MonoBehaviour
 	{
 		m_bShow = bShow;
 		base.gameObject.SetActiveRecursive(bShow);
-		TweenScale tweenScale = TweenScale.Begin(base.gameObject, 0.4f, Vector3.one);
-		tweenScale.from = Vector3.zero;
-		tweenScale.to = Vector3.one;
 		if (bShow)
 		{
 			base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);

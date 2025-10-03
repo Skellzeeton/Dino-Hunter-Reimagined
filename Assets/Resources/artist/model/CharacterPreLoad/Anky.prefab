@@ -233,7 +233,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4810498406443870}
-  - component: {fileID: 137005934054971316}
   m_Layer: 26
   m_Name: role_009
   m_TagString: Untagged
@@ -867,69 +866,3 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
---- !u!137 &137005934054971316
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1600822180448444}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 0
-  m_MotionVectors: 2
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_Materials: []
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 1
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 0
-  m_Mesh: {fileID: 4300000, guid: 657ffe79839d35e488b5f84412648f1f, type: 2}
-  m_Bones:
-  - {fileID: 4522412189272856}
-  - {fileID: 4424316210765204}
-  - {fileID: 4523193105348360}
-  - {fileID: 4368015496341746}
-  - {fileID: 4843047681359688}
-  - {fileID: 4930575143249090}
-  - {fileID: 4444605028317040}
-  - {fileID: 4700415110760578}
-  - {fileID: 4269592379872682}
-  - {fileID: 4327907247941010}
-  - {fileID: 4154421627212860}
-  - {fileID: 4920475945339206}
-  - {fileID: 4429272690931414}
-  - {fileID: 4256377643682976}
-  - {fileID: 4003019212920734}
-  - {fileID: 4063985057492866}
-  - {fileID: 4181426193199334}
-  - {fileID: 4484384936814010}
-  - {fileID: 4439038303492214}
-  - {fileID: 4388927139586768}
-  - {fileID: 4235462824633336}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 4843047681359688}
-  m_AABB:
-    m_Center: {x: 0.5985602, y: 0.8998666, z: 0.17489362}
-    m_Extent: {x: 2.719469, y: 3.9045725, z: 3.6390097}
-  m_DirtyAABB: 0
