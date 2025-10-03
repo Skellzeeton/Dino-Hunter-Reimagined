@@ -4,6 +4,11 @@ public class iItemDynamic : iItem
 {
     public float fAbsorbDistance;
     public float fAbsorbSpeed = 20f;
+    
+    private float m_fAbsorbDelayTimer = 0f;
+    
+    private const float m_fAbsorbDelayThreshold = 5f;
+
     public GameObject m_GroundEffect;
 
     protected Rigidbody m_Rigidbody;
@@ -38,6 +43,31 @@ public class iItemDynamic : iItem
 
     private void Update()
     {
+        m_fAbsorbDelayTimer += Time.deltaTime;
+        if (!m_bAbsorb && m_fAbsorbDelayTimer >= m_fAbsorbDelayThreshold)
+        {
+            m_bAbsorb = true;
+            m_bBump = false;
+
+            if (m_GroundEffect != null)
+            {
+                Object.Destroy(m_GroundEffect);
+                m_GroundEffect = null;
+            }
+
+            if (m_Collider != null)
+            {
+                Object.Destroy(m_Collider);
+                m_Collider = null;
+            }
+
+            if (m_Rigidbody != null)
+            {
+                Object.Destroy(m_Rigidbody);
+                m_Rigidbody = null;
+            }
+        }
+
         float deltaTime = Time.deltaTime;
 
         if (m_bBump)
