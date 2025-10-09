@@ -8,6 +8,7 @@ SubShader {
  Tags { "QUEUE"="Transparent" }
  Pass {
   Tags { "QUEUE"="Transparent" }
+  ZWrite Off
   BindChannels {
    Bind "vertex", Vertex
    Bind "texcoord", TexCoord0
