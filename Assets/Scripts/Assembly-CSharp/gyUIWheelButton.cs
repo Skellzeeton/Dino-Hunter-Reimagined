@@ -2,89 +2,111 @@ using UnityEngine;
 
 public class gyUIWheelButton : MonoBehaviour
 {
-	public GameObject wheelback;
+    public GameObject wheelback;
+    public GameObject wheelbutton;
+    public float wheelradius;
+    public bool isWheelMove;
 
-	public GameObject wheelbutton;
+    protected UIRoot mRoot;
+    protected UIAnchor mAnchor;
+    protected Vector2 m_v2ActualPos;
+    protected Vector2 m_v2VitualPos;
 
-	public float wheelradius;
+    public Vector2 WheelOffSet
+    {
+        get
+        {
+            return (wheelbutton.transform.localPosition - wheelback.transform.localPosition) / wheelradius;
+        }
+    }
 
-	public bool isWheelMove;
+    private void Awake()
+    {
+        if (IsPCPlatform())
+        {
+            gameObject.SetActive(false);
+        }
+    }
 
-	protected UIRoot mRoot;
+    private void Start()
+    {
 
-	protected UIAnchor mAnchor;
 
-	protected Vector2 m_v2ActualPos;
+        mRoot = NGUITools.FindInParents<UIRoot>(base.gameObject);
+        mAnchor = NGUITools.FindInParents<UIAnchor>(base.gameObject);
+        m_v2ActualPos = Vector2.zero;
+        m_v2VitualPos = Vector2.zero;
+    }
 
-	protected Vector2 m_v2VitualPos;
+    private bool IsPCPlatform()
+    {
+        RuntimePlatform p = Application.platform;
+        return (p == RuntimePlatform.WindowsPlayer ||
+                p == RuntimePlatform.WindowsEditor ||
+                p == RuntimePlatform.OSXPlayer ||
+                p == RuntimePlatform.OSXEditor ||
+                p == RuntimePlatform.LinuxPlayer);
+    }
 
-	public Vector2 WheelOffSet
-	{
-		get
-		{
-			return (wheelbutton.transform.localPosition - wheelback.transform.localPosition) / wheelradius;
-		}
-	}
+    private void Update()
+    {
+        if (IsPCPlatform())
+        {
+            if (gameObject != null)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+        }
+    }
 
-	private void Start()
-	{
-		mRoot = NGUITools.FindInParents<UIRoot>(base.gameObject);
-		mAnchor = NGUITools.FindInParents<UIAnchor>(base.gameObject);
-		m_v2ActualPos = Vector2.zero;
-		m_v2VitualPos = Vector2.zero;
-	}
+    public void Reset()
+    {
+        TweenPosition.Begin(wheelbutton, 0.1f, Vector3.zero);
+        if (isWheelMove)
+        {
+            TweenPosition.Begin(wheelback, 0.1f, Vector3.zero);
+        }
+    }
 
-	private void Update()
-	{
-	}
+    protected void OnPress(bool isPressed)
+    {
+        if (!isPressed)
+        {
+            TweenPosition.Begin(wheelbutton, 0.1f, Vector3.zero);
+            if (isWheelMove)
+            {
+                TweenPosition.Begin(wheelback, 0.1f, Vector3.zero);
+            }
+        }
+        else
+        {
+            m_v2ActualPos = (Vector2)UICamera.lastHit.point - (Vector2)wheelback.transform.position;
+            m_v2ActualPos /= mRoot.transform.localScale.x * mAnchor.transform.localScale.x;
+            UpdatePos();
+        }
+    }
 
-	public void Reset()
-	{
-		TweenPosition.Begin(wheelbutton, 0.1f, Vector3.zero);
-		if (isWheelMove)
-		{
-			TweenPosition.Begin(wheelback, 0.1f, Vector3.zero);
-		}
-	}
+    protected void OnDrag(Vector2 delta)
+    {
+        m_v2ActualPos += delta / mAnchor.transform.localScale.x;
+        UpdatePos();
+    }
 
-	protected void OnPress(bool isPressed)
-	{
-		if (!isPressed)
-		{
-			TweenPosition.Begin(wheelbutton, 0.1f, Vector3.zero);
-			if (isWheelMove)
-			{
-				TweenPosition.Begin(wheelback, 0.1f, Vector3.zero);
-			}
-		}
-		else
-		{
-			m_v2ActualPos = (Vector2)UICamera.lastHit.point - (Vector2)wheelback.transform.position;
-			m_v2ActualPos /= mRoot.transform.localScale.x * mAnchor.transform.localScale.x;
-			UpdatePos();
-		}
-	}
-
-	protected void OnDrag(Vector2 delta)
-	{
-		m_v2ActualPos += delta / mAnchor.transform.localScale.x;
-		UpdatePos();
-	}
-
-	protected void UpdatePos()
-	{
-		m_v2VitualPos = m_v2ActualPos - (Vector2)wheelback.transform.localPosition;
-		float magnitude = m_v2VitualPos.magnitude;
-		Vector2 vector = m_v2VitualPos / magnitude;
-		if (magnitude > wheelradius)
-		{
-			if (isWheelMove)
-			{
-				wheelback.transform.localPosition += (Vector3)vector * (magnitude - wheelradius);
-			}
-			magnitude = wheelradius;
-		}
-		m_v2VitualPos = (Vector2)wheelback.transform.localPosition + vector * magnitude;
-		wheelbutton.transform.localPosition = m_v2VitualPos;
-	}
+    protected void UpdatePos()
+    {
+        m_v2VitualPos = m_v2ActualPos - (Vector2)wheelback.transform.localPosition;
+        float magnitude = m_v2VitualPos.magnitude;
+        Vector2 vector = m_v2VitualPos / magnitude;
+        if (magnitude > wheelradius)
+        {
+            if (isWheelMove)
+            {
+                wheelback.transform.localPosition += (Vector3)vector * (magnitude - wheelradius);
+            }
+            magnitude = wheelradius;
+        }
+        m_v2VitualPos = (Vector2)wheelback.transform.localPosition + vector * magnitude;
+        wheelbutton.transform.localPosition = m_v2VitualPos;
+    }
 }

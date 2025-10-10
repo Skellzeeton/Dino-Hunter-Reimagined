@@ -210,16 +210,11 @@ public class CCharUser : CCharPlayer
 		{
 			num2 = 0f;
 		}
-		m_v2Move = Vector2.zero;
-		if (m_v2MoveDir.x != 0f)
-		{
-			m_v2Move.x = (m_fCurSpeedSide + num2) * (float)((m_v2MoveDir.x > 0f) ? 1 : (-1)) * (1f - num);
-		}
-		if (m_v2MoveDir.y != 0f)
-		{
-			m_v2Move.y = (m_fCurSpeed + num2) * (float)((m_v2MoveDir.y > 0f) ? 1 : (-1)) * (1f - num);
-		}
-		m_v2Move *= deltaTime;
+		Vector2 rawDir = m_v2MoveDir.normalized;
+		float speedX = (m_fCurSpeedSide + num2) * Mathf.Abs(m_v2MoveDir.x) * (1f - num);
+		float speedY = (m_fCurSpeed + num2) * Mathf.Abs(m_v2MoveDir.y) * (1f - num);
+		Vector2 scaledDir = new Vector2(rawDir.x * speedX, rawDir.y * speedY);
+		m_v2Move = scaledDir * deltaTime;
 		Vector3 zero = Vector3.zero;
 		zero += m_ModelTransform.forward * m_v2Move.y;
 		zero += m_ModelTransform.right * m_v2Move.x;

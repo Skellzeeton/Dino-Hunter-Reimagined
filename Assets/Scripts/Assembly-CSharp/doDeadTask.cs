@@ -163,7 +163,7 @@ public class doDeadTask : Task
 					{
 						num = 1f;
 					}
-					m_GameScene.Boom(cCharMob.GetBone(2).position, num, new int[1] { 5 }, new int[1] { (int)value }, new int[1], "Fx_Explosion_RPG", -1, null, cCharMob);
+					m_GameScene.Boom(cCharMob.GetBone(2).position, num, new int[1] { 5 }, new int[1] { (int)value }, new int[1], new string[] { "Fx_Explosion_RPG" }, -1, null, cCharMob);
 					cCharMob.isNeedDestroy = true;
 					m_State = kDeadProcess.Destroy;
 				}

@@ -3300,9 +3300,19 @@ public class iGameSceneBase
 		}
 	}
 
-	public void Boom(Vector3 v3Pos, float fRadius, int[] arrFunc, int[] arrValueX, int[] arrValueY, string sAudio, int nEffectHit, CCharBase ignoretarget = null, CCharBase actor = null, int targetlimit = 2)
+	public void Boom(Vector3 v3Pos, float fRadius, int[] arrFunc, int[] arrValueX, int[] arrValueY, string[] sAudios, int nEffectHit, CCharBase ignoretarget = null, CCharBase actor = null, int targetlimit = 2)
 	{
-		PlayAudio(v3Pos, sAudio);
+		if (sAudios != null)
+		{
+			foreach (string sound in sAudios)
+			{
+				if (!string.IsNullOrEmpty(sound))
+				{
+					PlayAudio(v3Pos, sound);
+				}
+			}
+		}
+
 		AddEffect(v3Pos, Vector3.forward, 2f, nEffectHit);
 		List<CCharBase> unitList = GetUnitList();
 		if (unitList == null)

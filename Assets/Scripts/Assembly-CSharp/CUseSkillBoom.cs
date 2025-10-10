@@ -32,7 +32,7 @@ public class CUseSkillBoom : CUseSkillOnce
 				{
 					float fValue = 0f;
 					m_pSkillInfoLevel.GetSkillModeValue(1, ref fValue);
-					m_GameScene.Boom(charbase.GetBone(2).position, fValue, new int[1] { 5 }, new int[1] { 100 }, new int[1], "Fx_Explosion_RPG", -1, null, charbase);
+					m_GameScene.Boom(charbase.GetBone(2).position, fValue, new int[1] { 5 }, new int[1] { 100 }, new int[1], new string[] { "Fx_Blastbug_Explode", "Fx_Explosion_RPG" }, -1, null, charbase);
 				}
 			}
 		}

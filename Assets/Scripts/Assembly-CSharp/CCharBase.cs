@@ -19,6 +19,12 @@ public class CCharBase : MonoBehaviour
 	}
 
 	public string m_sName;
+	
+	public Transform ModelRoot
+	{
+		get { return transform.Find("Model"); } // or whatever your visual root is named
+	}
+
 
 	[SerializeField]
 	protected int m_nUID;

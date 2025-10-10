@@ -161,11 +161,6 @@ public class CControlWindows : CControlBase
 				}
 				zero.x += 1f;
 			}
-			if (zero.x != 0f && zero.y != 0f)
-			{
-				zero.x *= 0.707f;
-				zero.y *= 0.707f;
-			}
 		}
 		if (zero == Vector2.zero)
 		{

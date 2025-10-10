@@ -20,8 +20,8 @@ QualitySettings:
     shadowmaskMode: 0
     blendWeights: 1
     textureQuality: 0
-    anisotropicTextures: 2
-    antiAliasing: 8
+    anisotropicTextures: 0
+    antiAliasing: 0
     softParticles: 0
     softVegetation: 0
     realtimeReflectionProbes: 0
@@ -48,7 +48,7 @@ QualitySettings:
     shadowmaskMode: 0
     blendWeights: 1
     textureQuality: 0
-    anisotropicTextures: 1
+    anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
     softVegetation: 1
@@ -62,6 +62,4 @@ QualitySettings:
     asyncUploadBufferSize: 4
     resolutionScalingFixedDPIFactor: 0
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality:
-    Android: 0
-    Standalone: 0
+  m_PerPlatformDefaultQuality: {}
