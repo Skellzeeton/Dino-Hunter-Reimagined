@@ -8,8 +8,8 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 1d424940affeadf48b5b3091a586b372
-  m_OcclusionCullingData: {fileID: 36300000, guid: c5b893d72d946467e8ae306497888988,
+  m_SceneGUID: b73e39c7cc45c48ebb22e8f715d5d081
+  m_OcclusionCullingData: {fileID: 36300000, guid: 5879ccaf94d4d45648374ff417151362,
     type: 2}
 --- !u!104 &1403
 RenderSettings:
@@ -258,7 +258,7 @@ Prefab:
         type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1289393012}
+      objectReference: {fileID: 967262715}
     - target: {fileID: 114966953244562534, guid: b5f0dc5c7bc8c447b86491050363b3a0,
         type: 2}
       propertyPath: mMat
@@ -3116,39 +3116,39 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4808989478291096, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.78999954
+      value: -0.8099995
       objectReference: {fileID: 0}
     - target: {fileID: 4280130531949396, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.50472534
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4441323462270642, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.50472534
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4441323462270642, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.46875
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4163236373628864, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -445.67822
+      value: -417.2549
       objectReference: {fileID: 0}
     - target: {fileID: 4028185594953576, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 445.67822
+      value: 417.2549
       objectReference: {fileID: 0}
     - target: {fileID: 4188845708971700, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -445.67822
+      value: -417.2549
       objectReference: {fileID: 0}
     - target: {fileID: 4401489715543078, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 445.67822
+      value: 417.2549
       objectReference: {fileID: 0}
     - target: {fileID: 4772630094254344, guid: b5f0dc5c7bc8c447b86491050363b3a0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.50472534
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114841997698365364, guid: b5f0dc5c7bc8c447b86491050363b3a0,
         type: 2}
@@ -3432,6 +3432,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bActive: 0
   m_Target: {fileID: 0}
+  movementOffsetIntensity: 0.325
+  movementOffsetSmoothing: 2
+  rotationSmooth: 270
 --- !u!81 &318692093
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3490,7 +3493,7 @@ Camera:
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 1
   m_ForceIntoRT: 1
-  m_OcclusionCulling: 0
+  m_OcclusionCulling: 1
   m_StereoConvergence: 0
   m_StereoSeparation: 0
 --- !u!4 &318692097
@@ -3581,7 +3584,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4011f1dfde2ce49ddb02e2312d1a7d31, type: 2}
   m_IsPrefabParent: 0
---- !u!43 &1289393012
+--- !u!43 &967262715
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
