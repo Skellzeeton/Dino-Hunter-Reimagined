@@ -17,7 +17,7 @@ Mesh:
     vertexCount: 4
     localAABB:
       m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.660531, y: 0.660531, z: 0}
+      m_Extent: {x: 0.66053104, y: 0.66053104, z: 0}
   m_Shapes:
     vertices: []
     shapes: []
@@ -34,7 +34,7 @@ Mesh:
   m_IndexBuffer: 000001000200000003000100
   m_Skin: []
   m_VertexData:
-    m_CurrentChannels: 139
+    m_CurrentChannels: 137
     m_VertexCount: 4
     m_Channels:
     - stream: 0
@@ -42,15 +42,15 @@ Mesh:
       format: 0
       dimension: 3
     - stream: 0
-      offset: 12
+      offset: 0
       format: 0
-      dimension: 3
+      dimension: 0
     - stream: 0
       offset: 0
       format: 0
       dimension: 0
     - stream: 0
-      offset: 24
+      offset: 12
       format: 0
       dimension: 2
     - stream: 0
@@ -66,11 +66,11 @@ Mesh:
       format: 0
       dimension: 0
     - stream: 0
-      offset: 32
+      offset: 20
       format: 0
       dimension: 4
-    m_DataSize: 192
-    _typelessdata: 9018293f9018293f0000000000000000000000000000803f000000000000803f000080bf0000000000000000000080bf901829bf901829bf0000000000000000000000000000803f0000803f00000000000080bf0000000000000000000080bf9018293f901829bf0000000000000000000000000000803f0000000000000000000080bf0000000000000000000080bf901829bf9018293f0000000000000000000000000000803f0000803f0000803f000080bf0000000000000000000080bf
+    m_DataSize: 144
+    _typelessdata: 9018293f9018293f00000000000000000000803f000080bf0000000000000000000080bf901829bf901829bf000000000000803f00000000000080bf0000000000000000000080bf9018293f901829bf000000000000000000000000000080bf0000000000000000000080bf901829bf9018293f000000000000803f0000803f000080bf0000000000000000000080bf
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -125,8 +125,8 @@ Mesh:
     m_UVInfo: 0
   m_LocalAABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.660531, y: 0.660531, z: 0}
-  m_MeshUsageFlags: 1
+    m_Extent: {x: 0.66053104, y: 0.66053104, z: 0}
+  m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
-  m_MeshOptimized: 1
+  m_MeshOptimized: 0
