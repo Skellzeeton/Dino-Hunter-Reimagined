@@ -27,8 +27,8 @@ public class iCameraTrail : iCamera
     protected float m_fRateYaw;
     protected float m_fRatePitch;
 
-    public float movementOffsetIntensity = 0.325f;
-    public float movementOffsetSmoothing = 2f;
+    public float movementOffsetIntensity = 0.35f;
+    public float movementOffsetSmoothing = 1.25f;
     public float rotationSmooth = 270f;
 
     private Vector3 lastTargetPos = Vector3.zero;

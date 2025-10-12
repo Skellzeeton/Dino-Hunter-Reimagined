@@ -55,7 +55,7 @@ public class TAudioManager : MonoBehaviour
                 KeyValuePair<AudioSource, AudioInfo> playAudio = enumerator.Current;
                 if (!playAudio.Value.sfx)
                 {
-                    if (m_isMusicOn)
+                    if (m_isMusicOn && !GamePause.IsPaused)
                         playAudio.Key.Play();
                     else
                         playAudio.Key.Pause();
@@ -81,7 +81,7 @@ public class TAudioManager : MonoBehaviour
                 AudioInfo info = playAudio.Value;
                 if (info.sfx)
                 {
-                    if (m_isSoundOn)
+                    if (m_isSoundOn && !GamePause.IsPaused)
                     {
                         if (info.loop && info.audioEvt != null)
                             info.audioEvt.Trigger();

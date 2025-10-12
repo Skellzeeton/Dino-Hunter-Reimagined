@@ -149,9 +149,11 @@ public class TAudioEffectRandom : ITAudioEvent
 		float time_trigger = Time.realtimeSinceStartup;
 		while (Time.realtimeSinceStartup - time_trigger < time)
 		{
-			yield return 0;
+			if (!GamePause.IsPaused)
+				yield return null;
+			else
+				yield return new WaitForSecondsRealtime(0.1f); // slow polling during pause
 		}
-
 		Trigger(true);
 	}
 
@@ -181,11 +183,15 @@ public class TAudioEffectRandom : ITAudioEvent
 
 	public override void Trigger()
 	{
+		if (GamePause.IsPaused)
+			return;
 		Trigger(false);
 	}
 
 	private void Trigger(bool delay)
 	{
+		if (GamePause.IsPaused)
+			return;
 		if (!m_awake)
 		{
 			Debug.LogWarning("TAudioEffectRandom is not Awake");
@@ -462,6 +468,21 @@ public class TAudioEffectRandom : ITAudioEvent
 	{
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 	}
+	
+	public void PauseAudioEffect()
+	{
+		AudioSource src = GetComponent<AudioSource>();
+		if (src != null && src.isPlaying)
+			src.Pause();
+	}
+
+	public void ResumeAudioEffect()
+	{
+		AudioSource src = GetComponent<AudioSource>();
+		if (src != null)
+			src.UnPause();
+	}
+
 
 	private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
 	{

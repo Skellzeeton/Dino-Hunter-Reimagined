@@ -3048,14 +3048,26 @@ public class iGameSceneBase
 	
 	public void SetGamePause(bool bPause)
 	{
-		if (bPause && isTutorialStage)
+		if (bPause && isTutorialStage) return;
+		if ((bPause && m_Status != kGameStatus.Gameing) || (bPause && TNetManager.GetInstance().Connection != null)) return;
+		ParticleSystem[] allParticles = UnityEngine.Object.FindObjectsOfType<ParticleSystem>();
+		foreach (ParticleSystem ps in allParticles)
 		{
-			return;
+			if (ps == null) continue;
+			if (bPause)
+				ps.Pause(); // ✅ freeze without clearing
+			else
+				ps.Play();  // ✅ resume cleanly
 		}
-
-		if ((bPause && m_Status != kGameStatus.Gameing) || (bPause && TNetManager.GetInstance().Connection != null))
+		
+		TAudioEffectRandom[] audioEffects = UnityEngine.Object.FindObjectsOfType<TAudioEffectRandom>();
+		foreach (TAudioEffectRandom effect in audioEffects)
 		{
-			return;
+			if (effect == null) continue;
+			if (bPause)
+				effect.PauseAudioEffect();
+			else
+				effect.ResumeAudioEffect();
 		}
 		if (bPause)
 		{
@@ -3065,30 +3077,24 @@ public class iGameSceneBase
 			{
 				m_User.SetFire(false);
 				m_User.MoveStop();
-				Time.timeScale = 0f;
 			}
-			if (OpenClikPlugin.IsAdReady())
-			{
-				OpenClikPlugin.Show(false);
-			}
-			CSoundScene.GetInstance().StopBGM();
-			CSoundScene.GetInstance().StopAmbienceBGM();
+			Time.timeScale = 0f;
+			if (OpenClikPlugin.IsAdReady()) OpenClikPlugin.Show(false);
 		}
 		else
 		{
-			if (m_LastStatus != 0)
-			{
-				m_Status = m_LastStatus;
-			}
+			Time.timeScale = 1f;
+			if (m_LastStatus != 0) m_Status = m_LastStatus;
 			OpenClikPlugin.Hide();
 			CSoundScene.GetInstance().PlayBGM(string.Empty);
 			CSoundScene.GetInstance().PlayAmbienceBGM(string.Empty);
-			Time.timeScale = 1f;
 		}
+
+		GamePause.IsPaused = bPause;
 		SetPause(bPause);
 		m_GameUI.ShowPauseUI(bPause);
 	}
-
+	
 	public void SetPause(bool bPause)
 	{
 		if (/*(TNetManager.GetInstance().Connection != null && bPause) || */m_bPause == bPause)

@@ -315,12 +315,14 @@ public class CWeaponBase
 	{
 		if (m_pWeaponLvlInfo != null && m_GameScene != null && !(player == null))
 		{
-			UpdateLight(deltaTime);
-			if (!m_bPauseFire)
+			if (!GamePause.IsPaused)
+				UpdateLight(deltaTime);
+			if (!m_bPauseFire && !GamePause.IsPaused)
 			{
 				OnUpdate(player, deltaTime);
 			}
-			m_fGlobalAmmoRestoreTimer += deltaTime;
+			if (!GamePause.IsPaused)
+				m_fGlobalAmmoRestoreTimer += deltaTime;
 			if (m_fGlobalAmmoRestoreTimer >= m_fGlobalAmmoRestoreInterval)
 			{
 				m_fGlobalAmmoRestoreTimer = 0f;

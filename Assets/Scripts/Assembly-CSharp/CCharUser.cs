@@ -6,6 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CCharUser : CCharPlayer
 {
+	
+	protected const float kAccelerationTime = 0.33f;
+	protected float m_fAccelerationTimer = 0f;
+	protected bool m_bWasMoving = false;
+
 	protected float m_fCurSpeedMax;
 
 	protected float m_fCurSpeedSideMax;
@@ -169,33 +174,23 @@ public class CCharUser : CCharPlayer
 	{
 		base.FixedUpdate();
 		float deltaTime = Time.deltaTime;
+
 		if (m_CharMoveState == kCharMoveState.None)
-		{
 			return;
-		}
+
 		if (m_CharMoveState == kCharMoveState.Acc)
 		{
-			if (m_fCurSpeed < m_fCurSpeedMax)
-			{
-				m_fCurSpeed += m_Property.GetValue(kProEnum.MoveSpeedAcc) * deltaTime;
-				if (m_fCurSpeed >= m_fCurSpeedMax)
-				{
-					m_fCurSpeed = m_fCurSpeedMax;
-				}
-			}
-			if (m_fCurSpeedSide < m_fCurSpeedSideMax)
-			{
-				m_fCurSpeedSide += m_Property.GetValue(kProEnum.MoveSpeedAcc) * deltaTime;
-				if (m_fCurSpeedSide >= m_fCurSpeedSideMax)
-				{
-					m_fCurSpeedSide = m_fCurSpeedSideMax;
-				}
-			}
-			if (m_fCurSpeed == m_fCurSpeedMax && m_fCurSpeedSide == m_fCurSpeedSideMax)
+			m_fAccelerationTimer += deltaTime;
+			float t = Mathf.Clamp01(m_fAccelerationTimer / kAccelerationTime);
+			m_fCurSpeed = Mathf.Lerp(0f, m_fCurSpeedMax, t);
+			m_fCurSpeedSide = Mathf.Lerp(0f, m_fCurSpeedSideMax, t);
+
+			if (t >= 1f)
 			{
 				m_CharMoveState = kCharMoveState.Max;
 			}
 		}
+
 		float num = 0f;
 		if (m_Property.GetValue(kProEnum.Char_MSEquip_Off) == 0f && m_curWeapon != null && m_curWeaponLvlInfo != null)
 		{
@@ -205,21 +200,23 @@ public class CCharUser : CCharPlayer
 				num += m_curWeaponLvlInfo.fMSDownRateShoot;
 			}
 		}
+
 		float num2 = m_Property.GetValue(kProEnum.Char_MoveSpeedUp);
 		if (num2 < 0f)
 		{
 			num2 = 0f;
 		}
+
 		Vector2 rawDir = m_v2MoveDir.normalized;
-		float speedX = (m_fCurSpeedSide + num2) * Mathf.Abs(m_v2MoveDir.x) * (1f - num);
-		float speedY = (m_fCurSpeed + num2) * Mathf.Abs(m_v2MoveDir.y) * (1f - num);
-		Vector2 scaledDir = new Vector2(rawDir.x * speedX, rawDir.y * speedY);
+		float speed = Mathf.Min(m_fCurSpeed, m_fCurSpeedSide) + num2;
+		Vector2 scaledDir = m_v2MoveDir * speed * (1f - num);
 		m_v2Move = scaledDir * deltaTime;
+
 		Vector3 zero = Vector3.zero;
 		zero += m_ModelTransform.forward * m_v2Move.y;
 		zero += m_ModelTransform.right * m_v2Move.x;
-		Vector3 position = m_ModelTransform.position;
 		zero.y = -5f * deltaTime;
+
 		CollisionFlags collisionFlags = m_Controller.Move(zero);
 		m_bUpdatePos = true;
 	}
@@ -241,36 +238,33 @@ public class CCharUser : CCharPlayer
 
 	public void MoveByCompass(float fRateX, float fRateY)
 	{
-		if (fRateX != 0f || fRateY != 0f)
+		Vector2 newDir = new Vector2(fRateX, fRateY);
+
+		if (newDir.sqrMagnitude > 0f)
 		{
-			m_v2MoveDir = new Vector2(fRateX, fRateY);
-			m_fCurSpeedMax = m_Property.GetValue(kProEnum.MoveSpeed) * Mathf.Abs(fRateY);
-			m_fCurSpeedSideMax = m_Property.GetValue(kProEnum.MoveSpeed) * Mathf.Abs(fRateX);
-			UpdateMoveAnim(m_v2MoveDir);
-			m_CharMoveState = kCharMoveState.Max;
-			if (m_CharMoveState == kCharMoveState.Max)
+			// Only reset acceleration if movement was previously stopped
+			if (m_v2MoveDir.sqrMagnitude == 0f)
 			{
-				m_fCurSpeed = m_fCurSpeedMax;
-				m_fCurSpeedSide = m_fCurSpeedSideMax;
+				m_fAccelerationTimer = 0f;
+				m_CharMoveState = kCharMoveState.Acc;
 			}
-			if (m_fCurSpeed > m_fCurSpeedMax)
-			{
-				m_fCurSpeed = m_fCurSpeedMax;
-			}
-			if (m_fCurSpeedSide > m_fCurSpeedSideMax)
-			{
-				m_fCurSpeedSide = m_fCurSpeedSideMax;
-			}
-			if (m_fCurSpeed == m_fCurSpeedMax && m_fCurSpeedSide == m_fCurSpeedSideMax)
-			{
-				m_CharMoveState = kCharMoveState.Max;
-			}
+
+			m_v2MoveDir = newDir.normalized;
+			m_bWasMoving = true;
+
+			// Use full speed regardless of direction
+			float baseSpeed = m_Property.GetValue(kProEnum.MoveSpeed);
+			m_fCurSpeedMax = baseSpeed;
+			m_fCurSpeedSideMax = baseSpeed;
+
+			UpdateMoveAnim(newDir);
 		}
 	}
 
+	
 	public void MoveStop()
 	{
-		if (m_CharMoveState != 0)
+		if (m_CharMoveState != kCharMoveState.None)
 		{
 			m_bUpdatePos = false;
 			if (CGameNetManager.GetInstance().IsConnected())
@@ -278,13 +272,18 @@ public class CCharUser : CCharPlayer
 				CGameNetSender.GetInstance().SendMsg_PLAYER_MOVESTOP(base.Pos);
 			}
 		}
+
 		m_CharMoveState = kCharMoveState.None;
 		m_fCurSpeedMax = 0f;
 		m_fCurSpeedSideMax = 0f;
 		m_fCurSpeed = 0f;
 		m_fCurSpeedSide = 0f;
+		m_v2MoveDir = Vector2.zero; // ✅ clear movement direction
+		m_fAccelerationTimer = 0f;  // ✅ reset timer
 		StopMoveAnim();
+		m_bWasMoving = false;
 	}
+
 
 	protected void UpdateAnimation()
 	{
