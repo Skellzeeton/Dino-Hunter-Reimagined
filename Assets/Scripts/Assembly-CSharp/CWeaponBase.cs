@@ -64,6 +64,15 @@ public class CWeaponBase
 		}
 	}
 
+    public void ForceResume(CCharPlayer player)
+    {
+        m_bPauseFire = false;
+        m_fFireIntervalCount = 0f;
+        UpdateLight(Time.deltaTime);
+        OnUpdate(player, Time.deltaTime);
+    }
+
+
 	public int ID
 	{
 		get

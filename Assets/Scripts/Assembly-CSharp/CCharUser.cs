@@ -6,11 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CCharUser : CCharPlayer
 {
-	
-	protected const float kAccelerationTime = 0.33f;
-	protected float m_fAccelerationTimer = 0f;
-	protected bool m_bWasMoving = false;
-
 	protected float m_fCurSpeedMax;
 
 	protected float m_fCurSpeedSideMax;
@@ -40,6 +35,12 @@ public class CCharUser : CCharPlayer
 	protected int m_nCurWeaponIndex;
 
 	protected bool m_bCarryTaskItem;
+
+	protected bool m_bWasMoving = false;
+
+	protected float m_fAccelerationTimer = 0f;
+
+	protected const float kAccelerationTime = 0.33f;
 
 	public CharacterController m_Controller { get; private set; }
 
@@ -242,21 +243,16 @@ public class CCharUser : CCharPlayer
 
 		if (newDir.sqrMagnitude > 0f)
 		{
-			// Only reset acceleration if movement was previously stopped
 			if (m_v2MoveDir.sqrMagnitude == 0f)
 			{
 				m_fAccelerationTimer = 0f;
 				m_CharMoveState = kCharMoveState.Acc;
 			}
-
 			m_v2MoveDir = newDir.normalized;
 			m_bWasMoving = true;
-
-			// Use full speed regardless of direction
 			float baseSpeed = m_Property.GetValue(kProEnum.MoveSpeed);
 			m_fCurSpeedMax = baseSpeed;
 			m_fCurSpeedSideMax = baseSpeed;
-
 			UpdateMoveAnim(newDir);
 		}
 	}
@@ -278,8 +274,8 @@ public class CCharUser : CCharPlayer
 		m_fCurSpeedSideMax = 0f;
 		m_fCurSpeed = 0f;
 		m_fCurSpeedSide = 0f;
-		m_v2MoveDir = Vector2.zero; // ✅ clear movement direction
-		m_fAccelerationTimer = 0f;  // ✅ reset timer
+		m_v2MoveDir = Vector2.zero;
+		m_fAccelerationTimer = 0f;
 		StopMoveAnim();
 		m_bWasMoving = false;
 	}

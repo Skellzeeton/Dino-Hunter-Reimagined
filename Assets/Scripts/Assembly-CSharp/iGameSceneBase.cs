@@ -3055,19 +3055,9 @@ public class iGameSceneBase
 		{
 			if (ps == null) continue;
 			if (bPause)
-				ps.Pause(); // ✅ freeze without clearing
+				ps.Pause();
 			else
-				ps.Play();  // ✅ resume cleanly
-		}
-		
-		TAudioEffectRandom[] audioEffects = UnityEngine.Object.FindObjectsOfType<TAudioEffectRandom>();
-		foreach (TAudioEffectRandom effect in audioEffects)
-		{
-			if (effect == null) continue;
-			if (bPause)
-				effect.PauseAudioEffect();
-			else
-				effect.ResumeAudioEffect();
+				ps.Play();
 		}
 		if (bPause)
 		{
@@ -3080,6 +3070,8 @@ public class iGameSceneBase
 			}
 			Time.timeScale = 0f;
 			if (OpenClikPlugin.IsAdReady()) OpenClikPlugin.Show(false);
+			CSoundScene.GetInstance().StopBGM();
+			CSoundScene.GetInstance().StopAmbienceBGM();
 		}
 		else
 		{

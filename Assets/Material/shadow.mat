@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: shadow
-  m_Shader: {fileID: 4800000, guid: 44337ddd2d4cbcb4096e7c8e4ef85570, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0c87c1a476f926145a678546eb790fa2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -18,6 +18,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _LightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: d5bba347700390f4e859f6d8c4f3bc52, type: 3}
         m_Scale: {x: 1, y: 1}

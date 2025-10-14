@@ -32,7 +32,6 @@ public class iGame : MonoBehaviour
 		if (bPause && iGameApp.GetInstance().m_GameScene != null && !iGameApp.GetInstance().m_GameScene.isTutorialStage && TNetManager.GetInstance().Connection == null)
 		{
 			iGameApp.GetInstance().m_GameScene.SetGamePause(true);
-			Time.timeScale = 0.1f;
 		}
 	}
 }

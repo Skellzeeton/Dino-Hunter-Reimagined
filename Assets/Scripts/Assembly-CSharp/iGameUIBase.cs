@@ -961,6 +961,8 @@ public class iGameUIBase : MonoBehaviour
 		}
 		ShowPauseUI(false);
 		ShowShootUI(false);
+		iGlobalResume.Force();
+		Time.timeScale = 1f;
 		foreach (gyUIPortrait value in m_dictTeamMate.Values)
 		{
 			value.Show(false);
@@ -1451,6 +1453,7 @@ public class iGameUIBase : MonoBehaviour
 			dataCenter.Save();
 		}
 		ShowPauseUI(false);
+		iGlobalResume.Force();
 		Time.timeScale = 1f;
 		FadeOut(0.5f);
 		m_GameScene.LeaveGame(0.5f);
@@ -1468,6 +1471,8 @@ public class iGameUIBase : MonoBehaviour
 			m_GameScene.LeaveMutiplyPunish();
 		}
 		iGameApp.GetInstance().SaveData();
+		iGlobalResume.Force();
+		Time.timeScale = 1f;
 		FadeOut(0.5f);
 		m_GameScene.LeaveGame(0.5f);
 		if (m_GameScene.CurGameLevelInfo != null)
@@ -1491,6 +1496,7 @@ public class iGameUIBase : MonoBehaviour
 			dataCenter.Save();
 		}
 		ShowPauseUI(false);
+		iGlobalResume.Force();
 		Time.timeScale = 1f;
 		FadeOut(0.5f);
 		m_GameScene.LeaveGame(0.5f, kGameSceneEnum.Map);
