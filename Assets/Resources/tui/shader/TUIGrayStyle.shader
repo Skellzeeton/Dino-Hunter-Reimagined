@@ -4,7 +4,6 @@ Shader "Triniti/TUI/TUIGrayStyle" {
         _Color ("Main Color", Color) = (1, 1, 1, 1)
     }
     SubShader { 
-    LOD 200
     Tags { "QUEUE"="Transparent" }
     Pass {
     Tags { "QUEUE"="Transparent" }

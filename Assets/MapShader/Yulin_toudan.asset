@@ -32,19 +32,19 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.5
+    value: 2
   threshold:
     overrideState: 0
-    value: 0.75
+    value: 0
   softKnee:
     overrideState: 1
-    value: 0.75
+    value: 1
   clamp:
     overrideState: 0
-    value: 1
+    value: 65472
   diffusion:
-    overrideState: 1
-    value: 8.25
+    overrideState: 0
+    value: 8
   anamorphicRatio:
     overrideState: 0
     value: 0.35
@@ -56,11 +56,14 @@ MonoBehaviour:
     value: 1
   dirtTexture:
     overrideState: 0
-    value: {fileID: 2800000, guid: f52b809e11224f04885c8fa0a31bd40b, type: 3}
+    value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
     overrideState: 0
     value: 2.5
+  downscale:
+    overrideState: 1
+    value: 2
 --- !u!114 &114701399060230122
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -81,9 +84,9 @@ MonoBehaviour:
     value: 0
   shutterAngle:
     overrideState: 1
-    value: 85
+    value: 105
   sampleCount:
-    overrideState: 1
+    overrideState: 0
     value: 7
 --- !u!114 &114994841255138500
 MonoBehaviour:
@@ -108,8 +111,8 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 3
+    overrideState: 1
+    value: 0
   toneCurveToeStrength:
     overrideState: 0
     value: 0
@@ -126,7 +129,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   toneCurveGamma:
-    overrideState: 0
+    overrideState: 1
     value: 0.9
   ldrLut:
     overrideState: 0
@@ -158,7 +161,7 @@ MonoBehaviour:
     value: 1.4
   contrast:
     overrideState: 1
-    value: 10
+    value: 15
   mixerRedOutRedIn:
     overrideState: 0
     value: 125

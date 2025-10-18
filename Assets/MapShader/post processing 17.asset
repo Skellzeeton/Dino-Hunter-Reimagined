@@ -50,18 +50,21 @@ MonoBehaviour:
     overrideState: 0
     value: 0.35
   color:
-    overrideState: 1
+    overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
     overrideState: 1
     value: 1
   dirtTexture:
-    overrideState: 1
+    overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
+    overrideState: 0
     value: 5
+  downscale:
+    overrideState: 1
+    value: 2
 --- !u!114 &114230285983874892
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -112,9 +115,9 @@ MonoBehaviour:
     value: 0
   shutterAngle:
     overrideState: 1
-    value: 135
+    value: 105
   sampleCount:
-    overrideState: 1
+    overrideState: 0
     value: 7
 --- !u!114 &114994841255138500
 MonoBehaviour:

@@ -5,7 +5,6 @@ Properties {
  _LightMap ("Lightmap (RGB)", 2D) = "white" {}
 }
 SubShader {
-    LOD 200
     Tags { "RenderType" = "Opaque" }
 CGPROGRAM
 #pragma surface surf Lambert nodynlightmap

@@ -332,7 +332,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		{
 			if (sfx_open_now)
 			{
-				CUISound.GetInstance().Play("UI_Button");
+				CUISound.GetInstance().Play("UI_cancle");
 			}
 			if (popup_player_info != null)
 			{

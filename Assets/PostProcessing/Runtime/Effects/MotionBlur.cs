@@ -9,7 +9,7 @@ namespace UnityEngine.Rendering.PostProcessing
     [PostProcess(typeof(MotionBlurRenderer), "Unity/Motion Blur", false)]
     public sealed class MotionBlur : PostProcessEffectSettings
     {
-        [Tooltip("Enable fast mode using ARGB1555 format for lower precision and better performance.")]
+        [Tooltip("Fast mode switches ARGB32 to ARGB1555. This boosts performance, at the cost of compatibility and visuals.")]
         public BoolParameter fastMode = new BoolParameter { value = false };
         /// <summary>
         /// The angle of the rotary shutter. Larger values give longer exposure therefore a stronger

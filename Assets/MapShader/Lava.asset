@@ -60,8 +60,11 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
+    overrideState: 0
     value: 5
+  downscale:
+    overrideState: 1
+    value: 2
 --- !u!114 &114111638808194200
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -112,9 +115,9 @@ MonoBehaviour:
     value: 0
   shutterAngle:
     overrideState: 1
-    value: 135
+    value: 105
   sampleCount:
-    overrideState: 1
+    overrideState: 0
     value: 7
 --- !u!114 &114994841255138500
 MonoBehaviour:
@@ -180,7 +183,7 @@ MonoBehaviour:
     value: 5
   saturation:
     overrideState: 1
-    value: 10
+    value: 5
   brightness:
     overrideState: 0
     value: 0
