@@ -1,0 +1,341 @@
+
+
+**MAKE SURE THAT RIGHT BEFORE BUILDING THE GAME FOR LINUX THAT YOU COPY THIS SCRIPT**
+
+
+
+CursorLock.cs is the filename and this part is for Linux:
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Runtime.InteropServices;
+
+public class CursorLock : MonoBehaviour
+{
+    public GameObject pauseMenu;
+    private bool isPaused = false;
+    private bool isManuallyUnlocked = false;
+
+    // Variables to handle scene transitions.
+    private bool isSceneTransitioning = false;
+    private float sceneTransitionTimer = 0f;
+    private const float sceneTransitionDelay = 1f;
+
+#if UNITY_STANDALONE_LINUX
+    // X11 imports for warping the mouse pointer on Linux.
+    [DllImport("libX11.so.6")]
+    private static extern System.IntPtr XOpenDisplay(string displayName);
+    [DllImport("libX11.so.6")]
+    private static extern int XWarpPointer(System.IntPtr display, System.IntPtr src_w, System.IntPtr dest_w,
+                                            int src_x, int src_y, uint src_width, uint src_height,
+                                            int dest_x, int dest_y);
+    [DllImport("libX11.so.6")]
+    private static extern int XFlush(System.IntPtr display);
+
+    private System.IntPtr display;
+    private Coroutine forceResetCoroutine;
+#endif
+
+    private void Start()
+    {
+#if UNITY_STANDALONE_LINUX
+        // Open the default display (needed for XWarpPointer).
+        display = XOpenDisplay(null);
+#endif
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("Save path: " + Application.persistentDataPath);
+
+        // Lock cursor initially if required.
+        if (IsSceneThatRequiresCursorLock(SceneManager.GetActiveScene().name))
+            LockCursor();
+        else
+            UnlockCursor();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        // Unlock cursor if focus is lost and we're not in a scene transition.
+        if (!isSceneTransitioning && !Application.isFocused && Cursor.lockState != CursorLockMode.None)
+        {
+            UnlockCursor();
+            isManuallyUnlocked = true;
+        }
+
+        // Reset scene transition flag after delay.
+        if (isSceneTransitioning && Time.unscaledTime - sceneTransitionTimer > sceneTransitionDelay)
+        {
+            isSceneTransitioning = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            TogglePause();
+
+        if (Input.GetKeyDown(KeyCode.F1))
+            ToggleCursorLock();
+    }
+
+    private void LateUpdate()
+    {
+        // Enforce cursor locking if not paused and not manually unlocked.
+        if (!isPaused && !isManuallyUnlocked && IsSceneThatRequiresCursorLock(SceneManager.GetActiveScene().name))
+        {
+            if (Cursor.lockState != DesiredLockMode())
+            {
+                LockCursor();
+            }
+        }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus && !isSceneTransitioning)
+        {
+            UnlockCursor();
+            isManuallyUnlocked = true;
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!isPaused && !isManuallyUnlocked && IsSceneThatRequiresCursorLock(scene.name))
+            LockCursor();
+        else
+            UnlockCursor();
+
+        isSceneTransitioning = true;
+        sceneTransitionTimer = Time.unscaledTime;
+    }
+
+private bool IsSceneThatRequiresCursorLock(string sceneName)
+       {
+           return sceneName == "SceneForest" || sceneName == "SceneGorge" ||
+                  sceneName == "SceneForest_Dusk" || sceneName == "SceneGorge 1" ||
+                  sceneName == "SceneForest_Night" || sceneName == "SceneGorge 2" ||
+               sceneName == "SceneForest_Rainy" || sceneName == "Yulin_shaguai01" ||
+           sceneName == "Yulin_shaguai02" || sceneName == "Yulin_shaguai03" ||
+               sceneName == "Yulin_shaguai04" || sceneName == "Yulin_toudan01" ||
+               sceneName == "Yulin_toudan02" || sceneName == "Yulin_toudan03" ||
+               sceneName == "Yulin_toudan04" || sceneName == "Yulin_toudan05" ||
+               sceneName == "Yulin_shouwei01" || sceneName == "Yulin_shouwei01_dusk" ||
+               sceneName == "Yulin_shouwei02" || sceneName == "Yulin_shouwei03" ||
+               sceneName == "Yulin_shouwei04" || sceneName == "Yulin_shouwei05" ||
+               sceneName == "Yulin_shouwei06" || sceneName == "Yulin_shaguai02_night" ||
+               sceneName == "SceneScorch" || sceneName == "Yulin_shouwei07" ||
+               sceneName == "SceneIce" || sceneName == "SceneLava" ||
+               sceneName == "SceneLava2" || sceneName == "SceneSnow";
+       }
+
+    private void TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(isPaused);
+
+        if (isPaused)
+        {
+            UnlockCursor();
+        }
+        else
+        {
+            if (IsSceneThatRequiresCursorLock(SceneManager.GetActiveScene().name))
+            {
+                LockCursor();
+                isManuallyUnlocked = false;
+            }
+        }
+    }
+
+    private void ToggleCursorLock()
+    {
+        if (Cursor.lockState == DesiredLockMode())
+        {
+            UnlockCursor();
+            isManuallyUnlocked = true;
+        }
+        else
+        {
+            LockCursor();
+            isManuallyUnlocked = false;
+        }
+    }
+
+    private CursorLockMode DesiredLockMode()
+    {
+        return CursorLockMode.Locked;
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = DesiredLockMode();
+        Cursor.visible = false;
+#if UNITY_STANDALONE_LINUX
+        if (forceResetCoroutine == null)
+        {
+            forceResetCoroutine = StartCoroutine(ForceResetMouseCoroutine());
+        }
+#endif
+    }
+
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+#if UNITY_STANDALONE_LINUX
+        if (forceResetCoroutine != null)
+        {
+            StopCoroutine(forceResetCoroutine);
+            forceResetCoroutine = null;
+        }
+#endif
+    }
+
+#if UNITY_STANDALONE_LINUX
+    private IEnumerator ForceResetMouseCoroutine()
+    {
+        while (true)
+        {
+            if (Cursor.lockState == DesiredLockMode())
+            {
+                int centerX = Screen.width / 2;
+                int centerY = Screen.height / 2;
+                XWarpPointer(display, System.IntPtr.Zero, System.IntPtr.Zero, 0, 0, 0, 0, centerX, centerY);
+                XFlush(display);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+#endif
+}
+
+End of CursorLock.cs for Linux
+
+
+
+**IF YOU ARE NOT BUILDING FOR LINUX OR YOU ARE USING THE EDITOR TO TEST, YOU'LL NEED TO USE THIS INSTEAD**
+
+
+
+
+Paste this into CursorLock.cs whenn you are not currently building the game for Linux:
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class CursorLock : MonoBehaviour
+{
+    public GameObject pauseMenu;
+    private bool isPaused = false;
+    private bool isManuallyUnlocked = false;
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("Save path: " + Application.persistentDataPath);
+
+        // On startup, lock the cursor if required.
+        if (IsSceneThatRequiresCursorLock(SceneManager.GetActiveScene().name))
+            LockCursor();
+        else
+            UnlockCursor();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            TogglePause();
+
+        if (Input.GetKeyDown(KeyCode.F1))
+            ToggleCursorLock();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!isPaused && !isManuallyUnlocked && IsSceneThatRequiresCursorLock(scene.name))
+            LockCursor();
+        else
+            UnlockCursor();
+    }
+
+       private bool IsSceneThatRequiresCursorLock(string sceneName)
+              {
+                  return sceneName == "SceneForest" || sceneName == "SceneGorge" ||
+                         sceneName == "SceneForest_Dusk" || sceneName == "SceneGorge 1" ||
+                         sceneName == "SceneForest_Night" || sceneName == "SceneGorge 2" ||
+                      sceneName == "SceneForest_Rainy" || sceneName == "Yulin_shaguai01" ||
+                  sceneName == "Yulin_shaguai02" || sceneName == "Yulin_shaguai03" ||
+                      sceneName == "Yulin_shaguai04" || sceneName == "Yulin_toudan01" ||
+                      sceneName == "Yulin_toudan02" || sceneName == "Yulin_toudan03" ||
+                      sceneName == "Yulin_toudan04" || sceneName == "Yulin_toudan05" ||
+                      sceneName == "Yulin_shouwei01" || sceneName == "Yulin_shouwei01_dusk" ||
+                      sceneName == "Yulin_shouwei02" || sceneName == "Yulin_shouwei03" ||
+                      sceneName == "Yulin_shouwei04" || sceneName == "Yulin_shouwei05" ||
+                      sceneName == "Yulin_shouwei06" || sceneName == "Yulin_shaguai02_night" ||
+                      sceneName == "SceneScorch" || sceneName == "Yulin_shouwei07" ||
+                      sceneName == "SceneIce" || sceneName == "SceneLava" ||
+                      sceneName == "SceneLava2" || sceneName == "SceneSnow";
+              }
+
+    private void TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (pauseMenu != null)
+            pauseMenu.SetActive(isPaused);
+
+        if (isPaused)
+        {
+            UnlockCursor(); // Show cursor when paused.
+        }
+        else
+        {
+            // On unpause, force-lock the cursor (if the scene requires it) and clear manual override.
+            if (IsSceneThatRequiresCursorLock(SceneManager.GetActiveScene().name))
+            {
+                LockCursor();
+                isManuallyUnlocked = false;
+            }
+        }
+    }
+
+    private void ToggleCursorLock()
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            UnlockCursor();
+            isManuallyUnlocked = true;
+        }
+        else
+        {
+            LockCursor();
+            isManuallyUnlocked = false;
+        }
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+}
+
+end of the script
