@@ -1,4 +1,4 @@
-Shader "Triniti/Character/COL_AB-PLUS" {
+Shader "Triniti/Character/COL_PLUS" {
 Properties {
     _Color ("Main Color", Color) = (1,1,1,1)
     _MainTex ("MainTex", 2D) = "white" {}

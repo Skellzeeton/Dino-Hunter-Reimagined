@@ -2,22 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1001 &100100000
 Prefab:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1572310971257924}
+  m_RootGameObject: {fileID: 1212748908444782}
   m_IsPrefabParent: 1
---- !u!1 &1572310971257924
+--- !u!1 &1212748908444782
 GameObject:
   m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4969539726204598}
-  - component: {fileID: 114709005862520669}
+  - component: {fileID: 4123593328874500}
+  - component: {fileID: 114608200724667646}
   m_Layer: 0
   m_Name: shangu_gongyou_tiekuangshi1
   m_TagString: Untagged
@@ -25,10 +27,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4969539726204598
+--- !u!4 &4123593328874500
 Transform:
-  m_ObjectHideFlags: 0
-  m_GameObject: {fileID: 1572310971257924}
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1212748908444782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -36,15 +40,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114709005862520669
+--- !u!114 &114608200724667646
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_GameObject: {fileID: 1572310971257924}
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1212748908444782}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 886e013b8f8f3704a9d91965f8bad1c3, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 4c232d4e62d73384f8d1bded27b0a975, type: 2}
   sprites:
   - name: shangu_gongyou_tiekuangshi1

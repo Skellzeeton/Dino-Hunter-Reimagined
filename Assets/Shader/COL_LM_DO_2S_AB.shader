@@ -8,13 +8,12 @@ SubShader {
  Tags { "QUEUE"="Transparent" }
  Pass {
   Tags { "QUEUE"="Transparent" }
+  ZWrite Off
   BindChannels {
    Bind "vertex", Vertex
    Bind "texcoord", TexCoord0
    Bind "texcoord1", TexCoord1
   }
-  Cull Off
-  Fog { Mode Off }
   Blend SrcAlpha OneMinusSrcAlpha
   SetTexture [_MainTex] { ConstantColor [_Color] combine texture * constant double }
   SetTexture [_LightMap] { combine texture * previous }

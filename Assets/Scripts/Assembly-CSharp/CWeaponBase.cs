@@ -214,7 +214,7 @@ public class CWeaponBase
 			GameObject shootLightering = new GameObject("ShootLight");
 			m_FireLight = shootLightering.AddComponent<Light>();
 			m_FireLight.type = LightType.Point;
-			m_FireLight.enabled = true;
+			m_FireLight.enabled = false;
 			shootLightering.transform.parent = player.GetShootMouseTf();
 			shootLightering.transform.localRotation = Quaternion.identity;
 			InitLight();

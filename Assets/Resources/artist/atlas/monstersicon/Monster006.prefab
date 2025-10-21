@@ -2,22 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1001 &100100000
 Prefab:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1736120828780219}
+  m_RootGameObject: {fileID: 1273040984426924}
   m_IsPrefabParent: 1
---- !u!1 &1736120828780219
+--- !u!1 &1273040984426924
 GameObject:
   m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4945260924487741}
-  - component: {fileID: 114082554142796252}
+  - component: {fileID: 4325472152375616}
+  - component: {fileID: 114705787150623934}
   m_Layer: 0
   m_Name: Monster006
   m_TagString: Untagged
@@ -25,10 +27,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4945260924487741
+--- !u!4 &4325472152375616
 Transform:
-  m_ObjectHideFlags: 0
-  m_GameObject: {fileID: 1736120828780219}
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1273040984426924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -36,15 +40,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114082554142796252
+--- !u!114 &114705787150623934
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_GameObject: {fileID: 1736120828780219}
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1273040984426924}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 886e013b8f8f3704a9d91965f8bad1c3, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: c4ea73ed622b3d74a95d237ada9bde0e, type: 2}
   sprites:
   - name: 006
