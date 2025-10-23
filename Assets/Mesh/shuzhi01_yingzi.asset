@@ -34,7 +34,7 @@ Mesh:
   m_IndexBuffer: 060002000800060008000500050008000700050007000100000006000500030007000400040007000800040008000200
   m_Skin: []
   m_VertexData:
-    m_CurrentChannels: 155
+    m_CurrentChannels: 25
     m_VertexCount: 9
     m_Channels:
     - stream: 0
@@ -42,19 +42,19 @@ Mesh:
       format: 0
       dimension: 3
     - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
       offset: 12
       format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 24
-      format: 0
       dimension: 2
     - stream: 0
-      offset: 32
+      offset: 20
       format: 0
       dimension: 2
     - stream: 0
@@ -66,11 +66,11 @@ Mesh:
       format: 0
       dimension: 0
     - stream: 0
-      offset: 40
+      offset: 0
       format: 0
-      dimension: 4
-    m_DataSize: 504
-    _typelessdata: 70163e4120bd11400dcccc3d00000000000000000000803f12d94a3fe8c8ec3ed9b96b3f1fd76c3f5c79153f9ad44fbf00000000000080bfc0f7e1c0985219c10dcccc3d00000000000000000000803f23ab453fe014473f0827723f7fef6c3f2779153fc0d44fbf00000000000080bf6027d640805219410dcccc3d00000000000000000000803f446e2a3faf65ec3e6bd66b3f2f6a6f3f1779153fccd44fbf00000000000080bfd0a835c1e0ee1ac00dcccc3d00000000000000000000803fd890273f448f443fef11723fdb556f3f0479153fd9d44fbf00000000000080bf804267c0d06e90400dcccc3d00000000000000000000803fa08c233f322d1f3f2b1e6f3febcc6f3f4679153faad44fbf00000000000080bfc03e0540f01bc9c00dcccc3d00000000000000000000803ff64b4f3f4242253ff16d6f3fad4d6c3f6579153f93d44fbf00000000000080bf30d23241d070f1400dcccc3d00000000000000000000803f47e3393f46aada3eb7126b3feb386e3f4079153faed44fbf00000000000080bf70163ec1001dfbc00dcccc3d00000000000000000000803f3a64363fe491513f830b733f7d1b6e3f4879153fa8d44fbf00000000000080bf00342fbe8084363f0dcccc3d00000000000000000000803febfb353f23181d3f5fe16e3f55586e3f5979153f9cd44fbf00000000000080bf
+      dimension: 0
+    m_DataSize: 252
+    _typelessdata: 70163e4120bd11400dcccc3d12d94a3fe8c8ec3ed9b96b3f1fd76c3fc0f7e1c0985219c10dcccc3d23ab453fe014473f0827723f7fef6c3f6027d640805219410dcccc3d446e2a3faf65ec3e6bd66b3f2f6a6f3fd0a835c1e0ee1ac00dcccc3dd890273f448f443fef11723fdb556f3f804267c0d06e90400dcccc3da08c233f322d1f3f2b1e6f3febcc6f3fc03e0540f01bc9c00dcccc3df64b4f3f4242253ff16d6f3fad4d6c3f30d23241d070f1400dcccc3d47e3393f46aada3eb7126b3feb386e3f70163ec1001dfbc00dcccc3d3a64363fe491513f830b733f7d1b6e3f00342fbe8084363f0dcccc3debfb353f23181d3f5fe16e3f55586e3f
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0

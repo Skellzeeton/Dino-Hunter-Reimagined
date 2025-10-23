@@ -192,7 +192,7 @@ public class iCameraTrail : iCamera
             m_Target.transform.rotation = Quaternion.Slerp(
                 m_Target.transform.rotation,
                 charRot,
-                47.5f * Time.deltaTime
+                40f * Time.deltaTime
             );
         }
     }

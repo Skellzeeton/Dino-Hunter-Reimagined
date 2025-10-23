@@ -16,7 +16,7 @@ Mesh:
     firstVertex: 0
     vertexCount: 4
     localAABB:
-      m_Center: {x: 0, y: 0, z: 0.7337317}
+      m_Center: {x: 0, y: 0, z: 0.73373175}
       m_Extent: {x: 0.05921173, y: 2.745575, z: 0.8112502}
   m_Shapes:
     vertices: []
@@ -34,7 +34,7 @@ Mesh:
   m_IndexBuffer: 000001000200000003000100
   m_Skin: []
   m_VertexData:
-    m_CurrentChannels: 155
+    m_CurrentChannels: 27
     m_VertexCount: 4
     m_Channels:
     - stream: 0
@@ -66,11 +66,11 @@ Mesh:
       format: 0
       dimension: 0
     - stream: 0
-      offset: 40
+      offset: 0
       format: 0
-      dimension: 4
-    m_DataSize: 224
-    _typelessdata: 008872bd80b72f4000c29ebdc3f07f3f2ba1b03c000000000000023f000000006f54763fac434e3f2ca1b03cc4f07fbf00000000000080bf0088723d80b72fc0f8c1c53fc3f07f3f2ba1b03c0000000000007e3f0000963ecbf7703f4a824c3f2ca1b03cc4f07fbf00000000000080bf0088723d80b72fc000c29ebdc3f07f3f2ba1b03c0000000000007e3f00000000cbf7703fac434e3f2ca1b03cc4f07fbf00000000000080bf008872bd80b72f40f8c1c53fc3f07f3f2ba1b03c000000000000023f0000963e6f54763f4a824c3f2ca1b03cc4f07fbf00000000000080bf
+      dimension: 0
+    m_DataSize: 160
+    _typelessdata: 008872bd80b72f4000c29ebdc3f07f3f2ba1b03c000000000000023f000000006f54763fac434e3f0088723d80b72fc0f8c1c53fc3f07f3f2ba1b03c0000000000007e3f0000963ecbf7703f4a824c3f0088723d80b72fc000c29ebdc3f07f3f2ba1b03c0000000000007e3f00000000cbf7703fac434e3f008872bd80b72f40f8c1c53fc3f07f3f2ba1b03c000000000000023f0000963e6f54763f4a824c3f
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -124,9 +124,9 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0.7337317}
+    m_Center: {x: 0, y: 0, z: 0.73373175}
     m_Extent: {x: 0.05921173, y: 2.745575, z: 0.8112502}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
-  m_MeshOptimized: 1
+  m_MeshOptimized: 0
