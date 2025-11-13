@@ -40,7 +40,7 @@ public class CCharUser : CCharPlayer
 
 	protected float m_fAccelerationTimer = 0f;
 
-	protected const float kAccelerationTime = 0.33f;
+	protected const float kAccelerationTime = 0.66f;
 
 	public CharacterController m_Controller { get; private set; }
 
@@ -216,7 +216,7 @@ public class CCharUser : CCharPlayer
 		Vector3 zero = Vector3.zero;
 		zero += m_ModelTransform.forward * m_v2Move.y;
 		zero += m_ModelTransform.right * m_v2Move.x;
-		zero.y = -5f * deltaTime;
+		zero.y = -20f * deltaTime;
 
 		CollisionFlags collisionFlags = m_Controller.Move(zero);
 		m_bUpdatePos = true;
@@ -387,6 +387,19 @@ public class CCharUser : CCharPlayer
 			CGameNetSender.GetInstance().SendMsg_PLAYER_SWITCHWEAPON(weapon.ID, weapon.Level);
 		}
 	}
+	
+	public void Event_SwitchWeaponPrevious(GameObject go)
+	{
+		iGameSceneBase gameScene = iGameApp.GetInstance().m_GameScene as iGameSceneBase;
+		if (gameScene == null) return;
+		CCharUser user = gameScene.GetUser() as CCharUser;
+		if (user == null) return;
+		int weaponCount = user.m_GameState.GetWeaponCount();
+		int currentIndex = user.CurWeaponIndex;
+		int previousIndex = (currentIndex - 1 + weaponCount) % weaponCount;
+		user.SwitchWeapon(previousIndex);
+	}
+
 
 	public void LookAt(Vector3 v3Point)
 	{

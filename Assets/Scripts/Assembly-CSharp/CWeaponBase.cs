@@ -342,7 +342,7 @@ public class CWeaponBase
 					if (weapon == null || weapon.CurWeaponLvlInfo == null || weapon.CurWeaponLvlInfo.nType == 1)
 						continue;
 
-					int restoreAmount = Mathf.CeilToInt(weapon.BulletNumMax * 0.35f);
+					int restoreAmount = Mathf.CeilToInt(weapon.BulletNumMax * 0.325f);
 					weapon.SetBullet(weapon.BulletNum + restoreAmount);
 
 					if (weapon == m_GameState.GetCurrWeapon())

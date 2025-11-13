@@ -495,4 +495,15 @@ public class iGameState
 		}
 		return false;
 	}
+	
+	public int GetWeaponCount()
+	{
+		if (m_arrWeapon == null) return 0;
+		int count = 0;
+		for (int i = 0; i < m_arrWeapon.Length; i++)
+		{
+			if (m_arrWeapon[i] != null) count++;
+		}
+		return count;
+	}
 }

@@ -30,7 +30,7 @@ public class iCameraTrail : iCamera
     private Vector3 lastTargetPos = Vector3.zero;
     private Vector3 movementOffset = Vector3.zero;
     private float movementOffsetIntensity = 0.375f;
-    private float movementOffsetSmoothing = 4.5f;
+    private float movementOffsetSmoothing = 3f;
 
     public new void Awake()
     {
@@ -180,7 +180,7 @@ public class iCameraTrail : iCamera
             m_CameraController.Rotation = Quaternion.Slerp(
                 m_CameraController.Rotation,
                 targetRot,
-                52.5f * Time.deltaTime
+                40f * Time.deltaTime
             );
         }
         m_CameraController.Position = finalPos;

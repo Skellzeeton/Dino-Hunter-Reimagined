@@ -25,7 +25,7 @@ public class CControlWindows : CControlBase
 	private float mouseSensitivity;
 	private const float minSensitivity = 0.5f;
 	private const float maxSensitivity = 5f;
-
+	private float m_LastMeleeOnlyTipTime = -5f;
 
 	private void SetPause(bool pause)
 	{
@@ -42,19 +42,21 @@ public class CControlWindows : CControlBase
 		{
 			return;
 		}
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Gameing)
-			{
-				Cursor.lockState = CursorLockMode.None;
-				Cursor.visible = true;
-				m_GameScene.SetGamePause(true);
-			}
-			else if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Pause)
-				m_GameScene.SetGamePause(false);
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-		}
+    if (Input.GetKeyDown(KeyCode.Escape))
+    {
+        if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Gameing)
+        {
+            m_GameScene.SetGamePause(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Pause)
+        {
+            m_GameScene.SetGamePause(false);
+        Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
 		/*if (Input.GetKeyDown(KeyCode.T))
 		{
 			if (!m_TutorialActive)
@@ -225,6 +227,16 @@ public class CControlWindows : CControlBase
 		{
 			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
 			{
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				{
+					m_LastMeleeOnlyTipTime = Time.time;
+					iGameUIBase gameUI = m_GameScene.GetGameUI();
+					if (gameUI != null)
+					{
+						gameUI.ShowTip("No! Melee only!");
+						CUISound.GetInstance().Play("UI_Error");
+					}
+				}
 				return;
 			}
 			int curWeaponIndex = m_User.CurWeaponIndex;
@@ -245,6 +257,16 @@ public class CControlWindows : CControlBase
 		{
 			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
 			{
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				{
+					m_LastMeleeOnlyTipTime = Time.time;
+					iGameUIBase gameUI = m_GameScene.GetGameUI();
+					if (gameUI != null)
+					{
+						gameUI.ShowTip("No! Melee only!");
+						CUISound.GetInstance().Play("UI_Error");
+					}
+				}
 				return;
 			}
 			int curWeaponIndex = m_User.CurWeaponIndex;
@@ -265,6 +287,16 @@ public class CControlWindows : CControlBase
 		{
 			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
 			{
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				{
+					m_LastMeleeOnlyTipTime = Time.time;
+					iGameUIBase gameUI = m_GameScene.GetGameUI();
+					if (gameUI != null)
+					{
+						gameUI.ShowTip("No! Melee only!");
+						CUISound.GetInstance().Play("UI_Error");
+					}
+				}
 				return;
 			}
 			int curWeaponIndex2 = m_User.CurWeaponIndex;
@@ -284,6 +316,16 @@ public class CControlWindows : CControlBase
 		{
 			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
 			{
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				{
+					m_LastMeleeOnlyTipTime = Time.time;
+					iGameUIBase gameUI = m_GameScene.GetGameUI();
+					if (gameUI != null)
+					{
+						gameUI.ShowTip("No! Melee only!");
+						CUISound.GetInstance().Play("UI_Error");
+					}
+				}
 				return;
 			}
 			int curWeaponIndex2 = m_User.CurWeaponIndex;
@@ -303,6 +345,16 @@ public class CControlWindows : CControlBase
 		{
 			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
 			{
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				{
+					m_LastMeleeOnlyTipTime = Time.time;
+					iGameUIBase gameUI = m_GameScene.GetGameUI();
+					if (gameUI != null)
+					{
+						gameUI.ShowTip("No! Melee only!");
+						CUISound.GetInstance().Play("UI_Error");
+					}
+				}
 				return;
 			}
 			int curWeaponIndex3 = m_User.CurWeaponIndex;
@@ -318,7 +370,7 @@ public class CControlWindows : CControlBase
 			m_User.SwitchWeapon(num3);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha9))
+		/*if (Input.GetKeyDown(KeyCode.Alpha9))
 		{
 			Debug.Log("press 9 key");
 			m_GameScene.FinishGame(true);
@@ -326,7 +378,7 @@ public class CControlWindows : CControlBase
 			{
 				CGameNetSender.GetInstance().SendMsg_GAME_OVER(true);
 			}
-		}
+		}*/
 		if (!Input.GetKeyDown(KeyCode.Alpha0))
 		{
 			return;

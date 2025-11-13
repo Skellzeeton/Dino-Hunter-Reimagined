@@ -14,7 +14,6 @@ SubShader {
    Bind "texcoord1", TexCoord1
   }
   Cull Off
-  Fog { Mode Off }
   Blend SrcAlpha OneMinusSrcAlpha
   SetTexture [_MainTex] { ConstantColor [_Color] combine texture * constant }
   SetTexture [_LightMap] { combine texture * previous }

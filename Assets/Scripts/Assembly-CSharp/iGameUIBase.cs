@@ -32,6 +32,8 @@ public class iGameUIBase : MonoBehaviour
 	protected CPoolManage m_NGUITextTip;
 
 	protected CPoolManage m_NGUICrystalTip;
+	
+	protected CPoolManage m_NGUIExpTip;
 
 	protected CPoolManage m_NGUIPlayerHUD;
 
@@ -50,6 +52,8 @@ public class iGameUIBase : MonoBehaviour
 			return m_UIManager;
 		}
 	}
+	
+	private float m_LastMeleeOnlyTipTime = -5f; 
 
 	private void Awake()
 	{
@@ -109,6 +113,7 @@ public class iGameUIBase : MonoBehaviour
 			}
 		}
 	}
+	
 
 	public void Initialize()
 	{
@@ -134,6 +139,8 @@ public class iGameUIBase : MonoBehaviour
 		m_NGUITextTip.Initialize("Artist/GameUI/NGUITextTip", mPreLoadNode, m_UIManager.mParent, 1);
 		m_NGUICrystalTip = new CPoolManage();
 		m_NGUICrystalTip.Initialize("Artist/GameUI/NGUICrystalTip", mPreLoadNode, m_UIManager.mParent, 1);
+		m_NGUIExpTip = new CPoolManage();
+		m_NGUIExpTip.Initialize("Artist/GameUI/NGUIExpTip", mPreLoadNode, m_UIManager.mParent, 1);
 		m_NGUIPlayerHUD = new CPoolManage();
 		m_NGUIPlayerHUD.Initialize("Artist/GameUI/NGUIPlayerHUD", mPreLoadNode, m_UIManager.mParent, 1);
 		Reset();
@@ -256,7 +263,7 @@ public class iGameUIBase : MonoBehaviour
 
 	public void AddExpText(Vector2 v2Pos, int nExp)
 	{
-		GameObject gameObject = m_NGUIDamage.Get();
+		GameObject gameObject = m_NGUIExpTip.Get();
 		if (!(gameObject == null))
 		{
 			gyUILabelDmg component = gameObject.GetComponent<gyUILabelDmg>();
@@ -1233,7 +1240,7 @@ public class iGameUIBase : MonoBehaviour
 			}
 		}
 		gyUIEventRegister2 = GetEventRegister(m_UIManager.mFastWeapon);
-		gyUIEventRegister2.RegisterOnClick(Event_SwitchWeapon);
+		gyUIEventRegister2.RegisterOnClick(Event_SwitchWeaponPrevious);
 		gyUIEventRegister2 = GetEventRegister(m_UIManager.mSkill.gameObject);
 		gyUIEventRegister2.RegisterOnClick(Event_UseSkill);
 		if (m_UIManager.mPanelRevive != null)
@@ -1328,7 +1335,7 @@ public class iGameUIBase : MonoBehaviour
 			}
 		}
 		gyUIEventRegister2 = GetEventRegister(m_UIManager.mFastWeapon);
-		gyUIEventRegister2.RegisterOnClick(Event_SwitchWeapon);
+		gyUIEventRegister2.RegisterOnClick(Event_SwitchWeaponPrevious);
 		gyUIEventRegister2 = GetEventRegister(m_UIManager.mSkill.gameObject);
 		gyUIEventRegister2.RegisterOnClick(Event_UseSkill);
 		if (m_UIManager.mPanelRevive != null)
@@ -1578,16 +1585,31 @@ public class iGameUIBase : MonoBehaviour
 
 	protected void Event_SwitchWeapon()
 	{
-		if (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing && m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
+		if (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing &&
+		    m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
 		{
 			return;
 		}
-		CUISound.GetInstance().Play("UI_Weapon_change");
+
 		CCharUser user = m_GameScene.GetUser();
 		if (user == null || user.isDead || m_GameScene.CurGameLevelInfo.m_bLimitMelee)
 		{
+			if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+			{
+				m_LastMeleeOnlyTipTime = Time.time;
+
+				iGameUIBase gameUI = m_GameScene.GetGameUI();
+				if (gameUI != null)
+				{
+					gameUI.ShowTip("No! Melee only!");
+				}
+
+				CUISound.GetInstance().Play("UI_Error");
+			}
+
 			return;
 		}
+		CUISound.GetInstance().Play("UI_Weapon_change");
 		int curWeaponIndex = user.CurWeaponIndex;
 		int num = curWeaponIndex + 1;
 		while (num != curWeaponIndex && m_GameState.GetWeapon(num) == null)
@@ -1601,6 +1623,35 @@ public class iGameUIBase : MonoBehaviour
 		curWeaponIndex = num;
 		user.SwitchWeapon(curWeaponIndex);
 	}
+	
+	private void Event_SwitchWeaponPrevious()
+	{
+		iGameSceneBase scene = iGameApp.GetInstance().m_GameScene as iGameSceneBase;
+
+		if (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing &&
+		    m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
+		{
+			return;
+		}
+
+		CCharUser user = m_GameScene.GetUser();
+		if (user == null || user.isDead || m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+		{
+			if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+			{
+				m_LastMeleeOnlyTipTime = Time.time;
+				iGameUIBase gameUI = m_GameScene.GetGameUI();
+				if (gameUI != null)
+					gameUI.ShowTip("No! Melee only!");
+				CUISound.GetInstance().Play("UI_Error");
+			}
+			return;
+		}
+
+		CUISound.GetInstance().Play("UI_Weapon_change");
+		user.Event_SwitchWeaponPrevious(null);
+	}
+
 
 	protected void Event_UseSkill()
 	{
