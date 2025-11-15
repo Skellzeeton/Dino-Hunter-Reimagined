@@ -342,11 +342,12 @@ public class CWeaponBase
 					if (weapon == null || weapon.CurWeaponLvlInfo == null || weapon.CurWeaponLvlInfo.nType == 1)
 						continue;
 
-					int restoreAmount = Mathf.CeilToInt(weapon.BulletNumMax * 0.325f);
+					int restoreAmount = Mathf.CeilToInt(weapon.BulletNumMax * 0.3f);
 					weapon.SetBullet(weapon.BulletNum + restoreAmount);
 
 					if (weapon == m_GameState.GetCurrWeapon())
 					{
+						CUISound.GetInstance().Play("UI_Ammo_restore");
 						weapon.RefreshBulletUI(player, true);
 					}
 				}

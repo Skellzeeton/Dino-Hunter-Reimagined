@@ -41,6 +41,27 @@ public class CCharUser : CCharPlayer
 	protected float m_fAccelerationTimer = 0f;
 
 	protected const float kAccelerationTime = 0.66f;
+	
+	protected float m_fTurnSlowMaxPercent = 0.2f;
+	protected float m_fTurnAngularFull = 2.25f;
+
+	protected float m_turnDeadzone = 2.25f;
+	protected float m_turnCurve = 0.1f;
+	protected float m_yawWeight = 0.3f;
+	protected float m_moveWeight = 0.3f;
+
+	private float m_lastYaw = 0f;
+	private float m_prevTurnPenalty = 0f;
+	private Vector2 m_lastMoveDir = Vector2.zero;
+
+	private float m_angSpeedSmoothed = 0f;
+	private float m_moveAngleSpeedSmoothed = 0f;
+
+	protected float m_angSmoothRate = 8f;
+	protected float m_moveSmoothRate = 8f;
+
+
+
 
 	public CharacterController m_Controller { get; private set; }
 
@@ -98,6 +119,24 @@ public class CCharUser : CCharPlayer
 		m_Controller.stepOffset = 0.4f;
 		m_Controller.center = new Vector3(0f, 1f, 0f);
 		m_bCarryTaskItem = false;
+		if (m_ModelTransform != null)
+			m_lastYaw = m_ModelTransform.eulerAngles.y;
+		else
+			m_lastYaw = 0f;
+		
+		if (this.GetType().GetField("m_fYaw") != null)
+		{
+			try { m_lastYaw = (float)this.GetType().GetField("m_fYaw").GetValue(this); } catch { m_lastYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f); }
+		}
+		else
+		{
+			m_lastYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f);
+		}
+
+		m_lastMoveDir = Vector2.zero;
+		m_angSpeedSmoothed = 0f;
+		m_moveAngleSpeedSmoothed = 0f;
+
 	}
 
 	public new void Start()
@@ -171,56 +210,118 @@ public class CCharUser : CCharPlayer
 		}
 	}
 
-	public new void FixedUpdate()
-	{
-		base.FixedUpdate();
-		float deltaTime = Time.deltaTime;
+public new void FixedUpdate()
+{
+    base.FixedUpdate();
+    float deltaTime = Time.deltaTime;
 
-		if (m_CharMoveState == kCharMoveState.None)
-			return;
+    if (m_CharMoveState == kCharMoveState.None)
+        return;
+    
+    float currentYaw = 0f;
+    var t = this.GetType();
+    var yawField = t.GetField("m_fYaw");
+    if (yawField != null)
+    {
+        try { currentYaw = (float)yawField.GetValue(this); }
+        catch { currentYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f); }
+    }
+    else
+    {
+        currentYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f);
+    }
+    
+    float deltaYaw = Mathf.DeltaAngle(m_lastYaw, currentYaw);
+    float yawAngSpeed = 0f;
+    if (deltaTime > 0f) yawAngSpeed = Mathf.Abs(deltaYaw) / deltaTime;
+    float yawLerp = Mathf.Clamp01(m_angSmoothRate * deltaTime);
+    m_angSpeedSmoothed = Mathf.Lerp(m_angSpeedSmoothed, yawAngSpeed, yawLerp);
 
-		if (m_CharMoveState == kCharMoveState.Acc)
-		{
-			m_fAccelerationTimer += deltaTime;
-			float t = Mathf.Clamp01(m_fAccelerationTimer / kAccelerationTime);
-			m_fCurSpeed = Mathf.Lerp(0f, m_fCurSpeedMax, t);
-			m_fCurSpeedSide = Mathf.Lerp(0f, m_fCurSpeedSideMax, t);
+    Vector2 currentMoveDir = m_v2MoveDir;
+    float moveAngleDeg = 0f;
 
-			if (t >= 1f)
-			{
-				m_CharMoveState = kCharMoveState.Max;
-			}
-		}
+    if (currentMoveDir.sqrMagnitude > 0.0001f && m_lastMoveDir.sqrMagnitude > 0.0001f)
+    {
+        moveAngleDeg = Vector2.Angle(m_lastMoveDir, currentMoveDir);
+    }
+    else
+    {
+        moveAngleDeg = 0f;
+    }
 
-		float num = 0f;
-		if (m_Property.GetValue(kProEnum.Char_MSEquip_Off) == 0f && m_curWeapon != null && m_curWeaponLvlInfo != null)
-		{
-			num = m_curWeaponLvlInfo.fMSDownRateEquip;
-			if (m_curWeapon.IsFire())
-			{
-				num += m_curWeaponLvlInfo.fMSDownRateShoot;
-			}
-		}
+    float moveAngSpeed = 0f;
+    if (deltaTime > 0f) moveAngSpeed = Mathf.Abs(moveAngleDeg) / deltaTime;
+    float moveLerp = Mathf.Clamp01(m_moveSmoothRate * deltaTime);
+    m_moveAngleSpeedSmoothed = Mathf.Lerp(m_moveAngleSpeedSmoothed, moveAngSpeed, moveLerp);
 
-		float num2 = m_Property.GetValue(kProEnum.Char_MoveSpeedUp);
-		if (num2 < 0f)
-		{
-			num2 = 0f;
-		}
+    if (currentMoveDir.sqrMagnitude > 0.000001f)
+        m_lastMoveDir = currentMoveDir;
+    float effectiveAngSpeed = m_yawWeight * m_angSpeedSmoothed + m_moveWeight * m_moveAngleSpeedSmoothed;
+    if (effectiveAngSpeed <= m_turnDeadzone)
+    {
+        effectiveAngSpeed = 0f;
+    }
+    else
+    {
+        effectiveAngSpeed = Mathf.Max(0f, effectiveAngSpeed - m_turnDeadzone);
+    }
 
-		Vector2 rawDir = m_v2MoveDir.normalized;
-		float speed = Mathf.Min(m_fCurSpeed, m_fCurSpeedSide) + num2;
-		Vector2 scaledDir = m_v2MoveDir * speed * (1f - num);
-		m_v2Move = scaledDir * deltaTime;
+    float denom = Mathf.Max(0.0001f, (m_fTurnAngularFull - m_turnDeadzone));
+    float rawRatio = Mathf.Clamp01(effectiveAngSpeed / denom);
+    float curved = Mathf.Pow(rawRatio, m_turnCurve);
+    float penalty = curved * m_fTurnSlowMaxPercent;
+    float baseSpeed = m_Property.GetValue(kProEnum.MoveSpeed);
+    if (baseSpeed < 0f) baseSpeed = 0f;
+    float desiredMax = baseSpeed * (1f - penalty);
+    if (penalty > m_prevTurnPenalty + 0.001f)
+    {
+        m_fCurSpeedMax = desiredMax;
+        m_fCurSpeedSideMax = desiredMax;
 
-		Vector3 zero = Vector3.zero;
-		zero += m_ModelTransform.forward * m_v2Move.y;
-		zero += m_ModelTransform.right * m_v2Move.x;
-		zero.y = -20f * deltaTime;
+        if (m_fCurSpeed > m_fCurSpeedMax) m_fCurSpeed = m_fCurSpeedMax;
+        if (m_fCurSpeedSide > m_fCurSpeedSideMax) m_fCurSpeedSide = m_fCurSpeedSideMax;
+    }
+    else
+    {
+        m_fCurSpeedMax = desiredMax;
+        m_fCurSpeedSideMax = desiredMax;
 
-		CollisionFlags collisionFlags = m_Controller.Move(zero);
-		m_bUpdatePos = true;
-	}
+        float accelRate = (kAccelerationTime > 0f) ? (baseSpeed / kAccelerationTime) : baseSpeed;
+
+        m_fCurSpeed = Mathf.MoveTowards(m_fCurSpeed, m_fCurSpeedMax, accelRate * deltaTime);
+        m_fCurSpeedSide = Mathf.MoveTowards(m_fCurSpeedSide, m_fCurSpeedSideMax, accelRate * deltaTime);
+    }
+
+    m_prevTurnPenalty = penalty;
+    m_lastYaw = currentYaw;
+    float num = 0f;
+    if (m_Property.GetValue(kProEnum.Char_MSEquip_Off) == 0f && m_curWeapon != null && m_curWeaponLvlInfo != null)
+    {
+        num = m_curWeaponLvlInfo.fMSDownRateEquip;
+        if (m_curWeapon.IsFire())
+        {
+            num += m_curWeaponLvlInfo.fMSDownRateShoot;
+        }
+    }
+
+    float num2 = m_Property.GetValue(kProEnum.Char_MoveSpeedUp);
+    if (num2 < 0f) num2 = 0f;
+
+    Vector2 rawDir = m_v2MoveDir.normalized;
+    float speed = Mathf.Min(m_fCurSpeed, m_fCurSpeedSide) + num2;
+    Vector2 scaledDir = m_v2MoveDir * speed * (1f - num);
+    m_v2Move = scaledDir * deltaTime;
+
+    Vector3 zero = Vector3.zero;
+    zero += m_ModelTransform.forward * m_v2Move.y;
+    zero += m_ModelTransform.right * m_v2Move.x;
+    zero.y = -20f * deltaTime;
+
+    CollisionFlags collisionFlags = m_Controller.Move(zero);
+    m_bUpdatePos = true;
+}
+
+
 
 	public new void LateUpdate()
 	{
