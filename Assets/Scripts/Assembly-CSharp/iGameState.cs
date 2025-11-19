@@ -103,6 +103,10 @@ public class iGameState
 	public int m_nCurHunterExp;
 
 	public bool m_bNeedAutoSaleUI;
+	
+	public float GlobalAmmoRestoreTimer = 0f;
+	
+	public const float GlobalAmmoRestoreInterval = 60f;
 
 	protected Vector2 m_v2ScreenCenter;
 
@@ -279,6 +283,57 @@ public class iGameState
 			m_arrGainMaterialInGame[i] = new CMaterialInfo(-1, 0);
 		}
 	}
+
+	public void UpdateAmmoRestore(float deltaTime)
+	{
+		// Get active scene through global app
+		iGameSceneBase scene = iGameApp.GetInstance().m_GameScene as iGameSceneBase;
+		if (scene == null)
+			return;
+
+		// Only restore during gameplay
+		if (scene.GameStatus != iGameSceneBase.kGameStatus.Gameing &&
+		    scene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
+			return;
+
+		if (GamePause.IsPaused)
+			return;
+
+		// Timer
+		GlobalAmmoRestoreTimer += deltaTime;
+
+		if (GlobalAmmoRestoreTimer < GlobalAmmoRestoreInterval)
+			return;
+
+		GlobalAmmoRestoreTimer = 0f;
+
+		// Restore ammo for all weapons
+		for (int i = 0; i < 3; i++)
+		{
+			CWeaponBase weapon = GetWeapon(i);
+			if (weapon == null || weapon.CurWeaponLvlInfo == null)
+				continue;
+
+			// skip melee weapons (type 1)
+			if (weapon.CurWeaponLvlInfo.nType == 1)
+				continue;
+
+			int restoreAmount = Mathf.CeilToInt(weapon.BulletNumMax * 0.3f);
+			weapon.SetBullet(weapon.BulletNum + restoreAmount);
+		}
+
+		// UI & sound for current weapon only
+		CWeaponBase curr = GetCurrWeapon();
+		if (curr != null)
+		{
+			CUISound.GetInstance().Play("UI_Ammo_restore");
+
+			CCharPlayer player = scene.GetUser();
+			if (player != null)
+				curr.RefreshBulletUI(player, true);
+		}
+	}
+
 
 	public void Clear()
 	{

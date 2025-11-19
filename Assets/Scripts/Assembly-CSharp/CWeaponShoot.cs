@@ -7,108 +7,158 @@ public class CWeaponShoot : CWeaponBase
 		RefreshBulletUI(player);
 	}
 
-	protected override void OnFire(CCharPlayer player)
-	{
-		if (!player.IsCanAttack())
-		{
-			return;
-		}
-		if (base.IsBulletEmpty)
-		{
-			if (m_pWeaponLvlInfo != null)
-			{
-				switch (m_pWeaponLvlInfo.nType)
-				{
-				case 2:
-					player.PlayAudio("Weapon_nobullet_gun");
-					break;
-				case 0:
-					player.PlayAudio("Weapon_nobullet_crossbow");
-					break;
-				}
-			}
-			Stop(player);
-			return;
-		}
-		ConsumeBullet(player);
-		ShowFireLight(true);
-		if (base.m_GameScene.IsMyself(player))
-		{
-			iGameUIBase gameUI = base.m_GameScene.GetGameUI();
-			if (gameUI != null)
-			{
-				gameUI.ExpandAimCross();
-			}
-		}
-		player.PlayAnimMix(kAnimEnum.Attack, WrapMode.ClampForever, 1f);
-		float fValue = 10000f;
-		m_pWeaponLvlInfo.GetAtkModeValue(0, ref fValue);
-		Vector3 shootMouse = player.GetShootMouse();
-		Vector3 vector = player.m_v3CurNetAimDir;
-		Ray ray;
-		if (!base.isNetPlayerShoot)
-		{
-			ray = Camera.main.ScreenPointToRay(m_GameState.GetScreenCenterV3());
-			vector = ray.direction;
-		}
-		else
-		{
-			ray = new Ray(shootMouse, vector);
-		}
-		RaycastHit hitInfo;
-		if (!Physics.Raycast(ray, out hitInfo, fValue, -1543503872))
-		{
-			return;
-		}
-		float magnitude = (hitInfo.point - shootMouse).magnitude;
-		if (magnitude > 5f)
-		{
-			base.m_GameScene.AddBulletTrack(player.GetShootMouse(), hitInfo.point, m_pWeaponLvlInfo.nBullet);
-		}
-		base.m_GameScene.AddFireEffect(player.GetShootMouseTf(), vector, m_pWeaponLvlInfo.nFire, 2f);
-		player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
-		if (hitInfo.transform.gameObject.layer == 31 || hitInfo.transform.gameObject.layer == 29)
-		{
-			base.m_GameScene.AddHitEffect(hitInfo.point, hitInfo.normal, m_pWeaponLvlInfo.nHit);
-		}
-		else
-		{
-			if (hitInfo.transform.gameObject.layer != 26)
-			{
-				return;
-			}
-			CCharMob component = hitInfo.transform.root.gameObject.GetComponent<CCharMob>();
-			if (!(component == null) && !component.isDead)
-			{
-				if (!base.isNetPlayerShoot)
-				{
-					OnHitMob(player, component, hitInfo.point, hitInfo.normal, hitInfo.transform.name);
-				}
-				component.PlayAudio(kAudioEnum.HitBody);
-				switch (m_pWeaponLvlInfo.nElementType)
-				{
-				case 1:
-					component.PlayAudio("Fx_Impact_fire");
-					break;
-				case 3:
-					component.PlayAudio("Fx_Impact_freeze");
-					break;
-				case 2:
-					component.PlayAudio("Fx_Impact_electric");
-					break;
-				}
-				CCharBoss cCharBoss = component as CCharBoss;
-				if (cCharBoss != null && cCharBoss.isInBlack)
-				{
-					base.m_GameScene.AddHitEffect(hitInfo.point, hitInfo.normal, 1953);
-				}
-				else
-				{
-					base.m_GameScene.AddHitEffect(hitInfo.point, hitInfo.normal, m_pWeaponLvlInfo.nHit);
-				}
-			}
-		}
-	}
+protected override void OnFire(CCharPlayer player)
+{
+    if (!player.IsCanAttack())
+        return;
+
+    if (base.IsBulletEmpty)
+    {
+        if (m_pWeaponLvlInfo != null)
+        {
+            switch (m_pWeaponLvlInfo.nType)
+            {
+                case 2:
+                    player.PlayAudio("Weapon_nobullet_gun");
+                    break;
+                case 0:
+                    player.PlayAudio("Weapon_nobullet_crossbow");
+                    break;
+            }
+        }
+        Stop(player);
+        return;
+    }
+
+    ConsumeBullet(player);
+    ShowFireLight(true);
+
+    // UI expand
+    if (m_GameScene.IsMyself(player))
+    {
+        iGameUIBase ui = m_GameScene.GetGameUI();
+        if (ui != null) ui.ExpandAimCross();
+    }
+
+    player.PlayAnimMix(kAnimEnum.Attack, WrapMode.ClampForever, 1f);
+
+    float maxDist = 10000f;
+    m_pWeaponLvlInfo.GetAtkModeValue(0, ref maxDist);
+
+    // -----------------------------
+    // NEW: TRUE WEAPON SHOOT LOGIC
+    // -----------------------------
+
+    // 1. Get muzzle
+    Transform muzzle = player.GetShootMouseTf();
+    Vector3 muzzlePos = muzzle.position;
+
+    // 2. Raycast from camera to crosshair (to see what the player is aiming at)
+    Ray camRay = Camera.main.ScreenPointToRay(m_GameState.GetScreenCenterV3());
+    RaycastHit aimHit;
+
+    Vector3 targetPoint;
+
+    if (Physics.Raycast(camRay, out aimHit, maxDist, -1543503872))
+    {
+        // If crosshair hits something, that is our target
+        targetPoint = aimHit.point;
+    }
+    else
+    {
+        // Crosshair hits nothing → shoot straight ahead from camera
+        targetPoint = camRay.origin + camRay.direction * maxDist;
+    }
+    
+    Ray camToMuzzle = new Ray(camRay.origin, (muzzlePos - camRay.origin).normalized);
+    RaycastHit obstruction;
+    float muzzleDistance = Vector3.Distance(camRay.origin, muzzlePos);
+
+    if (Physics.Raycast(camToMuzzle, out obstruction, muzzleDistance, -1543503872))
+    {
+	    // Obstruction between camera and muzzle → start bullet at obstruction point
+	    muzzlePos = obstruction.point - camToMuzzle.direction * 0.1f; // small offset to avoid sticking inside wall
+    }
+    
+    // --------------------------------------------------
+// FIXED: Camera-based alignment gating (Unity 2017 compatible)
+// --------------------------------------------------
+    Vector3 cameraForward = camRay.direction.normalized;
+    Vector3 muzzleToTarget = (targetPoint - muzzlePos).normalized;
+
+// Dot = how well the camera aim matches the muzzle → target direction
+    float camAlignment = Vector3.Dot(cameraForward, muzzleToTarget);
+
+// If camera aim and muzzle→target direction differ too much,
+// that means the camera selected something behind/side of the weapon.
+    if (camAlignment < 0.75f)   // 0.75 = ~40° cone, adjust if needed
+    {
+	    // Force shoot straight from camera aim instead
+	    targetPoint = muzzlePos + cameraForward * maxDist;
+    }
+
+
+    // 3. Now build a REAL bullet ray: from weapon muzzle → target point
+    Vector3 shootDir = (targetPoint - muzzlePos).normalized;
+    Ray weaponRay = new Ray(muzzlePos, shootDir);
+
+    RaycastHit hit;
+    if (!Physics.Raycast(weaponRay, out hit, maxDist, -1543503872))
+    {
+        // No hit → still add fire effect
+        m_GameScene.AddFireEffect(muzzle, shootDir, m_pWeaponLvlInfo.nFire, 2f);
+        player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
+        return;
+    }
+
+    // 4. Add bullet tracer from muzzle to impact
+    float travelDist = (hit.point - muzzlePos).magnitude;
+    if (travelDist > 2f)
+    {
+        m_GameScene.AddBulletTrack(muzzlePos, hit.point, m_pWeaponLvlInfo.nBullet);
+    }
+
+    // 5. Fire effect
+    m_GameScene.AddFireEffect(muzzle, shootDir, m_pWeaponLvlInfo.nFire, 2f);
+    player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
+
+    // 6. World object hit
+    if (hit.transform.gameObject.layer == 31 || hit.transform.gameObject.layer == 29)
+    {
+        m_GameScene.AddHitEffect(hit.point, hit.normal, m_pWeaponLvlInfo.nHit);
+        return;
+    }
+
+    // 7. Mob hit
+    if (hit.transform.gameObject.layer == 26)
+    {
+        CCharMob mob = hit.transform.root.GetComponent<CCharMob>();
+        if (mob != null && !mob.isDead)
+        {
+            if (!base.isNetPlayerShoot)
+                OnHitMob(player, mob, hit.point, hit.normal, hit.transform.name);
+
+            mob.PlayAudio(kAudioEnum.HitBody);
+
+            switch (m_pWeaponLvlInfo.nElementType)
+            {
+                case 1: mob.PlayAudio("Fx_Impact_fire"); break;
+                case 2: mob.PlayAudio("Fx_Impact_electric"); break;
+                case 3: mob.PlayAudio("Fx_Impact_freeze"); break;
+            }
+
+            if (mob is CCharBoss && ((CCharBoss)mob).isInBlack)
+            {
+                m_GameScene.AddHitEffect(hit.point, hit.normal, 1953);
+            }
+            else
+            {
+                m_GameScene.AddHitEffect(hit.point, hit.normal, m_pWeaponLvlInfo.nHit);
+            }
+        }
+    }
+}
+
 
 	protected override void OnStop(CCharPlayer player)
 	{

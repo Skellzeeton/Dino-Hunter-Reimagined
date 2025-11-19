@@ -38,11 +38,6 @@ public class CWeaponBase
 	protected float m_fFireLightTime;
 
 	protected float m_fFireLightTimeCount;
-	
-	private float m_fGlobalAmmoRestoreTimer = 0f;
-	
-	private const float m_fGlobalAmmoRestoreInterval = 60f;
-	
 
 	protected iGameSceneBase m_GameScene
 	{
@@ -329,28 +324,6 @@ public class CWeaponBase
 			if (!m_bPauseFire && !GamePause.IsPaused)
 			{
 				OnUpdate(player, deltaTime);
-			}
-			if (!GamePause.IsPaused)
-				m_fGlobalAmmoRestoreTimer += deltaTime;
-			if (m_fGlobalAmmoRestoreTimer >= m_fGlobalAmmoRestoreInterval)
-			{
-				m_fGlobalAmmoRestoreTimer = 0f;
-
-				for (int i = 0; i < 3; i++)
-				{
-					CWeaponBase weapon = m_GameState.GetWeapon(i);
-					if (weapon == null || weapon.CurWeaponLvlInfo == null || weapon.CurWeaponLvlInfo.nType == 1)
-						continue;
-
-					int restoreAmount = Mathf.CeilToInt(weapon.BulletNumMax * 0.3f);
-					weapon.SetBullet(weapon.BulletNum + restoreAmount);
-
-					if (weapon == m_GameState.GetCurrWeapon())
-					{
-						CUISound.GetInstance().Play("UI_Ammo_restore");
-						weapon.RefreshBulletUI(player, true);
-					}
-				}
 			}
 		}
 	}

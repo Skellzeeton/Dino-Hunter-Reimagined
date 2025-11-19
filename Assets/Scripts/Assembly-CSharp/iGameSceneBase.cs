@@ -1638,6 +1638,9 @@ public class iGameSceneBase
 
 	protected virtual void UpdateStatus_Gaming(float deltaTime)
 	{
+		if (m_GameState != null)
+			m_GameState.UpdateAmmoRestore(deltaTime);
+		
 		if (CGameNetManager.GetInstance().IsConnected() && !CGameNetManager.GetInstance().IsGaming)
 		{
 			return;

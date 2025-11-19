@@ -1,286 +1,114 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class iGameCGAdvert : MonoBehaviour
 {
+    [Header("Splash Screen")]
+    public Texture2D splashTexture;
+    public float splashDuration = 5f;
+    private GameObject canvasGO;
+    private RawImage rawImage;
+    private CanvasGroup canvasGroup;
+    private const float fadeTime = 0.35f;
+
+
     public class CServerAdvertInfo
     {
         public string sVideo = string.Empty;
         public string sVideoUrl = string.Empty;
-        public Dictionary<int, string> dictAdvertUrl;
-
-        public CServerAdvertInfo()
-        {
-            dictAdvertUrl = new Dictionary<int, string>();
-        }
+        public Dictionary<int, string> dictAdvertUrl = new Dictionary<int, string>();
 
         public void LoadData(XmlDocument doc)
         {
-        }
-
-        protected bool GetAttribute(XmlNode node, string name, ref string value)
-        {
-            // Stubbed: Always return false
-            return false;
         }
     }
 
     protected string m_sUrl = iMacroDefine.CompanyAccountURL;
     protected string m_sUrl_File = "CoMDH_AdvertConfig";
-    protected string m_sServerInfoFilePathSrc = "D:\\development\\_DinoCapWorld\\src\\_DinoCapWorld\\Documents\\serverconfig";
-    protected string m_sServerInfoFilePathDst = "D:\\development\\_DinoCapWorld\\src\\_DinoCapWorld\\Documents\\serverconfig";
     public string m_sServerInfoKey = "trinitigame_comdh";
 
     private void Awake()
     {
-        Application.targetFrameRate = 0;
+        Application.targetFrameRate = 60;
     }
 
     private void Start()
     {
+        StartCoroutine(SplashAndLoad());
+    }
+
+    private IEnumerator SplashAndLoad()
+    {
+        if (splashTexture != null)
+            CreateSplash();
+        if (canvasGroup != null)
+            yield return StartCoroutine(FadeCanvas(0f, 1f, fadeTime));
+        if (splashDuration > 0f)
+            yield return new WaitForSeconds(splashDuration);
+        if (canvasGroup != null)
+            yield return StartCoroutine(FadeCanvas(1f, 0f, fadeTime));
+        if (canvasGO != null)
+            Destroy(canvasGO);
+        VisitServerConfig();
+    }
+
+    private void VisitServerConfig()
+    {
         SceneManager.LoadSceneAsync("Scene_Main");
     }
-
-    private void Update()
+    
+    private void CreateSplash()
     {
+        canvasGO = new GameObject("SplashCanvas");
+        Canvas canvas = canvasGO.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvasGO.transform.localScale = Vector3.one;
+
+        canvasGroup = canvasGO.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
+
+        GameObject imgGO = new GameObject("SplashImage");
+        imgGO.transform.SetParent(canvasGO.transform, false);
+
+        rawImage = imgGO.AddComponent<RawImage>();
+        rawImage.texture = splashTexture;
+
+        RectTransform rt = rawImage.rectTransform;
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
+
+        FitToScreen(rt, splashTexture);
+        
+        rt.localScale = new Vector3(0.45f, 0.5f, 1f);
     }
 
-    protected void OnResult(string filename, string url = "")
+    private void FitToScreen(RectTransform rt, Texture tex)
     {
-        SceneManager.LoadSceneAsync("Scene_Main");
+        float imgW = tex.width;
+        float imgH = tex.height;
+        float scale = Mathf.Max(Screen.width / imgW, Screen.height / imgH);
+        rt.sizeDelta = new Vector2(imgW * scale, imgH * scale);
+        rt.anchoredPosition = Vector2.zero;
     }
 
-    protected void OnSuccess(string sFileData)
+    private IEnumerator FadeCanvas(float from, float to, float duration)
     {
-        OnResult(string.Empty, string.Empty);
-    }
+        if (canvasGroup == null) yield break;
 
-    protected void OnFailed()
-    {
-        OnResult(string.Empty, string.Empty);
-    }
-
-    protected string TransformXML2TXT(string srcpath, string dstpath, string key)
-    {
-        return string.Empty;
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(from, to, time / duration);
+            yield return null;
+        }
+        canvasGroup.alpha = to;
     }
 }
-
-//old script in case it is for whatever reason ever needed:
-/*using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-using UnityEngine;
-
-public class iGameCGAdvert : MonoBehaviour
-{
-	public class CServerAdvertInfo
-	{
-		public string sVideo = string.Empty;
-
-		public string sVideoUrl = string.Empty;
-
-		public Dictionary<int, string> dictAdvertUrl;
-
-		public CServerAdvertInfo()
-		{
-			dictAdvertUrl = new Dictionary<int, string>();
-		}
-
-		public void LoadData(XmlDocument doc)
-		{
-			try
-			{
-				XmlNode documentElement = doc.DocumentElement;
-				if (documentElement == null)
-				{
-					return;
-				}
-				string value = string.Empty;
-				foreach (XmlNode item in documentElement)
-				{
-					if (item.Name != "advert")
-					{
-						continue;
-					}
-					bool flag = false;
-					if (GetAttribute(item, "video", ref value))
-					{
-						sVideo = value;
-						if (sVideo.IndexOf(".mp4") == -1)
-						{
-							sVideo += ".mp4";
-						}
-						flag = true;
-					}
-					int key = 0;
-					if (GetAttribute(item, "popularizetype", ref value))
-					{
-						key = int.Parse(value);
-					}
-					if (GetAttribute(item, "url", ref value))
-					{
-						if (!dictAdvertUrl.ContainsKey(key))
-						{
-							dictAdvertUrl.Add(key, value);
-						}
-						else
-						{
-							dictAdvertUrl[key] = value;
-						}
-						if (flag)
-						{
-							sVideoUrl = value;
-						}
-					}
-				}
-			}
-			catch
-			{
-				sVideo = string.Empty;
-				sVideoUrl = string.Empty;
-			}
-		}
-
-		protected bool GetAttribute(XmlNode node, string name, ref string value)
-		{
-			if (node == null || node.Attributes[name] == null)
-			{
-				return false;
-			}
-			value = node.Attributes[name].Value.Trim();
-			if (value.Length < 1)
-			{
-				return false;
-			}
-			return true;
-		}
-	}
-
-	protected string m_sUrl = iMacroDefine.CompanyAccountURL;
-
-	protected string m_sUrl_File = "CoMDH_AdvertConfig";
-
-	protected string m_sServerInfoFilePathSrc = "D:\\development\\_DinoCapWorld\\src\\_DinoCapWorld\\Documents\\serverconfig";
-
-	protected string m_sServerInfoFilePathDst = "D:\\development\\_DinoCapWorld\\src\\_DinoCapWorld\\Documents\\serverconfig";
-
-	public string m_sServerInfoKey = "trinitigame_comdh";
-
-	private void Awake()
-	{
-		Application.targetFrameRate = 60;
-	}
-
-	private void Start()
-	{
-		iServerFile.Instance.Visit(m_sUrl + "/" + m_sUrl_File + "_3.1.7a.txt", OnSuccess, OnFailed, 5f);
-	}
-
-	private void Update()
-	{
-	}
-
-	protected void OnResult(string filename, string url = "")
-	{
-		Debug.Log(filename + " " + url);
-		if (filename.Length < 1 || url.Length < 1)
-		{
-			SceneManager.LoadSceneAsync("Scene_Main");
-			return;
-		}
-		try
-		{
-			XAdManagerWrapper.SetVideoAdFile(filename);
-			XAdManagerWrapper.SetVideoAdUrl(url);
-			XAdManagerWrapper.ShowVideoAdLocal();
-		}
-		catch
-		{
-			UnityEngine.Debug.Log("filename = " + filename);
-			UnityEngine.Debug.Log("url = " + url);
-			UnityEngine.Debug.Log("server advert config error!");
-		}
-		SceneManager.LoadSceneAsync("Scene_Main");
-	}
-
-	protected void OnSuccess(string sFileData)
-	{
-		UnityEngine.Debug.Log("OnSuccess " + sFileData);
-		iGameState gameState = iGameApp.GetInstance().m_GameState;
-		if (gameState == null)
-		{
-			return;
-		}
-		string empty = string.Empty;
-		try
-		{
-			empty = XXTEAUtils.Decrypt(sFileData, m_sServerInfoKey);
-			MyUtils.UnZipString(empty, ref empty);
-			XmlDocument xmlDocument = new XmlDocument();
-			xmlDocument.LoadXml(empty);
-			if (gameState.m_ServerAdvertInfo == null)
-			{
-				gameState.m_ServerAdvertInfo = new CServerAdvertInfo();
-			}
-			gameState.m_ServerAdvertInfo.LoadData(xmlDocument);
-			OnResult(gameState.m_ServerAdvertInfo.sVideo, gameState.m_ServerAdvertInfo.sVideoUrl);
-		}
-		catch (Exception ex)
-		{
-			UnityEngine.Debug.LogError("OnSuccess Error " + ex);
-			OnResult(string.Empty, string.Empty);
-		}
-	}
-
-	protected void OnFailed()
-	{
-		OnResult(string.Empty, string.Empty);
-	}
-
-	protected string TransformXML2TXT(string srcpath, string dstpath, string key)
-	{
-		if (srcpath.Length < 1 || dstpath.Length < 1)
-		{
-			return string.Empty;
-		}
-		string zipedcontent = string.Empty;
-		UnityEngine.Debug.Log(srcpath);
-		if (File.Exists(srcpath))
-		{
-			StreamReader streamReader = null;
-			try
-			{
-				streamReader = new StreamReader(srcpath);
-				zipedcontent = streamReader.ReadToEnd();
-			}
-			catch
-			{
-				Debug.Log("ERROR - Encrypt()!!!");
-			}
-			finally
-			{
-				if (streamReader != null)
-				{
-					streamReader.Close();
-				}
-			}
-		}
-		if (zipedcontent != null && zipedcontent.Length > 0)
-		{
-			MyUtils.ZipString(zipedcontent, ref zipedcontent);
-			string text = XXTEAUtils.Encrypt(zipedcontent, key);
-			StreamWriter streamWriter = new StreamWriter(dstpath, false);
-			streamWriter.Write(text);
-			streamWriter.Flush();
-			streamWriter.Close();
-			return text;
-		}
-		return string.Empty;
-	}
-}*/

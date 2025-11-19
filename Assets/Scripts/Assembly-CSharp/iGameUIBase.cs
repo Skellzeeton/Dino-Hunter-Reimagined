@@ -888,11 +888,6 @@ public class iGameUIBase : MonoBehaviour
 		{
 			m_UIManager.mFastWeapon.SetActiveRecursive(true);
 		}
-		//old version of this shit above in case i wanna switch back but i dont think i want to cuz i fucking like this button bruh
-		/*if (MyUtils.isPad && m_UIManager.mFastWeapon != null)
-		{
-			m_UIManager.mFastWeapon.SetActiveRecursive(true);
-		}*/
 		if (m_UIManager.mSkill != null)
 		{
 			m_UIManager.mSkill.gameObject.SetActiveRecursive(true);

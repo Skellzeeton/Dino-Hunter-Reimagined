@@ -43,7 +43,7 @@ public class CCharUser : CCharPlayer
 	protected const float kAccelerationTime = 0.66f;
 	
 	protected float m_fTurnSlowMaxPercent = 0.2f;
-	protected float m_fTurnAngularFull = 2.25f;
+	protected float m_fTurnAngularFull = 180f;
 
 	protected float m_turnDeadzone = 2.25f;
 	protected float m_turnCurve = 0.1f;
