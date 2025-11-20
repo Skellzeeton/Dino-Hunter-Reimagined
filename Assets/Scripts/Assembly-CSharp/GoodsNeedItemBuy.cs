@@ -31,7 +31,7 @@ public class GoodsNeedItemBuy : MonoBehaviour
 	{
 		base.gameObject.transform.localPosition = m_position;
 		label_price_normal.Text = price.price.ToString();
-		label_price_press.Text = price.price.ToString();
+		label_price_press.Text = "...";
 		if (price.unit_type == UnitType.Gold)
 		{
 			img_price_unit_normal.texture = gold_texture;
@@ -52,7 +52,7 @@ public class GoodsNeedItemBuy : MonoBehaviour
 	public void HideInfo()
 	{
 		label_price_normal.Text = string.Empty;
-		label_price_press.Text = string.Empty;
+		label_price_press.Text = "...";
 		img_price_unit_normal.texture = string.Empty;
 		img_price_unit_press.texture = string.Empty;
 		base.gameObject.transform.localPosition = m_position + new Vector3(0f, -1000f, 0f);

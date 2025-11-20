@@ -30,7 +30,7 @@ public class PopupPriceBtn : MonoBehaviour
 			return;
 		}
 		label_value_normal.Text = m_text;
-		label_value_press.Text = m_text;
+		label_value_press.Text = "...";
 		img_unit_normal.texture = string.Empty;
 		img_unit_press.texture = string.Empty;
 	}
@@ -43,7 +43,7 @@ public class PopupPriceBtn : MonoBehaviour
 			return;
 		}
 		label_value_normal.Text = m_price.ToString();
-		label_value_press.Text = m_price.ToString();
+		label_value_press.Text = "...";
 		switch (m_unit_type)
 		{
 		case UnitType.Gold:

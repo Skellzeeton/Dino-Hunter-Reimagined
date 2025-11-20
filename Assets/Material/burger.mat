@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: D3 Stonism_32size_2t_retry
-  m_Shader: {fileID: 4800000, guid: 0015cd79847e302429b75fbbab0ee2f7, type: 3}
+  m_Name: burger
+  m_Shader: {fileID: 4800000, guid: 6667362aabe669348b59ca1168511eb6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -18,15 +18,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BackTex:
-        m_Texture: {fileID: 2800000, guid: 20a627dcc97e4e142a4f9403e27279c5, type: 3}
-        m_Scale: {x: 1, y: -1}
+    - _LightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3f865554d8da369499bd172b6c77f25c, type: 3}
-        m_Scale: {x: 1, y: -1}
+        m_Texture: {fileID: 2800000, guid: ed025d6d6652140ed94d309843619f00, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorB: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.50735295, g: 0.50735295, b: 0.50735295, a: 1}

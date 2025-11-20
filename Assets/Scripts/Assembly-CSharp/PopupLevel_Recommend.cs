@@ -148,7 +148,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		if (level < level_need)
 		{
 			label_btn_buy_normal.Text = "Buy";
-			label_btn_buy_press.Text = "Buy";
+			label_btn_buy_press.Text = "...";
 			btn_buy.gameObject.SetActiveRecursive(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.WeaponBuy;
@@ -168,7 +168,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 			if (!have_equip)
 			{
 				label_btn_buy_normal.Text = "Equip";
-				label_btn_buy_press.Text = "Equip";
+				label_btn_buy_press.Text = "...";
 				btn_buy.gameObject.SetActiveRecursive(true);
 				btn_buy.Show();
 				recommend_btn_state = RecommendBtnState.WeaponEquip;
@@ -218,7 +218,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		if (!have_buy)
 		{
 			label_btn_buy_normal.Text = "Buy";
-			label_btn_buy_press.Text = "Buy";
+			label_btn_buy_press.Text = "...";
 			btn_buy.gameObject.SetActiveRecursive(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.RoleBuy;
@@ -231,7 +231,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		else if (!have_equip)
 		{
 			label_btn_buy_normal.Text = "Equip";
-			label_btn_buy_press.Text = "Equip";
+			label_btn_buy_press.Text = "...";
 			btn_buy.gameObject.SetActiveRecursive(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.RoleEquip;

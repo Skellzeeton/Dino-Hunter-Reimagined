@@ -37,7 +37,7 @@ public class PopupWeaponUpdateBuy : MonoBehaviour
 		if (label_value_normal != null && label_value_press != null && label_value_disable != null)
 		{
 			label_value_normal.Text = m_price.ToString();
-			label_value_press.Text = "";
+			label_value_press.Text = "...";
 			label_value_disable.Text = m_price.ToString();
 		}
 		if (img_normal != null && img_press != null && img_disable != null)
@@ -69,13 +69,13 @@ public class PopupWeaponUpdateBuy : MonoBehaviour
 		if (label_text_normal != null && label_text_press != null && label_text_disable != null)
 		{
 			label_text_normal.Text = m_text;
-			label_text_press.Text = m_text;
+			label_text_press.Text = "...";
 			label_text_disable.Text = m_text;
 		}
 		if (label_value_normal != null && label_value_press != null && label_value_disable != null)
 		{
 			label_value_normal.Text = string.Empty;
-			label_value_press.Text = string.Empty;
+			label_value_press.Text = "...";
 			label_value_disable.Text = string.Empty;
 		}
 		if (img_normal != null && img_press != null && img_disable != null)

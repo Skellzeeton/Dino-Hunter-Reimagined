@@ -852,7 +852,6 @@ public new void FixedUpdate()
 		{
 			return true;
 		}
-		PlayAudio("UI_Skill_click");
 		return false;
 	}
 
@@ -860,7 +859,6 @@ public new void FixedUpdate()
 	{
 		m_fSkillCDcount = m_fSkillCD;
 		iGameUIBase gameUI = base.m_GameScene.GetGameUI();
-		PlayAudio("UI_Skill_ready");
 		if (gameUI != null)
 		{
 			gameUI.FinishSkillCD();

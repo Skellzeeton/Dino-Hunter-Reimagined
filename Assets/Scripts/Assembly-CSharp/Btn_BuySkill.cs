@@ -40,7 +40,7 @@ public class Btn_BuySkill : MonoBehaviour
 		img_crystal_normal.texture = string.Empty;
 		img_crystal_press.texture = string.Empty;
 		label_price_normal.Text = "UNLOCK";
-		label_price_press.Text = "UNLOCK";
+		label_price_press.Text = "...";
 	}
 
 	public void SetStateBuy()
@@ -51,7 +51,7 @@ public class Btn_BuySkill : MonoBehaviour
 		img_crystal_normal.texture = string.Empty;
 		img_crystal_press.texture = string.Empty;
 		label_price_normal.Text = "LEARN";
-		label_price_press.Text = "LEARN";
+		label_price_press.Text = "...";
 	}
 
 	public void SetStateUpdate()
@@ -62,7 +62,7 @@ public class Btn_BuySkill : MonoBehaviour
 		img_crystal_normal.texture = string.Empty;
 		img_crystal_press.texture = string.Empty;
 		label_price_normal.Text = "UPGRADE";
-		label_price_press.Text = "UPGRADE";
+		label_price_press.Text = "...";
 	}
 
 	public void SetStateDisable()
@@ -72,7 +72,7 @@ public class Btn_BuySkill : MonoBehaviour
 		img_crystal_normal.texture = string.Empty;
 		img_crystal_press.texture = string.Empty;
 		label_price_normal.Text = string.Empty;
-		label_price_press.Text = string.Empty;
+		label_price_press.Text = "...";
 	}
 
 	public StateButtonSkill GetStateBtnSkill()

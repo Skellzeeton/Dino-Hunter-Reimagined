@@ -25,7 +25,7 @@ public class PopupAddBtnBuy : MonoBehaviour
 	public void SetBtnText(int m_price, UnitType m_unit_type)
 	{
 		label_value_normal.Text = m_price.ToString();
-		label_value_press.Text = m_price.ToString();
+		label_value_press.Text = "...";
 		switch (m_unit_type)
 		{
 		case UnitType.Gold:

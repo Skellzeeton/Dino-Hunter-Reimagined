@@ -62,9 +62,9 @@ public class Top_Bar : MonoBehaviour
 		gold = m_gold;
 		crystal = m_crystal;
 		label_level.GetComponent<TUILabel>().Text = "LV. " + level;
-		label_exp.GetComponent<TUILabel>().Text = "E. " + exp.ToString();
-		label_gold.GetComponent<TUILabel>().Text = "G. " + gold.ToString();
-		label_crystal.GetComponent<TUILabel>().Text = "C. " + crystal.ToString();
+		label_exp.GetComponent<TUILabel>().Text = exp.ToString();
+		label_gold.GetComponent<TUILabel>().Text = gold.ToString();
+		label_crystal.GetComponent<TUILabel>().Text = crystal.ToString();
 		if (level_exp == 0)
 		{
 			img_exp.transform.localPosition = new Vector3(img_exp_normal_position.x + 90f, img_exp_normal_position.y, img_exp_normal_position.z);
@@ -90,7 +90,7 @@ public class Top_Bar : MonoBehaviour
 	{
 		exp = m_exp;
 		level_exp = m_level_exp;
-		label_exp.GetComponent<TUILabel>().Text = "E. " + exp.ToString();
+		label_exp.GetComponent<TUILabel>().Text = exp.ToString();
 		if (m_level_exp == 0)
 		{
 			img_exp.transform.localPosition = new Vector3(img_exp_normal_position.x + 90f, img_exp_normal_position.y, img_exp_normal_position.z);
@@ -111,13 +111,13 @@ public class Top_Bar : MonoBehaviour
 	public void SetGoldValue(int m_gold)
 	{
 		gold = m_gold;
-		label_gold.GetComponent<TUILabel>().Text  = "G. " + gold.ToString();
+		label_gold.GetComponent<TUILabel>().Text  = gold.ToString();
 	}
 
 	public void SetCrystalValue(int m_crystal)
 	{
 		crystal = m_crystal;
-		label_crystal.GetComponent<TUILabel>().Text = "C. " + crystal.ToString();
+		label_crystal.GetComponent<TUILabel>().Text = crystal.ToString();
 	}
 
 	public void SetRole(int m_role_id)
