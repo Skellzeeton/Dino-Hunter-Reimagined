@@ -41,7 +41,7 @@ public class CCharBossTyrannosaurus : CCharBoss
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "roar"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "roar"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_MoveRoar, "roar"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "run"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "tyran_rush"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "attack01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "attack02"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "attack03"));

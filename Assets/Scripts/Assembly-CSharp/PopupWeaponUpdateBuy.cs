@@ -59,7 +59,7 @@ public class PopupWeaponUpdateBuy : MonoBehaviour
 		if (label_text_normal != null && label_text_press != null && label_text_disable != null)
 		{
 			label_text_normal.Text = string.Empty;
-			label_text_press.Text = "...";
+			label_text_press.Text = "";
 			label_text_disable.Text = string.Empty;
 		}
 	}

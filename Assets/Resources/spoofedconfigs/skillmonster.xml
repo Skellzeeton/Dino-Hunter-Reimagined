@@ -265,7 +265,7 @@
 		-->
 		
 		<!-- ����Ŀ��0.1s[����0-3] -->
-		<skill id="50000" lvl="1" type="0" action="1" rangetype="0" rangetypevalue="0,3" skillmode="3" skillmodevalue="0.1" />	
+		<skill id="50000" lvl="1" type="0" action="1" rangetype="0" rangetypevalue="0,4" skillmode="3" skillmodevalue="0.1" />	
 		<!-- ��ͨ˺ҧ 100�˺�-->
 		<skill id="50001" lvl="1" type="0" action="1000" rangetype="0" rangetypevalue="0,4" skillmode="1" skillmodevalue="0.5" func="5" valuex="100" valuey="0"/>
 		
@@ -635,17 +635,17 @@
 		
 		<!-- ***********************************�������������� start by 50000************************************************************************* -->
 		<!-- ��ͨ���� -->
-		<combo id="50000" skilllist="50000,50001" coldown="4" freezetime="2" usecount='0'/> 
+		<combo id="50000" skilllist="50000,50001" coldown="4" freezetime="0" usecount='0'/> 
 		<!-- ��ʯͷ -->
 		<combo id="50001" skilllist="50002,50003" coldown="6" freezetime="2" usecount='0'/> 
 		<!-- ��ײ -->
-		<combo id="50002" skilllist="50004,50005,50001" coldown="8" freezetime="2.5" usecount='0'/>
+		<combo id="50002" skilllist="50004,50005,50001" coldown="12" freezetime="0.5" usecount='0'/>
 		<!-- 2��������ײ -->
-		<combo id="50003" skilllist="50004,50005,50004,50005,50001" coldown="12" freezetime="3.5" usecount='0'/>
+		<combo id="50003" skilllist="50004,50005,50004,50005,50001" coldown="16" freezetime="1.5" usecount='0'/>
 		<!-- 3��������ײ -->
-		<combo id="50004" skilllist="50004,50005,50004,50005,50004,50005,50001" coldown="15" freezetime="4" usecount='0'/>
+		<combo id="50004" skilllist="50004,50005,50004,50005,50004,50005,50001" coldown="15" freezetime="0" usecount='0'/>
 		<!-- ��ײ��ʯͷ -->
-		<combo id="50005" skilllist="50004,50005,50001,50002,50003" coldown="8" freezetime="3" usecount='0'/>
+		<combo id="50005" skilllist="50004,50005,50001,50002,50003" coldown="12" freezetime="0.75" usecount='0'/>
 		<!-- С�ֳ�ײ -->
 		<combo id="50006" skilllist="50008,50009" coldown="8" freezetime="2.5" usecount='0'/>
 		<!-- С�ֳ�ײ -->

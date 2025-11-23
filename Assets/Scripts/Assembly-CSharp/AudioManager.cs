@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        audioSource = GetComponent<AudioSource>(); // Assumes the AudioSource is attached to this GameObject
+        audioSource = GetComponent<AudioSource>();
         LoadVolumeSettings();
     }
 
