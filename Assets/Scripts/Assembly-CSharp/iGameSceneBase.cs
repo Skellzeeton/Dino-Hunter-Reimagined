@@ -951,12 +951,6 @@ public class iGameSceneBase
 			case "SceneLava2":
 				return "BGM_Map03";
 			
-			case "SceneGorge 1":
-			case "SceneForest 4":
-			case "SceneForest_Rainy":
-			case "Yulin_shaguai02_night":
-				return "BGM_Map05";
-			
 			case "Yulin_shouwei01":
 			case "Yulin_shouwei02":
 				return "BGM_Map01";

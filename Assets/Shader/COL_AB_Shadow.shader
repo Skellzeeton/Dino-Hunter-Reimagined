@@ -4,9 +4,9 @@ Properties {
  _MainTex ("MainTex(RGB)", 2D) = "" {}
 }
 SubShader { 
- Tags { "QUEUE"="Transparent" }
+ Tags { "QUEUE"="Transparent+1" }
  Pass {
-  Tags { "QUEUE"="Transparent" }
+  Tags { "QUEUE"="Transparent+1" }
   Color [_Color]
   ZWrite Off
   Blend SrcAlpha OneMinusSrcAlpha
