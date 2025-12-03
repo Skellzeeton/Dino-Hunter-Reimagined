@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class iMaterialBrightnessSetter : MonoBehaviour
 {
-    public static float Brightness = 1.75f;
+    public static float Brightness = 1.25f;
     private Renderer m_Renderer;
     private void Awake()
     {
