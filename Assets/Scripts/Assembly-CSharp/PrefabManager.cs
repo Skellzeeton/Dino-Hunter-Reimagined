@@ -210,10 +210,9 @@ public class PrefabManager
 		m_dictData.Add(1060, "Artist/Effect/Weapon/ammo_rpg/ammo_rpg_03_pfb");
 		m_dictData.Add(1061, "Artist/Effect/Weapon/ammo_rpg/ammo_rpg_01_pfb");
 		m_dictData.Add(1062, "Artist/Effect/Weapon/ammo_rpg/ammo_rpg_02_pfb");
-		m_dictData.Add(1100, "Artist/Effect/Weapon/hit_fire_01/hit_fire_pfb");
+		m_dictData.Add(1063, "Artist/Effect/Weapon/weapon_020/weapon_020_01");
 		m_dictData.Add(1101, "Artist/Effect/Weapon/hit_flash_01/hit_flash_01_pfb");
 		m_dictData.Add(1102, "Artist/Effect/Weapon/hit_ice_01/hit_ice_01_pfb");
-		m_dictData.Add(1103, "Artist/Effect/Weapon/hit_fire_01/hit_fire_02_pfb");
 		m_dictData.Add(1104, "Artist/Effect/Weapon/hit_flash_01/hit_flash_02_pfb");
 		m_dictData.Add(1105, "Artist/Effect/Weapon/hit_ice_01/hit_ice_02_pfb");
 		m_dictData.Add(1106, "Artist/Effect/Weapon/weapon_019_020/weapon_019_020_03_pfb");
@@ -227,8 +226,6 @@ public class PrefabManager
 		m_dictData.Add(1114, "Artist/Effect/Weapon/weapon_030/weapon_030_03_pfb");
 		m_dictData.Add(1115, "Artist/Effect/Weapon/hit_01/hit_01_02_pfb");
 		m_dictData.Add(1116, "Artist/Effect/Weapon/hit_01/hit_01_pfb");
-		m_dictData.Add(1150, "Artist/Effect/Weapon/staff_fire/staff_fire_pfb");
-		m_dictData.Add(1151, "Artist/Effect/Weapon/firecrossbow/fireCrossbow_pfb");
 		m_dictData.Add(1200, "Artist/Effect/Skill/HP_UP/HP_up_start");
 		m_dictData.Add(1201, "Artist/Effect/Skill/HP_UP/HP_up_keep");
 		m_dictData.Add(1202, "Artist/Effect/Skill/power_up/power_up_start");

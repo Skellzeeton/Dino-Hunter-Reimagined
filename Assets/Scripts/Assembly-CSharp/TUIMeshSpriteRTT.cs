@@ -5,6 +5,6 @@ public class TUIMeshSpriteRTT : TUIMeshSprite
 {
 	protected override Material CreateUITextureMaterial()
 	{
-		return new Material(Shader.Find("Triniti/Particle/AA_COL_DO_RT"));
+		return new Material(Shader.Find("Triniti/Sprite"));
 	}
 }

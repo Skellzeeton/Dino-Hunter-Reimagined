@@ -63,7 +63,7 @@
 		<RewardMaterial material="100010,800006,800009" mincount="2,-10,-25" maxcount="6,1,1"/>
 				<recommand recommandtype="1" recommandid="3" recommandlevel="1" islimit="false" />
 	</gamelevel>
-	<gamelevel id="1010" BGM="BGM_Map01" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="42" desc="Hunt Triterrortops x 1" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="1010" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="42" desc="Hunt Triterrortops x 1" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit> 
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
@@ -82,13 +82,13 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100005,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="29" gold="28" desc="Snatch and defend two Dino Eggs&#xA;EGG HP: 75" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="29" gold="28" desc="Snatch and defend a Dino Egg&#xA;EGG HP: 45" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006,700006,800009" mincount="4,0,-25" maxcount="6,2,1"/>
 	</gamelevel>
-	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2004001,2004002,2004003,2004004" task="2004" sp_cfg_ground="40111" exp="30" gold="15" desc="Kill all dinos" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2004001,2004002" task="2004" sp_cfg_ground="40111" exp="30" gold="15" desc="Kill all dinos" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="12"/>
 		</MonsterNumLimit>

@@ -35,8 +35,6 @@ public class iGameSceneBase
 		Material
 	}
 	
-	private float m_fLastExpSoundTime = -1f;
-
 	protected class MonsterNumInfo : MonsterNumLimitInfo
 	{
 		public int curNum;
@@ -2665,11 +2663,7 @@ public class iGameSceneBase
 		{
 			WorldToScreenPointNGUI(v3Pos, ref v3Pos);
 			m_GameUI.AddExpText(v3Pos, nExp);
-			if (Time.time - m_fLastExpSoundTime >= 0.02f)
-			{
-				CUISound.GetInstance().Play("UI_Exp_get");
-				m_fLastExpSoundTime = Time.time;
-			}
+			CUISound.GetInstance().Play("UI_Exp_get");
 		}
 	}
 
@@ -3065,7 +3059,7 @@ public class iGameSceneBase
 				m_User.SetFire(false);
 				m_User.MoveStop();
 			}
-			Time.timeScale = 0f;
+			Time.timeScale = 0.01f;
 			if (OpenClikPlugin.IsAdReady()) OpenClikPlugin.Show(false);
 			CSoundScene.GetInstance().StopBGM();
 			CSoundScene.GetInstance().StopAmbienceBGM();

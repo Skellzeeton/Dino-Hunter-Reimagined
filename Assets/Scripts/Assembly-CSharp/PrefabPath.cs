@@ -273,6 +273,8 @@ public class PrefabPath
 	public const int bullet_rocket_ball = 1061;
 
 	public const int bullet_rocket_bird = 1062;
+	
+	public const int fire_iron_cannon = 1063;
 
 	public const int hit_fire = 1100;
 
