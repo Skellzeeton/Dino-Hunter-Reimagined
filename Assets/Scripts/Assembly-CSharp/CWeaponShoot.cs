@@ -33,7 +33,6 @@ protected override void OnFire(CCharPlayer player)
     ConsumeBullet(player);
     ShowFireLight(true);
 
-    // UI expand
     if (m_GameScene.IsMyself(player))
     {
         iGameUIBase ui = m_GameScene.GetGameUI();
@@ -44,16 +43,8 @@ protected override void OnFire(CCharPlayer player)
 
     float maxDist = 10000f;
     m_pWeaponLvlInfo.GetAtkModeValue(0, ref maxDist);
-
-    // -----------------------------
-    // NEW: TRUE WEAPON SHOOT LOGIC
-    // -----------------------------
-
-    // 1. Get muzzle
     Transform muzzle = player.GetShootMouseTf();
     Vector3 muzzlePos = muzzle.position;
-
-    // 2. Raycast from camera to crosshair (to see what the player is aiming at)
     Ray camRay = Camera.main.ScreenPointToRay(m_GameState.GetScreenCenterV3());
     RaycastHit aimHit;
 
@@ -61,12 +52,10 @@ protected override void OnFire(CCharPlayer player)
 
     if (Physics.Raycast(camRay, out aimHit, maxDist, -1543503872))
     {
-        // If crosshair hits something, that is our target
         targetPoint = aimHit.point;
     }
     else
     {
-        // Crosshair hits nothing → shoot straight ahead from camera
         targetPoint = camRay.origin + camRay.direction * maxDist;
     }
     
@@ -76,60 +65,36 @@ protected override void OnFire(CCharPlayer player)
 
     if (Physics.Raycast(camToMuzzle, out obstruction, muzzleDistance, -1543503872))
     {
-	    // Obstruction between camera and muzzle → start bullet at obstruction point
-	    muzzlePos = obstruction.point - camToMuzzle.direction * 0.1f; // small offset to avoid sticking inside wall
+	    muzzlePos = obstruction.point - camToMuzzle.direction * 0.1f;
     }
-    
-    // --------------------------------------------------
-// FIXED: Camera-based alignment gating (Unity 2017 compatible)
-// --------------------------------------------------
     Vector3 cameraForward = camRay.direction.normalized;
     Vector3 muzzleToTarget = (targetPoint - muzzlePos).normalized;
-
-// Dot = how well the camera aim matches the muzzle → target direction
     float camAlignment = Vector3.Dot(cameraForward, muzzleToTarget);
-
-// If camera aim and muzzle→target direction differ too much,
-// that means the camera selected something behind/side of the weapon.
-    if (camAlignment < 0.75f)   // 0.75 = ~40° cone, adjust if needed
+    if (camAlignment < 0.75f)
     {
-	    // Force shoot straight from camera aim instead
 	    targetPoint = muzzlePos + cameraForward * maxDist;
     }
-
-
-    // 3. Now build a REAL bullet ray: from weapon muzzle → target point
     Vector3 shootDir = (targetPoint - muzzlePos).normalized;
     Ray weaponRay = new Ray(muzzlePos, shootDir);
-
     RaycastHit hit;
     if (!Physics.Raycast(weaponRay, out hit, maxDist, -1543503872))
     {
-        // No hit → still add fire effect
         m_GameScene.AddFireEffect(muzzle, shootDir, m_pWeaponLvlInfo.nFire, 2f);
         player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
         return;
     }
-
-    // 4. Add bullet tracer from muzzle to impact
     float travelDist = (hit.point - muzzlePos).magnitude;
     if (travelDist > 2f)
     {
         m_GameScene.AddBulletTrack(muzzlePos, hit.point, m_pWeaponLvlInfo.nBullet);
     }
-
-    // 5. Fire effect
     m_GameScene.AddFireEffect(muzzle, shootDir, m_pWeaponLvlInfo.nFire, 2f);
     player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
-
-    // 6. World object hit
     if (hit.transform.gameObject.layer == 31 || hit.transform.gameObject.layer == 29)
     {
         m_GameScene.AddHitEffect(hit.point, hit.normal, m_pWeaponLvlInfo.nHit);
         return;
     }
-
-    // 7. Mob hit
     if (hit.transform.gameObject.layer == 26)
     {
         CCharMob mob = hit.transform.root.GetComponent<CCharMob>();

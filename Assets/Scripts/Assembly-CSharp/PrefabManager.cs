@@ -96,6 +96,9 @@ public class PrefabManager
 		m_dictData.Add(51, "Artist/Model/Character/model_triceratops1");
 		m_dictData.Add(52, "Artist/Model/Character/model_triceratops2");
 		m_dictData.Add(53, "Artist/Model/Character/model_triceratops3");
+		m_dictData.Add(54, "Artist/Model/Character/model_triceratops4");
+		m_dictData.Add(55, "Artist/Model/Character/model_triceratops5");
+		m_dictData.Add(56, "Artist/Model/Character/model_triceratops6");
 		m_dictData.Add(60, "Artist/Model/Character/model_tyrannosaurus_boss");
 		m_dictData.Add(70, "Artist/Model/Character/model_ridgebackdragon_boss");
 		m_dictData.Add(10001, "Artist/Model/Character/model_ankylosaur1");

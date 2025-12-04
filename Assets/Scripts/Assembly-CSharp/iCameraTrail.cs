@@ -30,10 +30,10 @@ public class iCameraTrail : iCamera
     private Vector3 lastTargetPos = Vector3.zero;
     private Vector3 movementOffset = Vector3.zero;
     private float movementOffsetIntensity = 0.375f;
-    private float movementOffsetSmoothing = 3f;
+    private float movementOffsetSmoothing = 2.25f;
 
-    protected float yawSmoothTime = 0.03f;
-    protected float pitchSmoothTime = 0.03f;
+    protected float yawSmoothTime = 0.0222f;
+    protected float pitchSmoothTime = 0.0222f;
     private float yawSmoothVelocity = 0f;
     private float pitchSmoothVelocity = 0f;
 

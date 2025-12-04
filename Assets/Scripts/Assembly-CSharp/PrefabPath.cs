@@ -58,6 +58,12 @@ public class PrefabPath
 
 	public const int model_triceratops3 = 53;
 
+	public const int model_triceratops4 = 54;
+
+	public const int model_triceratops5 = 55;
+
+	public const int model_triceratops6 = 56;
+
 	public const int model_tyrannosaurus_boss = 60;
 
 	public const int model_ridgebackdragon_boss = 70;
