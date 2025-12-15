@@ -370,14 +370,6 @@ public class CControlWindows : CControlBase
 			m_User.SwitchWeapon(num3);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
-		foreach (CCharMob item in m_GameScene.GetMobEnumerator())
-		{
-			CCharBoss cCharBoss = item as CCharBoss;
-			if (cCharBoss != null)
-			{
-				cCharBoss.SetReadyToBlack(true, 2000f);
-			}
-		}
 	}
 
 	public override void LateUpdate(float deltaTime)
