@@ -370,20 +370,6 @@ public class CControlWindows : CControlBase
 			m_User.SwitchWeapon(num3);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
-		/*if (Input.GetKeyDown(KeyCode.Alpha9))
-		{
-			Debug.Log("press 9 key");
-			m_GameScene.FinishGame(true);
-			if (CGameNetManager.GetInstance().IsConnected())
-			{
-				CGameNetSender.GetInstance().SendMsg_GAME_OVER(true);
-			}
-		}*/
-		if (!Input.GetKeyDown(KeyCode.Alpha0))
-		{
-			return;
-		}
-		Debug.Log("press 0 key");
 		foreach (CCharMob item in m_GameScene.GetMobEnumerator())
 		{
 			CCharBoss cCharBoss = item as CCharBoss;

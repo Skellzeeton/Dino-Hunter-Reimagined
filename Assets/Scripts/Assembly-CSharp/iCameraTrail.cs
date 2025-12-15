@@ -32,8 +32,8 @@ public class iCameraTrail : iCamera
     private float movementOffsetIntensity = 0.375f;
     private float movementOffsetSmoothing = 2.25f;
 
-    protected float yawSmoothTime = 0.0222f;
-    protected float pitchSmoothTime = 0.0222f;
+    protected float yawSmoothTime = 0.02857f;
+    protected float pitchSmoothTime = 0.02857f;
     private float yawSmoothVelocity = 0f;
     private float pitchSmoothVelocity = 0f;
 

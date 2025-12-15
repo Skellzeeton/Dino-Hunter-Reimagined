@@ -144,8 +144,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6872f6cb25f7a124facc697cdbbc419c, type: 3}
   - {fileID: 8300000, guid: a95fc16447ef74835a6b9ec8936c0994, type: 3}
   probability:
-  - 0.35
-  - 0.35
+  - 0.25
+  - 0.25
+  - 0.2
   volumOffset: 0.05
   pitchOffset: 0.02
   loopMode: 0
@@ -156,3 +157,5 @@ MonoBehaviour:
   maxIntervalTime: 0
   intervalRangeMin: 0
   intervalRangeMax: 0
+  forceDeleteOnSceneChange: 0
+  preserveOnSceneChange: 0
