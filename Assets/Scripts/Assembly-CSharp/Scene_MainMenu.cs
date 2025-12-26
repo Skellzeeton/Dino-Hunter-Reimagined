@@ -99,10 +99,10 @@ public class Scene_MainMenu : MonoBehaviour
 	public PopupNewHelp popup_new_help;
 	
 	private const float MinMusicVolume = 0f;
-	private const float MaxMusicVolume = 1f;
+	private const float MaxMusicVolume = 0.5f;
 
 	private const float MinSFXVolume = 0f;
-	private const float MaxSFXVolume = 1f;
+	private const float MaxSFXVolume = 0.5f;
 
 	private const float VolumeDecrement = 0.1f;
 
@@ -196,7 +196,7 @@ public class Scene_MainMenu : MonoBehaviour
 			}
 			else
 			{
-				currentSFXVolume = 1f;
+				currentSFXVolume = 0.5f;
 				PlayerPrefs.SetFloat("SFXVolume", currentSFXVolume);
 				PlayerPrefs.Save();
 			}
@@ -924,7 +924,7 @@ public class Scene_MainMenu : MonoBehaviour
                 resetCounter++;
                 if (resetCounter >= 2)
                 {
-                    current = 1f;
+                    current = 0.5f;
                     resetCounter = 0;
                 }
                 else

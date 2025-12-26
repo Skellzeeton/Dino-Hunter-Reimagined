@@ -34,13 +34,7 @@ public class Btn_BuySkill : MonoBehaviour
 
 	public void SetStateUnlock()
 	{
-		state_btnskill = StateButtonSkill.State_Unlock;
-		base.gameObject.SetActiveRecursive(true);
-		base.gameObject.GetComponent<TUIButtonClick>().Show();
-		img_crystal_normal.texture = string.Empty;
-		img_crystal_press.texture = string.Empty;
-		label_price_normal.Text = "UNLOCK";
-		label_price_press.Text = "...";
+		base.gameObject.SetActiveRecursive(false);
 	}
 
 	public void SetStateBuy()

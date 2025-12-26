@@ -801,43 +801,6 @@ public class iGameUIBase : MonoBehaviour
 		}
 	}
 
-	public void ShowIAPUI(bool bShow, int nParam = -1)
-	{
-		if (m_UIManager == null || m_UIManager.mIAPDialog == null)
-		{
-			return;
-		}
-		m_UIManager.mIAPDialog.Show(bShow);
-		if (m_UIManager.mScreenMask != null)
-		{
-			m_UIManager.mScreenMask.ShowMask(bShow, -9f, -1);
-		}
-		if (bShow)
-		{
-			m_UIManager.mIAPDialog.SetTitleParam(nParam);
-			for (int i = 0; i < 3; i++)
-			{
-				CIAPInfo iAPInfoBySeq = m_GameData.GetIAPInfoBySeq(i);
-				if (iAPInfoBySeq != null)
-				{
-					gyUIIAPUnit iAPUnit = m_UIManager.mIAPDialog.GetIAPUnit(i);
-					if (iAPUnit != null)
-					{
-						iAPUnit.SetIAPID(iAPInfoBySeq.nID);
-						iAPUnit.SetButtonLabel("$" + iAPInfoBySeq.fMoney);
-						iAPUnit.SetGainValue(iAPInfoBySeq.nValue.ToString());
-						iAPUnit.SetIcon(iAPInfoBySeq.sIcon);
-					}
-				}
-			}
-			AndroidReturnPlugin.instance.SetCurFunc(Event_CloseIAPDialog);
-		}
-		else
-		{
-			AndroidReturnPlugin.instance.ClearFunc(Event_CloseIAPDialog);
-		}
-	}
-
 	public void ShowMessageBox(string str, gyUIMessageBox.kMessageBoxType msgboxtype = gyUIMessageBox.kMessageBoxType.OK, gyUIEventRegister.OnClickFunc onok = null)
 	{
 		if (!(m_UIManager == null) && !(m_UIManager.mMessageBox == null))
@@ -1265,17 +1228,6 @@ public class iGameUIBase : MonoBehaviour
 			gyUIEventRegister2 = GetEventRegister(m_UIManager.mGamePauseDialog.mbtnVillage);
 			gyUIEventRegister2.RegisterOnClick(Event_Pause_GoToVillage);
 		}
-		if (m_UIManager.mIAPDialog != null)
-		{
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.mClose);
-			gyUIEventRegister2.RegisterOnClick(Event_CloseIAPDialog);
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.arrUIIAPUnit[0].mButton);
-			gyUIEventRegister2.RegisterOnClick(Event_PurchaseIAP1);
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.arrUIIAPUnit[1].mButton);
-			gyUIEventRegister2.RegisterOnClick(Event_PurchaseIAP2);
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.arrUIIAPUnit[2].mButton);
-			gyUIEventRegister2.RegisterOnClick(Event_PurchaseIAP3);
-		}
 		if (m_UIManager.mStashFullDialog != null)
 		{
 			gyUIEventRegister2 = GetEventRegister(m_UIManager.mStashFullDialog.mbtnClose);
@@ -1359,17 +1311,6 @@ public class iGameUIBase : MonoBehaviour
 			gyUIEventRegister2.RegisterOnClick(Event_Pause_GoToMap);
 			gyUIEventRegister2 = GetEventRegister(m_UIManager.mGamePauseDialog.mbtnVillage);
 			gyUIEventRegister2.RegisterOnClick(Event_Pause_GoToVillage);
-		}
-		if (m_UIManager.mIAPDialog != null)
-		{
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.mClose);
-			gyUIEventRegister2.RegisterOnClick(Event_CloseIAPDialog);
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.arrUIIAPUnit[0].mButton);
-			gyUIEventRegister2.RegisterOnClick(Event_PurchaseIAP1);
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.arrUIIAPUnit[1].mButton);
-			gyUIEventRegister2.RegisterOnClick(Event_PurchaseIAP2);
-			gyUIEventRegister2 = GetEventRegister(m_UIManager.mIAPDialog.arrUIIAPUnit[2].mButton);
-			gyUIEventRegister2.RegisterOnClick(Event_PurchaseIAP3);
 		}
 		if (m_UIManager.mStashFullDialog != null)
 		{
@@ -1756,38 +1697,7 @@ public class iGameUIBase : MonoBehaviour
 
 	protected void Event_Revive()
 	{
-		CUISound.GetInstance().Play("UI_Button");
-		CCharUser user = m_GameScene.GetUser();
-		if (user == null || !user.isDead || !m_GameScene.isWaitingRevive)
-		{
-			return;
-		}
-		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
-		if (dataCenter.Crystal < 10)
-		{
-			if (!m_GameScene.m_bMutiplyGame)
-			{
-				m_GameScene.StartIAPPurchase(10 - dataCenter.Crystal);
-			}
-		}
-		else if (CGameNetManager.GetInstance().IsConnected())
-		{
-			CGameNetManager.CNetUserInfo netUserInfo = CGameNetManager.GetInstance().GetNetUserInfo();
-			if (netUserInfo != null && !netUserInfo.m_bRevive)
-			{
-				netUserInfo.m_bRevive = true;
-				CGameNetSender.GetInstance().SendMsg_PLAYER_REVIVE_REQUEST();
-			}
-		}
-		else
-		{
-			m_GameScene.FinishRevive();
-			m_GameScene.ReviveGame();
-		}
+		return;
 	}
 
 	protected void Event_Continue()
@@ -2031,67 +1941,7 @@ public class iGameUIBase : MonoBehaviour
 
 	protected void Event_PurchaseBullet()
 	{
-		CUISound.GetInstance().Play("UI_Button");
-		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
-		if (dataCenter.Crystal < 10)
-		{
-			if (!m_GameScene.m_bMutiplyGame)
-			{
-				m_GameScene.StartIAPPurchase(10 - dataCenter.Crystal);
-			}
-			return;
-		}
-		dataCenter.AddCrystal(-10);
-		CAchievementManager.GetInstance().AddAchievement(13);
-		CTrinitiCollectManager.GetInstance().SendConsumeCrystal(10, "buybullet", -1, -1);
-		dataCenter.Save();
-		CUISound.GetInstance().Play("UI_Crystal");
-		m_GameScene.FullWeaponBullet();
-		CFlurryManager.GetInstance().ConsumeCrystal(CFlurryManager.kConsumeType.Bullet);
-		if (m_GameScene.CurGameLevelInfo != null)
-		{
-			iGameApp.GetInstance().Flurry_PurchaseBullet(m_GameScene.CurGameLevelInfo.nID);
-		}
-	}
-
-	protected void Event_CloseIAPDialog()
-	{
-		CUISound.GetInstance().Play("UI_Cancle");
-		m_GameScene.FinishIAPPurchase();
-		AndroidReturnPlugin.instance.ClearFunc(Event_CloseIAPDialog);
-	}
-
-	protected void PurchaseIAP(int nIndex)
-	{
-		if (!(m_UIManager == null) && !(m_UIManager.mIAPDialog == null))
-		{
-			gyUIIAPUnit iAPUnit = m_UIManager.mIAPDialog.GetIAPUnit(nIndex);
-			if (!(iAPUnit == null) && iIAPManager.GetInstance().IsCanPurchase() && iServerIAPVerify.GetInstance().IsCanVerify())
-			{
-				m_GameScene.PurchaseIAP(iAPUnit.nIAPID);
-				ShowIAPUI(false);
-				ShowMessageBox("Waiting......", gyUIMessageBox.kMessageBoxType.None);
-			}
-		}
-	}
-
-	protected void Event_PurchaseIAP1()
-	{
-		PurchaseIAP(0);
-	}
-
-	protected void Event_PurchaseIAP2()
-	{
-		PurchaseIAP(1);
-	}
-
-	protected void Event_PurchaseIAP3()
-	{
-		PurchaseIAP(2);
+		return;
 	}
 
 	protected void Event_StashFullDialogClose()
@@ -2135,7 +1985,7 @@ public class iGameUIBase : MonoBehaviour
 		}
 		else
 		{
-			m_GameScene.StartIAPPurchase(stashCapacity2.nPrice - dataCenter.Crystal);
+			return;
 		}
 		ShowStashFullDialog(false);
 	}

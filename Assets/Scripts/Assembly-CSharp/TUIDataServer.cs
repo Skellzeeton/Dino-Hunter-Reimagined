@@ -7165,17 +7165,24 @@ public class TUIDataServer
 			tUIWeaponAttributeInfo.m_bCrystalWeapon = cWeaponInfoLevel.isCrystalPurchase;
 			tUIWeaponAttributeInfo.m_Mark = NewMarkType.None;
 			iServerVerify.CServerConfigInfo serverConfigInfo = iServerVerify.GetInstance().GetServerConfigInfo();
+			tUIWeaponAttributeInfo.m_bIsFree = false;
 			if (serverConfigInfo != null)
 			{
 				if (serverConfigInfo.IsGift(weaponInfo.nID))
 				{
 					tUIWeaponAttributeInfo.m_bActive = true;
-					tUIWeaponAttributeInfo.m_sActiveStr = "Buy tCrystals for the first time, and get this weapon for free.";
-					tUIWeaponAttributeInfo.m_bActiveCanGet = m_DataCenter.IsFreeWeaponID(weaponInfo.nID);
+					tUIWeaponAttributeInfo.m_bActiveCanGet = true;
+					tUIWeaponAttributeInfo.m_bIsFree = true;
+					tUIWeaponAttributeInfo.m_fDiscount = 1f;
+					tUIWeaponAttributeInfo.m_sActiveStr = "";
 				}
-				int nDiscount = 100;
-				serverConfigInfo.IsPriceOff(1, weaponInfo.nID, ref nDiscount);
-				tUIWeaponAttributeInfo.m_fDiscount = (float)nDiscount / 100f;
+				else
+				{
+					tUIWeaponAttributeInfo.m_bIsFree = false;
+					int nDiscount = 100;
+					serverConfigInfo.IsPriceOff(1, weaponInfo.nID, ref nDiscount);
+					tUIWeaponAttributeInfo.m_fDiscount = (float)nDiscount / 100f;
+				}
 			}
 			for (int i = 0; i < weaponInfo.GetLvlCount(); i++)
 			{

@@ -49,7 +49,7 @@
 		<RewardMaterial material="100009,800006,800009" mincount="2,-10,-25" maxcount="4,1,1"/>
 				<recommand recommandtype="1" recommandid="3" recommandlevel="1" islimit="false" />
 	</gamelevel>
-	<gamelevel id="1008" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" isskyscene="false" nav_plane="0" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="75" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 175" limitmelee="false">
+	<gamelevel id="1008" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" isskyscene="false" nav_plane="0" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="75" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 200" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>
@@ -94,13 +94,13 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100006,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 	</gamelevel>
-	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004,2005005,2005006,2005007" task="2005" sp_cfg_ground="40111" exp="30" gold="45" desc="Hunt Killosaurus x 8" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004,2005005,2005006,2005007" task="2005" sp_cfg_ground="40111" exp="30" gold="45" desc="Hunt Gloomwretch Killosaurus x 8" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="800"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100016,100017,8000011" mincount="-2,-2,-75" maxcount="1,1,1"/>
 	</gamelevel>
-	<gamelevel id="2006" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="31" gold="30" desc="Fend off 3 waves of Dinosaurs" limitmelee="false">
+	<gamelevel id="2006" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="31" gold="30" desc="Fend off 3 waves of Dinosaurs&#xA;Barricade Health: 150" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="14"/>
 		</MonsterNumLimit>

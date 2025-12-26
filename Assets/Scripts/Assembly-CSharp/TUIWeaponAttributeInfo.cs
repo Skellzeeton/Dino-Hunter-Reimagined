@@ -29,6 +29,8 @@ public class TUIWeaponAttributeInfo
 	public bool m_bActiveCanGet;
 
 	public NewMarkType m_Mark;
+	
+	public bool m_bIsFree;
 
 	public Dictionary<int, TUIWeaponLevelInfo> m_dictWeaponLevelInfo;
 

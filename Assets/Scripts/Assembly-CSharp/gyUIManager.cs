@@ -53,9 +53,7 @@ public class gyUIManager : MonoBehaviour
 	public gyUIPanelMaterial mPanelMaterial;
 
 	public gyUIGamePauseDialog mGamePauseDialog;
-
-	public gyUIIAPIngame mIAPDialog;
-
+	
 	public gyUIMessageBox mMessageBox;
 
 	public gyUIStashFullDialog mStashFullDialog;

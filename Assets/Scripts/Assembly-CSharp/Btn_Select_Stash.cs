@@ -137,7 +137,7 @@ public class Btn_Select_Stash : MonoBehaviour
 		if (m_count == 0)
 		{
 			label_count.Text = string.Empty;
-			img_mask.gameObject.SetActiveRecursive(true);
+			img_mask.gameObject.SetActiveRecursive(false);
 			img_mask.color = new Color(1f, 1f, 1f, 0.1f);
 			img_texture.color = new Color(1f, 1f, 1f, 0.3f);
 			img_quality.gameObject.SetActiveRecursive(true);

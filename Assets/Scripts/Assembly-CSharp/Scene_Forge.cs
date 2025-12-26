@@ -244,7 +244,6 @@ public class Scene_Forge : MonoBehaviour
 		{
 			if (m_event.GetControlSuccess())
 			{
-				//DoSceneChange(m_event.GetWparam(), "Scene_IAP");
 				return;
 			}
 			m_fade_in_time = 0f;
@@ -255,7 +254,6 @@ public class Scene_Forge : MonoBehaviour
 		{
 			if (m_event.GetControlSuccess())
 			{
-				DoSceneChange(m_event.GetWparam(), "Scene_Gold");
 				return;
 			}
 			m_fade_in_time = 0f;
@@ -288,7 +286,6 @@ public class Scene_Forge : MonoBehaviour
 		{
 			if (m_event.GetControlSuccess())
 			{
-				//DoSceneChange(m_event.GetWparam(), "Scene_IAP");
 				return;
 			}
 			m_fade_in_time = 0f;
@@ -506,11 +503,11 @@ public class Scene_Forge : MonoBehaviour
 		}
 		if (!(popup_weapon == null) && popup_weapon.m_curWeaponAttributeInfo != null)
 		{
-			if (popup_weapon.m_curWeaponAttributeInfo.m_bActive && popup_weapon.m_curWeaponAttributeInfo.m_bActiveCanGet)
+			if (popup_weapon.m_curWeaponAttributeInfo.m_bActive || popup_weapon.m_curWeaponAttributeInfo.m_bActiveCanGet || popup_weapon.m_curWeaponAttributeInfo.m_bIsFree)
 			{
 				int nID = popup_weapon.m_curWeaponAttributeInfo.m_nID;
 				int weaponType = (int)popup_weapon.m_curWeaponAttributeInfo.m_WeaponType;
-				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_GetActiveWeapon, nID, weaponType));
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_ClickUpgrade, nID, weaponType));
 			}
 			popup_weapon.CloseWeaponUpdate();
 			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseWeaponUpdate);

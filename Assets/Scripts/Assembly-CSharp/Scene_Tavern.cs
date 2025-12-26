@@ -382,30 +382,7 @@ public class Scene_Tavern : MonoBehaviour
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneTavern(TUIEvent.SceneTavernEventType.TUIEvent_Back));
 		}
 	}
-
-	public void TUIEvent_IAP(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneTavern(TUIEvent.SceneTavernEventType.TUIEvent_EnterIAP));
-		}
-	}
-
-	public void TUIEvent_Gold(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneTavern(TUIEvent.SceneTavernEventType.TUIEvent_EnterGold));
-		}
-	}
+	
 
 	public void TUIEvent_BtnGoldToCrystal(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{

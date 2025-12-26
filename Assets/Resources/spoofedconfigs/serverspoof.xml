@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <root>
+    <gift>
+        <!-- Weapons that are free -->
+        <node weaponid="20"/>
+        <node weaponid="24"/>
+        <node weaponid="25"/>
+        <node weaponid="27"/>
+        <node weaponid="29"/>
+        <node weaponid="32"/>
+        <node weaponid="34"/>
+    </gift>
     <discount>
         <!-- original data (except flamethrower obviously) -->
         <!-- <node type="1" id="27" discount="50"/>
         <node type="1" id="29" discount="50"/>
         <node type="1" id="34" discount="50"/> -->
-
         <node type="4" id="1002" discount="50"/>
         <node type="4" id="2001" discount="50"/>
         <node type="4" id="3001" discount="50"/>
         <node type="4" id="4001" discount="50"/>
         <node type="4" id="5001" discount="50"/>
         <node type="4" id="6001" discount="50"/>
-        <node type="1" id="20" discount="0"/>
-        <node type="1" id="25" discount="75"/>
-        <node type="1" id="34" discount="75"/>
     </discount>
-
     <worldmonster>
         <node mobid="19" dailymax="2" rate="4" ratetypelimit="0" refreshtime="0.6,0.6"/>
         <node mobid="20" dailymax="2" rate="4" ratetypelimit="0" refreshtime="0.6,0.6"/>
