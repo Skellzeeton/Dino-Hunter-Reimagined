@@ -146,7 +146,7 @@ public class iItemDynamic : iItem
 
         if (m_Rigidbody != null && m_GameScene != null &&
             base.transform.position.y <= m_fFloorHeight + m_Entity.transform.localPosition.y &&
-            m_Rigidbody.velocity.y > -0.2f && m_Rigidbody.velocity.y < 0.2f)
+            m_Rigidbody.linearVelocity.y > -0.2f && m_Rigidbody.linearVelocity.y < 0.2f)
         {
             m_Rigidbody.Sleep();
             Object.Destroy(m_Rigidbody);

@@ -42,12 +42,8 @@ public class Scene_Main : MonoBehaviour
 	private bool didTheThing;
 
 	private void Awake()
-	{
-		#if UNITY_ANDROID || UNITY_IOS
-    Application.targetFrameRate = 60;
-        #else
-    Application.targetFrameRate = 30;
-        #endif
+	{ 
+		Application.targetFrameRate = 60;
 		TUIDataServer.Instance().Initialize();
 		//global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMain>(TUIEvent_SetUIInfo);
 		label_text.Text = "touch to play";

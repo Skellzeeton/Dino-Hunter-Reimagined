@@ -26,17 +26,17 @@ public class TweenFOV : UITweener
 	{
 		get
 		{
-			return cachedCamera.fov;
+			return cachedCamera.fieldOfView;
 		}
 		set
 		{
-			cachedCamera.fov = value;
+			cachedCamera.fieldOfView = value;
 		}
 	}
 
 	protected override void OnUpdate(float factor, bool isFinished)
 	{
-		cachedCamera.fov = from * (1f - factor) + to * factor;
+		cachedCamera.fieldOfView = from * (1f - factor) + to * factor;
 	}
 
 	public static TweenFOV Begin(GameObject go, float duration, float to)

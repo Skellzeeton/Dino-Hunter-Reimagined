@@ -130,7 +130,7 @@ public class TUI : TUIInputHandleModel
 		TUITextureManager[] textureManagers = TextureManagers;
 		foreach (TUITextureManager tUITextureManager in textureManagers)
 		{
-			if (tUITextureManager.transform.GetChildCount() != 0)
+			if (tUITextureManager.transform.childCount != 0)
 			{
 				TUITextureInfo textureInfo = tUITextureManager.GetTextureInfo(name, isRetina);
 				if (null != textureInfo)
@@ -151,7 +151,7 @@ public class TUI : TUIInputHandleModel
 		TUITextureManager[] textureManagers = TextureManagers;
 		foreach (TUITextureManager tUITextureManager in textureManagers)
 		{
-			if (tUITextureManager.transform.GetChildCount() != 0)
+			if (tUITextureManager.transform.childCount != 0)
 			{
 				TUITextureInfo textureInfo = tUITextureManager.GetTextureInfo(name);
 				if (null != textureInfo)

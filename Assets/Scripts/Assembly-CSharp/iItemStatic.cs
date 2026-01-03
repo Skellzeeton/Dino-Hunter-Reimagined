@@ -59,9 +59,9 @@ public class iItemStatic : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (!(m_Rigidbody == null) && base.transform.position.y <= m_Entity.transform.localPosition.y && m_Rigidbody.velocity.y > -0.2f && m_Rigidbody.velocity.y < 0.2f)
+		if (!(m_Rigidbody == null) && base.transform.position.y <= m_Entity.transform.localPosition.y && m_Rigidbody.linearVelocity.y > -0.2f && m_Rigidbody.linearVelocity.y < 0.2f)
 		{
-			m_Rigidbody.drag = 10f;
+			m_Rigidbody.linearDamping = 10f;
 		}
 	}
 

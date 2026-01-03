@@ -169,7 +169,7 @@ public class UISlider : IgnoreTimeScale
 			float enter;
 			if (new Plane(mTrans.rotation * Vector3.back, mTrans.position).Raycast(ray, out enter))
 			{
-				Vector3 vector = mTrans.localPosition + mCol.center - mCol.extents;
+				Vector3 vector = mTrans.localPosition + mCol.center - mCol.size;
 				Vector3 vector2 = mTrans.localPosition - vector;
 				Vector3 vector3 = mTrans.InverseTransformPoint(ray.GetPoint(enter));
 				Vector3 vector4 = vector3 + vector2;

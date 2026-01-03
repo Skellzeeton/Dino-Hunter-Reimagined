@@ -235,7 +235,7 @@ public class CCameraRoam
 		}
 		m_fNear_Backup = m_MainCamera.nearClipPlane;
 		m_fFar_Backup = m_MainCamera.farClipPlane;
-		m_fFov_Backup = m_MainCamera.fov;
+		m_fFov_Backup = m_MainCamera.fieldOfView;
 	}
 
 	public void Restore()
@@ -256,7 +256,7 @@ public class CCameraRoam
 			}
 			m_MainCamera.nearClipPlane = m_fNear_Backup;
 			m_MainCamera.farClipPlane = m_fFar_Backup;
-			m_MainCamera.fov = m_fFov_Backup;
+			m_MainCamera.fieldOfView = m_fFov_Backup;
 		}
 	}
 }
