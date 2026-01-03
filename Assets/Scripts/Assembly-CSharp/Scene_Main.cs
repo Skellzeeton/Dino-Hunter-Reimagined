@@ -43,7 +43,6 @@ public class Scene_Main : MonoBehaviour
 
 	private void Awake()
 	{ 
-		Application.targetFrameRate = 60;
 		TUIDataServer.Instance().Initialize();
 		//global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMain>(TUIEvent_SetUIInfo);
 		label_text.Text = "touch to play";
