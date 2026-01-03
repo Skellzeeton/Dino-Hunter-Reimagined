@@ -9,6 +9,10 @@ public class TUIMainLevelInfo
     public List<TUISecondaryLevelInfo> secondary_level_info;
     public int secondary_level_id;
     public int[] level_goods_drop_list;
+    
+    public TUIRecommendRoleInfo recommend_role_info;
+    
+    public TUIRecommendWeaponInfo recommend_weapon_info;
 
     public TUIMainLevelInfo(int m_id, string m_title, MainLevelType m_type, int m_secondary_level_id, int[] m_level_goods_drop_list = null)
     {

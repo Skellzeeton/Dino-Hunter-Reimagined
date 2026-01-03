@@ -4664,8 +4664,7 @@ public class TUIDataServer
 				num4 = gameLevelGroupInfo.ltLevelList[gameLevelGroupInfo.ltLevelList.Count - 1];
 			}
 
-			TUIMainLevelInfo tUIMainLevelInfo = new TUIMainLevelInfo(wParam, gameLevelGroupInfo.sName,
-				(MainLevelType)gameLevelGroupInfo.nIcon, num4, list2.ToArray());
+			TUIMainLevelInfo tUIMainLevelInfo = new TUIMainLevelInfo(wParam, gameLevelGroupInfo.sName, (MainLevelType)gameLevelGroupInfo.nIcon, num4, list2.ToArray());
 			foreach (int ltLevel5 in gameLevelGroupInfo.ltLevelList)
 			{
 				GameLevelInfo gameLevelInfo4 = gameData3.GetGameLevelInfo(ltLevel5);
@@ -4676,7 +4675,6 @@ public class TUIDataServer
 
 				TUIRecommendRoleInfo tUIRecommendRoleInfo = null;
 				TUIRecommendWeaponInfo tUIRecommendWeaponInfo = null;
-				//Debug.Log("!!!!");
 				if (gameLevelInfo4.m_nRecommandType == 1)
 				{
 					CWeaponInfoLevel weaponInfo = gameData3.GetWeaponInfo(gameLevelInfo4.m_nRecommandID,
@@ -4755,7 +4753,6 @@ public class TUIDataServer
 					}
 				}
 
-				//Debug.Log("!!!!");
 				string sLevelDesc = gameLevelInfo4.sLevelDesc;
 				string introduce = "Exp: " + gameLevelInfo4.nRewardExp + "\nGold: " + gameLevelInfo4.nRewardGold;
 				List<TUIGoodsInfo> list3 = new List<TUIGoodsInfo>();

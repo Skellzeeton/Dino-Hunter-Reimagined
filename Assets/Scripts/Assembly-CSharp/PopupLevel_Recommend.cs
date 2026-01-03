@@ -105,13 +105,13 @@ public class PopupLevel_Recommend : MonoBehaviour
 		img_role.texture = string.Empty;
 		img_weapon.UseCustomize = false;
 		img_weapon.CustomizeTexture = null;
-		img_role.gameObject.SetActiveRecursive(false);
+		img_role.gameObject.SetActiveRecursively(false);
 		img_role.transform.localPosition = role_normal_pos;
-		img_weapon.gameObject.SetActiveRecursive(false);
+		img_weapon.gameObject.SetActiveRecursively(false);
 		img_weapon.transform.localPosition = weapon_normal_pos;
-		level_stars.gameObject.SetActiveRecursive(false);
+		level_stars.gameObject.SetActiveRecursively(false);
 		level_stars.transform.localPosition = stars_normal_pos;
-		btn_buy.gameObject.SetActiveRecursive(false);
+		btn_buy.gameObject.SetActiveRecursively(false);
 	}
 
 	public void SetRecommendWeapon(TUIRecommendWeaponInfo m_recommend_weapon)
@@ -139,17 +139,17 @@ public class PopupLevel_Recommend : MonoBehaviour
 			label_recommend_title.Text = "Recommended";
 		}
 		img_role.texture = string.Empty;
-		img_role.gameObject.SetActiveRecursive(false);
+		img_role.gameObject.SetActiveRecursively(false);
 		string weaponTexture = TUIMappingInfo.Instance().GetWeaponTexture(id);
 		SetCustomizeTexture(img_weapon, weapon_texture_path + weaponTexture);
-		img_weapon.gameObject.SetActiveRecursive(true);
+		img_weapon.gameObject.SetActiveRecursively(true);
 		level_stars.SetStars(level_need);
-		level_stars.gameObject.SetActiveRecursive(true);
+		level_stars.gameObject.SetActiveRecursively(true);
 		if (level < level_need)
 		{
 			label_btn_buy_normal.Text = "Buy";
-			label_btn_buy_press.Text = "...";
-			btn_buy.gameObject.SetActiveRecursive(true);
+			label_btn_buy_press.Text = "Buy";
+			btn_buy.gameObject.SetActiveRecursively(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.WeaponBuy;
 			img_weapon.transform.localPosition = weapon_normal_pos;
@@ -163,13 +163,13 @@ public class PopupLevel_Recommend : MonoBehaviour
 		{
 			if (level_need == 0 && required)
 			{
-				level_stars.gameObject.SetActiveRecursive(false);
+				level_stars.gameObject.SetActiveRecursively(false);
 			}
 			if (!have_equip)
 			{
 				label_btn_buy_normal.Text = "Equip";
-				label_btn_buy_press.Text = "...";
-				btn_buy.gameObject.SetActiveRecursive(true);
+				label_btn_buy_press.Text = "Equip";
+				btn_buy.gameObject.SetActiveRecursively(true);
 				btn_buy.Show();
 				recommend_btn_state = RecommendBtnState.WeaponEquip;
 				img_weapon.transform.localPosition = weapon_normal_pos;
@@ -181,7 +181,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 			}
 			else
 			{
-				btn_buy.gameObject.SetActiveRecursive(false);
+				btn_buy.gameObject.SetActiveRecursively(false);
 				recommend_btn_state = RecommendBtnState.Disable;
 				img_weapon.transform.localPosition = weapon_normal_pos + delta_pos;
 				level_stars.transform.localPosition = stars_normal_pos + delta_pos;
@@ -211,15 +211,15 @@ public class PopupLevel_Recommend : MonoBehaviour
 		}
 		img_weapon.UseCustomize = false;
 		img_weapon.CustomizeTexture = null;
-		img_weapon.gameObject.SetActiveRecursive(false);
-		level_stars.gameObject.SetActiveRecursive(false);
+		img_weapon.gameObject.SetActiveRecursively(false);
+		level_stars.gameObject.SetActiveRecursively(false);
 		img_role.texture = TUIMappingInfo.Instance().GetRoleTexture(id);
-		img_role.gameObject.SetActiveRecursive(true);
+		img_role.gameObject.SetActiveRecursively(true);
 		if (!have_buy)
 		{
 			label_btn_buy_normal.Text = "Buy";
-			label_btn_buy_press.Text = "...";
-			btn_buy.gameObject.SetActiveRecursive(true);
+			label_btn_buy_press.Text = "Buy";
+			btn_buy.gameObject.SetActiveRecursively(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.RoleBuy;
 			img_role.transform.localPosition = role_normal_pos;
@@ -231,8 +231,8 @@ public class PopupLevel_Recommend : MonoBehaviour
 		else if (!have_equip)
 		{
 			label_btn_buy_normal.Text = "Equip";
-			label_btn_buy_press.Text = "...";
-			btn_buy.gameObject.SetActiveRecursive(true);
+			label_btn_buy_press.Text = "Equip";
+			btn_buy.gameObject.SetActiveRecursively(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.RoleEquip;
 			img_role.transform.localPosition = role_normal_pos;
@@ -243,7 +243,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		}
 		else
 		{
-			btn_buy.gameObject.SetActiveRecursive(false);
+			btn_buy.gameObject.SetActiveRecursively(false);
 			recommend_btn_state = RecommendBtnState.Disable;
 			img_role.transform.localPosition = role_normal_pos + delta_pos;
 		}

@@ -190,6 +190,7 @@ public class PopupLevel : MonoBehaviour
 			if (popuplevel_frame03 != null)
 			{
 				popuplevel_frame03.SetGoodsInfo(null);
+				popuplevel_frame03.SetRecommend(null, null);
 			}
 			SetBtnStartEnable(false);
 		}
@@ -213,6 +214,7 @@ public class PopupLevel : MonoBehaviour
 				if (popuplevel_frame03 != null)
 				{
 					popuplevel_frame03.SetGoodsInfo(null);
+					popuplevel_frame03.SetRecommend(null, null);
 				}
 				SetBtnStartEnable(false);
 				return;
@@ -241,6 +243,7 @@ public class PopupLevel : MonoBehaviour
 				if (popuplevel_frame03 != null)
 				{
 					popuplevel_frame03.SetGoodsInfo(null);
+					popuplevel_frame03.SetRecommend(null, null);
 				}
 				SetBtnStartEnable(false);
 			}
@@ -257,8 +260,9 @@ public class PopupLevel : MonoBehaviour
 				if (popuplevel_frame03 != null)
 				{
 					popuplevel_frame03.SetGoodsInfo(goods_drop_list);
+					popuplevel_frame03.SetRecommend(level_info.recommend_role_info, level_info.recommend_weapon_info);
 				}
-				SetBtnStartEnable(true);
+				RefreshStartButtonForCurrentSelection();
 			}
 			TUIButtonSelect btnSelect = level_item_now.GetBtnSelect();
 			if (btnSelect != null)
@@ -288,6 +292,7 @@ public class PopupLevel : MonoBehaviour
 			if (popuplevel_frame03 != null)
 			{
 				popuplevel_frame03.SetGoodsInfo(null);
+				popuplevel_frame03.SetRecommend(null, null);
 			}
 			SetBtnStartEnable(false);
 			return;
@@ -317,6 +322,7 @@ public class PopupLevel : MonoBehaviour
 			if (popuplevel_frame03 != null)
 			{
 				popuplevel_frame03.SetGoodsInfo(null);
+				popuplevel_frame03.SetRecommend(null, null);
 			}
 			SetBtnStartEnable(false);
 			return;
@@ -336,12 +342,25 @@ public class PopupLevel : MonoBehaviour
 		if (popuplevel_frame03 != null)
 		{
 			popuplevel_frame03.SetGoodsInfo(goods_drop_list);
+			popuplevel_frame03.SetRecommend(level_info.recommend_role_info, level_info.recommend_weapon_info);
 		}
-		SetBtnStartEnable(true);
+		RefreshStartButtonForCurrentSelection();
 	}
 
 	public PopupLevel_Item GetChoose()
 	{
 		return level_item_now;
+	}
+	private void RefreshStartButtonForCurrentSelection()
+	{
+		bool canStart = true;
+
+		if (level_item_now == null) canStart = false;
+		else if (level_item_now.GetState() == LevelPassState.Disable) canStart = false;
+		if (canStart && popuplevel_frame03 != null)
+		{
+			if (!popuplevel_frame03.GetOpenStart()) canStart = false;
+		}
+		SetBtnStartEnable(canStart);
 	}
 }

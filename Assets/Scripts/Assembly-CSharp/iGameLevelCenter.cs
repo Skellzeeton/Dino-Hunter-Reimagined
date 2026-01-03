@@ -262,9 +262,9 @@ public class iGameLevelCenter : iBaseCenter
 							}
 						}
 					}
-					else if (childNode2.Name == "recommand")
+					else if (childNode2.Name == "recommend")
 					{
-						if (MyUtils.GetAttribute(childNode2, "recommandtype", ref value))
+						if (MyUtils.GetAttribute(childNode2, "recommendtype", ref value))
 						{
 							gameLevelInfo.m_nRecommandType = int.Parse(value);
 						}
