@@ -16,11 +16,11 @@ PlayerSettings:
   productName: 'COM Dino Hunter: REIMAGINED'
   defaultCursor: {fileID: 2800000, guid: a2bdd4d96deed4108823d3d48000d3d1, type: 3}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.75735295, g: 0.75735295, b: 0.75735295, a: 1}
-  m_ShowUnitySplashScreen: 0
-  m_ShowUnitySplashLogo: 1
-  m_SplashScreenOverlayOpacity: 0.5
-  m_SplashScreenAnimation: 1
+  m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ShowUnitySplashScreen: 1
+  m_ShowUnitySplashLogo: 0
+  m_SplashScreenOverlayOpacity: 0
+  m_SplashScreenAnimation: 0
   m_SplashScreenLogoStyle: 1
   m_SplashScreenDrawMode: 0
   m_SplashScreenBackgroundAnimationZoom: 0.1
@@ -40,7 +40,7 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 21300000, guid: 659ce70a8358e4ad384bd186b6000741, type: 3}
+  - logo: {fileID: 21300000, guid: a55eace4f31868643830bfc31ae8c349, type: 3}
     duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
@@ -730,7 +730,7 @@ PlayerSettings:
     type: 3}
   splashScreenBackgroundSourcePortrait: {fileID: 21300000, guid: c78d6f2a87966424fbd38a405f31607b,
     type: 3}
-  blurSplashScreenBackground: 1
+  blurSplashScreenBackground: 0
   spritePackerPolicy: 
   webGLMemorySize: 256
   webGLExceptionSupport: 1
@@ -781,7 +781,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
-    Android: 1
+    Android: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}

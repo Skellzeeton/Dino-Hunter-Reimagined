@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: equip_005_006_01_m
-  m_Shader: {fileID: 4800000, guid: 650437422999eb34eba8556d75b7362a, type: 3}
+  m_Name: power_up_ultimate_start
+  m_Shader: {fileID: 4800000, guid: 1e696c0b7f09cf649941a353b3442f0f, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -18,15 +18,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _LightMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d46749793ec154ec3aba8418a849164e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 66c30ad1d098a1b4483da6402946e848, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Brightness: 1
+    - _InvFade: 1
+    - _Offset: 1
+    - _Shininess: 0.7
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.75373137, g: 0.4612386, b: 0.5287369, a: 0.3529412}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 1, g: 0.31468526, b: 0, a: 1}

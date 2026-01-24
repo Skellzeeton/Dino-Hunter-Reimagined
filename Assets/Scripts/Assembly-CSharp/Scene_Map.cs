@@ -42,10 +42,6 @@ public class Scene_Map : MonoBehaviour
 
 	public Transform level03_point;
 
-	public TUIButtonClick btn_popularize;
-
-	public PopupPopularize popup_popularize;
-
 	private void Awake()
 	{
 		CGameNetManager.GetInstance().connected = false;
@@ -69,10 +65,6 @@ public class Scene_Map : MonoBehaviour
 		else if (TUIMappingInfo.Instance().GetNewHelpState() == NewHelpState.Help19_ClickLevel03)
 		{
 			DoNewHelp(level03_point);
-		}
-		if (TUIMappingInfo.Instance().GetNewHelpState() != NewHelpState.None && TUIMappingInfo.Instance().GetNewHelpState() != NewHelpState.Help_Over && btn_popularize != null)
-		{
-			btn_popularize.gameObject.SetActiveRecursive(false);
 		}
 	}
 
@@ -296,10 +288,6 @@ public class Scene_Map : MonoBehaviour
 		}
 		else
 		{
-			if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_ClickPopularize)
-			{
-				return;
-			}
 			if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_SkipTutorial)
 			{
 				if (m_event.GetControlSuccess())
@@ -593,59 +581,6 @@ public class Scene_Map : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_OpenPopularize(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-			if (popup_popularize != null)
-			{
-				popup_popularize.Show(true);
-				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_ClosePopularize);
-			}
-		}
-	}
-
-	public void TUIEvent_ClosePopularize(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-			if (popup_popularize != null)
-			{
-				popup_popularize.Show(false);
-			}
-			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_ClosePopularize);
-		}
-	}
-
-	public void TUIEvent_ClickPopularize(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type != 3)
-		{
-			return;
-		}
-		if (sfx_open_now)
-		{
-			CUISound.GetInstance().Play("UI_Button");
-		}
-		if (control != null && control.transform.parent != null)
-		{
-			PopupPopularizeItem component = control.transform.parent.GetComponent<PopupPopularizeItem>();
-			if (component != null)
-			{
-				PopularizeType popularizeType = component.GetPopularizeType();
-				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_ClickPopularize, (int)popularizeType));
-			}
-		}
-	}
-
 	public void TUIEvent_ClickSecondaryLevel(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
 		if (event_type == 1)
@@ -716,19 +651,6 @@ public class Scene_Map : MonoBehaviour
 				CUISound.GetInstance().Play("UI_Button");
 			}
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterCoop));
-		}
-	}
-	
-	public void TUIEvent_EndlessMainMenu(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-
-			SceneManager.LoadScene("Scene_EndlessMainMenu");
 		}
 	}
 
