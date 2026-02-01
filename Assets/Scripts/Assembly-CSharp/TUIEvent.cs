@@ -193,7 +193,6 @@ public class TUIEvent
 		TUIEvent_EnterIAP,
 		TUIEvent_EnterGold,
 		TUIEvent_EnterVilliage,
-		TUIEvent_ClickPopularize,
 		TUIEvent_SkipTutorial,
 		TUIEvent_EnterCoop,
 		TUIEvent_EnterEndless

@@ -649,20 +649,6 @@ public class Scene_Forge : MonoBehaviour
 		{
 			CUISound.GetInstance().Play("UI_Button");
 		}
-		if (control.transform.parent == null || control.transform.parent.parent == null)
-		{
-			Debug.Log("error!");
-			return;
-		}
-		int wparam2 = 0;
-		PopupGoldToCrystal component = control.transform.parent.parent.GetComponent<PopupGoldToCrystal>();
-		if (component != null)
-		{
-			wparam2 = component.GetGoldExchangeCount();
-		}
-		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_GoldToCrystal, wparam2));
-		popup_weapon.HidePopupGoldToCrystal();
-		AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseGoldToCrystal);
 	}
 
 	public void TUIEvent_CloseGoldToCrystal(TUIControl control, int event_type, float wparam, float lparam, object data)

@@ -3041,15 +3041,6 @@ public class iGameSceneBase
 	{
 		if (bPause && isTutorialStage) return;
 		if ((bPause && m_Status != kGameStatus.Gameing) || (bPause && TNetManager.GetInstance().Connection != null)) return;
-		ParticleSystem[] allParticles = UnityEngine.Object.FindObjectsOfType<ParticleSystem>();
-		foreach (ParticleSystem ps in allParticles)
-		{
-			if (ps == null) continue;
-			if (bPause)
-				ps.Pause();
-			else
-				ps.Play();
-		}
 		if (bPause)
 		{
 			m_LastStatus = m_Status;
@@ -3059,7 +3050,6 @@ public class iGameSceneBase
 				m_User.SetFire(false);
 				m_User.MoveStop();
 			}
-			Time.timeScale = 0.01f;
 			if (OpenClikPlugin.IsAdReady()) OpenClikPlugin.Show(false);
 			CSoundScene.GetInstance().StopBGM();
 			CSoundScene.GetInstance().StopAmbienceBGM();

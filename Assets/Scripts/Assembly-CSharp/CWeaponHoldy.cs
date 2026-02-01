@@ -34,8 +34,9 @@ public class CWeaponHoldy : CWeaponBase
         {
             foreach (var ps in m_arrParticleSystem)
             {
-                if (ps != null)
-                    ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                if (ps == null) continue;
+                var em = ps.emission;
+                em.enabled = false;
             }
         }
     }
@@ -62,8 +63,10 @@ public class CWeaponHoldy : CWeaponBase
         {
             foreach (var ps in m_arrParticleSystem)
             {
-                if (ps != null)
-                    ps.Play(true);
+                if (ps == null) continue;
+                var em = ps.emission;
+                em.enabled = true;
+                ps.Play(true);
             }
         }
 
@@ -90,8 +93,9 @@ public class CWeaponHoldy : CWeaponBase
         {
             foreach (var ps in m_arrParticleSystem)
             {
-                if (ps != null)
-                    ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                if (ps == null) continue;
+                var em = ps.emission;
+                em.enabled = false;
             }
         }
     }
@@ -116,7 +120,6 @@ public class CWeaponHoldy : CWeaponBase
             Stop(player);
             return;
         }
-
         ConsumeBullet(player);
         ShowFireLight(true);
 
@@ -126,17 +129,15 @@ public class CWeaponHoldy : CWeaponBase
             if (gameUI != null)
                 gameUI.ExpandAimCross();
         }
-
+        Vector3 fireOrigin = player.GetUpBodyPos() + new Vector3(0f, 0.7f, 0f);
         Dictionary<int, CCharMob> mobData = base.m_GameScene.GetMobData();
         foreach (CCharMob mob in mobData.Values)
         {
             if (mob.isDead)
                 continue;
-
             Vector3 toMob = mob.Pos - player.Pos;
             if (toMob.sqrMagnitude > m_fRadius * m_fRadius)
                 continue;
-
             if (m_fRadius < 2f && m_fAngle > 0f)
             {
                 toMob.y = 0f;
@@ -149,11 +150,37 @@ public class CWeaponHoldy : CWeaponBase
                 if (Vector3.Dot(player.Dir2D, toMob.normalized) < Mathf.Cos(m_fAngle * Mathf.Deg2Rad / 2f))
                     continue;
             }
-
             Vector3 hitDir = mob.Pos - player.Pos;
-            Vector3 hitPos = mob.GetBloodPos(player.GetUpBodyPos() + new Vector3(0f, 0.7f, 0f), hitDir);
-            CCharBoss boss = mob as CCharBoss;
+            Vector3 hitPos = mob.GetBloodPos(fireOrigin, hitDir);
+            Vector3 rayDir = hitPos - fireOrigin;
+            float rayDist = rayDir.magnitude;
+            bool blocked = false;
 
+            if (rayDist > 0f)
+            {
+                RaycastHit[] hits = Physics.RaycastAll(fireOrigin, rayDir.normalized, rayDist, ~0, QueryTriggerInteraction.Ignore);
+                if (hits != null && hits.Length > 0)
+                {
+                    Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+                    foreach (var h in hits)
+                    {
+                        if (h.collider == null) continue;
+                        if (IsColliderPartOfPlayer(h.collider, player))
+                            continue;
+                        if (IsColliderPartOfMob(h.collider, mob))
+                        {
+                            blocked = false;
+                            break;
+                        }
+                        blocked = true;
+                        break;
+                    }
+                }
+            }
+            if (blocked)
+                continue;
+            CCharBoss boss = mob as CCharBoss;
             if (boss != null && boss.isInBlack)
                 base.m_GameScene.AddHitEffect(hitPos, hitDir, 1953);
             else
@@ -231,5 +258,29 @@ public class CWeaponHoldy : CWeaponBase
             player.AddExp(exp);
             base.m_GameScene.AddExpText(exp, hitinfo.v3HitPos);
         }
+    }
+
+    private bool IsColliderPartOfMob(Collider col, CCharMob mob)
+    {
+        if (col == null || mob == null) return false;
+        Transform t = col.transform;
+        while (t != null)
+        {
+            if (t == mob.transform) return true;
+            t = t.parent;
+        }
+        return false;
+    }
+
+    private bool IsColliderPartOfPlayer(Collider col, CCharPlayer player)
+    {
+        if (col == null || player == null) return false;
+        Transform t = col.transform;
+        while (t != null)
+        {
+            if (t == player.transform) return true;
+            t = t.parent;
+        }
+        return false;
     }
 }

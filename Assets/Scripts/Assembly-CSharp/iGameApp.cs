@@ -1588,45 +1588,6 @@ public class iGameApp
 		}
 	}
 
-	public void Flurry_PurchaseIAP(int nIAPID)
-	{
-		CIAPInfo iAPInfo = m_GameData.GetIAPInfo(nIAPID);
-		if (iAPInfo == null)
-		{
-			return;
-		}
-		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
-		CCharacterInfo characterInfo = m_GameData.GetCharacterInfo(dataCenter.CurCharID);
-		if (characterInfo == null)
-		{
-			return;
-		}
-		CCharSaveInfo character = dataCenter.GetCharacter(dataCenter.CurCharID);
-		if (character == null || character.nLevel == -1)
-		{
-			return;
-		}
-		CCharacterInfoLevel cCharacterInfoLevel = characterInfo.Get(character.nLevel);
-		if (cCharacterInfoLevel != null)
-		{
-			GameLevelInfo gameLevelInfo = m_GameData.GetGameLevelInfo(dataCenter.LatestLevel);
-			if (gameLevelInfo != null)
-			{
-				CFlurryManager.CPurchaseIAPInfo cPurchaseIAPInfo = new CFlurryManager.CPurchaseIAPInfo();
-				cPurchaseIAPInfo.sCharID = characterInfo.nID + "_" + cCharacterInfoLevel.sName;
-				cPurchaseIAPInfo.sCharLevel = character.nLevel.ToString();
-				cPurchaseIAPInfo.sIAP = nIAPID + "_" + iAPInfo.sKey;
-				cPurchaseIAPInfo.sLevelID = gameLevelInfo.nID + "_" + gameLevelInfo.sLevelName;
-				CFlurryManager.GetInstance().PurchaseIAP(cPurchaseIAPInfo.sIAP, cPurchaseIAPInfo);
-				CFlurryManager.GetInstance().PurchaseIAP("ALL IAP", cPurchaseIAPInfo);
-			}
-		}
-	}
-
 	public void Flurry_CharRevive(int nLevelID)
 	{
 		GameLevelInfo gameLevelInfo = m_GameData.GetGameLevelInfo(nLevelID);
@@ -1791,96 +1752,7 @@ public class iGameApp
 		}
 		return dataCenter.UnPack(sData);
 	}
-
-	public void OnPurchaseIAP(string sKey, string sIdentifier, string sReceipt)
-	{
-		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
-		CIAPInfo iAPInfoByKey = m_GameData.GetIAPInfoByKey(sKey);
-		if (iAPInfoByKey == null)
-		{
-			return;
-		}
-		CTrinitiCollectManager.GetInstance().SendPay(dataCenter.Crystal, iAPInfoByKey.nValue, iAPInfoByKey.fMoney);
-		if (iAPInfoByKey.isCrystal)
-		{
-			CUISound.GetInstance().Play("UI_Crystal");
-			dataCenter.AddCrystal(iAPInfoByKey.nValue);
-		}
-		else
-		{
-			dataCenter.AddGold(iAPInfoByKey.nValue);
-		}
-		iServerVerify.CServerConfigInfo serverConfigInfo = iServerVerify.GetInstance().GetServerConfigInfo();
-		iGameData gameData = GetInstance().m_GameData;
-		if (gameData != null)
-		{
-			iWeaponCenter weaponCenter = gameData.GetWeaponCenter();
-			if (weaponCenter != null)
-			{
-				Dictionary<int, CWeaponInfo> data = weaponCenter.GetData();
-				if (data != null)
-				{
-					foreach (CWeaponInfo value in data.Values)
-					{
-						if (!dataCenter.IsFreeWeaponID(value.nID) && serverConfigInfo != null && serverConfigInfo.IsGift(value.nID))
-						{
-							dataCenter.AddFreeWeapon(value.nID);
-						}
-					}
-				}
-			}
-		}
-		GetInstance().SaveData();
-	}
-
-	public void OnPurchaseIAP_InBackground(string sKey, string sIdentifier, string sReceipt)
-	{
-		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
-		CIAPInfo iAPInfoByKey = m_GameData.GetIAPInfoByKey(sKey);
-		if (iAPInfoByKey == null)
-		{
-			return;
-		}
-		CTrinitiCollectManager.GetInstance().SendPay(dataCenter.Crystal, iAPInfoByKey.nValue, iAPInfoByKey.fMoney);
-		if (iAPInfoByKey.isCrystal)
-		{
-			dataCenter.AddCrystalInBackground(iAPInfoByKey.nValue, iAPInfoByKey.fMoney, sKey + sIdentifier + sReceipt);
-		}
-		else
-		{
-			dataCenter.AddGold(iAPInfoByKey.nValue);
-		}
-		iServerVerify.CServerConfigInfo serverConfigInfo = iServerVerify.GetInstance().GetServerConfigInfo();
-		iGameData gameData = GetInstance().m_GameData;
-		if (gameData != null)
-		{
-			iWeaponCenter weaponCenter = gameData.GetWeaponCenter();
-			if (weaponCenter != null)
-			{
-				Dictionary<int, CWeaponInfo> data = weaponCenter.GetData();
-				if (data != null)
-				{
-					foreach (CWeaponInfo value in data.Values)
-					{
-						if (!dataCenter.IsFreeWeaponID(value.nID) && serverConfigInfo != null && serverConfigInfo.IsGift(value.nID))
-						{
-							dataCenter.AddFreeWeapon(value.nID);
-						}
-					}
-				}
-			}
-		}
-		GetInstance().SaveData();
-	}
-
+	
 	public void SaveData(bool bImmediately = false)
 	{
 		iDataCenter dataCenter = m_GameData.GetDataCenter();

@@ -154,7 +154,6 @@ public class iLoginManager : MonoBehaviour
 			{
 				m_OnSuccess();
 			}
-			iServerIAPVerifyBackground.GetInstance().SetActive(true);
 		}
 	}
 
@@ -216,8 +215,6 @@ public class iLoginManager : MonoBehaviour
 			cServerInfo = serverConfigInfo.GetServerInfo("iapserver");
 			if (cServerInfo != null)
 			{
-				iIAPManager.GetInstance().Initialize(cServerInfo.sName, cServerInfo.sUrl, cServerInfo.sKey, cServerInfo.fTimeOut);
-				iServerIAPVerify.GetInstance().Initialize(cServerInfo.sName, cServerInfo.sUrl, cServerInfo.sKey, cServerInfo.fTimeOut);
 				iServerTime.GetInstance().Initialize("servertime", cServerInfo.sUrl, cServerInfo.sKey, cServerInfo.fTimeOut);
 			}
 			cServerInfo = serverConfigInfo.GetServerInfo("collectserver");

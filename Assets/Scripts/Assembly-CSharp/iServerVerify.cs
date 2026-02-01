@@ -51,15 +51,6 @@ public class iServerVerify : MonoBehaviour
 			public int nDiscount;
 		}
 
-		public class CPopularizeInfo
-		{
-			public int nType;
-
-			public int nID;
-
-			public string sBundleID;
-		}
-
 		public class CWorldMonsterInfo
 		{
 			public int m_nMobID;
@@ -102,9 +93,6 @@ public class iServerVerify : MonoBehaviour
 		public List<CServerDiscount> m_ltServerDiscount;
 
 		public List<int> m_ltGift;
-
-		public List<CPopularizeInfo> m_ltServerPopularize;
-
 		public List<CWorldMonsterInfo> m_ltWorldMonsterInfo;
 
 		public List<CVersionIDChange> m_ltItemIDChange;
@@ -116,7 +104,6 @@ public class iServerVerify : MonoBehaviour
 			m_ltGameServerInfo = new List<CGameServerInfo>();
 			m_ltServerDiscount = new List<CServerDiscount>();
 			m_ltGift = new List<int>();
-			m_ltServerPopularize = new List<CPopularizeInfo>();
 			m_ltWorldMonsterInfo = new List<CWorldMonsterInfo>();
 			m_ltItemIDChange = new List<CVersionIDChange>();
 			Clear();
@@ -130,7 +117,6 @@ public class iServerVerify : MonoBehaviour
 			m_dictServerInfo.Clear();
 			m_ltServerDiscount.Clear();
 			m_ltGift.Clear();
-			m_ltServerPopularize.Clear();
 			m_ltWorldMonsterInfo.Clear();
 			m_ltItemIDChange.Clear();
 		}
@@ -187,23 +173,6 @@ public class iServerVerify : MonoBehaviour
 				if (item.nType == nType && item.nID == nID)
 				{
 					nDiscount = item.nDiscount;
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public bool IsPopularize(int nType, int nID, ref string sBundleID)
-		{
-			if (m_ltServerPopularize == null || m_ltServerPopularize.Count < 1)
-			{
-				return false;
-			}
-			foreach (CPopularizeInfo item in m_ltServerPopularize)
-			{
-				if (item.nType == nType && item.nID == nID)
-				{
-					sBundleID = item.sBundleID;
 					return true;
 				}
 			}
@@ -390,29 +359,6 @@ public class iServerVerify : MonoBehaviour
 						{
 							int item = int.Parse(value);
 							m_ltGift.Add(item);
-						}
-					}
-				}
-				else if (item2.Name == "popularize")
-				{
-					Debug.Log("popularize");
-					m_ltServerPopularize.Clear();
-					foreach (XmlNode item11 in item2)
-					{
-						if (!(item11.Name != "node") && GetAttribute(item11, "type", ref value))
-						{
-							CPopularizeInfo cPopularizeInfo = new CPopularizeInfo();
-							cPopularizeInfo.nType = int.Parse(value);
-							if (GetAttribute(item11, "id", ref value))
-							{
-								cPopularizeInfo.nID = int.Parse(value);
-							}
-							if (GetAttribute(item11, "bundleid", ref value))
-							{
-								cPopularizeInfo.sBundleID = value.Trim();
-							}
-							UnityEngine.Debug.Log(cPopularizeInfo.nType + " " + cPopularizeInfo.nID + " " + cPopularizeInfo.sBundleID);
-							m_ltServerPopularize.Add(cPopularizeInfo);
 						}
 					}
 				}

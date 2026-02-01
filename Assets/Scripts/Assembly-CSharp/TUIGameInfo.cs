@@ -33,11 +33,7 @@ public class TUIGameInfo
 	public TUIAllRoleInfo all_role_info;
 
 	public TUIMapInfo map_info;
-
-	public TUIPopularizeInfo popularize_info;
-
-	public TUIIAPInfo iap_info;
-
+	
 	public TUIUpdatePlayerTextureInfo player_texture_info;
 
 	public TUIBlackMarketInfo blackmarket_info;
@@ -110,10 +106,5 @@ public class TUIGameInfo
 	public TUIMapInfo GetMapInfo()
 	{
 		return map_info;
-	}
-
-	public TUIIAPInfo GetIAPInfo()
-	{
-		return iap_info;
 	}
 }

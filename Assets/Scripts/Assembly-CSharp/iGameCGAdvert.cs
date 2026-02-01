@@ -37,7 +37,7 @@ public class iGameCGAdvert : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 0;
+        Application.targetFrameRate = 60;
     }
 
     private void Start()

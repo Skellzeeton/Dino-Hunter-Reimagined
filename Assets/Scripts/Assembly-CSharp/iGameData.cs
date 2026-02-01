@@ -32,9 +32,7 @@ public class iGameData
 	public iDropGroupCenter m_DropGroupCenter { get; private set; }
 
 	public iLoadTipCenter m_LoadTipCenter { get; private set; }
-
-	public iIAPCenter m_IAPCenter { get; private set; }
-
+	
 	public iAchievementCenter m_AchievementCenter { get; private set; }
 
 	public iDailyTaskCenter m_DailyTaskCenter { get; private set; }
@@ -75,7 +73,6 @@ public class iGameData
 		m_BattleGroupCenter = new iBattleGroupCenter();
 		m_DropGroupCenter = new iDropGroupCenter();
 		m_LoadTipCenter = new iLoadTipCenter();
-		m_IAPCenter = new iIAPCenter();
 		m_AchievementCenter = new iAchievementCenter();
 		m_DailyTaskCenter = new iDailyTaskCenter();
 		m_DailyRewardCenter = new iDailyRewardCenter();
@@ -137,11 +134,6 @@ public class iGameData
 			iGameApp.GetInstance().ScreenLog("Loading m_LoadTipCenter");
 			m_LoadTipCenter.Load("loadtip");
 			iServerConfigData.GetInstance().AddConfigInfo(m_LoadTipCenter.sFileName, m_LoadTipCenter.sMD5, m_LoadTipCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_IAPCenter");
-			m_IAPCenter.Load("iap");
-			m_IAPCenter.LoadCrystal2Gold();
-			iServerConfigData.GetInstance().AddConfigInfo(m_IAPCenter.sFileName, m_IAPCenter.sMD5, m_IAPCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_AchievementCenter");
 			m_AchievementCenter.Load("achievement");
 			iServerConfigData.GetInstance().AddConfigInfo(m_AchievementCenter.sFileName, m_AchievementCenter.sMD5, m_AchievementCenter.OnFetch);
 			iGameApp.GetInstance().ScreenLog("Loading m_DailyTaskCenter");
@@ -248,11 +240,6 @@ public class iGameData
 	public iDailyTaskCenter GetDailyTaskCenter()
 	{
 		return m_DailyTaskCenter;
-	}
-
-	public iIAPCenter GetIAPCenter()
-	{
-		return m_IAPCenter;
 	}
 
 	public CCharacterInfo GetCharacterInfo(int nID)
@@ -452,42 +439,6 @@ public class iGameData
 			return null;
 		}
 		return m_StashCapacityCenter.Get(nLevel - 1);
-	}
-
-	public CIAPInfo GetIAPInfo(int nIAPID)
-	{
-		if (m_IAPCenter == null)
-		{
-			return null;
-		}
-		return m_IAPCenter.Get(nIAPID);
-	}
-
-	public CIAPInfo GetIAPInfoBySeq(int nIndex)
-	{
-		if (m_IAPCenter == null)
-		{
-			return null;
-		}
-		return m_IAPCenter.GetBySeq(nIndex);
-	}
-
-	public CIAPInfo GetIAPInfoByKey(string key)
-	{
-		if (m_IAPCenter == null)
-		{
-			return null;
-		}
-		return m_IAPCenter.GetByKey(key);
-	}
-
-	public CCrystal2GoldInfo GetCrystal2GoldInfo(int nID)
-	{
-		if (m_IAPCenter == null)
-		{
-			return null;
-		}
-		return m_IAPCenter.GetCrystal2GoldInfo(nID);
 	}
 
 	public CAchievementInfo GetAchievementInfo(int nID)

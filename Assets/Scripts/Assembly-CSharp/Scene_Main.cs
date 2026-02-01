@@ -26,9 +26,7 @@ public class Scene_Main : MonoBehaviour
 	private bool music_open_now = true;
 
 	public TUILabel label_text;
-
-	public PopupIAP popup_warning;
-
+	
 	private bool connect_success;
 
 	private ServerConnectFailType server_connect_fail;
@@ -175,10 +173,6 @@ public class Scene_Main : MonoBehaviour
 			if (sfx_open_now)
 			{
 				CUISound.GetInstance().Play("UI_Button");
-			}
-			if (popup_warning != null)
-			{
-				popup_warning.Hide();
 			}
 			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseWarnning);
 			if (server_connect_fail == ServerConnectFailType.NeedNet)

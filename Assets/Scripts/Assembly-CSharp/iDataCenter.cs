@@ -78,9 +78,7 @@ public class iDataCenter
 	protected Dictionary<int, CCharSaveInfo> m_dictCharSaveInfo;
 
 	protected List<CLevelSaveInfo> m_ltLevelSaveInfo;
-
-	protected List<CIAPTransactionInfo> m_ltIAPTransactionInfo;
-
+	
 	protected List<int> m_ltFreeWeapon;
 
 	protected Dictionary<int, CAchievementData> m_dictAchievementData;
@@ -756,7 +754,6 @@ public class iDataCenter
 		{
 			m_ltLevelList.Add(i);
 		}
-		m_ltIAPTransactionInfo = new List<CIAPTransactionInfo>();
 		m_ltUnlockSign = new List<CUnlockSign>();
 		m_dictAchievementData = new Dictionary<int, CAchievementData>();
 		m_ltFreeWeapon = new List<int>();
@@ -804,7 +801,6 @@ public class iDataCenter
 		m_nAvatarBadge.Set(-1);
 		m_nAvatarStone.Set(-1);
 		m_ltLevelSaveInfo.Clear();
-		m_ltIAPTransactionInfo.Clear();
 		m_ltFreeWeapon.Clear();
 		m_dictAchievementData.Clear();
 		m_dictWeaponSign.Clear();
@@ -825,7 +821,6 @@ public class iDataCenter
 		m_nTutorialVillageState = 25;
 		m_bEvaluate = false;
 		m_nEnterAppCount = 0;
-		m_ltIAPTransactionInfo.Clear();
 		m_ltUnlockSign.Clear();
 		m_dictAchievementData.Clear();
 		m_ltFreeWeapon.Clear();
@@ -1093,19 +1088,6 @@ public class iDataCenter
 			xmlElement18.AppendChild(xmlElement24);
 			xmlElement24.SetAttribute("id", item15.Key.ToString());
 			xmlElement24.SetAttribute("sign", item15.Value.ToString());
-		}
-		if (m_ltIAPTransactionInfo.Count > 0)
-		{
-			XmlElement xmlElement25 = doc.CreateElement("transaction");
-			xmlElement.AppendChild(xmlElement25);
-			foreach (CIAPTransactionInfo item16 in m_ltIAPTransactionInfo)
-			{
-				XmlElement xmlElement26 = doc.CreateElement("node");
-				xmlElement25.AppendChild(xmlElement26);
-				xmlElement26.SetAttribute("key", item16.m_sIAPKey);
-				xmlElement26.SetAttribute("identifier", item16.m_sIdentifier);
-				xmlElement26.SetAttribute("receipt", item16.m_sReceipt);
-			}
 		}
 		if (m_ltCrystalInBackground.Count > 0)
 		{
@@ -1694,31 +1676,6 @@ public class iDataCenter
 						{
 							m_dictCharacterSign.Add(num7, value6);
 						}
-					}
-				}
-			}
-			else if (item2.Name == "transaction")
-			{
-				m_ltIAPTransactionInfo.Clear();
-				foreach (XmlNode item11 in item2)
-				{
-					if (item11.Name == "node")
-					{
-						if (!MyUtils.GetAttribute(item11, "key", ref value))
-						{
-							return;
-						}
-						CIAPTransactionInfo cIAPTransactionInfo = new CIAPTransactionInfo();
-						cIAPTransactionInfo.m_sIAPKey = value;
-						if (MyUtils.GetAttribute(item11, "identifier", ref value))
-						{
-							cIAPTransactionInfo.m_sIdentifier = value;
-						}
-						if (MyUtils.GetAttribute(item11, "receipt", ref value))
-						{
-							cIAPTransactionInfo.m_sReceipt = value;
-						}
-						m_ltIAPTransactionInfo.Add(cIAPTransactionInfo);
 					}
 				}
 			}
@@ -2468,60 +2425,6 @@ public class iDataCenter
 		{
 			Debug.Log("exception UnPack");
 			return false;
-		}
-	}
-
-	public void AddIAPTransactionInfo(string sIAPKey, string sIdentifier, string sReceipt, string sSignature, string sRandom, int nRat, int nRatA, int nRatB)
-	{
-		CIAPTransactionInfo cIAPTransactionInfo = null;
-		foreach (CIAPTransactionInfo item in m_ltIAPTransactionInfo)
-		{
-			if (item.m_sIAPKey == sIAPKey && item.m_sIdentifier == sIdentifier && item.m_sReceipt == sReceipt)
-			{
-				cIAPTransactionInfo = item;
-			}
-		}
-		if (cIAPTransactionInfo == null)
-		{
-			cIAPTransactionInfo = new CIAPTransactionInfo();
-			m_ltIAPTransactionInfo.Add(cIAPTransactionInfo);
-		}
-		cIAPTransactionInfo.m_sIAPKey = sIAPKey;
-		cIAPTransactionInfo.m_sIdentifier = sIdentifier;
-		cIAPTransactionInfo.m_sReceipt = sReceipt;
-		cIAPTransactionInfo.m_sSignature = sSignature;
-		cIAPTransactionInfo.m_sRandom = sRandom;
-		cIAPTransactionInfo.m_nRat = nRat;
-		cIAPTransactionInfo.m_nRatA = nRatA;
-		cIAPTransactionInfo.m_nRatB = nRatB;
-	}
-
-	public bool GetIAPTransactionInfo(ref string sIAPKey, ref string sIdentifier, ref string sReceipt, ref string sSignature, ref string sRandom, ref int nRat, ref int nRatA, ref int nRatB)
-	{
-		if (m_ltIAPTransactionInfo.Count < 1)
-		{
-			return false;
-		}
-		sIAPKey = m_ltIAPTransactionInfo[0].m_sIAPKey;
-		sIdentifier = m_ltIAPTransactionInfo[0].m_sIdentifier;
-		sReceipt = m_ltIAPTransactionInfo[0].m_sReceipt;
-		sSignature = m_ltIAPTransactionInfo[0].m_sSignature;
-		sRandom = m_ltIAPTransactionInfo[0].m_sRandom;
-		nRat = m_ltIAPTransactionInfo[0].m_nRat;
-		nRatA = m_ltIAPTransactionInfo[0].m_nRatA;
-		nRatB = m_ltIAPTransactionInfo[0].m_nRatB;
-		return true;
-	}
-
-	public void DelIAPTransactionInfo(string sIAPKey, string sIdentifier, string sReceipt)
-	{
-		foreach (CIAPTransactionInfo item in m_ltIAPTransactionInfo)
-		{
-			if (item.m_sIAPKey == sIAPKey && item.m_sIdentifier == sIdentifier && item.m_sReceipt == sReceipt)
-			{
-				m_ltIAPTransactionInfo.Remove(item);
-				break;
-			}
 		}
 	}
 

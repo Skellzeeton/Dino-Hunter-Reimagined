@@ -631,7 +631,7 @@ public class Role_Control : MonoBehaviour
 				weapon_036.localPosition = new Vector3(0f, 0f, 0f);
 			}
 			transform = weapon_036;
-			weapon_type = WeaponType.CloseWeapons;
+			weapon_type = WeaponType.LiquidFireGun;
 			break;
 		case 37:
 			if (weapon_037 == null)
