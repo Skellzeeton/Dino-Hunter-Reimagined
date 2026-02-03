@@ -3433,6 +3433,7 @@ public class iGameSceneBase
 		}
 		if (m_GameUI.UIManager != null && m_GameUI.UIManager.mPanelMissionComplete != null)
 		{
+			m_GameUI.UIManager.mPanelMissionComplete.SetGainExp(m_GameState.m_nLevelRewardExp);
 			m_GameUI.UIManager.mPanelMissionComplete.SetCharExp(lstLevel, lstRate, curLevel, curRate);
 			m_GameUI.UIManager.mPanelMissionComplete.SetGainGold(m_GameState.m_nLevelRewardGold);
 			m_GameUI.UIManager.mPanelMissionComplete.SetGainGoldEarned(m_GameState.GainGoldInGame);

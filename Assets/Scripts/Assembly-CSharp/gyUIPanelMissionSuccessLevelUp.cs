@@ -12,14 +12,12 @@ public class gyUIPanelMissionSuccessLevelUp : MonoBehaviour
     public UILabel mLabel1_2;
     public UILabel mLabel1_3;
     public UILabel mLabel1_3_1;
-    //public UISprite mLabel1_3;
     public UILabel mLabel1_4;
 
     public UILabel mLabel2_1;
     public UILabel mLabel2_2;
     public UILabel mLabel2_3;
     public UILabel mLabel2_3_1;
-    //public UISprite mLabel2_3;
     public UILabel mLabel2_4;
 
     protected bool m_bShow;
@@ -162,9 +160,6 @@ public class gyUIPanelMissionSuccessLevelUp : MonoBehaviour
             transform.localPosition = new Vector3(0f, 0f, transform.localPosition.z);
             m_nStep = 0;
             m_fStepCount = 0.5f;
-
-            //mLabel1_1.gameObject.SetActive(true);
-            //mLabel2_1.gameObject.SetActive(true);
         }
         else
         {
@@ -184,13 +179,6 @@ public class gyUIPanelMissionSuccessLevelUp : MonoBehaviour
         mLabel2_3.gameObject.SetActive(false);
         mLabel2_3_1.gameObject.SetActive(false);
         mLabel2_4.gameObject.SetActive(false);
-        
-        /*CUISound.GetInstance().Play("UI_Bump");
-        mLabel1_1.gameObject.SetActive(true);
-        mLabel2_1.gameObject.SetActive(true);
-        m_nStep = 0;
-        m_fStepCount = 0.5f;
-        m_bShow = true;*/
     }
 
     public void Stop()
@@ -207,7 +195,6 @@ public class gyUIPanelMissionSuccessLevelUp : MonoBehaviour
         mLabel2_3.gameObject.SetActive(true);
         mLabel2_3_1.gameObject.SetActive(true);
         mLabel2_4.gameObject.SetActive(true);
-
         m_nStep = 10;
         m_bShow = true;
     }

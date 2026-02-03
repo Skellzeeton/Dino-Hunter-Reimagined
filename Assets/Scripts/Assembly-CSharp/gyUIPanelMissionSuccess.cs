@@ -36,11 +36,15 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 	
 	public GameObject mStatisticsContext11;
 	
+	public GameObject mStatisticsContext12;
+	
 	public gyUIHopNumber mContext1;
 
 	public gyUIHopNumber mContext2;
 
 	public gyUIHopNumber mContext3;
+	
+	public gyUIHopNumber mContext4;
 
 	protected bool m_bShow;
 
@@ -221,6 +225,8 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 			{
 				CUISound.GetInstance().Play("UI_Exp_plus");
 				m_CharExp.gameObject.SetActive(true);
+				mStatisticsContext12.SetActive(true);
+				mContext4.gameObject.SetActive(true);
 				m_nStep = 15;
 				m_fStepCount = 0.1f;
 			}
@@ -248,9 +254,11 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 		mStatisticsContext9.SetActive(false);
 		mStatisticsContext10.SetActive(false);
 		mStatisticsContext11.SetActive(false);
+		mStatisticsContext12.SetActive(false);
 		mContext1.gameObject.SetActive(false);
 		mContext2.gameObject.SetActive(false);
 		mContext3.gameObject.SetActive(false);
+		mContext4.gameObject.SetActive(false);
 		m_CharExp.gameObject.SetActive(false);
 		if (bShow)
 		{
@@ -308,6 +316,14 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 			mContext3.Go(0f, nValue, Mathf.Clamp01((float)nValue / 300f) * 5f);
 		}
 	}
+	
+	public void SetGainExp(int nValue)
+	{
+		if (!(mContext4 == null))
+		{
+			mContext4.Go(0f, nValue, Mathf.Clamp01((float)nValue / 300f) * 5f);
+		}
+	}
 
 	public bool IsContextHop()
 	{
@@ -320,6 +336,10 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 			return false;
 		}
 		if (mContext3 == null || !mContext3.gameObject.active || !mContext3.isHop)
+		{
+			return false;
+		}
+		if (mContext4 == null || !mContext4.gameObject.active || !mContext4.isHop)
 		{
 			return false;
 		}
@@ -339,6 +359,10 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 		if (mContext3 != null)
 		{
 			mContext3.Stop();
+		}
+		if (mContext4 != null)
+		{
+			mContext4.Stop();
 		}
 	}
 }
