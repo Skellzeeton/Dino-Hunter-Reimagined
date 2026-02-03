@@ -4891,7 +4891,7 @@ public class TUIDataServer
 		if (gameState != null && nIndex >= 0 && nIndex < gameState.m_arrMainScenePopWindow.Length)
 		{
 			//Debug.Log("SetPopWindow " + nIndex);
-			//gameState.m_arrMainScenePopWindow[nIndex] = true;
+			gameState.m_arrMainScenePopWindow[nIndex] = true;
 		}
 	}
 
