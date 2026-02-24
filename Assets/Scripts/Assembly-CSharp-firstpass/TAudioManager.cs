@@ -336,7 +336,6 @@ public class TAudioManager : MonoBehaviour
         m_audio_rules.Clear();
     }
 
-    // NEW VOLUME CONTROL METHODS (for UI buttons or hotkeys)
     public void AdjustMusicVolume(float delta)
     {
         musicVolume = Mathf.Clamp01(musicVolume + delta);

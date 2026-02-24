@@ -181,7 +181,7 @@ MonoBehaviour:
     m_Bits: 512
   stopNaNPropagation: 0
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -191,7 +191,7 @@ MonoBehaviour:
     quality: 0
   fastApproximateAntialiasing:
     fastMode: 1
-    keepAlpha: 1
+    keepAlpha: 0
   fog:
     enabled: 1
     excludeSkybox: 1

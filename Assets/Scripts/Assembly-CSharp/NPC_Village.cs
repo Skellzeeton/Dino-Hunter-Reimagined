@@ -46,7 +46,7 @@ public class NPC_Village : MonoBehaviour
 		switch (Random.Range(1, 1000) % 2)
 		{
 		case 0:
-			ani_time = Random.Range(0.5f, 1.5f);
+			ani_time = Random.Range(1f, 3f);
 			if (npc_type == NPCType.NPC_01)
 			{
 				base.GetComponent<Animation>().CrossFade("Standby02");
@@ -57,7 +57,7 @@ public class NPC_Village : MonoBehaviour
 			}
 			break;
 		case 1:
-			ani_time = Random.Range(1f, 2f);
+			ani_time = Random.Range(2f, 4f);
 			if (npc_type == NPCType.NPC_01)
 			{
 				base.GetComponent<Animation>().CrossFade("Standby01");
@@ -81,5 +81,10 @@ public class NPC_Village : MonoBehaviour
 			Object.Destroy(gameObject, 1f);
 			CUISound.GetInstance().Play("Mat_Blacksmith");
 		}
+	}
+	
+	public void PlayLand()
+	{
+		CUISound.GetInstance().Play("Footstep_NPC_Land");
 	}
 }

@@ -201,6 +201,7 @@ public class Scene_MainMenu : MonoBehaviour
 				PlayerPrefs.Save();
 			}
 			TAudioManager.instance.soundVolume = currentSFXVolume;
+			CUISound.GetInstance().Play("Amb_Village");
 		}
 	}
 
@@ -232,6 +233,7 @@ public class Scene_MainMenu : MonoBehaviour
 			if (switchSceneStr != null)
 			{
 				switchSceneStr(next_scene);
+				CUISound.GetInstance().Stop("Amb_Village");
 			}
 		}
 	}
@@ -1525,19 +1527,14 @@ public class Scene_MainMenu : MonoBehaviour
 			Debug.Log("error!");
 			return;
 		}
-
 		float num = 0.37f;
 		float num2 = 0.65f;
 		float persentAngle = camera_village.GetPersentAngle();
-
-		// Left arrow
 		MeshRenderer leftRenderer = img_arrow_left.GetComponent<MeshRenderer>();
 		if (leftRenderer != null)
 		{
 			leftRenderer.enabled = (persentAngle > num);
 		}
-
-		// Right arrow
 		MeshRenderer rightRenderer = img_arrow_right.GetComponent<MeshRenderer>();
 		if (rightRenderer != null)
 		{

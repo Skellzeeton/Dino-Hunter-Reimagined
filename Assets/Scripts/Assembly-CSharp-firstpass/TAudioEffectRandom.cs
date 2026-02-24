@@ -62,7 +62,11 @@ public class TAudioEffectRandom : ITAudioEvent
 	private bool m_awake;
 
 	private AudioSource m_audioSource;
-	private bool hasScheduledDestroy = false;
+
+	private Coroutine scheduledDestroyCoroutine = null;
+	private float m_lastPlayTime = -99999f;
+
+	private const float SceneChangeDestroyDelay = 15f;
 
 	private static bool IsSceneToIgnore(string sceneName)
 	{
@@ -82,8 +86,6 @@ public class TAudioEffectRandom : ITAudioEvent
 		preserveOnSceneChange = true;
 		forceDeleteOnSceneChange = false;
 	}
-
-
 
 	public int currentPlayIndex
 	{
@@ -138,6 +140,12 @@ public class TAudioEffectRandom : ITAudioEvent
 
 	private void OnDestroy()
 	{
+		if (scheduledDestroyCoroutine != null)
+		{
+			StopCoroutine(scheduledDestroyCoroutine);
+			scheduledDestroyCoroutine = null;
+		}
+
 		if (TAudioManager.checkInstance)
 		{
 			Stop();
@@ -427,8 +435,13 @@ public class TAudioEffectRandom : ITAudioEvent
 
 			SendTriggerEvent(audioClip);
 		}
-
 		m_isPlaying = true;
+		m_lastPlayTime = Time.realtimeSinceStartup;
+		if (scheduledDestroyCoroutine != null)
+		{
+			StopCoroutine(scheduledDestroyCoroutine);
+			scheduledDestroyCoroutine = null;
+		}
 	}
 
 	public override void Stop()
@@ -473,13 +486,21 @@ public class TAudioEffectRandom : ITAudioEvent
 
 	private IEnumerator DelayedDestroy(float delay)
 	{
-		yield return new WaitForSeconds(delay);
-		if (!isPlaying && !preserveOnSceneChange)
+		yield return new WaitForSecondsRealtime(delay);
+		if (this == null)
+			yield break;
+		if (preserveOnSceneChange)
+		{
+			scheduledDestroyCoroutine = null;
+			yield break;
+		}
+		if (Time.realtimeSinceStartup - m_lastPlayTime >= delay && !m_isPlaying)
 		{
 			Object.Destroy(gameObject);
 		}
+		scheduledDestroyCoroutine = null;
 	}
-	
+
 	public static void DestroyAllSfxInstances()
 	{
 		TAudioEffectRandom[] allInstances = FindObjectsOfType<TAudioEffectRandom>();
@@ -487,27 +508,19 @@ public class TAudioEffectRandom : ITAudioEvent
 		{
 			if (instance == null)
 				continue;
-			
 			if (instance.preserveOnSceneChange)
 				continue;
-			
 			if (instance.forceDeleteOnSceneChange)
 			{
 				instance.Stop();
 				Object.Destroy(instance.gameObject);
 				continue;
 			}
-			
 			if (instance.isSfx)
 			{
-				if (!instance.isPlaying)
+				if (instance.scheduledDestroyCoroutine == null)
 				{
-					instance.StartCoroutine(instance.DelayedDestroy(5f));
-				}
-				else
-				{
-					instance.Stop();
-					Object.Destroy(instance.gameObject);
+					instance.scheduledDestroyCoroutine = instance.StartCoroutine(instance.DelayedDestroy(SceneChangeDestroyDelay));
 				}
 			}
 		}

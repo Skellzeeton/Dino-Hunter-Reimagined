@@ -12,10 +12,10 @@ public class CControlWindows : CControlBase
 	public override void Initialize()
 	{
 		base.Initialize();
-		mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", 1f);
+		mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", 0.5f);
 		if (mouseSensitivity < minSensitivity)
 		{
-			mouseSensitivity = 1f;
+			mouseSensitivity = 0.5f;
 			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
 		}
 	}
@@ -370,6 +370,14 @@ public class CControlWindows : CControlBase
 			m_User.SwitchWeapon(num3);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
+		/*if (Input.GetKeyDown(KeyCode.Alpha9))
+		{
+			Debug.Log("press 9 key");
+			m_GameScene.FinishGame(true);
+			if (CGameNetManager.GetInstance().IsConnected())
+			{
+				CGameNetSender.GetInstance().SendMsg_GAME_OVER(true);
+			} Uncomment for testing*/
 	}
 
 	public override void LateUpdate(float deltaTime)

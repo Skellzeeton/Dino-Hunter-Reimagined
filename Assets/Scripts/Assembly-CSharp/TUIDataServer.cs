@@ -4927,7 +4927,7 @@ public class TUIDataServer
 				break;
 			case 2:
 				gameState.m_bNeedAutoSaleUI = false;
-				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ShowSale, true));
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ShowSale, false));
 				break;
 			case 3:
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ShowUnlockItem));
@@ -6540,7 +6540,9 @@ public class TUIDataServer
 			tuiweaponinfo.AddItem(nCategory, tUIWeaponAttributeInfo);
 			if (tUIWeaponAttributeInfo.m_nLevel < 1)
 			{
-				if ((weaponInfo.m_nUnlockStageID == 0 && weaponInfo.m_nUnlockHunterLvl == 0) || (weaponInfo.m_nUnlockStageID > 0 && m_DataCenter.IsLevelPassed(weaponInfo.m_nUnlockStageID)) || (weaponInfo.m_nUnlockHunterLvl > 0 && m_DataCenter.HunterLvl >= weaponInfo.m_nUnlockHunterLvl))
+				if ((weaponInfo.m_nUnlockStageID == 0 && weaponInfo.m_nUnlockHunterLvl == 0) ||
+				    (weaponInfo.m_nUnlockStageID > 0 && m_DataCenter.IsLevelPassed(weaponInfo.m_nUnlockStageID)) ||
+				    (weaponInfo.m_nUnlockHunterLvl > 0 && m_DataCenter.HunterLvl >= weaponInfo.m_nUnlockHunterLvl))
 				{
 					tUIWeaponAttributeInfo.m_bUnlock = true;
 					tUIWeaponAttributeInfo.m_sUnlockStr = string.Empty;
@@ -6552,22 +6554,15 @@ public class TUIDataServer
 					if (weaponInfo.m_nUnlockStageID > 0)
 					{
 						int groupID = m_GameData.m_GameLevelCenter.GetGroupID(weaponInfo.m_nUnlockStageID);
-						if (groupID > 0)
+						GameLevelGroupInfo groupInfo = m_GameData.m_GameLevelCenter.GetGroupInfo(groupID);
+						if (groupInfo != null && groupInfo.ltLevelList != null)
 						{
-							tUIWeaponAttributeInfo.m_sUnlockStr = tUIWeaponAttributeInfo.m_sUnlockStr + "COMPLETE STAGE " + groupID;
+							int subLevelIndex = groupInfo.ltLevelList.IndexOf(weaponInfo.m_nUnlockStageID) + 1;
+							if (subLevelIndex > 0)
+								tUIWeaponAttributeInfo.m_sUnlockStr +=
+									$"COMPLETE STAGE {groupID}, LV. {subLevelIndex}";
+							else tUIWeaponAttributeInfo.m_sUnlockStr += $"COMPLETE STAGE {groupID}";
 						}
-					}
-					if (weaponInfo.m_nUnlockHunterLvl > 0)
-					{
-						if (tUIWeaponAttributeInfo.m_sUnlockStr.Length > 0)
-						{
-							tUIWeaponAttributeInfo.m_sUnlockStr += " OR ";
-						}
-						tUIWeaponAttributeInfo.m_sUnlockStr = tUIWeaponAttributeInfo.m_sUnlockStr + "REACH HUNTER LV " + weaponInfo.m_nUnlockHunterLvl;
-					}
-					if (tUIWeaponAttributeInfo.m_sUnlockStr.Length > 0)
-					{
-						tUIWeaponAttributeInfo.m_sUnlockStr += " TO UNLOCK";
 					}
 				}
 			}
