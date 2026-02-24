@@ -301,7 +301,7 @@ public class iServerVerify : MonoBehaviour
 							}
 							if (GetAttribute(item7, "timeout", ref value))
 							{
-								cServerInfo.fTimeOut = float.Parse(value);
+								cServerInfo.fTimeOut = MyUtils.ParseFloat(value);
 							}
 						}
 					}
@@ -375,7 +375,7 @@ public class iServerVerify : MonoBehaviour
 						cWorldMonsterInfo.m_nMobID = int.Parse(value);
 						if (GetAttribute(item12, "rate", ref value))
 						{
-							cWorldMonsterInfo.m_fRate = float.Parse(value);
+							cWorldMonsterInfo.m_fRate = MyUtils.ParseFloat(value);
 						}
 						if (GetAttribute(item12, "dailymax", ref value))
 						{
@@ -399,8 +399,8 @@ public class iServerVerify : MonoBehaviour
 							if (array != null && array.Length >= 2)
 							{
 								cWorldMonsterInfo.m_arrRefreshTime = new float[2];
-								cWorldMonsterInfo.m_arrRefreshTime[0] = float.Parse(array[0]);
-								cWorldMonsterInfo.m_arrRefreshTime[1] = float.Parse(array[1]);
+								cWorldMonsterInfo.m_arrRefreshTime[0] = MyUtils.ParseFloat(array[0]);
+								cWorldMonsterInfo.m_arrRefreshTime[1] = MyUtils.ParseFloat(array[1]);
 							}
 						}
 						m_ltWorldMonsterInfo.Add(cWorldMonsterInfo);
@@ -434,39 +434,39 @@ public class iServerVerify : MonoBehaviour
 				{
 					if (GetAttribute(item2, "monster_life", ref value))
 					{
-						iMacroDefine.m_fMonsterPower_Life = float.Parse(value);
+						iMacroDefine.m_fMonsterPower_Life = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "monster_damage", ref value))
 					{
-						iMacroDefine.m_fMonsterPower_Damage = float.Parse(value);
+						iMacroDefine.m_fMonsterPower_Damage = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "monster_level", ref value))
 					{
-						iMacroDefine.m_fMonsterPower_Lvl = float.Parse(value);
+						iMacroDefine.m_fMonsterPower_Lvl = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "monster_rewards_gold", ref value))
 					{
-						iMacroDefine.m_fMonsterReward_Gold = float.Parse(value);
+						iMacroDefine.m_fMonsterReward_Gold = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "monster_rewards_exp", ref value))
 					{
-						iMacroDefine.m_fMonsterReward_Exp = float.Parse(value);
+						iMacroDefine.m_fMonsterReward_Exp = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "monster_rewards_level", ref value))
 					{
-						iMacroDefine.m_fMonsterReward_Lvl = float.Parse(value);
+						iMacroDefine.m_fMonsterReward_Lvl = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "stage_rewards_gold", ref value))
 					{
-						iMacroDefine.m_fStageReward_Gold = float.Parse(value);
+						iMacroDefine.m_fStageReward_Gold = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "stage_rewards_exp", ref value))
 					{
-						iMacroDefine.m_fStageReward_Exp = float.Parse(value);
+						iMacroDefine.m_fStageReward_Exp = MyUtils.ParseFloat(value);
 					}
 					if (GetAttribute(item2, "stage_rewards_level", ref value))
 					{
-						iMacroDefine.m_fStageReward_Lvl = float.Parse(value);
+						iMacroDefine.m_fStageReward_Lvl = MyUtils.ParseFloat(value);
 					}
 				}
 			}

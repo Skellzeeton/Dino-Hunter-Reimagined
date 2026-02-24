@@ -223,7 +223,7 @@ public class iSkillCenter
 				string[] array = value.Split(',');
 				for (int i = 0; i < array.Length; i++)
 				{
-					cSkillInfoLevel.ltRangeValue.Add(float.Parse(array[i]));
+					cSkillInfoLevel.ltRangeValue.Add(MyUtils.ParseFloat(array[i]));
 				}
 			}
 			if (MyUtils.GetAttribute(childNode, "targetlimit", ref value))
@@ -240,7 +240,7 @@ public class iSkillCenter
 				string[] array = value.Split(',');
 				for (int j = 0; j < array.Length; j++)
 				{
-					cSkillInfoLevel.ltSkillModeValue.Add(float.Parse(array[j]));
+					cSkillInfoLevel.ltSkillModeValue.Add(MyUtils.ParseFloat(array[j]));
 				}
 			}
 			if (MyUtils.GetAttribute(childNode, "name", ref value))
@@ -297,7 +297,7 @@ public class iSkillCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "actionspeed", ref value))
 			{
-				cSkillInfoLevel.fAnimSpeed = float.Parse(value);
+				cSkillInfoLevel.fAnimSpeed = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "actionloop", ref value))
 			{
@@ -341,11 +341,11 @@ public class iSkillCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "mutiplyeff", ref value))
 			{
-				cSkillInfoLevel.m_fMutiplyEff = float.Parse(value);
+				cSkillInfoLevel.m_fMutiplyEff = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "mutiplyefftime", ref value))
 			{
-				cSkillInfoLevel.m_fMutiplyEffTime = float.Parse(value);
+				cSkillInfoLevel.m_fMutiplyEffTime = MyUtils.ParseFloat(value);
 			}
 		}
 	}
@@ -373,7 +373,7 @@ public class iSkillCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "coldown", ref value))
 			{
-				cSkillComboInfo.fCoolDown = float.Parse(value);
+				cSkillComboInfo.fCoolDown = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "skilllist", ref value))
 			{
@@ -386,7 +386,7 @@ public class iSkillCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "freezetime", ref value))
 			{
-				cSkillComboInfo.fFreezeTime = float.Parse(value);
+				cSkillComboInfo.fFreezeTime = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "usecount", ref value))
 			{

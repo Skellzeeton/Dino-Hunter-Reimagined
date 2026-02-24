@@ -98,19 +98,19 @@ public class iMobCenter : iBaseCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "life", ref value))
 			{
-				cMobInfoLevel.fLife = float.Parse(value);
+				cMobInfoLevel.fLife = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "movespeed", ref value))
 			{
-				cMobInfoLevel.fMoveSpeed = float.Parse(value);
+				cMobInfoLevel.fMoveSpeed = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "meleerange", ref value))
 			{
-				cMobInfoLevel.fMeleeRange = float.Parse(value);
+				cMobInfoLevel.fMeleeRange = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "damage", ref value))
 			{
-				cMobInfoLevel.fDamage = float.Parse(value);
+				cMobInfoLevel.fDamage = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "skill", ref value))
 			{
@@ -127,7 +127,7 @@ public class iMobCenter : iBaseCenter
 				string[] array = value.Split(',');
 				for (int j = 0; j < array.Length && j < cMobInfoLevel.ltSkill.Count; j++)
 				{
-					cMobInfoLevel.ltSkill[j].m_fRate = float.Parse(array[j]);
+					cMobInfoLevel.ltSkill[j].m_fRate = MyUtils.ParseFloat(array[j]);
 				}
 			}
 			if (MyUtils.GetAttribute(childNode, "skillpassive", ref value))
@@ -141,7 +141,7 @@ public class iMobCenter : iBaseCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "hardiness", ref value))
 			{
-				cMobInfoLevel.fHardiness = float.Parse(value);
+				cMobInfoLevel.fHardiness = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "aimanager", ref value))
 			{
@@ -149,11 +149,11 @@ public class iMobCenter : iBaseCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "movespeedrate", ref value))
 			{
-				cMobInfoLevel.fMoveSpeedRate = float.Parse(value);
+				cMobInfoLevel.fMoveSpeedRate = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "rushspeedrate", ref value))
 			{
-				cMobInfoLevel.fRushSpeedRate = float.Parse(value);
+				cMobInfoLevel.fRushSpeedRate = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "iswaitrot", ref value))
 			{
@@ -201,9 +201,9 @@ public class iMobCenter : iBaseCenter
 					{
 						CHardinessInfo cHardinessInfo = new CHardinessInfo();
 						cHardinessInfo.nPartID = int.Parse(array[0]);
-						cHardinessInfo.fHardiness = float.Parse(array[1]);
+						cHardinessInfo.fHardiness = MyUtils.ParseFloat(array[1]);
 						cHardinessInfo.nAnimEnum = int.Parse(array[2]);
-						cHardinessInfo.fDmgRate = float.Parse(array[3]);
+						cHardinessInfo.fDmgRate = MyUtils.ParseFloat(array[3]);
 						cMobInfoLevel.ltHardinessInfo.Add(cHardinessInfo);
 					}
 				}

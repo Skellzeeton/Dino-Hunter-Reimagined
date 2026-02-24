@@ -48,7 +48,7 @@ public class iBuffCenter : iBaseCenter
 			}
 			if (MyUtils.GetAttribute(childNode, "functime", ref value))
 			{
-				cBuffInfo.fEffectTime = float.Parse(value);
+				cBuffInfo.fEffectTime = MyUtils.ParseFloat(value);
 			}
 			if (MyUtils.GetAttribute(childNode, "effhold", ref value))
 			{

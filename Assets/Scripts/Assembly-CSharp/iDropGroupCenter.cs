@@ -82,7 +82,7 @@ public class iDropGroupCenter : iBaseCenter
                 string[] array = value.Split(',');
                 for (int j = 0; j < array.Length && j < cDropGroupInfo.ltItem.Count; j++)
                 {
-                    cDropGroupInfo.ltItem[j].fRate = float.Parse(array[j]);
+                    cDropGroupInfo.ltItem[j].fRate = MyUtils.ParseFloat(array[j]);
                 }
             }
 

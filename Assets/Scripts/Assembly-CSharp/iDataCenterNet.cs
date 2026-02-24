@@ -211,7 +211,7 @@ public class iDataCenterNet
 						}
 						if (MyUtils.GetAttribute(item2, "sceneproccess", ref value))
 						{
-							cNameCardInfo.m_fSceneProccess = float.Parse(value);
+							cNameCardInfo.m_fSceneProccess = MyUtils.ParseFloat(value);
 						}
 						if (MyUtils.GetAttribute(item2, "signature", ref value))
 						{

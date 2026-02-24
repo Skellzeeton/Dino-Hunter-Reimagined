@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Globalization;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using UnityEngine;
 
@@ -158,6 +159,11 @@ public class MyUtils
 			return src;
 		}
 		return src + (dst - src) * rate;
+	}
+	
+	public static float ParseFloat(string str)
+	{
+		return float.Parse(str, CultureInfo.InvariantCulture);
 	}
 
 	public static bool Compare(float cpvalue, int operate, float value, float maxvalue = 0f)

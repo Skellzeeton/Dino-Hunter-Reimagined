@@ -1224,7 +1224,7 @@ public class iDataCenter
 		}
 		if (MyUtils.GetAttribute(root, "proccess", ref value))
 		{
-			m_fSceneProccess = float.Parse(value);
+			m_fSceneProccess = MyUtils.ParseFloat(value);
 		}
 		if (MyUtils.GetAttribute(root, "crystaltotalgain", ref value))
 		{
@@ -1693,7 +1693,7 @@ public class iDataCenter
 						}
 						if (MyUtils.GetAttribute(item12, "money", ref value))
 						{
-							cCrystalInBackground.m_fMoney = float.Parse(value);
+							cCrystalInBackground.m_fMoney = MyUtils.ParseFloat(value);
 						}
 						if (MyUtils.GetAttribute(item12, "crystal", ref value))
 						{
