@@ -2016,26 +2016,33 @@ public class iGameSceneBase
 
 	public CCharUser AddUser(int nID, int nUID, Vector3 v3Pos, Vector3 v3Dir)
 	{
-		GameObject gameObject = PrefabManager.Get(10);
-		if (gameObject == null)
+		iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dataCenter == null)
 		{
+			Debug.LogError("DataCenter is null!");
 			return null;
 		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
-		if (gameObject2 == null)
+		bool hasArmor = (dataCenter.AvatarHead > 0 && dataCenter.AvatarHead != 101) ||  (dataCenter.AvatarUpper > 0 && dataCenter.AvatarUpper != 301) || (dataCenter.AvatarLower > 0 && dataCenter.AvatarLower != 501);
+		int targetPrefabID = hasArmor ? 10 : nID;
+		GameObject prefab = PrefabManager.Get(targetPrefabID);
+		if (prefab == null)
 		{
-			return null;
+			Debug.LogWarning($"Prefab {targetPrefabID} not found, falling back to 10.");
+			prefab = PrefabManager.Get(10);
 		}
-		CCharUser cCharUser = gameObject2.AddComponent<CCharUser>();
-		if (cCharUser == null)
-		{
-			return null;
-		}
+		GameObject playerObj = Object.Instantiate(prefab);
+		playerObj.transform.position = v3Pos;
+		playerObj.transform.forward = v3Dir;
+		CCharUser cCharUser = playerObj.GetComponent<CCharUser>() ?? playerObj.AddComponent<CCharUser>();
 		cCharUser.Pos = v3Pos;
 		cCharUser.Dir2D = v3Dir;
 		cCharUser.UID = nUID;
+		cCharUser.ID = nID;
 		cCharUser.name = "main_player";
-		m_PlayerMap.Add(cCharUser.UID, cCharUser);
+		if (!m_PlayerMap.ContainsKey(cCharUser.UID))
+		{
+			m_PlayerMap.Add(cCharUser.UID, cCharUser);
+		}
 		return cCharUser;
 	}
 

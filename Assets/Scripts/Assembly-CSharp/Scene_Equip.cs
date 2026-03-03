@@ -97,6 +97,65 @@ public class Scene_Equip : MonoBehaviour
 	{
 		global::EventCenter.EventCenter.Instance.Unregister<TUIEvent.BackEvent_SceneEquip>(TUIEvent_SetUIInfo);
 	}
+	
+	    private void UpdateAttributeData(TUICharacterAttribute attribute, TUIPopupInfo equipment)
+    {
+        if (attribute == null || equipment == null) return;
+
+        switch (equipment.m_PopupType)
+        {
+            case PopupType.Armor_Head:
+                attribute.m_nAvatarHead = equipment.texture_id;
+                break;
+            case PopupType.Armor_Body:
+                attribute.m_nAvatarUpper = equipment.texture_id;
+                break;
+            case PopupType.Armor_Leg:
+                attribute.m_nAvatarLower = equipment.texture_id;
+                break;
+            case PopupType.Accessory_Halo:
+                attribute.m_nAvatarHeadup = equipment.texture_id;
+                break;
+            case PopupType.Armor_Bracelet:
+                attribute.m_nAvatarBracelet = equipment.texture_id;
+                break;
+            case PopupType.Accessory_Necklace:
+                attribute.m_nAvatarNeck = equipment.texture_id;
+                break;
+        }
+    }
+    private void RefreshCharacterVisuals(TUICharacterAttribute attribute)
+    {
+        if (attribute == null || go_role == null) return;
+
+        int roleID = top_bar.GetRoleID();
+        GameObject modelPrefab = null;
+        Texture modelTexture = null;
+        var mapping = TUIMappingInfo.Instance();
+        if (mapping.m_GetAvatarModel == null) return;
+
+        // Head
+        if (mapping.m_GetAvatarModel(attribute.m_nAvatarHead, roleID, ref modelPrefab, ref modelTexture)) go_role.ChangeAvatar(0, modelPrefab, modelTexture);
+
+        // Body/Upper
+        if (mapping.m_GetAvatarModel(attribute.m_nAvatarUpper, roleID, ref modelPrefab, ref modelTexture)) go_role.ChangeAvatar(1, modelPrefab, modelTexture);
+
+        // Legs/Lower
+        if (mapping.m_GetAvatarModel(attribute.m_nAvatarLower, roleID, ref modelPrefab, ref modelTexture)) go_role.ChangeAvatar(2, modelPrefab, modelTexture);
+
+        // Halo/Headup
+        if (mapping.m_GetAvatarModel(attribute.m_nAvatarHeadup, roleID, ref modelPrefab, ref modelTexture)) go_role.ChangeAvatarEffect(3, modelPrefab);
+
+        // Bracelet (Left and Right)
+        if (mapping.m_GetAvatarModel(attribute.m_nAvatarBracelet, roleID, ref modelPrefab, ref modelTexture))
+        {
+            go_role.ChangeAvatarEffect(4, modelPrefab);
+            go_role.ChangeAvatarEffect(5, modelPrefab);
+        }
+
+        // Necklace
+        if (mapping.m_GetAvatarModel(attribute.m_nAvatarNeck, roleID, ref modelPrefab, ref modelTexture)) go_role.ChangeAvatarEffect(6, modelPrefab);
+    }
 
 	public void TUIEvent_SetUIInfo(object sender, TUIEvent.BackEvent_SceneEquip m_event)
 	{
@@ -355,27 +414,19 @@ public class Scene_Equip : MonoBehaviour
 						{
 							if (item.m_CharacterAttribute != null)
 							{
-								switch (info3.m_PopupType)
-								{
-								case PopupType.Armor_Head:
-									item.m_CharacterAttribute.m_nAvatarHead = info3.texture_id;
-									break;
-								case PopupType.Armor_Body:
-									item.m_CharacterAttribute.m_nAvatarUpper = info3.texture_id;
-									break;
-								case PopupType.Armor_Leg:
-									item.m_CharacterAttribute.m_nAvatarLower = info3.texture_id;
-									break;
-								case PopupType.Accessory_Halo:
-									item.m_CharacterAttribute.m_nAvatarHeadup = info3.texture_id;
-									break;
-								case PopupType.Armor_Bracelet:
-									item.m_CharacterAttribute.m_nAvatarBracelet = info3.texture_id;
-									break;
-								case PopupType.Accessory_Necklace:
-									item.m_CharacterAttribute.m_nAvatarNeck = info3.texture_id;
-									break;
-								}
+								UpdateAttributeData(item.m_CharacterAttribute, info3);
+							}
+						}
+					}
+					go_role.ChangeRole(top_bar.GetRoleID());
+					if (data != null)
+					{
+						foreach (TUIPopupInfo item in data)
+						{
+							if (item.texture_id == top_bar.GetRoleID())
+							{
+								RefreshCharacterVisuals(item.m_CharacterAttribute);
+								break;
 							}
 						}
 					}
@@ -518,6 +569,7 @@ public class Scene_Equip : MonoBehaviour
 					}
 				}
 			}
+			go_role.ChangeRole(top_bar.GetRoleID());
 			m_PopupShow_Equip.UnEquip();
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_WeaponExchange)

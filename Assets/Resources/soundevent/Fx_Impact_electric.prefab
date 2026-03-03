@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4353466320638575}
   - component: {fileID: 82091230601193278}
   - component: {fileID: 114368047636664969}
+  - component: {fileID: -8560513070015067974}
   m_Layer: 0
   m_Name: Fx_Impact_electric
   m_TagString: Untagged
@@ -158,3 +159,17 @@ MonoBehaviour:
   intervalRangeMax: 0
   forceDeleteOnSceneChange: 0
   preserveOnSceneChange: 0
+--- !u!114 &-8560513070015067974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710420274058988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2120433db96d6b04fbe41a593fceaf68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCount: 3
+  deltaTime: 0.2

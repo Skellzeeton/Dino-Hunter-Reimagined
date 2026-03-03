@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4064189665287727}
   - component: {fileID: 82546005211808824}
   - component: {fileID: 114421485093647398}
+  - component: {fileID: 6452035100248034311}
   m_Layer: 0
   m_Name: Fx_Impact_freeze
   m_TagString: Untagged
@@ -158,3 +159,17 @@ MonoBehaviour:
   intervalRangeMax: 0
   forceDeleteOnSceneChange: 0
   preserveOnSceneChange: 0
+--- !u!114 &6452035100248034311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070593132769271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2120433db96d6b04fbe41a593fceaf68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCount: 3
+  deltaTime: 0.2

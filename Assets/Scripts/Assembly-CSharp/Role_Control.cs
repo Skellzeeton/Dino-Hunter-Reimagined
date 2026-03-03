@@ -258,6 +258,12 @@ public class Role_Control : MonoBehaviour
 			UpdatePosMove();
 		}
 	}
+	
+	private bool HasArmorEquipped()
+	{
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		return (dc.AvatarHead > 0 && dc.AvatarHead != 101) || (dc.AvatarUpper > 0 && dc.AvatarUpper != 301) || (dc.AvatarLower > 0 && dc.AvatarLower != 501);
+	}
 
 	public void SetRotation(float wparam, float lparam)
 	{
@@ -690,6 +696,7 @@ public class Role_Control : MonoBehaviour
 
 	public void ChangeRole(int id)
 	{
+		if (HasArmorEquipped()) id = 7;
 		if (role_now != null)
 		{
 			role_now.gameObject.SetActiveRecursive(false);
