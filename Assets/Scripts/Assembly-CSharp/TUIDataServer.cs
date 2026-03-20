@@ -4515,14 +4515,13 @@ public class TUIDataServer
 			TUIMainLevelInfo tUIMainLevelInfo = new TUIMainLevelInfo(wParam, gameLevelGroupInfo.sName, (MainLevelType)gameLevelGroupInfo.nIcon, num4, list2.ToArray());
 			foreach (int ltLevel5 in gameLevelGroupInfo.ltLevelList)
 			{
+				TUIRecommendRoleInfo tUIRecommendRoleInfo = null;
+				TUIRecommendWeaponInfo tUIRecommendWeaponInfo = null;
 				GameLevelInfo gameLevelInfo4 = gameData3.GetGameLevelInfo(ltLevel5);
 				if (gameLevelInfo4 == null)
 				{
 					return;
 				}
-
-				TUIRecommendRoleInfo tUIRecommendRoleInfo = null;
-				TUIRecommendWeaponInfo tUIRecommendWeaponInfo = null;
 				if (gameLevelInfo4.m_nRecommandType == 1)
 				{
 					CWeaponInfoLevel weaponInfo = gameData3.GetWeaponInfo(gameLevelInfo4.m_nRecommandID,
@@ -4682,8 +4681,13 @@ public class TUIDataServer
 				}
 
 				Debug.Log(string.Concat(ltLevel5, " ", levelPassState, " ", secondaryLevelType));
-				tUIMainLevelInfo.AddSecondaryLevelInfo(new TUISecondaryLevelInfo(ltLevel5, gameLevelInfo4.sLevelDesc,
-					list3, secondaryLevelType, levelPassState));
+				var secondaryLevel = new TUISecondaryLevelInfo(ltLevel5, gameLevelInfo4.sLevelDesc,
+					list3, secondaryLevelType, levelPassState);
+
+				secondaryLevel.recommend_role_info   = tUIRecommendRoleInfo;
+				secondaryLevel.recommend_weapon_info = tUIRecommendWeaponInfo;
+
+				tUIMainLevelInfo.AddSecondaryLevelInfo(secondaryLevel);
 			}
 
 			TUIGameInfo tUIGameInfo3 = new TUIGameInfo();

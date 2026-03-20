@@ -51,6 +51,10 @@ public class PrefabPath
 	public const int model_dilophosaurus2 = 42;
 
 	public const int model_dilophosaurus3 = 43;
+	
+	public const int model_dilophosaurus4 = 44;
+	
+	public const int model_dilophosaurus5 = 45;
 
 	public const int model_triceratops1 = 51;
 

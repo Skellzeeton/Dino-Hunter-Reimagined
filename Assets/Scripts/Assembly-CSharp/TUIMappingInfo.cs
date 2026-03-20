@@ -625,7 +625,7 @@ public class TUIMappingInfo
 			result = "Scene_MainMenu";
 			break;
 		case TUISceneType.Scene_Map:
-			result = "Scene_Map01";
+			result = "Scene_Map";
 			break;
 		case TUISceneType.Scene_Skill:
 			result = "Scene_Skill";

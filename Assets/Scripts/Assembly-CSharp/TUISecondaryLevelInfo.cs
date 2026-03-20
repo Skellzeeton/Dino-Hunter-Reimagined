@@ -22,7 +22,6 @@ public class TUISecondaryLevelInfo
 
     public LevelPassState pass_state;
 
-    // Full constructor
     public TUISecondaryLevelInfo(
         int m_id,
         string m_introduce01,
@@ -43,7 +42,6 @@ public class TUISecondaryLevelInfo
     }
 
 
-    // Simplified constructor without recommendations or goods_id_list
     public TUISecondaryLevelInfo(
         int m_id,
         string m_title,
