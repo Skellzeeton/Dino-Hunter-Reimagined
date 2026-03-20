@@ -18,6 +18,8 @@ public class PopupLevel_Recommend : MonoBehaviour
 	private Vector3 weapon_normal_pos = Vector3.zero;
 	private Vector3 stars_normal_pos  = Vector3.zero;
 	private Vector3 delta_pos         = Vector3.zero;
+	private const float TITLE_X_RECOMMENDED = -17.5f;
+	private const float TITLE_X_REQUIRED    = -5f;
 	private RecommendType     recommend_type;
 	private RequiredType      required_type;
 	private RecommendBtnState recommend_btn_state;
@@ -74,7 +76,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		int  level      = m_recommend_weapon.level;
 		bool have_equip = m_recommend_weapon.have_equip;
 		int  id         = m_recommend_weapon.id;
-		label_recommend_title.Text = required ? "Required" : "Recommended";
+		SetTitleText(required);
 		required_type = required ? RequiredType.Weapon : RequiredType.None;
 		img_role.texture = string.Empty;
 		img_role.gameObject.SetActiveRecursively(false);
@@ -95,7 +97,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		bool have_buy   = m_recommend_role.have_buy;
 		bool have_equip = m_recommend_role.have_equip;
 		int  id         = m_recommend_role.id;
-		label_recommend_title.Text = required ? "Required" : "Recommended";
+		SetTitleText(required);
 		required_type = required ? RequiredType.Role : RequiredType.None;
 		img_weapon.UseCustomize     = false;
 		img_weapon.CustomizeTexture = null;
@@ -143,7 +145,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		int  level      = m_recommend_weapon.level;
 		bool have_equip = m_recommend_weapon.have_equip;
 		int  id         = m_recommend_weapon.id;
-		label_recommend_title.Text = required ? "Required" : "Recommended";
+		SetTitleText(required);
 		required_type = required ? RequiredType.Weapon : RequiredType.None;
 		img_role.texture = string.Empty;
 		img_role.gameObject.SetActiveRecursively(false);
@@ -152,6 +154,16 @@ public class PopupLevel_Recommend : MonoBehaviour
 		img_weapon.gameObject.SetActiveRecursively(true);
 		ApplyStarsAndButtons(level, level_need, have_equip, required);
 		UpdateRequiredAni();
+	}
+
+	/// Sets the title label text and shifts its X position to suit the string length.
+	private void SetTitleText(bool required)
+	{
+		if (label_recommend_title == null) return;
+		label_recommend_title.Text = required ? "Required" : "Recommended";
+		Vector3 pos = label_recommend_title.transform.localPosition;
+		pos.x = required ? TITLE_X_REQUIRED : TITLE_X_RECOMMENDED;
+		label_recommend_title.transform.localPosition = pos;
 	}
 
 	private void ApplyStarsAndButtons(int level, int level_need, bool have_equip, bool required)
@@ -202,14 +214,12 @@ public class PopupLevel_Recommend : MonoBehaviour
 		{
 			CAvatarInfo info = gameData.m_AvatarCenter.Get(id);
 			if (info != null && info.m_sIcon.Length > 0)
-			{
 				return TUIMappingInfo.Instance().m_sPathRootCustomTex + "/Accessory/" + info.m_sIcon;
-			}
 		}
 		string texName = TUIMappingInfo.Instance().GetWeaponTexture(id);
 		return TUIMappingInfo.Instance().m_sPathRootCustomTex + "/Weapon/" + texName;
 	}
-	
+
 	private void SetDirectTexture(TUIMeshSprite sprite, string texPath)
 	{
 		sprite.texture          = string.Empty;
@@ -228,7 +238,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 			return;
 		}
 		sprite.CustomizeRect = new Rect(0f, 0f,
-			sprite.CustomizeTexture.width, 
+			sprite.CustomizeTexture.width,
 			sprite.CustomizeTexture.height);
 	}
 
@@ -237,7 +247,6 @@ public class PopupLevel_Recommend : MonoBehaviour
 		sprite.texture          = string.Empty;
 		sprite.UseCustomize     = true;
 		sprite.CustomizeTexture = Resources.Load(texPath) as Texture;
-
 		if (sprite.CustomizeTexture == null)
 		{
 			Debug.Log("[Recommend] lose texture! path=" + texPath);

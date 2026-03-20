@@ -444,6 +444,13 @@ public class Scene_Map : MonoBehaviour
 			m_fade.FadeOut();
 		}
 	}
+	
+	public void TUIEvent_ToggleRecommend(TUIControl control, int event_type, float wparam, float lparam, object obj)
+	{
+		if (event_type != 3) return;
+		CUISound.GetInstance().Play("UI_Button");
+		popup_level_map.popuplevel_frame03.ToggleRecommendPanel();
+	}
 
 	public void TUIEvent_ClosePopup(TUIControl control, int event_type, float wparam, float lparam, object obj)
 	{

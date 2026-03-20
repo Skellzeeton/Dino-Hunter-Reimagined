@@ -4690,14 +4690,13 @@ public class TUIDataServer
 				{
 					levelPassState = LevelPassState.Normal;
 				}
-
 				Debug.Log(string.Concat(ltLevel5, " ", levelPassState, " ", secondaryLevelType));
 				var secondaryLevel = new TUISecondaryLevelInfo(ltLevel5, gameLevelInfo4.sLevelDesc,
 					list3, secondaryLevelType, levelPassState);
-
+				secondaryLevel.introduce01 = gameLevelInfo4.sLevelDesc;
+				secondaryLevel.introduce02 = "Exp: " + gameLevelInfo4.nRewardExp + "\nGold: " + gameLevelInfo4.nRewardGold;
 				secondaryLevel.recommend_role_info   = tUIRecommendRoleInfo;
 				secondaryLevel.recommend_weapon_info = tUIRecommendWeaponInfo;
-
 				tUIMainLevelInfo.AddSecondaryLevelInfo(secondaryLevel);
 			}
 

@@ -11,9 +11,9 @@ public class PopupLevel_Frame03 : MonoBehaviour
 	public GoodsNeedItemImg goods06;
 	public GoodsNeedItemImg goods07;
 	public GoodsNeedItemImg goods08;
-
 	public PopupLevel_Recommend recommend;
-
+	public PopupLevel_Frame02 frame02;
+	public GameObject btn_toggle_arrow;
 	private Vector3 goods01_position = Vector3.zero;
 	private Vector3 goods02_position = Vector3.zero;
 	private Vector3 goods03_position = Vector3.zero;
@@ -22,6 +22,10 @@ public class PopupLevel_Frame03 : MonoBehaviour
 	private Vector3 goods06_position = Vector3.zero;
 	private Vector3 goods07_position = Vector3.zero;
 	private Vector3 goods08_position = Vector3.zero;
+	private TUIRecommendRoleInfo   m_cached_role_info;
+	private TUIRecommendWeaponInfo m_cached_weapon_info;
+	private List<TUIGoodsInfo>     m_cached_goods_list;
+	private bool m_showing_recommend = true;
 
 	private void Awake()
 	{
@@ -44,45 +48,100 @@ public class PopupLevel_Frame03 : MonoBehaviour
 
 	public void SetGoodsInfo(List<TUIGoodsInfo> m_goods_drop_list)
 	{
-		if (m_goods_drop_list == null || m_goods_drop_list.Count == 0)
+		m_cached_goods_list = m_goods_drop_list;
+		ApplyGoodsInfo(m_goods_drop_list);
+	}
+
+	public void SetRecommend(TUIRecommendRoleInfo m_recommend_role,
+		TUIRecommendWeaponInfo m_recommend_weapon)
+	{
+		m_cached_role_info   = m_recommend_role;
+		m_cached_weapon_info = m_recommend_weapon;
+		recommend.gameObject.SetActive(true);
+		ApplyRecommendLogic(m_recommend_role, m_recommend_weapon);
+		if (!m_showing_recommend)
 		{
-			goods01.gameObject.SetActiveRecursive(false);
-			goods02.gameObject.SetActiveRecursive(false);
-			goods03.gameObject.SetActiveRecursive(false);
-			goods04.gameObject.SetActiveRecursive(false);
-			goods05.gameObject.SetActiveRecursive(false);
-			goods06.gameObject.SetActiveRecursive(false);
-			goods07.gameObject.SetActiveRecursive(false);
-			goods08.gameObject.SetActiveRecursive(false);
-			return;
+			recommend.gameObject.SetActive(false);
+			ApplyFrame02Visibility(true);
 		}
+		else
+		{
+			ApplyFrame02Visibility(false);
+		}
+		ApplyArrowRotation();
+	}
+
+	public bool GetOpenStart()
+	{
+		return recommend.GetOpenStart();
+	}
+
+	public void ToggleRecommendPanel()
+	{
+		m_showing_recommend = !m_showing_recommend;
+
+		if (m_showing_recommend)
+		{
+			recommend.gameObject.SetActive(true);
+			ApplyFrame02Visibility(false);
+		}
+		else
+		{
+			recommend.gameObject.SetActive(false);
+			ApplyFrame02Visibility(true);
+		}
+
+		ApplyArrowRotation();
+	}
+
+	private void ApplyRecommendLogic(TUIRecommendRoleInfo roleInfo,
+	                                  TUIRecommendWeaponInfo weaponInfo)
+	{
+		if (roleInfo != null)
+			recommend.SetRecommendRole(roleInfo);
+		else if (weaponInfo != null)
+		{
+			if (IsWeaponID(weaponInfo.id))
+				recommend.SetRecommendWeapon(weaponInfo);
+			else
+				recommend.SetRecommendAvatarItem(weaponInfo);
+		}
+		else
+			recommend.SetRecommendNone();
+	}
+
+	private void ApplyFrame02Visibility(bool show)
+	{
+		if (frame02 != null)
+			frame02.gameObject.SetActiveRecursively(show);
+	}
+
+	private void ApplyArrowRotation()
+	{
+		if (btn_toggle_arrow == null) return;
+		float yAngle = m_showing_recommend ? 180f : 0f;
+		btn_toggle_arrow.transform.localRotation = Quaternion.Euler(0f, yAngle, 0f);
+	}
+
+	private void ApplyGoodsInfo(List<TUIGoodsInfo> m_goods_drop_list)
+	{
+		HideAllGoods();
+		if (m_goods_drop_list == null || m_goods_drop_list.Count == 0)
+			return;
 		switch (m_goods_drop_list.Count)
 		{
 		case 1:
 			goods06.SetInfo(m_goods_drop_list[0].id, m_goods_drop_list[0].quality, m_goods_drop_list[0].name);
 			goods06.transform.localPosition = goods06_position;
-			goods01.gameObject.SetActiveRecursive(false);
-			goods02.gameObject.SetActiveRecursive(false);
-			goods03.gameObject.SetActiveRecursive(false);
-			goods04.gameObject.SetActiveRecursive(false);
-			goods05.gameObject.SetActiveRecursive(false);
 			goods06.gameObject.SetActiveRecursive(true);
-			goods07.gameObject.SetActiveRecursive(false);
-			goods08.gameObject.SetActiveRecursive(false);
 			break;
 		case 2:
 			goods06.SetInfo(m_goods_drop_list[0].id, m_goods_drop_list[0].quality, m_goods_drop_list[0].name);
 			goods07.SetInfo(m_goods_drop_list[1].id, m_goods_drop_list[1].quality, m_goods_drop_list[1].name);
 			goods06.transform.localPosition = goods06_position + new Vector3(20f, 0f, 0f);
 			goods07.transform.localPosition = goods07_position + new Vector3(20f, 0f, 0f);
-			goods01.gameObject.SetActiveRecursive(false);
-			goods02.gameObject.SetActiveRecursive(false);
-			goods03.gameObject.SetActiveRecursive(false);
-			goods04.gameObject.SetActiveRecursive(false);
-			goods05.gameObject.SetActiveRecursive(false);
 			goods06.gameObject.SetActiveRecursive(true);
 			goods07.gameObject.SetActiveRecursive(true);
-			goods08.gameObject.SetActiveRecursive(false);
 			break;
 		case 3:
 			goods06.SetInfo(m_goods_drop_list[0].id, m_goods_drop_list[0].quality, m_goods_drop_list[0].name);
@@ -91,11 +150,6 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			goods06.transform.localPosition = goods06_position;
 			goods07.transform.localPosition = goods07_position;
 			goods08.transform.localPosition = goods08_position;
-			goods01.gameObject.SetActiveRecursive(false);
-			goods02.gameObject.SetActiveRecursive(false);
-			goods03.gameObject.SetActiveRecursive(false);
-			goods04.gameObject.SetActiveRecursive(false);
-			goods05.gameObject.SetActiveRecursive(false);
 			goods06.gameObject.SetActiveRecursive(true);
 			goods07.gameObject.SetActiveRecursive(true);
 			goods08.gameObject.SetActiveRecursive(true);
@@ -113,10 +167,6 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			goods02.gameObject.SetActiveRecursive(true);
 			goods03.gameObject.SetActiveRecursive(true);
 			goods04.gameObject.SetActiveRecursive(true);
-			goods05.gameObject.SetActiveRecursive(false);
-			goods06.gameObject.SetActiveRecursive(false);
-			goods07.gameObject.SetActiveRecursive(false);
-			goods08.gameObject.SetActiveRecursive(false);
 			break;
 		case 5:
 			goods01.SetInfo(m_goods_drop_list[0].id, m_goods_drop_list[0].quality, m_goods_drop_list[0].name);
@@ -134,41 +184,32 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			goods03.gameObject.SetActiveRecursive(true);
 			goods04.gameObject.SetActiveRecursive(true);
 			goods05.gameObject.SetActiveRecursive(true);
-			goods06.gameObject.SetActiveRecursive(false);
-			goods07.gameObject.SetActiveRecursive(false);
-			goods08.gameObject.SetActiveRecursive(false);
 			break;
 		default:
 			Debug.Log("error!");
 			break;
 		}
 	}
-	
-	public void SetRecommend(TUIRecommendRoleInfo m_recommend_role,
-	                         TUIRecommendWeaponInfo m_recommend_weapon)
+
+	private void HideAllGoods()
 	{
-		if (m_recommend_role != null)
-		{
-			recommend.SetRecommendRole(m_recommend_role);
-		}
-		else if (m_recommend_weapon != null)
-		{
-			if (IsWeaponID(m_recommend_weapon.id))
-				recommend.SetRecommendWeapon(m_recommend_weapon);
-			else
-				recommend.SetRecommendAvatarItem(m_recommend_weapon);
-		}
-		else
-		{
-			recommend.SetRecommendNone();
-		}
+		ClearGoods(goods01);
+		ClearGoods(goods02);
+		ClearGoods(goods03);
+		ClearGoods(goods04);
+		ClearGoods(goods05);
+		ClearGoods(goods06);
+		ClearGoods(goods07);
+		ClearGoods(goods08);
 	}
 
-	public bool GetOpenStart()
+	private void ClearGoods(GoodsNeedItemImg item)
 	{
-		return recommend.GetOpenStart();
+		if (item == null) return;
+		item.SetInfo(0, GoodsQualityType.Quality01, string.Empty);
+		item.gameObject.SetActiveRecursive(false);
 	}
-	
+
 	private bool IsWeaponID(int id)
 	{
 		iGameData gameData = iGameApp.GetInstance().m_GameData;

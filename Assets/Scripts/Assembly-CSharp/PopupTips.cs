@@ -41,7 +41,7 @@ public class PopupTips : MonoBehaviour
 			Debug.Log("error!");
 			return;
 		}
-		base.transform.position = m_pos + new Vector3(0f, 0f, -2f);
+		base.transform.position = m_pos + new Vector3(0f, 0f, -50f);
 		label_text.Text = m_text;
 		DoAlign(m_tip_pivot);
 	}
