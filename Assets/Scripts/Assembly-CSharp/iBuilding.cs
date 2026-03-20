@@ -72,8 +72,6 @@ public class iBuilding : MonoBehaviour
                 break;
             }
         }
-
-        // Play impact sound when entering life state 1 or 2
         if (newLifeState != m_nLifeState)
         {
             if (newLifeState == 1)
@@ -87,7 +85,6 @@ public class iBuilding : MonoBehaviour
                 Debug.Log("Barricade entered life state " + newLifeState + ", playing impact sound.");
             }
         }
-
         m_nLifeState = newLifeState;
         SetModel(m_nLifeState);
     }

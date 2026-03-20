@@ -939,11 +939,11 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
@@ -974,7 +974,7 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
+  m_Quality: 1
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300000, guid: fb2a7b04bd31bb94d844b0318cea1a02, type: 2}
@@ -1105,7 +1105,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4037555834471520}
-  - component: {fileID: 137012897034815814}
+  - component: {fileID: 3212745801965643152}
+  - component: {fileID: 7773473361923187935}
   m_Layer: 0
   m_Name: Dummy01
   m_TagString: Untagged
@@ -1128,22 +1129,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4871809249491202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &137012897034815814
-SkinnedMeshRenderer:
+--- !u!23 &3212745801965643152
+MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663995167675386}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
@@ -1163,7 +1164,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
+  m_StitchLightmapSeams: 1
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1172,19 +1173,15 @@ SkinnedMeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &7773473361923187935
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663995167675386}
   m_Mesh: {fileID: 4300000, guid: 9a9b2e1fcb94f468a8b63d8e9c0fb354, type: 2}
-  m_Bones:
-  - {fileID: 4037555834471520}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 0}
-  m_AABB:
-    m_Center: {x: 0.015473306, y: 0.0035291463, z: -0.0007815063}
-    m_Extent: {x: 0.21999636, y: 0.15935674, z: 0.20644112}
-  m_DirtyAABB: 0
 --- !u!1 &1680255243979052
 GameObject:
   m_ObjectHideFlags: 0

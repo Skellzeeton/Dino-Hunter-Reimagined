@@ -16,7 +16,6 @@ MonoBehaviour:
   - {fileID: 114010080494861950}
   - {fileID: 114701399060230122}
   - {fileID: 114994841255138500}
-  - {fileID: 114643197453634308}
 --- !u!114 &114010080494861950
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -64,34 +63,6 @@ MonoBehaviour:
   dirtIntensity:
     overrideState: 0
     value: 5
---- !u!114 &114643197453634308
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
-  m_Name: DepthOfField
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  focusDistance:
-    overrideState: 1
-    value: 65
-  aperture:
-    overrideState: 1
-    value: 0.1
-  focalLength:
-    overrideState: 1
-    value: 30
-  kernelSize:
-    overrideState: 1
-    value: 0
 --- !u!114 &114701399060230122
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -110,7 +81,7 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 105
+    value: 55
   sampleCount:
     overrideState: 0
     value: 7
@@ -157,7 +128,7 @@ MonoBehaviour:
     value: 0
   toneCurveGamma:
     overrideState: 1
-    value: 0.9
+    value: 0.95
   ldrLut:
     overrideState: 0
     value: {fileID: 0}
