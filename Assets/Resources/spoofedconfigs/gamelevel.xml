@@ -40,14 +40,14 @@
 			<limit type="1" maxnumber="6"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100004,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
-		<recommend recommendtype="1" recommandid="2" recommandlevel="1" islimit="false"/>
+		<recommend recommendtype="3" recommandid="701" recommandlevel="1" islimit="true"/>
 	</gamelevel>
 	<gamelevel id="1007" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest_Dusk" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1007001,1007002,1007003" task="1007" sp_cfg_ground="20111" exp="72" gold="14" desc="Survive a Horde of Dinosaurs for 1:30" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100009,800006,800009" mincount="2,-10,-25" maxcount="4,1,1"/>
-		<recommend recommendtype="1" recommandid="3" recommandlevel="1" islimit="false"/>
+		<recommend recommendtype="1" recommandid="20" recommandlevel="2" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="1008" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" isskyscene="false" nav_plane="0" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="75" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 200" limitmelee="false">
 		<MonsterNumLimit>
@@ -61,7 +61,7 @@
 			<limit type="1" maxnumber="18"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100010,800006,800009" mincount="2,-10,-25" maxcount="4,1,1"/>
-		<recommend recommendtype="1" recommandid="20" recommandlevel="1" islimit="false"/>
+		<recommend recommendtype="1" recommandid="3" recommandlevel="1" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="1010" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="56" desc="Hunt Triterrortops x 1" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit> 
@@ -75,60 +75,70 @@
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="2" recommandlevel="2" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2002" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2002001,2002002,2002003" task="2002" sp_cfg_ground="40111" exp="56" gold="20" desc="Survive a Horde of Dinosaurs for 1:40" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="3" recommandlevel="2" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="58" gold="28" desc="Snatch and defend a Dino Egg&#xA;EGG HP: 45" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006,700006,800009" mincount="4,0,-25" maxcount="6,2,1"/>
+		<recommend recommendtype="1" recommandid="4" recommandlevel="3" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2004001,2004002" task="2004" sp_cfg_ground="40111" exp="60" gold="15" desc="Kill all dinos" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="12"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="1" recommandlevel="2" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" isskyscene="false" nav_plane="0" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004,2005005,2005006,2005007" task="2005" sp_cfg_ground="40111" exp="90" gold="45" desc="Hunt Gloomwretch Killosaurus x 8" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="800"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100016,100017,8000011" mincount="0,0,-75" maxcount="1,1,1"/>
+		<recommend recommendtype="1" recommandid="1" recommandlevel="3" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2006" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="31" gold="30" desc="Fend off 3 waves of Dinosaurs&#xA;Barricade Health: 150" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="14"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100007,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="20" recommandlevel="2" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2007" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2007001,2007002,2007003" task="2007" sp_cfg_ground="30111" exp="32" gold="30" desc="Survive a Horde of Dinosaurs for 2:00" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100007,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="1" recommandlevel="3" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2008" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2008001,2008002" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="32" gold="15" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 25" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,700006,800009" mincount="4,0,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="4" recommandlevel="3" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="30111" exp="33" gold="30" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
+		<recommend recommendtype="1" recommandid="2" recommandlevel="3" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="2010" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="34" gold="75" desc="Hunt Old Killosaurus Rex x 2" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100018,100019,8000011" mincount="1,1,-75" maxcount="1,1,1"/>
+		<recommend recommendtype="1" recommandid="1" recommandlevel="4" islimit="false"/>
 	</gamelevel>
 	<gamelevel id="3001" cutscene_ambience="Amb_WindValley_Show" BGM="BGM_Map01_0" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge_Dusk" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3001001,3001002" task="3001" sp_cfg_ground="10111" cutscene="shangu01_open" exp="35" gold="30" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>

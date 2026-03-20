@@ -4579,22 +4579,33 @@ public class TUIDataServer
 				}
 				else if (gameLevelInfo4.m_nRecommandType == 3)
 				{
-					CItemInfoLevel itemInfo = gameData3.GetItemInfo(gameLevelInfo4.m_nRecommandID,
-						gameLevelInfo4.m_nRecommandLevel);
-					if (itemInfo != null)
+					CAvatarInfo avatarItemInfo = gameData3.m_AvatarCenter != null
+						? gameData3.m_AvatarCenter.Get(gameLevelInfo4.m_nRecommandID)
+						: null;
+					if (avatarItemInfo != null)
 					{
 						bool have_equip3 = false;
 						int nItemLevel = 0;
-						dataCenter3.GetEquipStone(gameLevelInfo4.m_nRecommandID, ref nItemLevel);
+						dataCenter3.GetAvatar(gameLevelInfo4.m_nRecommandID, ref nItemLevel);
 						if (nItemLevel <= 0)
 						{
 							nItemLevel = 0;
 						}
-						else if (dataCenter3.CurEquipStone == gameLevelInfo4.m_nRecommandID)
+						else
 						{
-							have_equip3 = true;
+							switch (avatarItemInfo.m_nType)
+							{
+								case 1: have_equip3 = (dataCenter3.AvatarHead  == gameLevelInfo4.m_nRecommandID); break;
+								case 3: have_equip3 = (dataCenter3.AvatarUpper == gameLevelInfo4.m_nRecommandID); break;
+								case 5: have_equip3 = (dataCenter3.AvatarLower == gameLevelInfo4.m_nRecommandID); break;
+								case 4: have_equip3 = (dataCenter3.AvatarWrist == gameLevelInfo4.m_nRecommandID); break;
+								case 0: have_equip3 = (dataCenter3.AvatarHeadup == gameLevelInfo4.m_nRecommandID); break;
+								case 2: have_equip3 = (dataCenter3.AvatarNeck  == gameLevelInfo4.m_nRecommandID); break;
+								case 6: have_equip3 = (dataCenter3.AvatarBadge == gameLevelInfo4.m_nRecommandID); break;
+								case 7: have_equip3 = (dataCenter3.AvatarStone == gameLevelInfo4.m_nRecommandID); break;
+								default: have_equip3 = false; break;
+							}
 						}
-
 						tUIRecommendWeaponInfo = new TUIRecommendWeaponInfo(gameLevelInfo4.m_nRecommandID, nItemLevel,
 							gameLevelInfo4.m_nRecommandLevel, have_equip3, gameLevelInfo4.m_bRecommandLimit);
 					}

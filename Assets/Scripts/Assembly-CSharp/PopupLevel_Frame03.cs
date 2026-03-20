@@ -4,46 +4,31 @@ using UnityEngine;
 public class PopupLevel_Frame03 : MonoBehaviour
 {
 	public GoodsNeedItemImg goods01;
-
 	public GoodsNeedItemImg goods02;
-
 	public GoodsNeedItemImg goods03;
-	
 	public GoodsNeedItemImg goods04;
-
 	public GoodsNeedItemImg goods05;
-	
 	public GoodsNeedItemImg goods06;
-	
 	public GoodsNeedItemImg goods07;
-	
 	public GoodsNeedItemImg goods08;
-
 
 	public PopupLevel_Recommend recommend;
 
 	private Vector3 goods01_position = Vector3.zero;
-
 	private Vector3 goods02_position = Vector3.zero;
-
 	private Vector3 goods03_position = Vector3.zero;
-	
 	private Vector3 goods04_position = Vector3.zero;
-	
 	private Vector3 goods05_position = Vector3.zero;
-	
 	private Vector3 goods06_position = Vector3.zero;
-	
 	private Vector3 goods07_position = Vector3.zero;
-	
 	private Vector3 goods08_position = Vector3.zero;
 
 	private void Awake()
 	{
-		if (goods01 == null || goods02 == null || goods03 == null || goods04 == null || goods05 == null || goods06 == null || goods07 == null || goods08 == null)
-		{
+		if (goods01 == null || goods02 == null || goods03 == null || goods04 == null ||
+		    goods05 == null || goods06 == null || goods07 == null || goods08 == null)
 			Debug.Log("error!");
-		}
+
 		goods01_position = goods01.transform.localPosition;
 		goods02_position = goods02.transform.localPosition;
 		goods03_position = goods03.transform.localPosition;
@@ -54,13 +39,8 @@ public class PopupLevel_Frame03 : MonoBehaviour
 		goods08_position = goods08.transform.localPosition;
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
+	private void Start()  { }
+	private void Update() { }
 
 	public void SetGoodsInfo(List<TUIGoodsInfo> m_goods_drop_list)
 	{
@@ -124,7 +104,7 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			goods01.SetInfo(m_goods_drop_list[0].id, m_goods_drop_list[0].quality, m_goods_drop_list[0].name);
 			goods02.SetInfo(m_goods_drop_list[1].id, m_goods_drop_list[1].quality, m_goods_drop_list[1].name);
 			goods03.SetInfo(m_goods_drop_list[2].id, m_goods_drop_list[2].quality, m_goods_drop_list[2].name);
-			goods04.SetInfo(m_goods_drop_list[3].id, m_goods_drop_list[3].quality, m_goods_drop_list[2].name);
+			goods04.SetInfo(m_goods_drop_list[3].id, m_goods_drop_list[3].quality, m_goods_drop_list[3].name);
 			goods01.transform.localPosition = goods01_position;
 			goods02.transform.localPosition = goods02_position;
 			goods03.transform.localPosition = goods03_position;
@@ -142,8 +122,8 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			goods01.SetInfo(m_goods_drop_list[0].id, m_goods_drop_list[0].quality, m_goods_drop_list[0].name);
 			goods02.SetInfo(m_goods_drop_list[1].id, m_goods_drop_list[1].quality, m_goods_drop_list[1].name);
 			goods03.SetInfo(m_goods_drop_list[2].id, m_goods_drop_list[2].quality, m_goods_drop_list[2].name);
-			goods04.SetInfo(m_goods_drop_list[3].id, m_goods_drop_list[3].quality, m_goods_drop_list[2].name);
-			goods05.SetInfo(m_goods_drop_list[4].id, m_goods_drop_list[4].quality, m_goods_drop_list[2].name);
+			goods04.SetInfo(m_goods_drop_list[3].id, m_goods_drop_list[3].quality, m_goods_drop_list[3].name);
+			goods05.SetInfo(m_goods_drop_list[4].id, m_goods_drop_list[4].quality, m_goods_drop_list[4].name);
 			goods01.transform.localPosition = goods01_position;
 			goods02.transform.localPosition = goods02_position;
 			goods03.transform.localPosition = goods03_position;
@@ -163,8 +143,9 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			break;
 		}
 	}
-
-	public void SetRecommend(TUIRecommendRoleInfo m_recommend_role, TUIRecommendWeaponInfo m_recommend_weapon)
+	
+	public void SetRecommend(TUIRecommendRoleInfo m_recommend_role,
+	                         TUIRecommendWeaponInfo m_recommend_weapon)
 	{
 		if (m_recommend_role != null)
 		{
@@ -172,7 +153,10 @@ public class PopupLevel_Frame03 : MonoBehaviour
 		}
 		else if (m_recommend_weapon != null)
 		{
-			recommend.SetRecommendWeapon(m_recommend_weapon);
+			if (IsWeaponID(m_recommend_weapon.id))
+				recommend.SetRecommendWeapon(m_recommend_weapon);
+			else
+				recommend.SetRecommendAvatarItem(m_recommend_weapon);
 		}
 		else
 		{
@@ -184,5 +168,13 @@ public class PopupLevel_Frame03 : MonoBehaviour
 	{
 		return recommend.GetOpenStart();
 	}
+	
+	private bool IsWeaponID(int id)
+	{
+		iGameData gameData = iGameApp.GetInstance().m_GameData;
+		if (gameData == null) return false;
+		iWeaponCenter weaponCenter = gameData.GetWeaponCenter();
+		if (weaponCenter == null) return false;
+		return weaponCenter.Get(id) != null;
+	}
 }
-
