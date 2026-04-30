@@ -16,8 +16,8 @@ public class TAudioManager : MonoBehaviour
     private Dictionary<string, List<ITAudioRule>> m_audio_rules = new Dictionary<string, List<ITAudioRule>>();
     private bool m_isMusicOn = true;
     private bool m_isSoundOn = true;
-    private float m_musicVolume = 0.5f;
-    private float m_soundVolume = 0.5f;
+    private float m_musicVolume = 1f;
+    private float m_soundVolume = 1f;
     private AudioListener audioListener;
     private static TAudioManager s_instance;
 
@@ -29,7 +29,7 @@ public class TAudioManager : MonoBehaviour
             if (s_instance == null && Application.isPlaying)
             {
                 GameObject target = new GameObject("TAudioManager", typeof(TAudioManager));
-                s_instance = target.GetComponent<TAudioManager>();  // <-- this line is missing
+                s_instance = target.GetComponent<TAudioManager>();
                 DontDestroyOnLoad(target);
             }
             return s_instance;
@@ -134,8 +134,8 @@ public class TAudioManager : MonoBehaviour
         m_isMusicOn = PlayerPrefs.GetInt("MusicOff", 0) == 0;
         m_isSoundOn = PlayerPrefs.GetInt("SoundOff", 0) == 0;
 
-        m_musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
-        m_soundVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+        m_musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        m_soundVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
         if (s_instance != null)
             Destroy(s_instance.gameObject);

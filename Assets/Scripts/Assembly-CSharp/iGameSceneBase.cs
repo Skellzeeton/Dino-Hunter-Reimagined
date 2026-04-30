@@ -2841,13 +2841,13 @@ public class iGameSceneBase
 									case "SceneIce":
 										AddObject(257, v3GroundPos, Vector3.forward);
 										break;
-									/*case "Yulin_toudan01":
+									case "Yulin_toudan01":
 									case "Yulin_toudan05":
 										AddObject(259, v3GroundPos, Vector3.forward);
-										break;*/
-									/*default:
+										break;
+									default:
 										AddObject(255, v3GroundPos, Vector3.forward);
-										break;*/
+										break;
 								}
 							}
 						}

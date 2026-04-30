@@ -348,6 +348,7 @@ public class CCharMob : CCharBase
 					int dropItem = m_tmpDropGroupInfo.GetDropItem();
 					if (dropItem > 0)
 					{
+						CUISound.GetInstance().Play("UI_Material_appear");
 						Vector3 onUnitSphere = UnityEngine.Random.onUnitSphere;
 						onUnitSphere.y = 1f;
 						m_GameScene.AddItem(dropItem, GetBone(0).position, onUnitSphere * UnityEngine.Random.Range(300f, 500f), -1f);
