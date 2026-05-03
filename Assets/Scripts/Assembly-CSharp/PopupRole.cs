@@ -237,7 +237,7 @@ public class PopupRole : MonoBehaviour
 		{
 			if (scene_tavern.GetSFXOpen())
 			{
-				CUISound.GetInstance().Play("UI_Unlocked_weapon");
+				CUISound.GetInstance().Play("UI_Unlocked_character");
 			}
 		}
 		else
@@ -308,12 +308,12 @@ public class PopupRole : MonoBehaviour
 		item_choose.DoBuy();
 		btn_buy.SetStateDisable();
 		int id = roleInfo.id;
-		unlock_blink.OpenBlinkRole(id, "Purchase complete!");
+		unlock_blink.OpenBlinkRole(id, "You got a new character!");
 		if (scene_tavern != null)
 		{
 			if (scene_tavern.GetSFXOpen())
 			{
-				CUISound.GetInstance().Play("UI_Unlocked_weapon");
+				CUISound.GetInstance().Play("UI_Unlocked_character");
 			}
 		}
 		else

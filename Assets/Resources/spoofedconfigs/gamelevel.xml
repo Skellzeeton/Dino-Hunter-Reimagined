@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root>
-	<gamelevel id="1001" cutscene_ambience="Amb_Rainforest_Show" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1000001,1000002,1000003,1000004" task="1000" sp_cfg_ground="20111" cutscene="forest_open" exp="63" gold="14" desc="Tutorial level:&#xA;Hunt a Dummy Raptor" limitmelee="false">
+	<gamelevel id="1001" iconoverride="9" cutscene_ambience="Amb_Rainforest_Show" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1000001,1000002,1000003,1000004" task="1000" sp_cfg_ground="20111" cutscene="forest_open" exp="63" gold="14" desc="Tutorial level:&#xA;Hunt a Dummy Raptor" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="800"/>
 		</MonsterNumLimit>
@@ -14,7 +14,7 @@
 		<RewardMaterial material="100001,800006,800009" mincount="1,-10,-25" maxcount="1,1,1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="1" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="1003" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_toudan01" isskyscene="false" nav_plane="0" bp_cfg="150101" gamewave="1003001,1003002,1003003" task="1003" sp_cfg_ground="150111" cutscene="toudan01_jiaoxue" cutscene_ambience="Amb_Rainforest_Show" tpbegin_cfg="150301" tpend_cfg="150401" exp="66" gold="14" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 35" limitmelee="false">
+	<gamelevel id="1003" iconoverride="8" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_toudan01" isskyscene="false" nav_plane="0" bp_cfg="150101" gamewave="1003001,1003002,1003003" task="1003" sp_cfg_ground="150111" cutscene="toudan01_jiaoxue" cutscene_ambience="Amb_Rainforest_Show" tpbegin_cfg="150301" tpend_cfg="150401" exp="66" gold="14" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 35" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
@@ -28,7 +28,7 @@
 		<RewardMaterial material="100002,100003,800006,800009" mincount="0,2,-10,-25" maxcount="2,5,1,1"/>
 		<recommend recommendtype="1" recommandid="2" recommandlevel="1" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="1005" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Boss" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1005001,1005002" task="1005" sp_cfg_ground="20111" exp="69" gold="42" desc="Hunt Tyrant King x 1" limitmelee="false">
+	<gamelevel id="1005" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Boss" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1005001,1005002" task="1005" sp_cfg_ground="20111" exp="69" gold="42" desc="Hunt Tyrant King x 1" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="22"/>
 		</MonsterNumLimit>
@@ -49,7 +49,7 @@
 		<RewardMaterial material="100009,800006,800009" mincount="2,-10,-25" maxcount="4,1,1"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="2" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="1008" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" isskyscene="false" nav_plane="0" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="75" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 200" limitmelee="false">
+	<gamelevel id="1008" iconoverride="7" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" isskyscene="false" nav_plane="0" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="75" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 200" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>
@@ -63,7 +63,7 @@
 		<RewardMaterial material="100010,800006,800009" mincount="2,-10,-25" maxcount="4,1,1"/>
 		<recommend recommendtype="1" recommandid="3" recommandlevel="1" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="1010" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="56" desc="Hunt Triterrortops x 1" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="1010" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" isskyscene="false" nav_plane="0" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="56" desc="Hunt Triterrortops x 1" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit> 
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
@@ -105,35 +105,35 @@
 		<RewardMaterial material="100016,100017,8000011" mincount="0,0,-75" maxcount="1,1,1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="3" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="2006" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="31" gold="30" desc="Fend off 3 waves of Dinosaurs&#xA;Barricade Health: 150" limitmelee="false">
+	<gamelevel id="2006" iconoverride="3" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="31" gold="30" desc="Fend off 3 waves of Dinosaurs&#xA;Barricade Health: 150" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="14"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100007,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="2" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="2007" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2007001,2007002,2007003" task="2007" sp_cfg_ground="30111" exp="32" gold="30" desc="Survive a Horde of Dinosaurs for 2:00" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2007" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2007001,2007002,2007003" task="2007" sp_cfg_ground="30111" exp="32" gold="30" desc="Survive a Horde of Dinosaurs for 2:00" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100007,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="3" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="2008" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2008001,2008002" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="32" gold="15" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 25" limitmelee="false">
+	<gamelevel id="2008" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30102" gamewave="2008001,2008002" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="32" gold="15" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 25" limitmelee="false">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,700006,800009" mincount="4,0,-25" maxcount="6,1,1"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="3" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="2009" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="30111" exp="33" gold="30" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true"  hp_cfg_def="40501">
+	<gamelevel id="2009" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="30111" exp="33" gold="30" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,800006,800009" mincount="4,-10,-25" maxcount="6,1,1"/>
 		<recommend recommendtype="1" recommandid="2" recommandlevel="3" islimit="false"/>
 	</gamelevel>
-	<gamelevel id="2010" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="34" gold="75" desc="Hunt Old Killosaurus Rex x 2" limitmelee="false"  hp_cfg_def="40501">
+	<gamelevel id="2010" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava" isskyscene="false" nav_plane="0" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="34" gold="75" desc="Hunt Old Killosaurus Rex x 2" limitmelee="false"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>

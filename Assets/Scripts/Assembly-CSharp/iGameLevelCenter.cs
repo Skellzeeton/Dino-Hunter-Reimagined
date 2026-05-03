@@ -64,6 +64,10 @@ public class iGameLevelCenter : iBaseCenter
 				{
 					gameLevelInfo.sIcon = value;
 				}
+				if (MyUtils.GetAttribute(childNode, "iconoverride", ref value))
+				{
+					gameLevelInfo.sIconOverride = value;
+				}
 				if (MyUtils.GetAttribute(childNode, "nav_plane", ref value))
 				{
 					gameLevelInfo.fNavPlane = MyUtils.ParseFloat(value);

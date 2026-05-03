@@ -166,6 +166,7 @@ public class gyUIPanelMaterial : gyUICellPanel
 			m_HUD.SetPos(localPosition);
 			m_HUD.SetText(sName);
 			m_HUD.Show(true);
+			CUISound.GetInstance().Play("UI_Inspect");
 		}
 	}
 
@@ -174,6 +175,7 @@ public class gyUIPanelMaterial : gyUICellPanel
 		if (!(m_HUD == null))
 		{
 			m_HUD.Show(false);
+			CUISound.GetInstance().Stop("UI_Inspect");
 		}
 	}
 

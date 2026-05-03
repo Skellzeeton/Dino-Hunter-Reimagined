@@ -951,21 +951,29 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		{
 			return;
 		}
-		if (sfx_open_now)
-		{
-			CUISound.GetInstance().Play("UI_Unlocked_weapon");
-		}
 		if (tUIUnlockInfo.unlock_type == UnlockType.Weapon)
 		{
-			unlock_blink.OpenBlinkWeapon(tUIUnlockInfo.item_id, "New Equip Unlocked For Purchase!", true);
+			unlock_blink.OpenBlinkWeapon(tUIUnlockInfo.item_id, "New Item Unlocked For Purchase!", true);
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Unlocked_weapon");
+			}
 		}
 		else if (tUIUnlockInfo.unlock_type == UnlockType.Role)
 		{
 			unlock_blink.OpenBlinkRole(tUIUnlockInfo.item_id, "New Character Unlocked For Purchase!");
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Unlocked_character");
+			}
 		}
 		else if (tUIUnlockInfo.unlock_type == UnlockType.Skill)
 		{
 			unlock_blink.OpenBlinkSkill(tUIUnlockInfo.item_id, "New Skill Unlocked For Purchase!", true);
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Unlocked_character");
+			}
 		}
 		else if (tUIUnlockInfo.unlock_type == UnlockType.Title)
 		{
@@ -974,11 +982,19 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			{
 				title_name = title_list[tUIUnlockInfo.item_id];
 			}
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Unlocked_character");
+			}
 			unlock_blink.OpenBlinkTitle(title_name, "New Title Unlocked!");
 		}
 		else if (tUIUnlockInfo.unlock_type == UnlockType.Avatar)
 		{
 			unlock_blink.OpenBlinkWeapon("New Avatar Unlocked For Purchase!", true, tUIUnlockInfo.m_sPath);
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Unlocked_character");
+			}
 		}
 		unlock_list.Remove(tUIUnlockInfo);
 	}

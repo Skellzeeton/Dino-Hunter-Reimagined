@@ -477,6 +477,7 @@ public class PopupWeapon : MonoBehaviour
 			string iconPath = m_curWeaponAttributeInfo.GetIconPath();
 			if (iconPath.Length > 0)
 			{
+				CUISound.GetInstance().Play("UI_Forge_craft");
 				CUISound.GetInstance().Play("UI_Unlocked_weapon");
 				if (weaponlevel == 1)
 				{

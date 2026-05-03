@@ -92,7 +92,7 @@ public class PopupLevel : MonoBehaviour
 	{
 		if (popup_tips != null) popup_tips.Hide();
 	}
-
+	
 	public void SetChoose(int m_index)
 	{
 		if (m_index < 0)
@@ -102,13 +102,11 @@ public class PopupLevel : MonoBehaviour
 			return;
 		}
 		if (popup_level_item_list == null) return;
-
 		level_item_now = popup_level_item_list[m_index];
 		if (level_item_now == null) { ClearFrames(); SetBtnStartEnable(false); return; }
-
 		TUISecondaryLevelInfo info = level_item_now.GetInfo();
 		if (info == null) return;
-
+		UpdateTitleIcon(info);
 		LevelPassState state = level_item_now.GetState();
 		if (state == LevelPassState.Disable)
 		{
@@ -120,35 +118,71 @@ public class PopupLevel : MonoBehaviour
 			ApplyFrames(info);
 			RefreshStartButton();
 		}
-
 		TUIButtonSelect btnSel = level_item_now.GetBtnSelect();
 		if (btnSel != null) btnSel.SetSelected(true);
 	}
+	
 	public void SetChoose(PopupLevel_Item m_control)
 	{
 		if (popup_level_item_list == null) return;
-
 		level_item_now = m_control;
 		if (level_item_now == null) { ClearFrames(); SetBtnStartEnable(false); return; }
-
 		TUIButtonSelect btnSel = level_item_now.GetBtnSelect();
 		TUISecondaryLevelInfo info  = level_item_now.GetInfo();
+		UpdateTitleIcon(info);
 		LevelPassState state = level_item_now.GetState();
-
 		if (btnSel != null) btnSel.SetSelected(true);
 		if (info == null) return;
-
 		if (state == LevelPassState.Disable)
 		{
 			ClearFrames();
 			SetBtnStartEnable(false);
 			return;
 		}
-
 		ApplyFrames(info);
 		RefreshStartButton();
 	}
 
+	private void UpdateTitleIcon(TUISecondaryLevelInfo info)
+	{
+		if (img_title_bg == null || info == null) return;
+		iGameLevelCenter levelCenter = iGameApp.GetInstance().m_GameData.m_GameLevelCenter;
+		GameLevelInfo levelInfo = levelCenter?.Get(info.id);
+		if (levelInfo == null) return;
+		string iconTex;
+		if (!string.IsNullOrEmpty(levelInfo.sIconOverride))
+		{
+			if (int.TryParse(levelInfo.sIconOverride, out int overrideId))
+			{
+				iconTex = TUIMappingInfo.Instance().GetMapTexture(overrideId);
+			}
+			else
+			{
+				iconTex = levelInfo.sIconOverride;
+			}
+		}
+		else if (!string.IsNullOrEmpty(levelInfo.sIcon))
+		{
+			if (int.TryParse(levelInfo.sIcon, out int iconId))
+			{
+				iconTex = TUIMappingInfo.Instance().GetMapTexture(iconId);
+			}
+			else
+			{
+				iconTex = levelInfo.sIcon;
+			}
+		}
+		else if (level_info != null)
+		{
+			iconTex = TUIMappingInfo.Instance().GetMapTexture((int)level_info.level_type);
+		}
+		else
+		{
+			return;
+		}
+		img_title_bg.texture = iconTex;
+	}
+	
 	public PopupLevel_Item GetChoose() { return level_item_now; }
 	
 	private void ClearFrames()

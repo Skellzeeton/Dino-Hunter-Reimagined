@@ -176,6 +176,7 @@ public class LevelPoint : MonoBehaviour
 		}
 		m_time = 0f;
 		way_points_list[way_points_index].SetActiveRecursive(true);
+		CUISound.GetInstance().Play("UI_Waypoint");
 		way_points_index++;
 		if (way_points_index >= way_points_count)
 		{

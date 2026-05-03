@@ -19,6 +19,8 @@ public class GameLevelInfo
 	public string sRewardsName = string.Empty;
 
 	public string sIcon = string.Empty;
+	
+	public string sIconOverride = string.Empty;
 
 	public float fNavPlane;
 
