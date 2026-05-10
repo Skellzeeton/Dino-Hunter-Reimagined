@@ -41,9 +41,6 @@ public class Popup_Stash : MonoBehaviour
 
 	public PopupCrystalNoEnough popup_crystal_no_enough;
 
-	private void Awake()
-	{
-	}
 
 	private void Start()
 	{
@@ -51,32 +48,23 @@ public class Popup_Stash : MonoBehaviour
 		SetSellBtnEnableEx(false);
 	}
 
-	private void Update()
-	{
-	}
 
 	public void ShowCapacityAdd()
 	{
 		if (stash_info == null || stash_info.stash_update_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int level = stash_info.level;
 		int num = stash_info.stash_update_info.Length;
 		int nowCapacity = stash_info.GetNowCapacity();
-		if (level >= num)
-		{
-			Debug.Log("You reach max level!");
-			return;
-		}
-		Debug.Log("You open capacity add!");
 		TUIStashUpdateInfo stashLevelInfo = stash_info.GetStashLevelInfo();
 		int max_capacity = stashLevelInfo.max_capacity;
 		TUIPriceInfo price_info = stashLevelInfo.price_info;
 		if (price_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		string introduce = stashLevelInfo.introduce;
@@ -87,13 +75,11 @@ public class Popup_Stash : MonoBehaviour
 
 	public void CloseCapacityAdd()
 	{
-		Debug.Log("You close capacity add");
 		go_capacity_add.transform.localPosition = new Vector3(0f, -1000f, go_capacity_add.transform.localPosition.z);
 	}
 
 	public void ShowSell()
 	{
-		Debug.Log("You open sell");
 		if (btn_sell_enable)
 		{
 			go_sell.transform.localPosition = new Vector3(0f, 0f, go_sell.transform.localPosition.z);
@@ -103,7 +89,6 @@ public class Popup_Stash : MonoBehaviour
 
 	public void HideSell()
 	{
-		Debug.Log("You close sell");
 		go_sell.transform.localPosition = new Vector3(0f, -2000f, go_sell.transform.localPosition.z);
 	}
 
@@ -111,7 +96,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (m_stash_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		stash_info = m_stash_info;
@@ -120,7 +105,7 @@ public class Popup_Stash : MonoBehaviour
 		TUIStashUpdateInfo stashLevelInfo = m_stash_info.GetStashLevelInfo();
 		if (stashLevelInfo == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int max_capacity = stashLevelInfo.max_capacity;
@@ -132,7 +117,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (label_capacity == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (m_now_count > m_max_count)
 		{
@@ -148,19 +133,19 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (stash_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUIStashUpdateInfo stashLevelInfo = stash_info.GetStashLevelInfo();
 		if (stashLevelInfo == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUIPriceInfo price_info = stashLevelInfo.price_info;
 		if (price_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int level = stashLevelInfo.level;
@@ -172,11 +157,6 @@ public class Popup_Stash : MonoBehaviour
 		case UnitType.Gold:
 			num = top_bar.GetGoldValue();
 			num -= price;
-			if (num < 0)
-			{
-				Debug.Log("you have no gold enough!");
-				return;
-			}
 			top_bar.SetGoldValue(num);
 			if (m_sfx_open)
 			{
@@ -186,11 +166,6 @@ public class Popup_Stash : MonoBehaviour
 		case UnitType.Crystal:
 			num = top_bar.GetCrystalValue();
 			num -= price;
-			if (num < 0)
-			{
-				Debug.Log("you have no crystal enough!");
-				return;
-			}
 			top_bar.SetCrystalValue(num);
 			if (m_sfx_open)
 			{
@@ -223,7 +198,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (m_price == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		label_name.Text = m_name;
@@ -311,7 +286,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (go_sell == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int totalPrice = go_sell.GetTotalPrice();
@@ -355,7 +330,7 @@ public class Popup_Stash : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!!!");
+			Debug.LogWarning("error!!!");
 		}
 		int nowCapacity = stash_info.GetNowCapacity();
 		int max_capacity = stash_info.GetStashLevelInfo().max_capacity;
@@ -399,7 +374,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (m_info == null)
 		{
-			Debug.Log("error! no found info");
+			Debug.LogWarning("error! no found info");
 			return;
 		}
 		int role_id = m_info.role_id;
@@ -452,7 +427,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		if (popup_gold_to_crystal == null || top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int goldExchangeCount = popup_gold_to_crystal.GetGoldExchangeCount();
@@ -463,7 +438,7 @@ public class Popup_Stash : MonoBehaviour
 		crystalValue -= crystalExchangeCount;
 		if (crystalValue < 0)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		top_bar.SetGoldValue(goldValue);

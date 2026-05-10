@@ -4,11 +4,11 @@ public class iCameraTrail : iCamera
 {
     public CCharBase m_Target;
 
-    public static Vector3 camera_offset_normal = new Vector3(1.2f, 2.2f, -2.6f);
-    public static Vector3 camera_offset_shoot  = new Vector3(1f,  2f, -1.2f);
-    public static Vector3 camera_offset_melee  = new Vector3(2f,  4f, -5f);
-    public static Vector3 camera_offset_block  = new Vector3(0f,  2f,  0f);
-    public static Vector3 camera_lookat        = new Vector3(1f,  0f,  5f);
+    private Vector3 camera_offset_normal = new Vector3(1.2f, 2.2f, -2.6f);
+    private Vector3 camera_offset_shoot  = new Vector3(1f,  2f, -1.2f);
+    private Vector3 camera_offset_melee  = new Vector3(2f,  4f, -5f);
+    private Vector3 camera_offset_block  = new Vector3(0f,  2f,  0f);
+    private Vector3 camera_lookat        = new Vector3(1f,  0f,  5f);
 
     protected AudioListener m_AudioListenerCamera;
     protected AudioListener m_AudioListenerTarget;
@@ -29,17 +29,17 @@ public class iCameraTrail : iCamera
 
     private Vector3 lastTargetPos = Vector3.zero;
     private Vector3 movementOffset = Vector3.zero;
-    private float movementOffsetIntensity = 0.375f;
+    private float movementOffsetIntensity = 0.1875f;
     private float movementOffsetSmoothing = 2.25f;
 
-    protected float yawSmoothTime = 0.022f;
-    protected float pitchSmoothTime = 0.022f;
-    private float yawSmoothVelocity = 0f;
-    private float pitchSmoothVelocity = 0f;
+    protected const float yawSmoothTime = 0.022f;
+    protected const float pitchSmoothTime = 0.022f;
+    private float yawSmoothVelocity = 1f;
+    private float pitchSmoothVelocity = 1f;
 
-    protected float characterRotationSpeed = 0f;
+    protected float characterRotationSpeed = 1f;
     
-    private float currentCharacterYaw = 0f;
+    private float currentCharacterYaw = 1f;
 
     public new void Awake()
     {

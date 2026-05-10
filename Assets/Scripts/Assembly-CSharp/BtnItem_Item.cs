@@ -55,14 +55,6 @@ public class BtnItem_Item : MonoBehaviour
 		m_NewMark = NewMarkType.None;
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(TUIPopupInfo popupinfo, bool isanimate = false, bool iscustom = false)
 	{
 		m_PopupInfo = popupinfo;
@@ -145,7 +137,6 @@ public class BtnItem_Item : MonoBehaviour
 		{
 			if (!iscustom)
 			{
-				Debug.Log(m_PopupInfo.texture_id + " " + text);
 				img_normal.texture = text;
 				img_pressed.texture = text;
 			}
@@ -189,7 +180,7 @@ public class BtnItem_Item : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!");
+			Debug.LogWarning("lose texture!");
 			return;
 		}
 		if (!m_use_NGUI)

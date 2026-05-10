@@ -36,9 +36,6 @@ public class iSceneMainMutiply : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	private void OnGUI()
 	{

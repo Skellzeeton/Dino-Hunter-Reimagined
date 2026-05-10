@@ -16,9 +16,6 @@ public class gyUITest : MonoBehaviour
 		tweenScale.to = new Vector3(91f, 91f, 1f) * 2f;
 	}
 
-	private void Update()
-	{
-	}
 
 	public void ShowDmg()
 	{

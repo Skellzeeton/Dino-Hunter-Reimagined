@@ -22,10 +22,6 @@ public class ScrollList_Weapon : MonoBehaviour
 		scroll_list_ex = base.gameObject.GetComponent<TUIScrollListCircle>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		CheckItemChoose();

@@ -347,12 +347,12 @@ public class TUIScrollList : TUIControlImpl
 	{
 		if (list == null || list.Count == 0)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (contentExtents == 0f)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		Vector3 vector = Vector3.zero;
@@ -388,7 +388,7 @@ public class TUIScrollList : TUIControlImpl
 		}
 		if (!flag)
 		{
-			Debug.Log("no found");
+			Debug.LogWarning("no found");
 			return;
 		}
 		float num = 0f;

@@ -14,13 +14,6 @@ public class PopupGoldToCrystal : MonoBehaviour
 
 	private int crystal_exchange_count;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetTitle(string m_str)
 	{

@@ -130,7 +130,6 @@ public class iSkillCenter
 		}
 		catch
 		{
-			Debug.Log("fetch " + sFileNameMonster + " failed");
 		}
 	}
 
@@ -161,7 +160,6 @@ public class iSkillCenter
 		}
 		catch
 		{
-			Debug.Log("fetch " + sFileNamePlayer + " failed");
 		}
 	}
 

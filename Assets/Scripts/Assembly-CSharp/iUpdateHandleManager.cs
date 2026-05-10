@@ -45,10 +45,6 @@ public class iUpdateHandleManager : MonoBehaviour
 		m_ltEventInfoDestroy = new List<CEventInfo>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_ltEventInfo.Count < 1)

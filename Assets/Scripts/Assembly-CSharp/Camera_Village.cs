@@ -146,7 +146,7 @@ public class Camera_Village : MonoBehaviour
     {
         if (angle_max == angle_min)
         {
-            Debug.Log("error!");
+            Debug.LogWarning("error!");
             return 0f;
         }
         return (transform.eulerAngles.y - angle_min) / (angle_max - angle_min);

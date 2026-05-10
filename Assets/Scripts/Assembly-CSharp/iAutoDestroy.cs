@@ -16,7 +16,4 @@ public class iAutoDestroy : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 }

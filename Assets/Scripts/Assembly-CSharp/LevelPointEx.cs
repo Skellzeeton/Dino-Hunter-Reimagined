@@ -88,10 +88,6 @@ public class LevelPointEx : MonoBehaviour
 		SetDefaultIcon();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		UpdateShowWayAffterTime(Time.deltaTime);
@@ -102,7 +98,7 @@ public class LevelPointEx : MonoBehaviour
 	{
 		if (btn_level == null || img_bottom == null)
 		{
-			Debug.Log("error! btn_level or img_bottom no found!");
+			Debug.LogWarning("error! btn_level or img_bottom no found!");
 			return;
 		}
 		level_point_state = m_level_point_state;
@@ -153,7 +149,7 @@ public class LevelPointEx : MonoBehaviour
 	{
 		if (img_way == null)
 		{
-			Debug.Log("error! no found way");
+			Debug.LogWarning("error! no found way");
 		}
 		else
 		{
@@ -187,7 +183,7 @@ public class LevelPointEx : MonoBehaviour
 	{
 		if (img_way == null)
 		{
-			Debug.Log("error! no found way");
+			Debug.LogWarning("error! no found way");
 		}
 		else
 		{
@@ -227,7 +223,7 @@ public class LevelPointEx : MonoBehaviour
 	{
 		if (img_icon_normal == null && img_icon_press == null && img_icon_disable == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (level_point_ex_type == LevelPointExType.Killing)
 		{
@@ -253,15 +249,15 @@ public class LevelPointEx : MonoBehaviour
 			img_icon_press.texture = texture_survival01;
 			img_icon_disable.texture = texture_survival01;
 		}
-	else if (level_point_ex_type == LevelPointExType.Timed)
-	{
-		img_icon_normal.texture = texture_timed01;
-		img_icon_press.texture = texture_timed01;
-		img_icon_disable.texture = texture_timed01;
-	}
+		else if (level_point_ex_type == LevelPointExType.Timed) 
+		{ 
+			img_icon_normal.texture = texture_timed01; 
+			img_icon_press.texture = texture_timed01; 
+			img_icon_disable.texture = texture_timed01; 
+		}
 		else
 		{
-			Debug.Log("warning! level type no set!");
+			Debug.LogWarning("warning! level type no set!");
 		}
 	}
 
@@ -269,7 +265,7 @@ public class LevelPointEx : MonoBehaviour
 	{
 		if (img_icon_normal == null && img_icon_press == null && img_icon_disable == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (level_point_ex_type == LevelPointExType.Killing)
 		{
@@ -303,7 +299,7 @@ public class LevelPointEx : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("warning! level type no set!");
+			Debug.LogWarning("warning! level type no set!");
 		}
 	}
 

@@ -185,7 +185,6 @@ public class gyUIScreenMask : MonoBehaviour
 			cMaskInfo2.count = 1;
 			m_ltMaskInfo.Insert(i, cMaskInfo2);
 			flag = false;
-			Debug.Log("inster " + i);
 			break;
 		}
 		if (bShow && flag)

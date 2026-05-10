@@ -252,7 +252,6 @@ public class iLoginManager : MonoBehaviour
 	{
 		if (m_State != kState.Timeout)
 		{
-			Debug.Log(string.Concat("OnGameCenterLoginCache ", m_State, " account = ", sAccount));
 			if (m_State == kState.BackToApp)
 			{
 				OnFetchSuccess();
@@ -270,7 +269,6 @@ public class iLoginManager : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log(string.Concat("OnGameCenterLoginSuccess ", m_State, " account = ", sAccount, " cacheaccount = ", m_sGameCenterCache));
 		if (m_DataCenterNet != null)
 		{
 			m_DataCenterNet.m_sGameCenterCache = sAccount;
@@ -278,7 +276,6 @@ public class iLoginManager : MonoBehaviour
 		}
 		if ((m_sGameCenterCache.Length > 0 && m_sGameCenterCache != sAccount) || (m_State == kState.BackToApp && !iServerSaveData.GetInstance().CheckGCAccountIsValid(sAccount)))
 		{
-			Debug.Log("change gc");
 			m_FailedType = kFailedType.GameCenterChanged;
 			OnLoginFailed(m_FailedType);
 		}
@@ -300,7 +297,6 @@ public class iLoginManager : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log(string.Concat("OnGameCenterLoginFailed ", m_State, " cacheaccount = ", m_sGameCenterCache));
 		if (m_sGameCenterCache.Length > 0 || (m_State == kState.BackToApp && !iServerSaveData.GetInstance().CheckGCAccountIsValid(string.Empty)))
 		{
 			m_FailedType = kFailedType.GameCenterChanged;
@@ -355,7 +351,6 @@ public class iLoginManager : MonoBehaviour
 	{
 		if (m_State != kState.Timeout)
 		{
-			Debug.Log("OnFetchConfigFailed");
 			m_FailedType = kFailedType.FetchFailed;
 			OnLoginFailed(m_FailedType);
 		}

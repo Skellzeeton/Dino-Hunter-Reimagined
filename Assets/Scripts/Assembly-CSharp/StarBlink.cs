@@ -35,7 +35,7 @@ public class StarBlink : MonoBehaviour
 		}
 		if (blink_time == 0f)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		m_time += delta_time;

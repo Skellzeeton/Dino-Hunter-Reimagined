@@ -14,19 +14,12 @@ public class PopupPriceBtn : MonoBehaviour
 
 	private string texture_crystal = "title_shuijing";
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetInfo(string m_text)
 	{
 		if (label_value_normal == null || label_value_press == null || img_unit_normal == null || img_unit_press == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		label_value_normal.Text = m_text;
@@ -39,7 +32,7 @@ public class PopupPriceBtn : MonoBehaviour
 	{
 		if (label_value_normal == null || label_value_press == null || img_unit_normal == null || img_unit_press == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		label_value_normal.Text = m_price.ToString();
@@ -61,7 +54,7 @@ public class PopupPriceBtn : MonoBehaviour
 	{
 		if (label_value_normal == null || label_value_press == null || img_unit_normal == null || img_unit_press == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 	}
 }

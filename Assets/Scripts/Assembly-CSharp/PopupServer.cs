@@ -10,14 +10,6 @@ public class PopupServer : MonoBehaviour
 
 	public TUIButtonClick btn_ok;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void DoCreate(string m_text, GameObject m_invoke_obj, string m_component_name, string m_invoke_ok_func, string m_invoke_cancel_func)
 	{
 		if (go_popup != null && go_popup.GetComponent<Animation>() != null)

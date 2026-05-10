@@ -39,26 +39,12 @@ public class iServerHttp : MonoBehaviour
 			iServerHttp2.m_OnFailed = onfailed;
 			string server = sServerUrl + sAction;
 			HttpClient.Instance().SetServer(server, sServerUrl, fTimeOut, sKey);
-			UnityEngine.Debug.Log(sData);
 			HttpClient.Instance().SendRequest(server, sAction, sData, gameObject.name, "iServerHttp", "OnRequestResult", string.Empty);
 		}
 	}
 
-	private void Awake()
-	{
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	protected void OnRequestResult(int taskId, int result, string server, string action, string response, string param)
 	{
-		UnityEngine.Debug.Log("OnRequestResult " + result + " " + action + " " + response + " " + param);
 		if (result == 0)
 		{
 			if (m_OnSuccess != null)

@@ -86,7 +86,6 @@ public class CUseSkillBumpTrack : CUseSkill
 				m_RushEffect.iRushEffect_PlayEffect(m_nEffectID);
 			}
 		}
-		Debug.Log(charbase.UID + " start bump state");
 		if (m_pSkillInfoLevel.sUseAudio.Length > 0)
 		{
 			charbase.PlayAudio(m_pSkillInfoLevel.sUseAudio);
@@ -96,7 +95,6 @@ public class CUseSkillBumpTrack : CUseSkill
 
 	public override void OnExit(CCharBase charbase)
 	{
-		Debug.Log(charbase.UID + " out of the bump state");
 		charbase.m_bBumping = false;
 		if (m_pSkillInfoLevel != null && m_pSkillInfoLevel.nAnimBuffID > 0)
 		{
@@ -104,7 +102,6 @@ public class CUseSkillBumpTrack : CUseSkill
 		}
 		if (m_RushEffect != null)
 		{
-			Debug.Log(charbase.UID + " stop effect");
 			m_RushEffect.iRushEffect_StopEffect(true);
 		}
 	}
@@ -124,7 +121,6 @@ public class CUseSkillBumpTrack : CUseSkill
 				}
 				if (m_RushEffect != null)
 				{
-					Debug.Log(charbase.UID + " stop effect");
 					m_RushEffect.iRushEffect_StopEffect(true);
 				}
 				return kUseSkillStatus.Success;

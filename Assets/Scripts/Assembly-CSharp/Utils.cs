@@ -67,7 +67,7 @@ public class Utils
 		}
 		catch
 		{
-			Debug.Log("Save" + text + " error");
+			Debug.LogError("Save" + text + " error");
 		}
 	}
 
@@ -89,7 +89,7 @@ public class Utils
 		}
 		catch
 		{
-			Debug.Log("Load" + text + " error");
+			Debug.LogError("Load" + text + " error");
 			return false;
 		}
 	}
@@ -99,7 +99,7 @@ public class Utils
 		string text = Application.dataPath + "/" + sPath;
 		if (!File.Exists(text))
 		{
-			Debug.Log("Load" + text + " error");
+			Debug.LogError("Load" + text + " error");
 			return;
 		}
 		try
@@ -112,7 +112,7 @@ public class Utils
 		}
 		catch
 		{
-			Debug.Log("Load" + text + " error");
+			Debug.LogError("Load" + text + " error");
 		}
 	}
 

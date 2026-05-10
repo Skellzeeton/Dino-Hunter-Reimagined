@@ -6,10 +6,6 @@ public class BtnFullVersion : MonoBehaviour
 
 	private float total_time;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (img_myself != null)

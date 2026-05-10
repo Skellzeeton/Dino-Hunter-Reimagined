@@ -535,7 +535,6 @@ public class iGameSceneBase
 				monsterNumInfo.nLimitType = item.nLimitType;
 				monsterNumInfo.nLimitValue = item.nLimitValue;
 				monsterNumInfo.nMax = item.nMax;
-				UnityEngine.Debug.Log(monsterNumInfo.nLimitType + " " + monsterNumInfo.nMax);
 				m_ltMonsterNumInfo.Add(monsterNumInfo);
 			}
 		}
@@ -768,7 +767,6 @@ public class iGameSceneBase
 		m_User.isDead = false;
 		m_User.SetRotateLimit(-10f, 60f, 0f, 0f);
 		m_User.SetBehavior(0);
-		UnityEngine.Debug.Log("user level = " + character.nLevel);
 		for (int i = 0; i < 3; i++)
 		{
 			int nID = 0;
@@ -828,7 +826,6 @@ public class iGameSceneBase
 		{
 			if (dataCenter.NickName.Length > 0)
 			{
-				UnityEngine.Debug.Log(dataCenter.NickName);
 				m_GameUI.SetProtraitName(dataCenter.NickName, m_User.UID);
 			}
 			m_GameUI.SetProtraitLevel(character.nLevel.ToString(), m_User.UID);
@@ -1102,7 +1099,6 @@ public class iGameSceneBase
 				if (taskInfo != null && taskInfo.nType == 2 && m_GameState.LastKillBoss != -1)
 				{
 					CCharMob mob = GetMob(m_GameState.LastKillBoss);
-					UnityEngine.Debug.Log(m_GameState.LastKillBoss + " " + mob);
 					if (mob != null)
 					{
 						m_CameraFocus.Go(mob.GetBone(1).gameObject, 8f, 1.5f);
@@ -1355,7 +1351,6 @@ public class iGameSceneBase
 
 	public virtual void LeaveGame(float fDelayTime = 0f, kGameSceneEnum leavegamescene = kGameSceneEnum.None)
 	{
-		Debug.LogError(leavegamescene);
 		m_Status = kGameStatus.GameLeave;
 		m_StatusTime = fDelayTime;
 		m_StatusTimeCount = 0f;
@@ -1678,7 +1673,6 @@ public class iGameSceneBase
 				}
 				if ((m_TaskManager.isAllCompleted || m_TaskManager.isFailed) && (CGameNetManager.GetInstance().IsConnected() || (!m_bWaitingRevive && !m_bUserDeath)))
 				{
-					UnityEngine.Debug.Log("over " + m_TaskManager.isAllCompleted + " " + m_TaskManager.isFailed);
 					FinishRevive(false);
 					FinishGame(m_TaskManager.isAllCompleted);
 					if (CGameNetManager.GetInstance().IsConnected())
@@ -1778,7 +1772,9 @@ public class iGameSceneBase
 				m_bUserDeath = false;
 				if (!CGameNetManager.GetInstance().IsConnected() || !IsPlayerAllDead())
 				{
+					#if UNITY_EDITOR
 					Debug.Log(string.Concat(m_Status, " ", isTutorialStage));
+					#endif
 					if (m_Status == kGameStatus.Gameing && !isTutorialStage)
 					{
 						StartRevive(5f);
@@ -2768,7 +2764,6 @@ public class iGameSceneBase
 
 	public void InitTask(int nTaskID)
 	{
-		UnityEngine.Debug.Log("inittask " + nTaskID);
 		CTaskInfo taskInfo = m_GameData.GetTaskInfo(nTaskID);
 		if (taskInfo == null)
 		{
@@ -3220,7 +3215,6 @@ public class iGameSceneBase
 
 	public void StartRevive(float fTime)
 	{
-		Debug.Log("StartRevive " + fTime);
 		if (!m_bMutiplyGame)
 		{
 			m_bWaitingRevive = false; //originally true
@@ -3502,7 +3496,6 @@ public class iGameSceneBase
 		//	CNameCardInfo nameCardInfo = m_DataCenterNet.GetNameCardInfo(m_User.m_sDeivceId);
 		//	if (nameCardInfo != null && nameCardInfo.GetPhoto() != null)
 		//	{
-		//		iGameApp.GetInstance().ScreenLog(nameCardInfo.m_sNickName + " set photo");
 		//		panelMissionSuccessMutiply_PlayerRewards.m_PlayerPhoto.mainTexture = nameCardInfo.GetPhoto();
 		//	}
 		//}
@@ -3580,7 +3573,6 @@ public class iGameSceneBase
 		panelMissionSuccessMutiply_PlayerRewards.Show(true);
 		//if (cNetUserInfo == CGameNetManager.GetInstance().GetNetUserInfo())
 		//{
-			Debug.Log("hide admire");
 			panelMissionSuccessMutiply_PlayerRewards.m_Admire.Enable = false;
 		//}
 	}

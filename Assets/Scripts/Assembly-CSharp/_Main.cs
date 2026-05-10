@@ -11,10 +11,6 @@ public class _Main : MonoBehaviour
 
 	protected float interval;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		interval -= Time.deltaTime;

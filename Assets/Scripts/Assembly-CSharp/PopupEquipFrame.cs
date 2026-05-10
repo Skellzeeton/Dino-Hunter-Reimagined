@@ -40,15 +40,12 @@ public class PopupEquipFrame : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	public void SetInfo(TUIEquipInfo m_equip_info)
 	{
 		if (m_equip_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (items_weapon != null)

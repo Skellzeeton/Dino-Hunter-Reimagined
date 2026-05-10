@@ -34,16 +34,12 @@ public class DailyMissionsItem : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
-
 	public void DoCreate(TUIOneDailyMissionsInfo m_daily_mission_info,  bool m_change_bg = false, GameObject m_go_invoke = null)
 	{
 		daily_missions_info = m_daily_mission_info;
 		if (daily_missions_info == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return;
 		}
 		if (btn_achievement != null && m_go_invoke != null)
@@ -87,7 +83,7 @@ public class DailyMissionsItem : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("no reward?");
+			Debug.LogWarning("no reward?");
 		}
 		if (img_bg != null)
 		{
@@ -199,7 +195,7 @@ public class DailyMissionsItem : MonoBehaviour
 	{
 		if (daily_missions_info == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return;
 		}
 		string text = daily_missions_info.name;
@@ -240,7 +236,7 @@ public class DailyMissionsItem : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("no reward?!");
+			Debug.LogWarning("no reward?!");
 		}
 	}
 
@@ -248,7 +244,7 @@ public class DailyMissionsItem : MonoBehaviour
 	{
 		if (daily_missions_info == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return null;
 		}
 		TUIAchievementRewardInfo reward_info = daily_missions_info.reward_info;

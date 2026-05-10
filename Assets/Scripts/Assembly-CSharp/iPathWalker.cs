@@ -50,10 +50,6 @@ public class iPathWalker : MonoBehaviour
 		m_State = kState.None;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_State == kState.None)

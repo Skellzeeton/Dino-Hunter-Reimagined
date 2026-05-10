@@ -69,7 +69,7 @@ public class PopupBlackMarket : MonoBehaviour
 	{
 		if (m_player_info == null)
 		{
-			Debug.Log("error! no found info");
+			Debug.LogWarning("error! no found info");
 			return;
 		}
 		int role_id = m_player_info.role_id;
@@ -511,7 +511,7 @@ public class PopupBlackMarket : MonoBehaviour
 	{
 		if (popup_gold_to_crystal == null || top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int goldExchangeCount = popup_gold_to_crystal.GetGoldExchangeCount();
@@ -522,7 +522,7 @@ public class PopupBlackMarket : MonoBehaviour
 		crystalValue -= crystalExchangeCount;
 		if (crystalValue < 0)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		top_bar.SetGoldValue(goldValue);

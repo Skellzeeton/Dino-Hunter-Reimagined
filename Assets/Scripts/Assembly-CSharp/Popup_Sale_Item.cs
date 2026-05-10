@@ -52,19 +52,15 @@ public class Popup_Sale_Item : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
-
 	public void DoCreate(TUISingleSaleInfo m_info, TUIRect m_rect, GameObject m_invoke_go)
 	{
 		single_sale_info = m_info;
 		if (m_info == null)
 		{
-			Debug.Log("no info");
+			Debug.LogWarning("no info");
 			return;
 		}
-		Debug.Log(string.Concat(m_info.sale_type, " ", m_info.id, " ", m_info.icon));
+		//Debug.Log(string.Concat(m_info.sale_type, " ", m_info.id, " ", m_info.icon));
 		OnSaleType sale_type = m_info.sale_type;
 		int id = m_info.id;
 		TUIPriceInfo old_price_info = m_info.old_price_info;
@@ -157,7 +153,7 @@ public class Popup_Sale_Item : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!" + m_sprite.name);
+			Debug.LogWarning("lose texture!" + m_sprite.name);
 			return;
 		}
 		if (!m_use_NGUI)

@@ -14,13 +14,6 @@ public class ScrollList_BlackMarket : MonoBehaviour
 		scrolllist = GetComponent<TUIScrollListCircle>();
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetItems(List<TUIBlackMarketItem> ltBlackMarketItem)
 	{

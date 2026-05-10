@@ -339,7 +339,7 @@ public class CProPlayer : CProBase
 				{
 					continue;
 				}
-				Debug.Log(item + " " + avatarlevel);
+				//Debug.Log(item + " " + avatarlevel);
 				CAvatarInfoLevel cAvatarInfoLevel = m_GameData.m_AvatarCenter.Get(item, avatarlevel);
 				if (cAvatarInfoLevel == null)
 				{
@@ -350,7 +350,7 @@ public class CProPlayer : CProBase
 				{
 					if (cAvatarInfoLevel.arrFunc[i] != 0)
 					{
-						Debug.Log(cAvatarInfoLevel.arrFunc[i] + " " + cAvatarInfoLevel.arrValueX[i] + " " + cAvatarInfoLevel.arrValueY[i]);
+						//Debug.Log(cAvatarInfoLevel.arrFunc[i] + " " + cAvatarInfoLevel.arrValueX[i] + " " + cAvatarInfoLevel.arrValueY[i]);
 						cFuncInfo.m_ltFunc.Add(cAvatarInfoLevel.arrFunc[i]);
 						cFuncInfo.m_ltValueX.Add(cAvatarInfoLevel.arrValueX[i]);
 						cFuncInfo.m_ltValueY.Add(cAvatarInfoLevel.arrValueY[i]);

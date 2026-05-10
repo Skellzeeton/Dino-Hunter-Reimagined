@@ -8,19 +8,11 @@ public class DailyLoginBonusItem : MonoBehaviour
 
 	public TUIMeshSprite img_texture;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(TUIPriceInfo m_price_info)
 	{
 		if (img_price == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (img_texture != null)
@@ -41,7 +33,7 @@ public class DailyLoginBonusItem : MonoBehaviour
 	{
 		if (img_price == null || label_title == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (m_bool)

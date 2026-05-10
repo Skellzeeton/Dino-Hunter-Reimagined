@@ -45,7 +45,6 @@ public class iBlackMarketCenter : iBaseCenter
 			value.m_fTimeCount += deltaTime;
 			if (value.m_fTimeCount >= value.m_fTime)
 			{
-				Debug.Log(value.m_curBlackItemInfo.m_nItemID + " " + value.m_fTime);
 				m_ltDestroyBlackItem.Add(item.Key);
 			}
 		}
@@ -75,7 +74,9 @@ public class iBlackMarketCenter : iBaseCenter
 
 	public void InitBlackItem(DateTime today)
 	{
+#if UNITY_EDITOR
 		Debug.Log("InitBlackItem today is " + today);
+#endif
 		m_dictBlackItem.Clear();
 		m_ltDestroyBlackItem.Clear();
 		m_Today = today;
@@ -103,14 +104,18 @@ public class iBlackMarketCenter : iBaseCenter
 				if (!CDateHelper.GetInstance().FindDayBefore(today, day, weekday, count, ref result))
 				{
 					continue;
-				}
+				} 
+#if UNITY_EDITOR
 				Debug.Log(string.Concat("find day:", result, " trigger hour:", hour, " server hour:", today.Hour));
+#endif
 				if (result.Day == today.Day && hour > today.Hour)
 				{
 					continue;
 				}
-				result = new DateTime(result.Year, result.Month, result.Day, hour, 0, 0);
+				result = new DateTime(result.Year, result.Month, result.Day, hour, 0, 0); 
+#if UNITY_EDITOR
 				Debug.Log(string.Concat("find day:", result, " remain time:", num2));
+#endif
 				DateTime dateTime = result.AddHours(num2);
 				if (CDateHelper.GetInstance().IsIndateperiod(today, result, dateTime))
 				{
@@ -159,7 +164,9 @@ public class iBlackMarketCenter : iBaseCenter
 				}
 			}
 		}
+#if UNITY_EDITOR
 		Debug.Log(num + " " + MyUtils.TimeToString(num));
+#endif
 		if (num > 0f)
 		{
 			fTime = num;
@@ -170,7 +177,6 @@ public class iBlackMarketCenter : iBaseCenter
 
 	public void InitBlackItemTest()
 	{
-		Debug.Log("InitBlackItemTest");
 		m_dictBlackItem.Clear();
 		m_ltDestroyBlackItem.Clear();
 		int num = 0;

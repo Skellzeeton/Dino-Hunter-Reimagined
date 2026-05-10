@@ -4,13 +4,6 @@ public class LevelMapSign : MonoBehaviour
 {
 	public GameObject go_sign;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void PlaySignAnimation()
 	{

@@ -26,10 +26,6 @@ public class iGoldEmitter : MonoBehaviour
 		m_PoolObject = GetComponent<gyUIPoolObject>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_ltGoldEmitter.Count < 1)

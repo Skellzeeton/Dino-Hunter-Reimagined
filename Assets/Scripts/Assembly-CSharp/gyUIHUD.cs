@@ -18,18 +18,6 @@ public class gyUIHUD : MonoBehaviour
 
 	public UILabel m_Label;
 
-	private void Awake()
-	{
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void Show(bool bShow)
 	{
 		base.transform.gameObject.SetActiveRecursive(bShow);
@@ -49,7 +37,6 @@ public class gyUIHUD : MonoBehaviour
 			{
 				float num = m_Label.transform.localScale.x * m_Label.font.CalculatePrintedSize(str, m_Label.supportEncoding, m_Label.symbolStyle).x;
 				SetWidth(num + 10f);
-				Debug.Log(num);
 			}
 		}
 	}

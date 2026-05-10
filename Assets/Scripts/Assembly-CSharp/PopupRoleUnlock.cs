@@ -12,31 +12,23 @@ public class PopupRoleUnlock : MonoBehaviour
 
 	private string crystal_texture = "title_shuijing";
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(ScrollList_RoleItem m_item)
 	{
 		if (m_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUIRoleInfo roleInfo = m_item.GetRoleInfo();
 		if (roleInfo == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUIPriceInfo unlock_price = roleInfo.unlock_price;
 		if (unlock_price == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int price = unlock_price.price;

@@ -40,10 +40,6 @@ public class iSparyGagma : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		float deltaTime = Time.deltaTime;

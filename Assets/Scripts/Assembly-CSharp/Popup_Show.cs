@@ -38,10 +38,6 @@ public class Popup_Show : MonoBehaviour
 		m_nExchangeIndex2 = -1;
 	}
 
-	private void Update()
-	{
-	}
-
 	public void Init(Scene_Equip scene_equip)
 	{
 		m_SceneEquip = scene_equip;
@@ -77,11 +73,6 @@ public class Popup_Show : MonoBehaviour
 
 	public void SetRoleInfo(TUIEquipInfo m_info, GameObject invoke_object)
 	{
-		if (m_info == null || select_group == null)
-		{
-			Debug.Log(string.Concat("data is null m_info = ", m_info, " select_group = ", select_group));
-		}
-		else
 		{
 			select_group.CreateList(PopupType.Roles, m_info.roles_list, prefab_items, rect_show, invoke_object);
 		}
@@ -89,11 +80,6 @@ public class Popup_Show : MonoBehaviour
 
 	public void SetSkillInfo(TUIEquipInfo m_info, GameObject invoke_object)
 	{
-		if (m_info == null || select_group == null)
-		{
-			Debug.Log(string.Concat("data is null m_info = ", m_info, " select_group = ", select_group));
-		}
-		else
 		{
 			select_group.CreateList(PopupType.Skills, m_info.skill_list, prefab_items, rect_show, invoke_object);
 		}
@@ -103,7 +89,6 @@ public class Popup_Show : MonoBehaviour
 	{
 		if (m_info == null || select_group == null)
 		{
-			Debug.Log(string.Concat("data is null m_info = ", m_info, " select_group = ", select_group));
 			return;
 		}
 		select_group.CreateList(PopupType.Weapons01, m_info.ltWeaponMelee, prefab_items, rect_show, invoke_object);
@@ -380,7 +365,7 @@ public class Popup_Show : MonoBehaviour
 	{
 		if (btn_equip == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		Popup_BtnEquip component = btn_equip.GetComponent<Popup_BtnEquip>();
@@ -435,11 +420,6 @@ public class Popup_Show : MonoBehaviour
 			}
 		}
 		return newMarkType;
-	}
-
-	public bool IsEmpty()
-	{
-		return IsEmpty(m_nPopupType);
 	}
 
 	public bool IsEmpty(PopupType nType)

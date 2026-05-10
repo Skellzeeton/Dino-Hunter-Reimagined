@@ -24,10 +24,6 @@ public class iGameUIWeapon : MonoBehaviour
 		m_v3BulletLabelScale = mBulletLabel.transform.localScale;
 	}
 
-	private void Update()
-	{
-	}
-
 	public void Show(bool bShow)
 	{
 		base.gameObject.SetActiveRecursive(bShow);

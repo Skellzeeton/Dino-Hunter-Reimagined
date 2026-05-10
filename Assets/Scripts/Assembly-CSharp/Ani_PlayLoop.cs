@@ -10,8 +10,4 @@ public class Ani_PlayLoop : MonoBehaviour
 			base.GetComponent<Animation>().Play();
 		}
 	}
-
-	private void Update()
-	{
-	}
 }

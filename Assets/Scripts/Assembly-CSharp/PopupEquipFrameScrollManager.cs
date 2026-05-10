@@ -88,13 +88,6 @@ public class PopupEquipFrameScrollManager : MonoBehaviour
 		m_dictData = new Dictionary<PopupType, List<TUIPopupInfo>>();
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public TUIScrollList Get(PopupType nType)
 	{

@@ -48,7 +48,6 @@ public class FileControl
 		binaryWriter.Write(ToXml(hashtable).OuterXml);
 		binaryWriter.Close();
 		fileStream.Close();
-		UnityEngine.Debug.Log(path + "-Save Success!");
 	}
 
 	public void Load(string path)
@@ -61,7 +60,6 @@ public class FileControl
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.LoadXml(xml);
 		hashtable = ToHashTable(xmlDocument);
-		UnityEngine.Debug.Log(path + "-Load Success!");
 	}
 
 	private static Hashtable ToHashTable(XmlDocument xmlDoc)

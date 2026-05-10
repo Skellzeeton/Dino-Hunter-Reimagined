@@ -22,25 +22,18 @@ public class PopupRoleBuy : MonoBehaviour
 
 	public TUIButtonClick btn_claim;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetInfo(ScrollList_RoleItem m_item)
 	{
 		if (m_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUIRoleInfo roleInfo = m_item.GetRoleInfo();
 		if (roleInfo == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		bool do_buy = roleInfo.do_buy;
@@ -81,7 +74,7 @@ public class PopupRoleBuy : MonoBehaviour
 		TUIPriceInfo do_buy_price = roleInfo.do_buy_price;
 		if (do_buy_price == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		bool unlock = roleInfo.unlock;

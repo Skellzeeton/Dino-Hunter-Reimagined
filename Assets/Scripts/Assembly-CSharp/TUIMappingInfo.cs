@@ -451,7 +451,6 @@ public class TUIMappingInfo
 		{
 			return stash_dictionary[id];
 		}
-		Debug.Log("error!" + id);
 		return string.Empty;
 	}
 
@@ -468,7 +467,6 @@ public class TUIMappingInfo
 		{
 			return skill_dictionary[id];
 		}
-		Debug.Log("error! " + id + " " + m_active_skill_square);
 		return string.Empty;
 	}
 
@@ -487,7 +485,6 @@ public class TUIMappingInfo
 		{
 			return prop_dictionary[id];
 		}
-		Debug.Log("error!");
 		return string.Empty;
 	}
 
@@ -497,7 +494,6 @@ public class TUIMappingInfo
 		{
 			return role_dictionary[id];
 		}
-		Debug.Log("error!" + id);
 		return string.Empty;
 	}
 
@@ -507,7 +503,6 @@ public class TUIMappingInfo
 		{
 			return map_dictionary[id];
 		}
-		Debug.Log("error!" + id);
 		return string.Empty;
 	}
 
@@ -535,60 +530,6 @@ public class TUIMappingInfo
 		default:
 			return string.Empty;
 		}
-	}
-
-	public void SetStashTexture(int m_id, string m_name)
-	{
-		if (stash_dictionary == null)
-		{
-			stash_dictionary = new Dictionary<int, string>();
-		}
-		stash_dictionary[m_id] = m_name;
-	}
-
-	public void SetSkillTexture(int m_id, string m_name)
-	{
-		if (skill_dictionary == null)
-		{
-			skill_dictionary = new Dictionary<int, string>();
-		}
-		skill_dictionary[m_id] = m_name;
-	}
-
-	public void SetWeaponTexture(int m_id, string m_name)
-	{
-		if (weapon_dictionary == null)
-		{
-			weapon_dictionary = new Dictionary<int, string>();
-		}
-		weapon_dictionary[m_id] = m_name;
-	}
-
-	public void SetPropTexture(int m_id, string m_name)
-	{
-		if (prop_dictionary == null)
-		{
-			prop_dictionary = new Dictionary<int, string>();
-		}
-		prop_dictionary[m_id] = m_name;
-	}
-
-	public void SetRoleTexture(int m_id, string m_name)
-	{
-		if (role_dictionary == null)
-		{
-			role_dictionary = new Dictionary<int, string>();
-		}
-		role_dictionary[m_id] = m_name;
-	}
-
-	public void SetMapTexture(int m_id, string m_name)
-	{
-		if (map_dictionary == null)
-		{
-			map_dictionary = new Dictionary<int, string>();
-		}
-		map_dictionary[m_id] = m_name;
 	}
 
 	public Vector3 GetCurrentAngle()
@@ -839,7 +780,6 @@ public class TUIMappingInfo
 
 	public void DoNewHelp(NewHelpState m_state)
 	{
-		Debug.Log("I'm fangkuai!");
 		iDataCenter iDataCenter2 = null;
 		if (iGameApp.GetInstance().m_GameData != null)
 		{

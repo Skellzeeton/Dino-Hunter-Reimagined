@@ -29,10 +29,6 @@ public class PopupNewHelpStateContent : MonoBehaviour
 
 	private string show_text = string.Empty;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		UpdateTextScroll(Time.deltaTime);

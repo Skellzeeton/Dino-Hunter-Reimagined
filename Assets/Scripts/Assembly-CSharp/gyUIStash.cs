@@ -22,13 +22,6 @@ public class gyUIStash : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetMax(int nCount, bool bAnim = false)
 	{

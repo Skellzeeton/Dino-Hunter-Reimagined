@@ -23,14 +23,6 @@ public class iWindowInputName : MonoBehaviour
 		m_sInput = string.Empty;
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	private void OnGUI()
 	{
 		if (m_bActive)

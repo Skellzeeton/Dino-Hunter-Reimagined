@@ -44,7 +44,6 @@ public class IphoneInputPlugin
 		}
 		if (!m_KeyBoard.active || m_KeyBoard.done)
 		{
-			Debug.Log("keyboard input done or hide!");
 			if (m_OnDone != null)
 			{
 				m_OnDone(sValue);
@@ -66,7 +65,6 @@ public class IphoneInputPlugin
 				m_nEnterCount++;
 			}
 		}
-		Debug.Log("etner count = " + m_nEnterCount);
 		if (m_nEnterCount > 2)
 		{
 			m_KeyBoard.text = sValue;
@@ -74,14 +72,12 @@ public class IphoneInputPlugin
 		}
 		if (m_nLimitLength > 0 && m_KeyBoard.text.Length > m_nLimitLength)
 		{
-			Debug.Log("keyboard input so long!");
 			m_KeyBoard.text = m_KeyBoard.text.Substring(0, m_nLimitLength);
 		}
 		if (m_KeyBoard.text != sValue)
 		{
 			if (!m_Regex.IsMatch(m_KeyBoard.text))
 			{
-				UnityEngine.Debug.Log("keyboard input illegal! " + m_KeyBoard.text + " " + m_Regex.ToString());
 				m_KeyBoard.text = sValue;
 			}
 			else
@@ -93,7 +89,6 @@ public class IphoneInputPlugin
 
 	public void Open(string title, string text, int limitlength, OnEvent ondone, TouchScreenKeyboardType keyboardtype = TouchScreenKeyboardType.Default, string regexstr = "^[\\w]+${0,12}", bool secure = false, bool autocorrection = true, bool multiline = false, bool alert = false)
 	{
-		Debug.Log("open keyboard");
 		m_KeyBoard = TouchScreenKeyboard.Open(text, TouchScreenKeyboardType.ASCIICapable, autocorrection, multiline, secure, alert, title);
 		m_nLimitLength = limitlength;
 		m_OnDone = ondone;

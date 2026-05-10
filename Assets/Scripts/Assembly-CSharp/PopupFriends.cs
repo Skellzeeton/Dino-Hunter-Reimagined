@@ -25,14 +25,6 @@ public class PopupFriends : MonoBehaviour
 		friends_item_list = new Dictionary<string, PopupFriendsItem>();
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetEmptyStr(string str)
 	{
 		if (!(label_friends_empty == null))
@@ -63,7 +55,7 @@ public class PopupFriends : MonoBehaviour
 		}
 		if (m_coop_player_info_list == null || friends_info_list == null || scrollist_items == null || prefab_group == null || prefab_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		scrollist_items.Clear(true);
@@ -103,7 +95,7 @@ public class PopupFriends : MonoBehaviour
 	{
 		if (m_coop_player_info_list == null || scrollist_items == null || prefab_group == null || prefab_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (friends_item_list != null && friends_item_list.Count > 0)

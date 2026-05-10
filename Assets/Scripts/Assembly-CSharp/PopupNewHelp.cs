@@ -17,13 +17,6 @@ public class PopupNewHelp : MonoBehaviour
 
 	public PopupOnlyText popup_skip;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	private void LateUpdate()
 	{
@@ -57,7 +50,7 @@ public class PopupNewHelp : MonoBehaviour
 	{
 		if (help_list == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		help_state = m_state;
@@ -102,17 +95,19 @@ public class PopupNewHelp : MonoBehaviour
 					}
 				}
 			}
-			Debug.Log("change to state:" + help_state);
 			return;
 		}
-		Debug.Log("no this state!" + help_state);
+
+#if UNITY_EDITOR
+		Debug.Log("now this state!" + help_state);
+#endif
 	}
 
 	public void ResetHelpState()
 	{
 		if (help_list == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		go_help = null;
@@ -149,7 +144,7 @@ public class PopupNewHelp : MonoBehaviour
 	{
 		if (go_help == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (go_help.IsTextOver())
 		{

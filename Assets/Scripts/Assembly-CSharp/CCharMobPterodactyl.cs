@@ -5,9 +5,9 @@ public class CCharMobPterodactyl : CCharMob
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "idle"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "fly"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "death01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadFly, "fly_death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "death02"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "fly_death"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHitFly, "fly_death"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "damage"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "damage"));

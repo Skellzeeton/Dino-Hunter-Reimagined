@@ -118,7 +118,6 @@ public class PopupRoomPlayerInfo : MonoBehaviour
 			role_control.SetRandomWeapon(true, weapon_list);
 			role_control.SetPosMove(GetPlayerRunPos(m_pos_index, -1), GetPlayerRunPos(m_pos_index, 0), Role_Control.MoveType.Enter);
 		}
-		Debug.Log("PlayerEnter:" + m_info.id + "  Role:" + role_id);
 	}
 
 	public bool GetPlayerInfoExist()
@@ -132,10 +131,6 @@ public class PopupRoomPlayerInfo : MonoBehaviour
 
 	public void SetPlayerNull(int m_pos_index)
 	{
-		if (player_info != null && player_info.role_info != null)
-		{
-			Debug.Log("PlayerExit:" + player_info.id + "  Role:" + player_info.role_info.role_id);
-		}
 		player_info = null;
 		if (role_control != null)
 		{

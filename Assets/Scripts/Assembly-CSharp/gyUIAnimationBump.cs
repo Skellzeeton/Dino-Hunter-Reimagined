@@ -38,10 +38,6 @@ public class gyUIAnimationBump : MonoBehaviour
 		m_v3Scale = mTranform.localScale;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))

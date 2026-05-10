@@ -182,7 +182,6 @@ namespace TNetSdk
 				heart_beat_interval += deltaTime;
 				if (heart_beat_interval >= heart_beat_rate)
 				{
-					Debug.Log("last ping:" + (int)TimeManager.LastPing);
 					Send(new HeartBeatRequest((int)TimeManager.LastPing));
 					time_manager.TimeSyncRequest();
 					heart_beat_interval = 0f;
@@ -211,7 +210,6 @@ namespace TNetSdk
 
 		public void Connect(string ip, int port)
 		{
-			Debug.Log("connect m_Status " + m_Status);
 			if (m_Status == STATUS.kReady)
 			{
 				m_Status = STATUS.kConnecting;
@@ -225,7 +223,7 @@ namespace TNetSdk
 		{
 			if (m_Status != STATUS.kConnected)
 			{
-				Debug.Log("Send Error, STATUS.kConnected:" + m_Status);
+				Debug.LogError("Send Error, STATUS.kConnected:" + m_Status);
 				return;
 			}
 			try
@@ -270,11 +268,9 @@ namespace TNetSdk
 					}
 					m_socket.BeginDisconnect(true, DisconnectCallback, m_socket);
 				}
-				catch (Exception message)
+				catch (Exception)
 				{
-					Debug.Log(message);
 				}
-				Debug.Log("close m_Status " + m_Status);
 				m_Status = STATUS.kClosed;
 			}
 			else if (m_Status == STATUS.kConnecting)
@@ -283,11 +279,9 @@ namespace TNetSdk
 				{
 					m_socket.BeginDisconnect(true, DisconnectCallback, m_socket);
 				}
-				catch (Exception message2)
+				catch (Exception)
 				{
-					Debug.Log(message2);
 				}
-				Debug.Log("close m_Status " + m_Status);
 				m_Status = STATUS.kClosed;
 			}
 			else if (m_Status == STATUS.kClosed)
@@ -314,7 +308,6 @@ namespace TNetSdk
 				@event.m_type = Event.TYPE.kDisconnect;
 				m_EventQueue.write(@event);
 			}
-			Debug.Log("DisconnectCallback");
 			m_socket = null;
 			m_Status = STATUS.kReady;
 			inited = false;
@@ -333,18 +326,16 @@ namespace TNetSdk
 				}
 				m_socket.BeginDisconnect(true, SystemDisconnectCallback, m_socket);
 			}
-			catch (Exception message)
+			catch (Exception)
 			{
-				Debug.Log(message);
 			}
-			Debug.Log("SystemClose m_Status " + m_Status);
 			m_Status = STATUS.kClosed;
 		}
 
 		protected void SystemDisconnectCallback(IAsyncResult ar)
 		{
 			Socket socket = (Socket)ar.AsyncState;
-			Debug.Log("SystemDisconnectCallback " + Thread.CurrentThread.GetHashCode());
+			Debug.LogError("SystemDisconnectCallback " + Thread.CurrentThread.GetHashCode());
 			try
 			{
 				socket.EndDisconnect(ar);
@@ -358,7 +349,7 @@ namespace TNetSdk
 				@event.m_type = Event.TYPE.kSystemDisconnect;
 				m_EventQueue.write(@event);
 			}
-			Debug.Log("SystemDisconnectCallback");
+			Debug.LogError("SystemDisconnectCallback");
 			m_socket = null;
 			m_Status = STATUS.kReady;
 			inited = false;
@@ -375,15 +366,13 @@ namespace TNetSdk
 			{
 				int num = socket.EndSend(iar);
 			}
-			catch (Exception message)
+			catch (Exception)
 			{
-				Debug.Log(message);
 			}
 		}
 
 		protected void Connected(IAsyncResult iar)
 		{
-			Debug.Log("connected m_Status " + m_Status);
 			if (m_Status != STATUS.kConnecting)
 			{
 				return;
@@ -446,7 +435,7 @@ namespace TNetSdk
 						Event event2 = new Event();
 						event2.m_type = Event.TYPE.kSystemClose;
 						m_EventQueue.write(event2);
-						Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!packet error!!!!!!!!!!!!!!!");
+						Debug.LogError("!!!!!!!!!!!!!!!!!!!!!!!!!!!!packet error!!!!!!!!!!!!!!!");
 					}
 					else
 					{
@@ -455,7 +444,6 @@ namespace TNetSdk
 				}
 				else
 				{
-					Debug.Log("RecvData recv <= 0");
 					Event event3 = new Event();
 					event3.m_type = Event.TYPE.kSystemClose;
 					m_EventQueue.write(event3);
@@ -463,7 +451,7 @@ namespace TNetSdk
 			}
 			catch (Exception)
 			{
-				Debug.Log("RecvData exception");
+				Debug.LogError("RecvData exception");
 				Event event4 = new Event();
 				event4.m_type = Event.TYPE.kSystemClose;
 				m_EventQueue.write(event4);

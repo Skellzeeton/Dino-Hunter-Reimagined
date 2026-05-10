@@ -32,14 +32,6 @@ public class Avatar : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void ReplaceAvatarEffect(int nIndex, GameObject effectprefab)
 	{
 		if (nIndex < 0 || nIndex >= m_AvatarEffect.Length)
@@ -65,8 +57,6 @@ public class Avatar : MonoBehaviour
 
 	public void ReplaceAvatar(int nIndex, string sPath_Prefab, string sPath_Texture)
 	{
-		Debug.Log(sPath_Prefab);
-		Debug.Log(sPath_Texture);
 		GameObject newpartprefab = Resources.Load(sPath_Prefab) as GameObject;
 		Texture texture = Resources.Load(sPath_Texture) as Texture;
 		ReplaceAvatar(nIndex, newpartprefab, texture);

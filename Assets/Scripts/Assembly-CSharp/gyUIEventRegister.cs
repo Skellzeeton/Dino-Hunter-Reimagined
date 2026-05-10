@@ -25,10 +25,6 @@ public class gyUIEventRegister : MonoBehaviour
 
 	protected float m_fHoldDelayCount;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!m_bHold && m_fHoldDelayCount >= 0f)

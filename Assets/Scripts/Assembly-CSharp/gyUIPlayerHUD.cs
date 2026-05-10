@@ -25,10 +25,6 @@ public class gyUIPlayerHUD : MonoBehaviour
 		m_Target = null;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void LateUpdate()
 	{
 		if (m_bActive)

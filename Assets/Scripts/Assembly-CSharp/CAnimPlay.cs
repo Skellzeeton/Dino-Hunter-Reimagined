@@ -119,7 +119,6 @@ public class CAnimPlay
 		string name = m_AnimData.GetName(nType);
 		if (IsAnimValid(name))
 		{
-			UnityEngine.Debug.Log(string.Concat("SetAnimLayer ", nType, " ", nLayer));
 			m_Model.GetComponent<Animation>()[name].layer = nLayer;
 		}
 	}
@@ -206,7 +205,6 @@ public class CAnimPlay
 			string name = m_AnimData.GetName(nType);
 			if (IsAnimValid(name))
 			{
-				Debug.Log(name);
 				m_Model.GetComponent<Animation>()[name].AddMixingTransform(bone, true);
 				m_Model.GetComponent<Animation>()[name].wrapMode = mode;
 				m_Model.GetComponent<Animation>()[name].speed = speed;

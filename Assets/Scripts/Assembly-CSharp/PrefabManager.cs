@@ -111,7 +111,6 @@ public class PrefabManager
 		m_dictData.Add(10021, "Artist/Model/Character/model_stegosaurus_boss");
 		m_dictData.Add(10022, "Artist/Model/Character/model_pterodactyl_boss");
 		m_dictData.Add(10023, "Artist/Model/Character/model_gold_dragon");
-		
 		m_dictData.Add(10025, "Artist/Model/Character/model_stegosaurus1");
 		m_dictData.Add(10026, "Artist/Model/Character/model_stegosaurus2");
 		m_dictData.Add(101, "Artist/Model/Weapon/weapon_001");
@@ -303,14 +302,6 @@ public class PrefabManager
 		m_dictData.Add(2007, "Artist/GameUI/Task/NGUITaskButcher");
 		m_dictData.Add(2008, "Artist/GameUI/Task/NGUITaskInfinite");
 		m_dictData.Add(2009, "Artist/GameUI/Task/NGUITaskTimed");
-		m_dictData.Add(2100, "Artist/GameUI/NGUIPortrait");
-		m_dictData.Add(2101, "Artist/GameUI/LifeBar");
-		m_dictData.Add(2102, "Artist/GameUI/txtDamageNormal");
-		m_dictData.Add(2103, "Artist/GameUI/txtDamageCritical");
-		m_dictData.Add(2104, "Artist/GameUI/txtExp");
-		m_dictData.Add(2015, "Artist/GameUI/dlgWaveStart");
-		m_dictData.Add(2900, "Artist/GameUI/txtMissionCompleted");
-		m_dictData.Add(2901, "Artist/GameUI/txtMissionFailed");
 		m_dictData.Add(3000, "_Config/ai");
 		m_dictData.Add(3001, "_Config/mob");
 		m_dictData.Add(3002, "_Config/skillplayer");
@@ -397,7 +388,6 @@ public class PrefabManager
 
 	public static void PreLoad()
 	{
-		Debug.Log("PreLoadGameEffect");
 		AddPool(302, 1);
 		AddPool(251, 1);
 		AddPool(252, 1);

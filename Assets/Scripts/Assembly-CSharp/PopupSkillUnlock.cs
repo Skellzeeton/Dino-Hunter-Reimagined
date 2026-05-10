@@ -12,31 +12,22 @@ public class PopupSkillUnlock : MonoBehaviour
 
 	private string crystal_texture = "title_shuijing";
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(ScrollList_SkillItem m_item)
 	{
 		if (m_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int skillLevel = m_item.GetSkillLevel();
 		if (skillLevel >= 5)
 		{
-			Debug.Log("!!!you reach max level!!!");
 			return;
 		}
 		TUIPriceInfo skillUnlockPrice = m_item.GetSkillUnlockPrice();
 		if (skillUnlockPrice == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int price = skillUnlockPrice.price;

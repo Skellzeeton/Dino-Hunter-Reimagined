@@ -40,10 +40,6 @@ public class PopupRole : MonoBehaviour
 
 	public PopupGoEquip popup_go_equip;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		CheckScrollChoose();
@@ -53,7 +49,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (m_player_info == null)
 		{
-			Debug.Log("error! no found info");
+			Debug.LogWarning("error! no found info");
 			return;
 		}
 		int role_id = m_player_info.role_id;
@@ -98,7 +94,7 @@ public class PopupRole : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		SetInfo(item_choose.GetRoleInfo());
 		int id = item_choose.GetRoleInfo().id;
@@ -109,7 +105,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (m_info == null)
 		{
-			Debug.Log("error! no info!");
+			Debug.LogWarning("error! no info!");
 		}
 		label_title.Text = m_info.name;
 		label_introduce.Text = m_info.introduce;
@@ -206,7 +202,6 @@ public class PopupRole : MonoBehaviour
 				}
 				break;
 			}
-			Debug.Log("you have no gold enough!");
 			return;
 		}
 		case UnitType.Crystal:
@@ -223,7 +218,6 @@ public class PopupRole : MonoBehaviour
 				}
 				break;
 			}
-			Debug.Log("you have no crystal enough!");
 			return;
 		}
 		}
@@ -242,7 +236,7 @@ public class PopupRole : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 	}
 
@@ -251,7 +245,7 @@ public class PopupRole : MonoBehaviour
 		TUIRoleInfo roleInfo = item_choose.GetRoleInfo();
 		if (roleInfo == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return;
 		}
 		if (!roleInfo.is_active_buy)
@@ -261,7 +255,7 @@ public class PopupRole : MonoBehaviour
 			TUIPriceInfo do_buy_price = roleInfo.do_buy_price;
 			if (do_buy_price == null)
 			{
-				Debug.Log("no info!");
+				Debug.LogWarning("no info!");
 				return;
 			}
 			int num = do_buy_price.price;
@@ -284,7 +278,6 @@ public class PopupRole : MonoBehaviour
 					}
 					break;
 				}
-				Debug.Log("you have no gold enough!");
 				return;
 			}
 			case UnitType.Crystal:
@@ -300,7 +293,6 @@ public class PopupRole : MonoBehaviour
 					}
 					break;
 				}
-				Debug.Log("you have no crystal enough!");
 				return;
 			}
 			}
@@ -318,7 +310,7 @@ public class PopupRole : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 	}
 
@@ -412,7 +404,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (popup_gold_to_crystal == null || top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int goldExchangeCount = popup_gold_to_crystal.GetGoldExchangeCount();
@@ -423,7 +415,7 @@ public class PopupRole : MonoBehaviour
 		crystalValue -= crystalExchangeCount;
 		if (crystalValue < 0)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		top_bar.SetGoldValue(goldValue);
@@ -462,7 +454,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (role_active_skill == null || m_active_skill_list == null)
 		{
-			Debug.Log("warning! no active skill.");
+			Debug.LogWarning("warning! no active skill.");
 		}
 		role_active_skill.SetInfo(m_active_skill_list);
 	}
@@ -471,7 +463,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (popup_active_skill == null || m_control == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		popup_active_skill.Show(PopupType.Skills01, null);
@@ -487,7 +479,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (popup_active_skill == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{
@@ -515,7 +507,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (item_choose == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (m_sfx_open_now)
@@ -533,7 +525,7 @@ public class PopupRole : MonoBehaviour
 	{
 		if (item_choose == null)
 		{
-			Debug.Log("no item_choose!");
+			Debug.LogWarning("no item_choose!");
 			return false;
 		}
 		return item_choose.IsActiveRole();

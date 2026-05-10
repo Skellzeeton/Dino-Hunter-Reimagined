@@ -77,7 +77,7 @@ public class Scene_Skill : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneSkillEventType.TUIEvent_SkillInfo)
@@ -89,7 +89,7 @@ public class Scene_Skill : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneSkillEventType.TUIEvent_SkillUnlcok)
@@ -204,7 +204,7 @@ public class Scene_Skill : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneSkillEventType.TUIEvent_GoldToCrystal)

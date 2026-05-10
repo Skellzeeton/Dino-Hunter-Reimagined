@@ -9,19 +9,12 @@ public class PopupWeaponSupplement : MonoBehaviour
 
 	public PopupWeaponSupplementGoods supplement_goods;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetSupplementInfo(TUISupplementInfo m_supplement_info)
 	{
 		if (m_supplement_info == null || supplement_goods == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		supplement_goods.ClearInfo();
@@ -56,7 +49,7 @@ public class PopupWeaponSupplement : MonoBehaviour
 	{
 		if (m_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{

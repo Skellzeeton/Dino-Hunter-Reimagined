@@ -54,10 +54,6 @@ public class PopupRankingItem : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
-
 	public void SetInfo(RankingType m_type, TUICoopPlayerInfo m_info, GameObject m_invoke_go, ref Dictionary<int, string> m_title_list, ShowBGType m_show_bg = ShowBGType.Keep, bool m_show_infocard = true)
 	{
 		if (m_info != null)
@@ -267,7 +263,6 @@ public class PopupRankingItem : MonoBehaviour
 		}
 		int num = 0;
 		num = ((!m_is_all) ? coop_player_info.friends_ranking : coop_player_info.all_ranking);
-		Debug.Log("Ranking:" + num);
 		switch (num)
 		{
 		case 0:

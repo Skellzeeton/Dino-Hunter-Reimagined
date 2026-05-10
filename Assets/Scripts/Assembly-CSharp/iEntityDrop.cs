@@ -4,10 +4,6 @@ public class iEntityDrop : MonoBehaviour
 {
 	protected bool m_bActive;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_bActive && base.transform.parent != null)

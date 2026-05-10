@@ -70,7 +70,6 @@ public class gyUIMovieMask : MonoBehaviour
 
 	public void MoveIn(bool bFinishHide)
 	{
-		Debug.Log((float)Screen.width * fWidthRate + " " + (float)Screen.height * fHeightRate + " " + mAnchor.transform.localScale.x);
 		mMaskUp.transform.localScale = new Vector3((float)Screen.width * fWidthRate, (float)Screen.height * fHeightRate, 1f) / mAnchor.transform.localScale.x;
 		mMaskDown.transform.localScale = new Vector3((float)Screen.width * fWidthRate, (float)Screen.height * fHeightRate, 1f) / mAnchor.transform.localScale.x;
 		m_bInProcess = true;

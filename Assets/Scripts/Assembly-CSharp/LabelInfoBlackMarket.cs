@@ -10,14 +10,6 @@ public class LabelInfoBlackMarket : MonoBehaviour
 
 	public TUILabel label_introduce;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(int m_title_value, int m_max, string m_introduce)
 	{
 		if (m_title_value == 0)

@@ -199,7 +199,6 @@ public class Scene_BlackMarket : MonoBehaviour
 		{
 			if (m_event.GetControlSuccess())
 			{
-				Debug.Log(m_event.GetWparam());
 				DoSceneChange(m_event.GetWparam(), "Scene_Equip");
 			}
 			else

@@ -6,10 +6,6 @@ public class _AnimController : MonoBehaviour
 
 	protected float m_fAnimTimeCount;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		m_fAnimTimeCount += m_fAnimTime;

@@ -77,7 +77,7 @@ public class Scene_Forge : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneForgeEventType.TUIEvent_WeaponInfo)
@@ -88,7 +88,7 @@ public class Scene_Forge : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneForgeEventType.TUIEvent_WeaponGoodsBuy)
@@ -211,7 +211,7 @@ public class Scene_Forge : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneForgeEventType.TUIEvent_ShowSupplement)
@@ -386,7 +386,7 @@ public class Scene_Forge : MonoBehaviour
 		}
 		if (popup_weapon == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		WeaponKindItemBtn component = control.gameObject.GetComponent<WeaponKindItemBtn>();
@@ -526,7 +526,7 @@ public class Scene_Forge : MonoBehaviour
 			TUISupplementInfo supplementInfo = popup_weapon.GetSupplementInfo();
 			if (supplementInfo == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				return;
 			}
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_ClickSupplement, supplementInfo));

@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class iLobbyUI : MonoBehaviour
 {
-	private void Awake()
-	{
-	}
 
 	private void OnGUI()
 	{

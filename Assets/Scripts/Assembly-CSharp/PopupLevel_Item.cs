@@ -37,14 +37,6 @@ public class PopupLevel_Item : MonoBehaviour
 		ShowDropSign(false);
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(TUISecondaryLevelInfo m_info, LevelPassState m_state)
 	{
 		secondary_level_info = m_info;
@@ -87,7 +79,7 @@ public class PopupLevel_Item : MonoBehaviour
 	{
 		if (secondary_level_info == null)
 		{
-			Debug.Log("no id!");
+			Debug.LogWarning("no id!");
 			return 0;
 		}
 		return secondary_level_info.id;

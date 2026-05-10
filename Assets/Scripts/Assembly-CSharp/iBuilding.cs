@@ -77,12 +77,10 @@ public class iBuilding : MonoBehaviour
             if (newLifeState == 1)
             {
                 PlayAudio("Mat_Fence_crash");
-                Debug.Log("Barricade entered life state " + newLifeState + ", playing impact sound.");
             }
             if (newLifeState == 2)
             {
                 PlayAudio("Mat_Fence_destroy");
-                Debug.Log("Barricade entered life state " + newLifeState + ", playing impact sound.");
             }
         }
         m_nLifeState = newLifeState;

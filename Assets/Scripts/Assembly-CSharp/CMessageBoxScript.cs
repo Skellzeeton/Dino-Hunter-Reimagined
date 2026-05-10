@@ -51,14 +51,12 @@ public class CMessageBoxScript : MonoBehaviour
 		switch (buttonIndex)
 		{
 		case 0:
-			Debug.Log("Clicked OK");
 			if (m_OnOK != null)
 			{
 				m_OnOK();
 			}
 			break;
 		case 1:
-			Debug.Log("Clicked Cancel");
 			if (m_OnCancel != null)
 			{
 				m_OnCancel();

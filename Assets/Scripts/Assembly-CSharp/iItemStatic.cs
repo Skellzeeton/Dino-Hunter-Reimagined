@@ -53,10 +53,6 @@ public class iItemStatic : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
-
 	private void FixedUpdate()
 	{
 		if (!(m_Rigidbody == null) && base.transform.position.y <= m_Entity.transform.localPosition.y && m_Rigidbody.linearVelocity.y > -0.2f && m_Rigidbody.linearVelocity.y < 0.2f)
@@ -67,7 +63,6 @@ public class iItemStatic : MonoBehaviour
 
 	private void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log(collider.transform.root.name);
 		CCharUser component = collider.transform.root.GetComponent<CCharUser>();
 		if (component == null)
 		{

@@ -41,22 +41,23 @@ public class CControlWindows : CControlBase
 		if (m_GameScene == null)
 		{
 			return;
+		} 
+		if (Input.GetKeyDown(KeyCode.Escape)) 
+		{ 
+			if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Gameing) 
+			{
+				m_GameScene.SetGamePause(true); 
+				Cursor.lockState = CursorLockMode.None; 
+				Cursor.visible = true;
+				
+			}
+			else if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Pause)
+			{
+				m_GameScene.SetGamePause(false); 
+				Cursor.lockState = CursorLockMode.Locked; 
+				Cursor.visible = false; 
+			} 
 		}
-    if (Input.GetKeyDown(KeyCode.Escape))
-    {
-        if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Gameing)
-        {
-            m_GameScene.SetGamePause(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Pause)
-        {
-            m_GameScene.SetGamePause(false);
-        Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
 		/*if (Input.GetKeyDown(KeyCode.T))
 		{
 			if (!m_TutorialActive)
@@ -81,14 +82,18 @@ public class CControlWindows : CControlBase
 			mouseSensitivity = Mathf.Clamp(mouseSensitivity + 0.25f, minSensitivity, maxSensitivity);
 			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
 			PlayerPrefs.Save();
+#if UNITY_EDITOR
 			Debug.Log("Sensitivity increased: " + mouseSensitivity);
+#endif
 		}
 		else if (Input.GetKeyDown(KeyCode.I))
 		{
 			mouseSensitivity = Mathf.Clamp(mouseSensitivity - 0.25f, minSensitivity, maxSensitivity);
 			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
 			PlayerPrefs.Save();
+#if UNITY_EDITOR
 			Debug.Log("Sensitivity decreased: " + mouseSensitivity);
+#endif
 		}
 		if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.CutScene && Input.GetKeyDown(KeyCode.Space))
 			CCameraRoam.GetInstance().Stop();
@@ -370,14 +375,16 @@ public class CControlWindows : CControlBase
 			m_User.SwitchWeapon(num3);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
-		/*if (Input.GetKeyDown(KeyCode.Alpha9))
+#if UNITY_EDITOR
+		if (Input.GetKeyDown(KeyCode.Alpha9))
 		{
-			Debug.Log("press 9 key");
 			m_GameScene.FinishGame(true);
 			if (CGameNetManager.GetInstance().IsConnected())
 			{
 				CGameNetSender.GetInstance().SendMsg_GAME_OVER(true);
-			} Uncomment for testing*/
+			}
+		}
+#endif
 	}
 
 	public override void LateUpdate(float deltaTime)

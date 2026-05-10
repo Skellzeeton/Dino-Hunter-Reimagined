@@ -572,7 +572,6 @@ public static class NGUITools
 		}
 		catch (Exception ex)
 		{
-			NGUIDebug.Log(ex.Message);
 			return false;
 		}
 		fileStream.Write(bytes, 0, bytes.Length);

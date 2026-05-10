@@ -12,10 +12,6 @@ public class iRoomUI : MonoBehaviour
 
 	protected int m_nLastReadyTime;
 
-	private void Awake()
-	{
-	}
-
 	private void Update()
 	{
 		TNetRoom curRoom = CGameNetManager.GetInstance().GetCurRoom();
@@ -32,19 +28,13 @@ public class iRoomUI : MonoBehaviour
 		if (m_nLastReadyTime == 0 || m_nLastReadyTime != num)
 		{
 			m_nLastReadyTime = num;
-			iGameApp.GetInstance().ScreenLog(num + "s left...");
 		}
 		if (m_fReadyTimeCount >= m_fReadyTime)
 		{
 			CGameNetManager.GetInstance().MutiplyState = CGameNetManager.kMutiplyState.Gaming;
 			if (curRoom.RoomMaster.IsItMe)
 			{
-				iGameApp.GetInstance().ScreenLog("play game !!!");
 				CGameNetSender.GetInstance().SendMsg_GAME_ENTER(m_nGameLevel, 1, curRoom);
-			}
-			else
-			{
-				iGameApp.GetInstance().ScreenLog("wait room master !!!");
 			}
 		}
 	}

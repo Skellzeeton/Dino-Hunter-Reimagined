@@ -6,13 +6,6 @@ public class PopupOnlyText : MonoBehaviour
 
 	public TUILabel label_text;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetInfo(string m_text)
 	{

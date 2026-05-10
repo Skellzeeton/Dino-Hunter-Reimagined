@@ -65,13 +65,6 @@ public class iServerDataManager : MonoBehaviour
 		HttpClient.Instance().AddServer(m_sServerName, m_sServerUrl, m_fTimeOut, (m_sKey.Length >= 1) ? m_sKey : null);
 	}
 
-	private void Awake()
-	{
-	}
-
-	private void Start()
-	{
-	}
 
 	private void Update()
 	{
@@ -93,7 +86,6 @@ public class iServerDataManager : MonoBehaviour
 
 	protected void OnFetchSaveDataResult(int taskId, int result, string server, string action, string response, string param)
 	{
-		UnityEngine.Debug.Log("OnFetchSaveDataResult " + result + " " + action + " " + response + " " + param);
 		if (result != 0)
 		{
 			return;
@@ -113,7 +105,6 @@ public class iServerDataManager : MonoBehaviour
 					JSONObject @object = jSONObject.GetObject("profile");
 					text2 = ((@object["data"] == null || @object["data"].Type != 0) ? string.Empty : @object["data"].Str);
 				}
-				Debug.Log(string2 + " " + text2);
 				SetUserRandom(@string, string2);
 				if (m_OnSuccessFetch != null)
 				{
@@ -129,7 +120,7 @@ public class iServerDataManager : MonoBehaviour
 		{
 			if (m_OnFailed != null)
 			{
-				Debug.Log("exception");
+				Debug.LogError("exception");
 				m_OnFailed(text);
 			}
 		}
@@ -147,7 +138,6 @@ public class iServerDataManager : MonoBehaviour
 
 	protected void OnUploadSaveDataResult(int taskId, int result, string server, string action, string response, string param)
 	{
-		UnityEngine.Debug.Log("OnUploadSaveDataResult " + result + " " + action + " " + response);
 		if (result != 0)
 		{
 			return;
@@ -157,12 +147,10 @@ public class iServerDataManager : MonoBehaviour
 		{
 			JSONObject jSONObject = JSONObject.Parse(response);
 			text = jSONObject.GetString("code");
-			UnityEngine.Debug.Log(text);
 			if (text == "0")
 			{
 				string str = jSONObject["userId"].Str;
 				string str2 = jSONObject["rand"].Str;
-				UnityEngine.Debug.Log("upload sucess random = " + str2);
 				if (m_OnSuccessUpload != null)
 				{
 					m_OnSuccessUpload();
@@ -170,7 +158,7 @@ public class iServerDataManager : MonoBehaviour
 			}
 			else if (m_OnFailed != null)
 			{
-				Debug.Log("code != 0 error failed");
+				Debug.LogError("code != 0 error failed");
 				m_OnFailed(text);
 			}
 		}
@@ -178,7 +166,7 @@ public class iServerDataManager : MonoBehaviour
 		{
 			if (m_OnFailed != null)
 			{
-				Debug.Log("exception error failed");
+				Debug.LogError("exception error failed");
 				m_OnFailed(text);
 			}
 		}

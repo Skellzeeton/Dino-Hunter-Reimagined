@@ -10,19 +10,12 @@ public class PriceIcon : MonoBehaviour
 
 	private string crystal_texture = "title_shuijing";
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetInfo(TUIPriceInfo m_info)
 	{
 		if (m_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int price = m_info.price;

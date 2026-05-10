@@ -56,7 +56,7 @@ public class PageFrame_Stash : MonoBehaviour
 	{
 		if (goods_info_list == null)
 		{
-			Debug.Log("no goods_info_list!");
+			Debug.LogWarning("no goods_info_list!");
 			return;
 		}
 		int num = Mathf.CeilToInt((float)goods_info_list.Count / 24f);
@@ -101,7 +101,7 @@ public class PageFrame_Stash : MonoBehaviour
 		TUIPageEx currentPage = page_frame_ex.CurrentPage;
 		if (currentPage == null)
 		{
-			Debug.Log("no m_page_ex!");
+			Debug.LogWarning("no m_page_ex!");
 			return;
 		}
 		int index = currentPage.gameObject.GetComponent<Page_Stash>().GetIndex();

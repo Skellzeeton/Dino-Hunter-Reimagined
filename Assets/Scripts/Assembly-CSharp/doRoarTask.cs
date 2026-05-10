@@ -36,7 +36,18 @@ public class doRoarTask : Task
 		}
 		if (cCharMob.m_Target != null)
 		{
-			cCharMob.Dir2D = Vector3.Lerp(cCharMob.Dir2D, (cCharMob.m_Target.Pos - cCharMob.Pos).normalized, m_fTimeCount / m_fTime);
+			Vector3 dir = cCharMob.m_Target.Pos - cCharMob.Pos;
+			dir.y = 0f;
+			if (dir.sqrMagnitude > 0.0001f)
+			{
+				dir.Normalize();
+				Vector3 newDir = Vector3.Lerp(
+					cCharMob.Dir2D,
+					dir,
+					Mathf.Clamp01(m_fTimeCount / Mathf.Max(m_fTime, 0.0001f))
+				);
+				cCharMob.Dir2D = newDir;
+			}
 		}
 		m_fTimeCount += deltaTime;
 		if (m_fTimeCount < m_fTime)

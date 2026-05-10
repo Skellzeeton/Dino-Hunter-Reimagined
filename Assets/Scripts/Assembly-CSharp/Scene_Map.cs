@@ -126,7 +126,7 @@ public class Scene_Map : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_MapEnterInfo)
@@ -137,7 +137,7 @@ public class Scene_Map : MonoBehaviour
 			}
 			if (m_event.GetEventInfo().map_info == null || top_bar == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				return;
 			}
 			level_map.SetMapEnterInfo(m_event.GetEventInfo().map_info);
@@ -177,12 +177,12 @@ public class Scene_Map : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error! no map info!");
+					Debug.LogWarning("error! no map info!");
 				}
 			}
 			else
 			{
-				Debug.Log("error! no map info!");
+				Debug.LogWarning("error! no map info!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_EnterLevel)
@@ -358,7 +358,6 @@ public class Scene_Map : MonoBehaviour
 			if (levelInfo == null)
 			{
 				int levelID = component.GetLevelID();
-				Debug.Log("Open MainLevel:" + levelID);
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, levelID));
 			}
 			else
@@ -384,14 +383,13 @@ public class Scene_Map : MonoBehaviour
 		AndroidReturnPlugin.instance.ClearFunc(TUIEvent_ClosePopup);
 		if (level_point == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		PopupLevel_Item choose = popup_level_map.GetChoose();
 		if (!(choose == null))
 		{
 			int iD = choose.GetID();
-			Debug.Log("Level:" + iD);
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD));
 		}
 	}
@@ -408,7 +406,6 @@ public class Scene_Map : MonoBehaviour
 		}
 		PopupLevel_Recommend component = control.transform.parent.GetComponent<PopupLevel_Recommend>();
 		PopupLevel_Recommend.RecommendBtnState recommendBtnState = component.GetRecommendBtnState();
-		Debug.Log("m_btn_state:" + recommendBtnState);
 		switch (recommendBtnState)
 		{
 		case PopupLevel_Recommend.RecommendBtnState.RoleBuy:
@@ -416,7 +413,7 @@ public class Scene_Map : MonoBehaviour
 			TUIRecommendRoleInfo recommendRoleInfo = component.GetRecommendRoleInfo();
 			if (recommendRoleInfo == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			int id2 = recommendRoleInfo.id;
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterRoleBuy, id2));
@@ -427,7 +424,7 @@ public class Scene_Map : MonoBehaviour
 			TUIRecommendWeaponInfo recommendWeaponInfo = component.GetRecommendWeaponInfo();
 			if (recommendWeaponInfo == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			int id = recommendWeaponInfo.id;
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterWeaponBuy, id));
@@ -551,7 +548,7 @@ public class Scene_Map : MonoBehaviour
 			PopupLevel_Item choose2 = popup_level_map.GetChoose();
 			if (choose2 == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				break;
 			}
 			int iD2 = choose2.GetID();
@@ -575,7 +572,7 @@ public class Scene_Map : MonoBehaviour
 			PopupLevel_Item choose = popup_level_map.GetChoose();
 			if (choose == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				break;
 			}
 			int iD = choose.GetID();

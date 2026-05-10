@@ -41,11 +41,7 @@ public class PopupNewHelpState : MonoBehaviour
 			rect_show.UpdateRect();
 		}
 	}
-
-	private void Update()
-	{
-	}
-
+	
 	public NewHelpState GetNewHelpState()
 	{
 		return help_state_now;
@@ -105,7 +101,7 @@ public class PopupNewHelpState : MonoBehaviour
 	{
 		if (label_content == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return true;
 		}
 		if (label_content.GetContentShowState() == PopupNewHelpStateContent.ContentShowState.ShowEnd)

@@ -48,9 +48,6 @@ public class PopupPlayerInfo : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	public void SetInfo(TUICoopPlayerInfo m_coop_player_info)
 	{

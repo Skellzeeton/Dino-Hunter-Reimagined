@@ -246,10 +246,6 @@ public class CGameNetManager : MonoBehaviour
 		CGameNetAccepter.GetInstance().Register();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_curRoom == null || IsRoomMaster())
@@ -541,11 +537,6 @@ public class CGameNetManager : MonoBehaviour
 			SearchRoom();
 			return;
 		}
-		Debug.Log("i enter room " + room.Name);
-		foreach (TNetUser user in room.UserList)
-		{
-			Debug.Log(user.Name);
-		}
 		m_curRoom = room;
 		m_fTimeInRoom = 5f;
 		m_nCurRoomGameLevelID = 0;
@@ -559,10 +550,6 @@ public class CGameNetManager : MonoBehaviour
 
 	protected void OnLeaveRoom(TNetRoom room)
 	{
-		if (room != null)
-		{
-			Debug.Log("i leave room " + room.Name);
-		}
 		m_curRoom = null;
 		m_fTimeInRoom = 0f;
 		CGameNetAccepter.GetInstance().OnCustomMsg(TNetManager.GetInstance().Connection.Myself, kGameNetEnum.LOBBY_LEAVE, new SFSObject());
@@ -610,7 +597,6 @@ public class CGameNetManager : MonoBehaviour
 
 	protected void OnRoomMasterChange(TNetUser roommaster)
 	{
-		Debug.Log("new master is " + roommaster.Name);
 		if (m_GameScene == null)
 		{
 			if (roommaster.IsItMe)
@@ -640,10 +626,9 @@ public class CGameNetManager : MonoBehaviour
 
 	protected void OnUserEnterRoom(TNetUser user)
 	{
-		iGameApp.GetInstance().ScreenLog(user.Name + " enter room, count = " + m_curRoom.UserCount);
 		if (m_curRoom != null && m_curRoom.IsGaming)
 		{
-			iGameApp.GetInstance().ScreenLog(user.Name + " enter failed, game is already start!");
+			Debug.LogError(user.Name + " enter failed, game is already start!");
 		}
 		else
 		{
@@ -653,7 +638,6 @@ public class CGameNetManager : MonoBehaviour
 
 	protected void OnUserLeaveRoom(TNetUser user)
 	{
-		iGameApp.GetInstance().ScreenLog(user.Name + " leave room, count = " + (m_curRoom.UserCount - 1));
 		CGameNetAccepter.GetInstance().OnCustomMsg(user, kGameNetEnum.LOBBY_LEAVE_PLAYER, new SFSObject());
 	}
 
@@ -722,15 +706,11 @@ public class CGameNetManager : MonoBehaviour
 		{
 			byte[] array = MyUtils.Serialize(ncpack);
 			string @string = Encoding.UTF8.GetString(array);
-			Debug.Log(@string);
-			Debug.Log("namecard npcpack length = " + Convert.ToBase64String(array).Length);
 			hashtable.Add("exts", Convert.ToBase64String(array));
 			iServerHttp.SendRequest(iMacroDefine.ServerUrl_CoopData, -1f, null, "userHandler.saveUser", JsonMapper.ToJson(hashtable));
 		}
-		catch (Exception ex)
+		catch (Exception)
 		{
-			Debug.Log(ex.Message);
-			Debug.Log(ex.StackTrace);
 		}
 	}
 
@@ -843,13 +823,12 @@ public class CGameNetManager : MonoBehaviour
 		}
 		catch
 		{
-			Debug.Log("OnFetchGCAccount_S parse error!");
+			Debug.LogError("OnFetchGCAccount_S parse error!");
 		}
 	}
 
 	public void FetchPhoto(string sDeviceId, string sGCAccount)
 	{
-		Debug.Log(sDeviceId + " " + sGCAccount);
 		if (sDeviceId != null && sDeviceId.Length >= 1)
 		{
 			if (sDeviceId == iServerSaveData.GetInstance().CurDeviceId)
@@ -860,7 +839,6 @@ public class CGameNetManager : MonoBehaviour
 			{
 				sGCAccount = MyUtils.TranslateGCAccount(sGCAccount, true);
 				GameCenterPlugin.LoadPhoto(sGCAccount);
-				Debug.Log(sGCAccount);
 				iUpdateHandleManager.GetInstance().AddEvent(OnEvent_FetchPhotoInBackground, new List<object> { sDeviceId, sGCAccount }, 5f);
 			}
 		}
@@ -879,25 +857,20 @@ public class CGameNetManager : MonoBehaviour
 		{
 			return false;
 		}
-		Debug.Log("fetch photo " + text);
 		CNameCardInfo nameCardInfo = m_DataCenterNet.GetNameCardInfo(text);
 		if (nameCardInfo == null)
 		{
 			return true;
 		}
-		Debug.Log("fetch photo photostate " + photoState);
 		nameCardInfo.m_nPhotoState = photoState;
 		if (photoState == 2)
 		{
 			int photoSize = GameCenterPlugin.GetPhotoSize(text2);
-			Debug.Log("fetch photo size " + photoSize + " " + text2);
 			if (photoSize > 0)
 			{
 				byte[] array = new byte[photoSize];
 				if (GameCenterPlugin.GetPhoto(text2, array))
 				{
-					Debug.Log("fetch photo 5");
-					Debug.Log("photo exist " + array);
 					nameCardInfo.SetPhoto(array);
 					nameCardInfo.ResetPhotoTime();
 					if (m_DataCenter != null)
@@ -908,10 +881,6 @@ public class CGameNetManager : MonoBehaviour
 					TUIGameInfo tUIGameInfo = new TUIGameInfo();
 					tUIGameInfo.player_texture_info = new TUIUpdatePlayerTextureInfo(nameCardInfo.m_sID, nameCardInfo.GetPhoto());
 					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_UpdatePlayerTexture, tUIGameInfo));
-				}
-				else
-				{
-					Debug.Log("photo does not exist ");
 				}
 			}
 			return true;
@@ -944,7 +913,6 @@ public class CGameNetManager : MonoBehaviour
 
 	public void FetchUUID(string gcaccount)
 	{
-		UnityEngine.Debug.Log("gc friends ready to fetch uuid " + gcaccount);
 		HttpClient.ServerInfo server = HttpClient.Instance().GetServer("dataserver");
 		if (server != null)
 		{
@@ -979,13 +947,12 @@ public class CGameNetManager : MonoBehaviour
 				if (string4.Length > 0 && m_ltFetchUUIDList != null && m_nFetchUUIDIndex >= 0 && m_nFetchUUIDIndex < m_ltFetchUUIDList.Count && iServerSaveData.GetInstance().CurDeviceId != string4)
 				{
 					m_ltFetchUUIDList[m_nFetchUUIDIndex].m_sUUID = string4;
-					UnityEngine.Debug.Log(m_ltFetchUUIDList[m_nFetchUUIDIndex].m_sGCAccount + " = " + string4);
 				}
 			}
 		}
 		catch
 		{
-			Debug.Log("OnFetchGCAccount_S parse error!");
+			Debug.LogError("OnFetchGCAccount_S parse error!");
 		}
 		finally
 		{

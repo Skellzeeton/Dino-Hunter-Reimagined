@@ -28,14 +28,6 @@ public class GoodsNeedItemImg : MonoBehaviour
 
 	private string goods_name = string.Empty;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(int m_goods_id, GoodsQualityType m_type, string m_goods_name)
 	{
 		goods_id = m_goods_id;
@@ -72,7 +64,6 @@ public class GoodsNeedItemImg : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!");
 			return;
 		}
 		if (!m_use_NGUI)

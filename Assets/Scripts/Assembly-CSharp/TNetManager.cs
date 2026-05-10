@@ -90,10 +90,6 @@ public class TNetManager : MonoBehaviour
 		Object.DontDestroyOnLoad(base.gameObject);
 	}
 
-	private void Update()
-	{
-	}
-
 	private void FixedUpdate()
 	{
 		if (m_Connection != null)
@@ -104,7 +100,6 @@ public class TNetManager : MonoBehaviour
 
 	public void SetCustomMsgFunc(OnCustomMsgFunc func)
 	{
-		UnityEngine.Debug.Log("SetCustomMsgFunc " + func.ToString());
 		m_OnCustomMsgFunc = func;
 	}
 
@@ -115,7 +110,6 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnConnectSuccess(TNetEventData tEvent)
 	{
-		Debug.Log("OnConnectSuccess");
 		if (m_OnConnectSuccess != null)
 		{
 			m_OnConnectSuccess();
@@ -124,7 +118,7 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnConnectKilled(TNetEventData tEvent)
 	{
-		Debug.Log("OnConnectKilled");
+		Debug.LogError("OnConnectKilled");
 		if (m_OnConnectFailed != null)
 		{
 			m_OnConnectFailed();
@@ -133,7 +127,7 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnConnectTimeout(TNetEventData tEvent)
 	{
-		Debug.Log("OnConnectTimeout");
+		Debug.LogError("OnConnectTimeout");
 		if (m_OnConnectTimeout != null)
 		{
 			m_OnConnectTimeout();
@@ -142,7 +136,7 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnConnectDisconnect(TNetEventData tEvent)
 	{
-		Debug.Log("OnDisConnect");
+		Debug.LogError("OnDisConnect");
 		if (m_OnConnectDisconnect != null)
 		{
 			m_OnConnectDisconnect();
@@ -151,7 +145,6 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnLoginSuccess(TNetEventData tEvent)
 	{
-		Debug.Log("OnLoginSuccess");
 		if (m_OnLoginSuccess != null)
 		{
 			m_OnLoginSuccess();
@@ -160,7 +153,7 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnLoginFailed(TNetEventData tEvent)
 	{
-		Debug.Log("OnLoginFailed");
+		Debug.LogError("OnLoginFailed");
 		if (m_OnLoginFailed != null)
 		{
 			m_OnLoginFailed();
@@ -169,22 +162,19 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnHeartTimeout(TNetEventData tEvent)
 	{
-		Debug.Log("OnHeartTimeout");
+		Debug.LogError("OnHeartTimeout");
 	}
 
 	protected void OnHeartWaiting(TNetEventData tEvent)
 	{
-		Debug.Log("OnHeartWaiting");
 	}
 
 	protected void OnHearRenew(TNetEventData tEvent)
 	{
-		Debug.Log("OnHearRenew");
 	}
 
 	protected void OnHearBeat(TNetEventData tEvent)
 	{
-		UnityEngine.Debug.Log("OnHearBeat servertime = " + tEvent.data["serverTime"]);
 	}
 
 	protected void OnRoomList(TNetEventData tEvent)
@@ -193,7 +183,6 @@ public class TNetManager : MonoBehaviour
 		ushort num2 = (ushort)tEvent.data["pageSum"];
 		RoomDragListCmd.ListType listType = (RoomDragListCmd.ListType)(int)tEvent.data["roomListType"];
 		List<TNetRoom> ltRoom = (List<TNetRoom>)tEvent.data["roomList"];
-		UnityEngine.Debug.Log("OnRoomList page = " + num + " pagenum = " + num2 + "  listtype = " + listType);
 		if (m_OnRoomList != null)
 		{
 			m_OnRoomList(ltRoom);
@@ -210,7 +199,6 @@ public class TNetManager : MonoBehaviour
 			return;
 		}
 		TNetRoom tNetRoom = (TNetRoom)tEvent.data["room"];
-		UnityEngine.Debug.Log("OnJoinRoom " + tNetRoom.Name);
 		if (m_OnEnterRoom != null)
 		{
 			m_OnEnterRoom(tNetRoom);
@@ -220,7 +208,6 @@ public class TNetManager : MonoBehaviour
 	protected void OnLeaveRoom(TNetEventData tEvent)
 	{
 		TNetRoom tNetRoom = (TNetRoom)tEvent.data["room"];
-		UnityEngine.Debug.Log("OnLeaveRoom " + tNetRoom.Name);
 		if (m_OnLeaveRoom != null)
 		{
 			m_OnLeaveRoom(tNetRoom);
@@ -229,7 +216,6 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnUserEnterRoom(TNetEventData tEvent)
 	{
-		Debug.Log("OnUserEnterRoom");
 		TNetUser tNetUser = (TNetUser)tEvent.data["user"];
 		if (tNetUser != null && m_OnUserEnterRoom != null)
 		{
@@ -239,7 +225,6 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnUserExitRoom(TNetEventData tEvent)
 	{
-		Debug.Log("OnUserExitRoom");
 		TNetUser tNetUser = (TNetUser)tEvent.data["user"];
 		if (tNetUser != null)
 		{
@@ -256,7 +241,6 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnCreateRoom(TNetEventData tEvent)
 	{
-		Debug.Log("OnCreateRoom");
 		if ((int)tEvent.data["result"] != 0)
 		{
 			Debug.LogError("cant create room!");
@@ -271,7 +255,6 @@ public class TNetManager : MonoBehaviour
 
 	protected void OnRoomMasterChange(TNetEventData tEvent)
 	{
-		Debug.Log("OnRoomMasterChange");
 		TNetUser roommaster = tEvent.data["user"] as TNetUser;
 		if (m_OnRoomMasterChange != null)
 		{
@@ -286,7 +269,6 @@ public class TNetManager : MonoBehaviour
 		SFSObject variable = Connection.CurRoom.GetVariable(tNetRoomVarType);
 		int @int = variable.GetInt("hunterlvl");
 		bool @bool = variable.GetBool("limithunterlvl");
-		UnityEngine.Debug.Log(string.Concat("OnRoomVarChange ", tNetUser.Id, " ", tNetUser.Name, " ", tNetRoomVarType, " ", @int, " ", @bool));
 	}
 
 	protected void OnRoomStart(TNetEventData tEvent)
@@ -337,13 +319,11 @@ public class TNetManager : MonoBehaviour
 		}
 		if (m_Connection.IsContected())
 		{
-			Debug.Log("connect is alreay worked");
 			return;
 		}
 		m_Connection.Close();
 		if (m_Connection.GetStatus() == TNetObject.STATUS.kReady)
 		{
-			UnityEngine.Debug.Log("Connect " + sIP + " port " + nPort);
 			m_Connection.Connect(sIP, nPort);
 		}
 		Unregister();

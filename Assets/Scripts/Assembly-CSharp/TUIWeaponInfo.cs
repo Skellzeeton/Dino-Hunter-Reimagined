@@ -46,7 +46,6 @@ public class TUIWeaponInfo
 
 	public void SetLinkInfo(kShopWeaponCategory nLinkCategory, int nLinkID)
 	{
-		Debug.Log(string.Concat("SetLinkInfo ", m_nLinkCategory, " ", m_nLinkID));
 		m_nLinkCategory = nLinkCategory;
 		m_nLinkID = nLinkID;
 	}

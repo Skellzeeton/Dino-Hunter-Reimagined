@@ -35,14 +35,6 @@ public class BlackMarketItem : MonoBehaviour
 		DoUnChoose();
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(TUIBlackMarketItem blackmarketitem)
 	{
 		m_BlackMarketItem = blackmarketitem;
@@ -94,7 +86,7 @@ public class BlackMarketItem : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!");
+			Debug.LogWarning("lose texture!");
 			return;
 		}
 		if (!m_use_NGUI)

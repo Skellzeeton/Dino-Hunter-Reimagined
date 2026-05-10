@@ -56,13 +56,6 @@ public class PopupInfoCard : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void Show(bool m_open, bool m_myself = false, TUICoopPlayerInfo m_player_info = null)
 	{

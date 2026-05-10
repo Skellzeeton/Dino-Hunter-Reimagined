@@ -47,13 +47,6 @@ public class iServerLogin : MonoBehaviour
 		HttpClient.Instance().AddServer(m_sServerName, m_sServerUrl, m_fTimeOut, (m_sKey.Length >= 1) ? m_sKey : null);
 	}
 
-	private void Awake()
-	{
-	}
-
-	private void Start()
-	{
-	}
 
 	private void Update()
 	{
@@ -67,7 +60,6 @@ public class iServerLogin : MonoBehaviour
 
 	public void Login(string game, string version, string deviceId, string facebookId, string gamecenterId, OnSuccessFetch successfunc, OnFailed failedfunc)
 	{
-		UnityEngine.Debug.Log(game + " " + version + " " + deviceId + " " + gamecenterId);
 		m_OnSuccessFetch = successfunc;
 		m_OnFailed = failedfunc;
 		Hashtable hashtable = new Hashtable();
@@ -81,7 +73,6 @@ public class iServerLogin : MonoBehaviour
 
 	protected void OnLoginResult(int taskId, int result, string server, string action, string response, string param)
 	{
-		UnityEngine.Debug.Log("OnLoginResult " + result + " " + action + " " + response + " " + param);
 		if (result != 0)
 		{
 			return;
@@ -91,7 +82,6 @@ public class iServerLogin : MonoBehaviour
 		{
 			JSONObject jSONObject = JSONObject.Parse(response);
 			text = jSONObject.GetString("code");
-			UnityEngine.Debug.Log(text);
 			if (text == "0")
 			{
 				string @string = jSONObject.GetString("serverId");
@@ -104,11 +94,6 @@ public class iServerLogin : MonoBehaviour
 				string string3 = @object.GetString("deviceId");
 				string string4 = @object.GetString("userId");
 				string string5 = @object.GetString("gamecenterId");
-				UnityEngine.Debug.Log("serverId = " + @string);
-				UnityEngine.Debug.Log("serverUrl = " + string2);
-				UnityEngine.Debug.Log("deviceId = " + string3);
-				UnityEngine.Debug.Log("userId = " + string4);
-				UnityEngine.Debug.Log("gamecenterId = " + string5);
 				if (m_OnSuccessFetch != null)
 				{
 					m_OnSuccessFetch(@string, string2, string3, string4, string5);
@@ -123,7 +108,6 @@ public class iServerLogin : MonoBehaviour
 		{
 			if (m_OnFailed != null)
 			{
-				UnityEngine.Debug.Log("exception");
 				m_OnFailed(text);
 			}
 		}

@@ -42,9 +42,6 @@ public class PopupFriendsItem : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	public void SetInfo(TUICoopPlayerInfo m_info, GameObject m_invoke_go, ref Dictionary<int, string> m_title_list)
 	{

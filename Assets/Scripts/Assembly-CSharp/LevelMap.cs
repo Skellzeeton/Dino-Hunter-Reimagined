@@ -25,18 +25,6 @@ public class LevelMap : MonoBehaviour
 
 	private TUIMapInfo map_info;
 
-	private void Awake()
-	{
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void MoveScreen(float wparam, float lparam)
 	{
 		base.transform.localPosition = base.transform.localPosition + new Vector3(wparam, lparam);
@@ -71,7 +59,7 @@ public class LevelMap : MonoBehaviour
 	{
 		if (m_map_info == null)
 		{
-			Debug.Log("error!no map info");
+			Debug.LogWarning("error!no map info");
 			return;
 		}
 		map_info = m_map_info;
@@ -87,7 +75,7 @@ public class LevelMap : MonoBehaviour
 		Vector3 m_move_pos = Vector3.zero;
 		if (main_level_id < 1)
 		{
-			Debug.Log("error! you have no open level!!");
+			Debug.LogWarning("error! you have no open level!!");
 			return;
 		}
 		int num = FindLevelInArea(main_level_id, map_enter_type);
@@ -159,7 +147,7 @@ public class LevelMap : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("no info found!");
+				Debug.LogWarning("no info found!");
 			}
 			break;
 		case MapEnterType.OpenNewLevel:
@@ -227,7 +215,7 @@ public class LevelMap : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("no info found!");
+				Debug.LogWarning("no info found!");
 			}
 			break;
 		case MapEnterType.SearchGoods:
@@ -298,13 +286,12 @@ public class LevelMap : MonoBehaviour
 				int num4 = FindLevelInArea(level, map_enter_type);
 				if (num4 != 0 && num4 > num)
 				{
-					Debug.Log("Find In Area:" + num4);
 					ShowSign(num4, base.transform.position, ref m_move_pos);
 				}
 			}
 			else
 			{
-				Debug.Log("error! no info found!");
+				Debug.LogWarning("error! no info found!");
 			}
 			break;
 		}
@@ -327,12 +314,12 @@ public class LevelMap : MonoBehaviour
 	{
 		if (m_main_level_info == null)
 		{
-			Debug.Log("error! no level info!");
+			Debug.LogWarning("error! no level info!");
 			return;
 		}
 		if (level_point_list == null)
 		{
-			Debug.Log("error! no level list!");
+			Debug.LogWarning("error! no level list!");
 			return;
 		}
 		for (int i = 0; i < level_point_list.Length; i++)
@@ -340,7 +327,7 @@ public class LevelMap : MonoBehaviour
 			LevelPoint levelPoint = level_point_list[i];
 			if (levelPoint == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				break;
 			}
 			int levelID = levelPoint.GetLevelID();
@@ -394,10 +381,6 @@ public class LevelMap : MonoBehaviour
 		{
 			return 5;
 		}
-		if (num == 0)
-		{
-			Debug.Log("Can't found level in any area!" + m_level);
-		}
 		return num;
 	}
 
@@ -430,7 +413,7 @@ public class LevelMap : MonoBehaviour
 	{
 		if (mask_list == null || mask_list.Length < m_id - 1 || m_id < 1)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (m_id == 5)
@@ -458,7 +441,7 @@ public class LevelMap : MonoBehaviour
 	{
 		if (sign_list == null || sign_list.Length < m_id || m_id < 1)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (m_id >= 1 && m_id <= 5)
 		{

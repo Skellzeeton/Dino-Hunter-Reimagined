@@ -50,7 +50,7 @@ public class Scene_CoopRoom : MonoBehaviour
 	{
 		if (m_fade == null)
 		{
-			Debug.Log("error!no found m_fade!");
+			Debug.LogWarning("error!no found m_fade!");
 		}
 		TUIDataServer.Instance().Initialize();
 		TUIMappingInfo.Instance().SetCurrentScene(base.gameObject);
@@ -127,7 +127,7 @@ public class Scene_CoopRoom : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneCoopRoomEventType.TUIEvent_EnterInfo)

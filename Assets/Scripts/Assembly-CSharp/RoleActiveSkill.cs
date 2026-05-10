@@ -7,20 +7,12 @@ public class RoleActiveSkill : MonoBehaviour
 
 	private List<TUIPopupInfo> active_skill_list;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(List<TUIPopupInfo> m_active_skill_list)
 	{
 		active_skill_list = m_active_skill_list;
 		if (active_skill_list == null)
 		{
-			Debug.Log("warning no skill list!");
+			Debug.LogWarning("warning no skill list!");
 			return;
 		}
 		for (int i = 0; i < btn_active_skill_list.Count; i++)

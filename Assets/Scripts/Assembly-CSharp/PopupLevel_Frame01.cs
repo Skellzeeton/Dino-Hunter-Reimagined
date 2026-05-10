@@ -9,19 +9,11 @@ public class PopupLevel_Frame01 : MonoBehaviour
 		SetInfo(string.Empty);
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetInfo(string m_introduce)
 	{
 		if (label_introduce == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{

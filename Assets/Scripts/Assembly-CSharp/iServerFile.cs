@@ -39,10 +39,6 @@ public class iServerFile : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_www == null)

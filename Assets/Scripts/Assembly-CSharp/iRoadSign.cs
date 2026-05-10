@@ -37,10 +37,6 @@ public class iRoadSign : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         if (!m_bActive || m_MeshFilter == null)

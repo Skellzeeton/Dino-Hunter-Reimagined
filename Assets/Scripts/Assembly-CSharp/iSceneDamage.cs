@@ -42,10 +42,6 @@ public class iSceneDamage : MonoBehaviour
 		m_ltHurtTargetDestroy = new List<CHurtTargetInfo>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!m_bActive)

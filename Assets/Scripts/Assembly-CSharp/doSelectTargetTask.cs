@@ -35,7 +35,7 @@ public class doSelectTargetTask : Task
 		List<CCharBase> unitList = m_GameScene.GetUnitList();
 		if (unitList.Count == 0)
 		{
-			Debug.Log("error 0 player in scene?");
+			Debug.LogError("error 0 player in scene?");
 			return kTreeRunStatus.Failture;
 		}
 		List<CCharBase> list = new List<CCharBase>();

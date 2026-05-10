@@ -15,10 +15,6 @@ public class iBillBoard : MonoBehaviour
 		m_Transform = base.transform;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		Vector3 forward = Camera.main.transform.position - m_Transform.position;

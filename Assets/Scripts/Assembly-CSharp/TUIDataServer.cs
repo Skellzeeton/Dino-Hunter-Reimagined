@@ -159,10 +159,8 @@ public class TUIDataServer
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(m_event.GetEventName(), true, wparam));
 				return;
 			}
-			/*UnityEngine.Debug.Log("CanChartboost CanChartboost " + TrinitiAdAndroidPlugin.Instance().CanChartboost());
-			if (TrinitiAdAndroidPlugin.Instance().CanChartboost())
+			/*if (TrinitiAdAndroidPlugin.Instance().CanChartboost())
 			{
-				UnityEngine.Debug.Log("CanChartboost Chartboost show");
 				ChartBoostAndroid.showInterstitial(null);
 			}*/
 			if (OpenClikPlugin.IsAdReady())
@@ -530,7 +528,6 @@ public class TUIDataServer
 					case 4:
 					{
 						CAvatarInfo cAvatarInfo = m_GameData.m_AvatarCenter.Get(item2.m_nID);
-						Debug.Log(string.Concat(cAvatarInfo, " ", cAvatarInfo.m_sIcon));
 						if (cAvatarInfo != null && cAvatarInfo.m_sIcon.Length > 0)
 						{
 							string text3 = TUIMappingInfo.Instance().m_sPathRootCustomTex;
@@ -718,7 +715,6 @@ public class TUIDataServer
 			{
 				if (m_DataCenter.NickName != null && m_DataCenter.NickName.Length > 0)
 				{
-					Debug.Log("myname is " + m_DataCenter.NickName);
 					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(m_event.GetEventName(), true, 12));
 				}
 				else
@@ -730,7 +726,6 @@ public class TUIDataServer
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_OpenSupportURL)
 		{
 			string text4 = "https://discord.gg/gv7Ebnmg7u";
-			UnityEngine.Debug.Log(text4);
 			Application.OpenURL(text4);
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(m_event.GetEventName()));
 		}
@@ -742,7 +737,6 @@ public class TUIDataServer
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_CloseReviewURL)
 		{
-			Debug.Log("22222");
 			ShowPopWindow();
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(m_event.GetEventName()));
 		}
@@ -904,7 +898,6 @@ public class TUIDataServer
 			}
 			OnSaleType wParam2 = (OnSaleType)m_event.GetWParam();
 			int lparam2 = m_event.GetLparam();
-			UnityEngine.Debug.Log(string.Concat(wParam2, " ", lparam2));
 			TUISceneType wparam = TUISceneType.None;
 			switch (wParam2)
 			{
@@ -938,7 +931,6 @@ public class TUIDataServer
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_CloseSale)
 		{
-			Debug.Log("TUIEvent_CloseSale");
 			ShowPopWindow();
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(m_event.GetEventName()));
 		}
@@ -959,7 +951,6 @@ public class TUIDataServer
 			{
 				return;
 			}
-			UnityEngine.Debug.Log(dataCenter9.DailyRewardCount + " " + dataCenter9.DailyRewardHasGot);
 			if (dataCenter9.DailyRewardCount != dataCenter9.DailyRewardHasGot)
 			{
 				TUIGameInfo tUIGameInfo6 = new TUIGameInfo();
@@ -1109,7 +1100,6 @@ public class TUIDataServer
 							CAchievementData achiData4 = dataCenter12.GetAchiData(wParam3);
 							if (achiData4 != null && !achiData4.IsGotReward(0) && achiData4.nCurValue >= step4.nStepPurpose)
 							{
-								Debug.Log("take reward " + wParam3);
 								if (step4.nRewardType == 2)
 								{
 									achiData4.SetGotReward(0, true);
@@ -1154,8 +1144,6 @@ public class TUIDataServer
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_ShowUDID)
 		{
-			iGameApp.GetInstance().ScreenLog("msg title " + iServerSaveData.GetInstance().GetDeviceInfoTitle());
-			iGameApp.GetInstance().ScreenLog("msg content " + iServerSaveData.GetInstance().GetDeviceInfoDesc());
 			CMessageBoxScript.GetInstance().MessageBox(iServerSaveData.GetInstance().GetDeviceInfoTitle(), iServerSaveData.GetInstance().GetDeviceInfoDesc(), null, null, "OK");
 		}
 		else
@@ -1461,7 +1449,6 @@ public class TUIDataServer
 					if (iGameApp.GetInstance().CheckWeaponSignState(3, cWeaponInfo.nID))
 					{
 						tUIPopupInfo3.m_MarkType = NewMarkType.New;
-						Debug.Log(cWeaponInfo.nID + " is new!");
 					}
 					if (cWeaponInfoLevel.nType == 1)
 					{
@@ -1513,10 +1500,8 @@ public class TUIDataServer
 					if (iGameApp.GetInstance().CheckAvatarSignState(3, cAvatarInfo.m_nID))
 					{
 						tUIPopupInfo4.m_MarkType = NewMarkType.New;
-						Debug.Log(cAvatarInfo.m_nID + " is new!");
 					}
 					tUIPopupInfo4.m_sIcon = cAvatarInfo.m_sIcon;
-					Debug.Log(cAvatarInfo.m_nType + " " + tUIPopupInfo4.m_sIcon);
 					switch (cAvatarInfo.m_nType)
 					{
 					case 1:
@@ -1663,7 +1648,6 @@ public class TUIDataServer
 					{
 						if (item7.texture_id == num3)
 						{
-							Debug.Log(num2 + " " + item7);
 							if (flag)
 							{
 								tUIGameInfo4.equip_info.SetArmor(nIndex, item7);
@@ -2170,7 +2154,6 @@ public class TUIDataServer
 					break;
 				}
 			}
-			Debug.Log(m_GameState.m_nLinkWeapon);
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneEquip(m_event.GetEventName(), true));
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_EnterGoBuyWeaponInBlack)
@@ -2184,7 +2167,6 @@ public class TUIDataServer
 				int wParam12 = m_event.GetWParam();
 				m_GameState.m_nLinkSkillRole = wParam12;
 				m_GameState.m_nLinkSkill = -1;
-				Debug.Log(m_GameState.m_nLinkSkillRole);
 			}
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneEquip(m_event.GetEventName(), true));
 		}
@@ -2334,7 +2316,6 @@ public class TUIDataServer
 			{
 				num2 = list.Count - 1;
 			}
-			UnityEngine.Debug.Log(num2 + " " + dataCenter2.StashLevel);
 			tUIGameInfo2.stash_info = new TUIStashInfo(dataCenter2.StashLevel, list.ToArray(), tUIGameInfo2.stash_info.goods_info_list);
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneStash(m_event.GetEventName(), tUIGameInfo2));
 		}
@@ -2630,7 +2611,6 @@ public class TUIDataServer
 			iGameState gameState = iGameApp.GetInstance().m_GameState;
 			if (gameState != null && gameState.m_nLinkSkillRole > 0)
 			{
-				Debug.Log("skill link " + gameState.m_nLinkSkillRole + " " + gameState.m_nLinkSkill);
 				cCharacterInfo = gameData2.GetCharacterInfo(gameState.m_nLinkSkillRole);
 				if (cCharacterInfo != null)
 				{
@@ -2638,7 +2618,6 @@ public class TUIDataServer
 					{
 						if (gameState.m_nLinkSkill <= 0 || gameState.m_nLinkSkill == cCharacterInfo.ltCharacterPassiveSkill[n])
 						{
-							Debug.Log(gameState.m_nLinkSkillRole + " " + cCharacterInfo.ltCharacterPassiveSkill[n]);
 							tUIGameInfo2.all_skill_info.SetLinkInfo(gameState.m_nLinkSkillRole, cCharacterInfo.ltCharacterPassiveSkill[n]);
 							break;
 						}
@@ -2892,7 +2871,6 @@ public class TUIDataServer
 							{
 								if (m_DataCenter.Gold < nPurchasePrice)
 								{
-									Debug.Log(nPurchasePrice - m_DataCenter.Gold);
 									global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneSkill(m_event.GetEventName(), false, BackEventFalseType.NoGoldEnough, nPurchasePrice - m_DataCenter.Gold));
 									return;
 								}
@@ -2953,7 +2931,6 @@ public class TUIDataServer
 							{
 								if (dataCenter5.Gold < num8)
 								{
-									Debug.Log(num8 - dataCenter5.Gold);
 									global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneSkill(m_event.GetEventName(), false, BackEventFalseType.NoGoldEnough, num8 - dataCenter5.Gold));
 									return;
 								}
@@ -3046,7 +3023,6 @@ public class TUIDataServer
 			}
 			if (nSignState == 1)
 			{
-				Debug.Log("choose " + lparam4);
 				dataCenter6.SetSkillSign(lparam4, 2);
 				dataCenter6.Save();
 				if (iGameApp.GetInstance().CheckSkillMaterialEnough(lparam4))
@@ -3268,7 +3244,6 @@ public class TUIDataServer
 			int wParam = m_event.GetWParam();
 			int rparam = m_event.GetRparam();
 			int lparam = m_event.GetLparam();
-			Debug.Log(wParam + " " + rparam);
 			CItemInfoLevel itemInfo = m_GameData.GetItemInfo(wParam, 1);
 			if (itemInfo == null || itemInfo.nType != 3)
 			{
@@ -3324,7 +3299,6 @@ public class TUIDataServer
 			iServerVerify.CServerConfigInfo serverConfigInfo = iServerVerify.GetInstance().GetServerConfigInfo();
 			int wParam2 = m_event.GetWParam();
 			WeaponType lparam2 = (WeaponType)m_event.GetLparam();
-			Debug.Log(wParam2 + " " + lparam2);
 			switch (lparam2)
 			{
 			case WeaponType.CloseWeapon:
@@ -4263,18 +4237,15 @@ public class TUIDataServer
 			int main_level_camera_stop = -1;
 			int num2 = -1;
 			int num3 = -1;
-			Debug.Log(dataCenter2.isUnLockLevel);
 			if (dataCenter2.isUnLockLevel)
 			{
 				int nextLevel = gameLevelCenter.GetNextLevel(dataCenter2.LatestLevel);
-				Debug.Log(nextLevel);
 				if (nextLevel > 1)
 				{
 					num2 = gameLevelCenter.GetGroupID(dataCenter2.LatestLevel);
 					num3 = gameLevelCenter.GetGroupID(nextLevel);
 					dataCenter2.UnlockNewLevelConfirm(nextLevel);
 					dataCenter2.Save();
-					Debug.Log(num2 + " " + num3);
 				}
 			}
 
@@ -4313,12 +4284,10 @@ public class TUIDataServer
 				gameState2.m_nMaterialIDFromEquipTemp = -1;
 				if (num2 > 0 && num3 > 0 && num2 != num3)
 				{
-					Debug.Log(num2 + " " + num3);
 					tUIGameInfo2.map_info = new TUIMapInfo(MapEnterType.OpenNewLevel, num2, num3, dictionary);
 				}
 				else
 				{
-					//Debug.Log("!!!!" + num);
 					tUIGameInfo2.map_info =
 						new TUIMapInfo(MapEnterType.Normal, num, dictionary, main_level_camera_stop);
 				}
@@ -4690,7 +4659,6 @@ public class TUIDataServer
 				{
 					levelPassState = LevelPassState.Normal;
 				}
-				Debug.Log(string.Concat(ltLevel5, " ", levelPassState, " ", secondaryLevelType));
 				var secondaryLevel = new TUISecondaryLevelInfo(ltLevel5, gameLevelInfo4.sLevelDesc,
 					list3, secondaryLevelType, levelPassState);
 				secondaryLevel.introduce01 = gameLevelInfo4.sLevelDesc;
@@ -4702,7 +4670,6 @@ public class TUIDataServer
 
 			TUIGameInfo tUIGameInfo3 = new TUIGameInfo();
 			tUIGameInfo3.map_info = new TUIMapInfo(tUIMainLevelInfo);
-			//Debug.Log("!!!!");
 			global::EventCenter.EventCenter.Instance.Publish(this,
 				new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo3));
 		}
@@ -4712,7 +4679,6 @@ public class TUIDataServer
 			if (gameState4 != null)
 			{
 				int wParam2 = m_event.GetWParam();
-				UnityEngine.Debug.Log(wParam2);
 				gameState4.GameLevel = wParam2;
 				iGameApp.GetInstance().EnterScene(kGameSceneEnum.Game);
 			}
@@ -4798,7 +4764,6 @@ public class TUIDataServer
 		{
 			if (m_DataCenter.NickName != null && m_DataCenter.NickName.Length > 0)
 			{
-				UnityEngine.Debug.Log("myname is " + m_DataCenter.NickName);
 				global::EventCenter.EventCenter.Instance.Publish(this,
 					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true, 12));
 			}
@@ -4814,7 +4779,6 @@ public class TUIDataServer
 	{
 		m_OnDialogOK = onok;
 		m_OnDialogCancel = oncancel;
-		Debug.Log("ShowDialogInMain " + message);
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_ShowPopupServer, message));
 	}
 
@@ -4847,7 +4811,7 @@ public class TUIDataServer
 
 	protected void OnLoginFailed(iLoginManager.kFailedType type)
 	{
-		Debug.Log("OnLoginFailed " + type);
+		Debug.LogError("OnLoginFailed " + type);
 		switch (type)
 		{
 		case iLoginManager.kFailedType.VersionError:
@@ -4888,7 +4852,6 @@ public class TUIDataServer
 
 	protected void ClearPopWindow()
 	{
-		Debug.Log("ClearPopWindow");
 		iGameState gameState = iGameApp.GetInstance().m_GameState;
 		if (gameState != null)
 		{
@@ -4904,7 +4867,6 @@ public class TUIDataServer
 		iGameState gameState = iGameApp.GetInstance().m_GameState;
 		if (gameState != null && nIndex >= 0 && nIndex < gameState.m_arrMainScenePopWindow.Length)
 		{
-			//Debug.Log("SetPopWindow " + nIndex);
 			gameState.m_arrMainScenePopWindow[nIndex] = true;
 		}
 	}
@@ -4988,7 +4950,6 @@ public class TUIDataServer
 			string str = m_event.GetStr();
 			if (m_DataCenter != null)
 			{
-				Debug.Log(str);
 				m_DataCenter.NickName = str;
 			}
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneCoopInputName(m_event.GetEventName(), true));
@@ -5248,7 +5209,6 @@ public class TUIDataServer
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AddAllRanking)
 		{
-			Debug.Log("go to this");
 			TUIGameInfo tUIGameInfo4 = new TUIGameInfo();
 			tUIGameInfo4.coop_ranking_info = new TUICoopRankingInfo();
 			CRankInfo[] arrRankInfo2 = m_DataCenterNet.arrRankInfo;
@@ -5363,11 +5323,9 @@ public class TUIDataServer
 						return;
 					}
 					string str = m_event.GetStr();
-					Debug.Log(str);
 					TUIGameInfo tUIGameInfo6 = new TUIGameInfo();
 					tUIGameInfo6.coop_player_info = new TUICoopPlayerInfo();
 					CNameCardInfo nameCardInfo2 = m_DataCenterNet.GetNameCardInfo(str);
-					Debug.Log(nameCardInfo2);
 					bool flag2 = true;
 					if (nameCardInfo2 != null)
 					{
@@ -5394,7 +5352,6 @@ public class TUIDataServer
 						tUIGameInfo6.coop_player_info.SetLikes(nameCardInfo2.m_nBeAdmired);
 						tUIGameInfo6.coop_player_info.SetProgress(nameCardInfo2.m_fSceneProccess / 100f);
 						CCharacterInfoLevel cCharacterInfoLevel3 = m_GameData.m_CharacterCenter.Get(nameCardInfo2.m_nRoleID, 1);
-						Debug.Log(nameCardInfo2.m_nRoleID + " " + cCharacterInfoLevel3);
 						if (cCharacterInfoLevel3 != null)
 						{
 							TUICoopRoleInfo tUICoopRoleInfo3 = new TUICoopRoleInfo();
@@ -5419,7 +5376,6 @@ public class TUIDataServer
 				else if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_TitleChange)
 				{
 					int wParam = m_event.GetWParam();
-					Debug.Log("change title to " + wParam);
 					if (m_DataCenter != null && m_DataCenterNet != null)
 					{
 						string curDeviceId2 = iServerSaveData.GetInstance().CurDeviceId;
@@ -5442,7 +5398,6 @@ public class TUIDataServer
 					{
 						m_DataCenterNet.Save();
 					}
-					Debug.Log(" start " + CGameNetManager.GetInstance().UserName);
 					CGameNetManager.GetInstance().connected = true;
 					if (!CGameNetManager.GetInstance().IsConnected())
 					{
@@ -5478,7 +5433,6 @@ public class TUIDataServer
 				else if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_StatusChange)
 				{
 					string str2 = m_event.GetStr();
-					Debug.Log(str2);
 					if (m_DataCenter != null)
 					{
 						m_DataCenter.Signature = str2;
@@ -5600,7 +5554,6 @@ public class TUIDataServer
 					}
 					if (num2 > 0)
 					{
-						iGameApp.GetInstance().ScreenLog("play game !!! " + num2);
 						CGameNetSender.GetInstance().SendMsg_GAME_ENTER(num2, m_DataCenter.HunterLvl, curRoom);
 					}
 				}
@@ -5627,7 +5580,6 @@ public class TUIDataServer
 					//}
 					//if (num3 > 0)
 					//{
-						iGameApp.GetInstance().ScreenLog("play game !!! " + num3);
 						m_GameState.GameLevel = num3;
 						m_GameState.m_nCurHunterLevelID = m_DataCenter.HunterLvl;
 						iGameApp.GetInstance().EnterScene(kGameSceneEnum.Game);
@@ -5668,7 +5620,6 @@ public class TUIDataServer
 				}
 				if (num4 > 0)
 				{
-					iGameApp.GetInstance().ScreenLog("play game !!! " + num4);
 					CGameNetSender.GetInstance().SendMsg_GAME_ENTER(num4, m_DataCenter.HunterLvl, curRoom3);
 				}
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneCoopRoom(TUIEvent.SceneCoopRoomEventType.TUIEvent_ShowBtnStart, true));
@@ -5728,7 +5679,6 @@ public class TUIDataServer
 			{
 				return;
 			}
-			Debug.Log(data.Count);
 			TUIGameInfo tUIGameInfo2 = new TUIGameInfo();
 			tUIGameInfo2.blackmarket_info = new TUIBlackMarketInfo();
 			foreach (KeyValuePair<int, CBlackItem> item in data)
@@ -5911,7 +5861,6 @@ public class TUIDataServer
 		else if (m_event.GetEventName() == TUIEvent.SceneBlackMarketEventType.TUIEvent_ClickBtnBuy)
 		{
 			int wParam = m_event.GetWParam();
-			Debug.Log("buy black item " + wParam);
 			CBlackItem cBlackItem = m_GameData.m_BlackMarketCenter.Get(wParam);
 			if (cBlackItem == null || cBlackItem.m_curBlackItemInfo == null)
 			{
@@ -6068,7 +6017,6 @@ public class TUIDataServer
 				CNameCardInfo nameCardInfo = m_DataCenterNet.GetNameCardInfo(friends[j]);
 				if (nameCardInfo != null)
 				{
-					Debug.Log("friend " + nameCardInfo.m_sID);
 					TUICoopPlayerInfo tUICoopPlayerInfo = new TUICoopPlayerInfo();
 					tUICoopPlayerInfo.SetID(nameCardInfo.m_sID);
 					if (nameCardInfo.GetPhoto() != null)
@@ -6080,10 +6028,6 @@ public class TUIDataServer
 					tUIGameInfo.coop_friends_info.Add(tUICoopPlayerInfo.id, tUICoopPlayerInfo);
 				}
 			}
-		}
-		catch
-		{
-			Debug.Log("OnFetchNameCards_S parse error");
 		}
 		finally
 		{
@@ -6127,8 +6071,6 @@ public class TUIDataServer
 				string str2 = jSONObject["exts"].Str;
 				byte[] array = Convert.FromBase64String(str2);
 				string @string = Encoding.UTF8.GetString(array);
-				Debug.Log(@string);
-				Debug.Log("namecard npcpack length = " + str2.Length);
 				cNameCardInfo.m_NCPack = MyUtils.Deserialize<CNCPack>(array);
 			}
 			cNameCardInfo.ResetNameCardTime();
@@ -6165,7 +6107,6 @@ public class TUIDataServer
 				}
 			}
 			CCharacterInfoLevel cCharacterInfoLevel = m_GameData.m_CharacterCenter.Get(cNameCardInfo.m_nRoleID, 1);
-			Debug.Log(cNameCardInfo.m_nRoleID + " " + cCharacterInfoLevel);
 			if (cCharacterInfoLevel != null)
 			{
 				TUICoopRoleInfo tUICoopRoleInfo = new TUICoopRoleInfo();
@@ -6176,7 +6117,7 @@ public class TUIDataServer
 		}
 		catch (Exception ex)
 		{
-			Debug.Log("OnFetchNameCard_S parse error " + ex.StackTrace);
+			Debug.LogError("OnFetchNameCard_S parse error " + ex.StackTrace);
 		}
 	}
 
@@ -6233,7 +6174,6 @@ public class TUIDataServer
 					array2[j].m_nCombatPower = Convert.ToInt32(array3[1]);
 					array2[j].m_sNickName = array3[2];
 				}
-				Debug.Log(array2[j].m_sNickName + " rank:" + (j + 1) + " applause:" + obj["applause"].Str);
 				CNameCardInfo cNameCardInfo = m_DataCenterNet.GetNameCardInfo(array2[j].m_sID);
 				if (cNameCardInfo == null)
 				{
@@ -6255,7 +6195,6 @@ public class TUIDataServer
 			{
 				m_DataCenter.LastRank = m_DataCenter.Rank;
 				m_DataCenter.Rank = rank;
-				Debug.Log(m_DataCenter.Rank);
 			}
 			if (array2 == null)
 			{
@@ -6313,7 +6252,7 @@ public class TUIDataServer
 		}
 		catch
 		{
-			Debug.Log("OnFetchRank_S parse error");
+			Debug.LogError("OnFetchRank_S parse error");
 		}
 	}
 
@@ -6457,7 +6396,7 @@ public class TUIDataServer
 		}
 		catch
 		{
-			Debug.Log("OnFetchRank_S parse error");
+			Debug.LogError("OnFetchRank_S parse error");
 		}
 	}
 
@@ -6473,11 +6412,9 @@ public class TUIDataServer
 		tUIGameInfo.coop_player_info.SetID(deviceid);
 		tUIGameInfo.coop_player_info.SetName(name);
 		tUIGameInfo.coop_player_info.SetTitleID(title);
-		Debug.Log(deviceid + " " + title);
 		tUIGameInfo.coop_player_info.SetHunterLV(hunterlvl);
 		tUIGameInfo.coop_player_info.SetStatus(sign);
 		CCharacterInfoLevel cCharacterInfoLevel = m_GameData.m_CharacterCenter.Get(charid, charlvl);
-		Debug.Log("PlayerEnterRoom roleid " + charid + " " + cCharacterInfoLevel.nModel + " " + nAvatarHead + " " + nAvatarUpper + " " + nAvatarLower);
 		if (cCharacterInfoLevel != null)
 		{
 			TUICoopRoleInfo tUICoopRoleInfo = new TUICoopRoleInfo();
@@ -6642,7 +6579,6 @@ public class TUIDataServer
 			}
 			if (m_GameState != null && m_GameState.m_nLinkWeapon == weaponInfo.nID)
 			{
-				Debug.Log(m_GameState.m_nLinkWeapon);
 				tuiweaponinfo.SetLinkInfo(nCategory, m_GameState.m_nLinkWeapon);
 			}
 		}

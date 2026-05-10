@@ -54,7 +54,6 @@ namespace gyTaskSystem
 				{
 					cCollect.m_fCurLife = cTaskInfoCollect.fLife;
 					cCollect.m_fMaxLife = cTaskInfoCollect.fLife;
-					Debug.Log("egg " + cCollect.m_fCurLife);
 					cCollect.isLifeChange = false;
 					m_ltCollections.Add(cCollect);
 				}

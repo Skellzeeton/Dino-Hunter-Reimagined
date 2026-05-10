@@ -68,22 +68,6 @@ public class CCharBoss : CCharMob
 		}
 	}
 
-	public float CurBlackLife
-	{
-		get
-		{
-			return m_fCurBlackLife;
-		}
-	}
-
-	public float MaxBlackLife
-	{
-		get
-		{
-			return m_fMaxBlackLife;
-		}
-	}
-
 	public Dictionary<int, CBodyPart> GetBodyPart()
 	{
 		return m_dictBodyPart;
@@ -91,7 +75,7 @@ public class CCharBoss : CCharMob
 
 	public new void Awake()
 	{
-		base.Awake();
+		Awake();
 		m_nType = kCharType.Boss;
 		m_dictBodyPart = new Dictionary<int, CBodyPart>();
 		m_curAIManager = null;
@@ -106,28 +90,27 @@ public class CCharBoss : CCharMob
 
 	public new void Start()
 	{
-		base.Start();
+		Start();
 	}
 
 	public new void Update()
 	{
-		base.Update();
+		Update();
 		m_fLifeTime += Time.deltaTime;
 		UpdateAITrigger(Time.deltaTime);
 		if (m_nChangeAI <= 0)
 		{
 			return;
 		}
-		UnityEngine.Debug.Log("Boss进入状态 AI:" + m_nChangeAI);
 		m_bShowTime = false;
 		SetAI(m_nChangeAI);
-		if (base.m_GameScene.m_MGManager != null)
+		if (m_GameScene.m_MGManager != null)
 		{
-			CEventManager eventManager = base.m_GameScene.m_MGManager.GetEventManager();
+			CEventManager eventManager = m_GameScene.m_MGManager.GetEventManager();
 			if (eventManager != null)
 			{
 				eventManager.Trigger(new EventCondition_MobByWave(GenerateWaveID, GenerateSequence, 2, m_nChangeAI));
-				eventManager.Trigger(new EventCondition_MobByID(base.ID, 2, m_nChangeAI));
+				eventManager.Trigger(new EventCondition_MobByID(ID, 2, m_nChangeAI));
 			}
 		}
 		m_nChangeAI = -1;
@@ -135,8 +118,8 @@ public class CCharBoss : CCharMob
 
 	public override void InitMob(int nMobID, int nMobLevel)
 	{
-		base.InitMob(nMobID, nMobLevel);
-		if (base.m_GameScene.CurGameLevelInfo != null && base.m_GameScene.CurGameLevelInfo.sSceneName == "SceneSnow")
+		InitMob(nMobID, nMobLevel);
+		if (m_GameScene.CurGameLevelInfo != null && m_GameScene.CurGameLevelInfo.sSceneName == "SceneSnow")
 		{
 			iStepEffectLeft component = m_ModelEntity.GetComponent<iStepEffectLeft>();
 			if (component != null)
@@ -159,12 +142,12 @@ public class CCharBoss : CCharMob
 	public override void Destroy()
 	{
 		ClearBodyEffect();
-		base.Destroy();
+		Destroy();
 	}
 
 	public override void InitHardiness(int nMobID, int nMobLevel)
 	{
-		CMobInfoLevel mobInfo = base.m_GameData.GetMobInfo(nMobID, nMobLevel);
+		CMobInfoLevel mobInfo = m_GameData.GetMobInfo(nMobID, nMobLevel);
 		if (mobInfo == null || mobInfo.ltHardinessInfo == null)
 		{
 			return;
@@ -181,27 +164,12 @@ public class CCharBoss : CCharMob
 		}
 	}
 
-	public override void InitAnimData()
-	{
-		base.InitAnimData();
-	}
-
-	public override bool IsMobCanThink()
-	{
-		return base.IsMobCanThink();
-	}
-
-	public override void AddHP(float fHP)
-	{
-		base.AddHP(fHP);
-	}
-
 	public override void OnDead(kDeadMode nDeathMode)
 	{
-		base.OnDead(nDeathMode);
-		if (base.m_GameData.m_DataCenter != null)
+		OnDead(nDeathMode);
+		if (m_GameData.m_DataCenter != null)
 		{
-			base.m_GameData.m_DataCenter.AddKillMonster(base.ID);
+			m_GameData.m_DataCenter.AddKillMonster(ID);
 		}
 	}
 
@@ -284,8 +252,8 @@ public class CCharBoss : CCharMob
 
 	public override void InitAI(int nAIManager)
 	{
-		base.InitAI(nAIManager);
-		CAIManagerInfo aIManagerInfo = base.m_GameData.GetAIManagerInfo(nAIManager);
+		InitAI(nAIManager);
+		CAIManagerInfo aIManagerInfo = m_GameData.GetAIManagerInfo(nAIManager);
 		if (aIManagerInfo == null)
 		{
 			return;
@@ -299,7 +267,7 @@ public class CCharBoss : CCharMob
 
 	protected override void OnEnterAI(int nLastAI, int nAI)
 	{
-		CAIInfo aIInfo = base.m_GameData.GetAIInfo(nAI);
+		CAIInfo aIInfo = m_GameData.GetAIInfo(nAI);
 		if (aIInfo == null)
 		{
 			return;
@@ -375,18 +343,18 @@ public class CCharBoss : CCharMob
 			{
 				m_BlackGear.gameObject.active = true;
 			}
-			if (base.m_GameScene.m_nBlackMonsterCount == 0)
+			if (m_GameScene.m_nBlackMonsterCount == 0)
 			{
-				iGameUIBase gameUI = base.m_GameScene.GetGameUI();
+				iGameUIBase gameUI = m_GameScene.GetGameUI();
 				if (gameUI != null)
 				{
 					gameUI.ShowBlackWarning(true);
 				}
 			}
-			base.m_GameScene.m_nBlackMonsterCount++;
+			m_GameScene.m_nBlackMonsterCount++;
 			return;
 		}
-		SetLifeBarStyle(0, base.CurHP / base.MaxHP);
+		SetLifeBarStyle(0, CurHP / MaxHP);
 		if (m_BlackGear != null)
 		{
 			m_BlackGear.gameObject.active = false;
@@ -394,16 +362,16 @@ public class CCharBoss : CCharMob
 		Transform bone = GetBone(2);
 		if (bone != null)
 		{
-			base.m_GameScene.AddEffect(bone.position, base.Dir2D, 2f, 1952);
+			m_GameScene.AddEffect(bone.position, Dir2D, 2f, 1952);
 		}
-		base.m_GameScene.m_nBlackMonsterCount--;
-		if (base.m_GameScene.m_nBlackMonsterCount < 0)
+		m_GameScene.m_nBlackMonsterCount--;
+		if (m_GameScene.m_nBlackMonsterCount < 0)
 		{
-			base.m_GameScene.m_nBlackMonsterCount = 0;
+			m_GameScene.m_nBlackMonsterCount = 0;
 		}
-		if (base.m_GameScene.m_nBlackMonsterCount == 0)
+		if (m_GameScene.m_nBlackMonsterCount == 0)
 		{
-			iGameUIBase gameUI2 = base.m_GameScene.GetGameUI();
+			iGameUIBase gameUI2 = m_GameScene.GetGameUI();
 			if (gameUI2 != null)
 			{
 				gameUI2.ShowBlackWarning(false);

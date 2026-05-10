@@ -28,20 +28,12 @@ public class PopupEquipFrameIntroduce : MonoBehaviour
 
 	public TUILabel label_def;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetWeaponInfo(TUIPopupInfo m_popup_info)
 	{
 		HideInfo();
 		if (m_popup_info == null)
 		{
-			Debug.Log("warning!no info!");
+			Debug.LogWarning("warning!no info!");
 			return;
 		}
 		TUILabel[] array = new TUILabel[10] { label_damage, label_damage_value, label_fire_rate, label_fire_rate_value, label_blast_radius, label_blast_radius_value, label_knockback, label_knockback_value, label_ammo, label_ammo_value };
@@ -119,7 +111,7 @@ public class PopupEquipFrameIntroduce : MonoBehaviour
 		HideInfo();
 		if (m_popup_info == null)
 		{
-			Debug.Log("warning!no info!");
+			Debug.LogWarning("warning!no info!");
 			return;
 		}
 		TUILabel[] array = new TUILabel[3] { label_introduce, label_def, label_def_value };
@@ -153,7 +145,7 @@ public class PopupEquipFrameIntroduce : MonoBehaviour
 		HideInfo();
 		if (m_popup_info == null)
 		{
-			Debug.Log("warning!no info!");
+			Debug.LogWarning("warning!no info!");
 		}
 		else if (label_introduce != null)
 		{

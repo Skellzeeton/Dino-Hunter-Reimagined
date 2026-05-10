@@ -1165,6 +1165,7 @@ public class iDataCenter
 			m_bFirstTimePlay = true;
 			m_nTutorialVillageState = -1;
 			SetCharacter(1, 1, 0);
+			SetCharacter(6, 1, 0);
 			SetWeaponLevel(1, 1);
 			SetWeaponLevel(2, 1);
 			Save();
@@ -2414,7 +2415,6 @@ public class iDataCenter
 
 	public bool UnPack(string sData)
 	{
-		Debug.Log("UnPack = " + sData);
 		try
 		{
 			MyUtils.UnZipString(sData, ref sData);
@@ -2423,7 +2423,7 @@ public class iDataCenter
 		}
 		catch
 		{
-			Debug.Log("exception UnPack");
+			Debug.LogError("exception UnPack");
 			return false;
 		}
 	}
@@ -2480,7 +2480,9 @@ public class iDataCenter
 		iGameState gameState = iGameApp.GetInstance().m_GameState;
 		if (gameState != null)
 		{
+#if UNITY_EDITOR
 			Debug.Log(string.Concat("lastday is ", m_lastLoginTime, " today is ", now));
+#endif
 			gameState.m_nDaysFromLastLogin = CalcPassedDays(m_lastLoginTime, now);
 			gameState.m_DayOfWeek = now.DayOfWeek;
 			m_lastLoginTime = now;
@@ -2495,7 +2497,10 @@ public class iDataCenter
 
 	public void RefreshDailyRewardCount(int nPassDays)
 	{
+
+#if UNITY_EDITOR
 		Debug.Log("days from lastlogin = " + nPassDays);
+#endif
 		if (nPassDays < 1)
 		{
 			return;
@@ -2523,7 +2528,9 @@ public class iDataCenter
 
 	public void RefreshDailyTask(DayOfWeek dayofweek)
 	{
+#if UNITY_EDITOR
 		Debug.Log("today is " + dayofweek);
+#endif
 		List<int> list = new List<int>();
 		foreach (CAchievementData value in m_dictAchievementData.Values)
 		{

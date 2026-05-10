@@ -76,7 +76,7 @@ public class Scene_Main : MonoBehaviour
 		}
 		if (m_fade == null)
 		{
-			Debug.Log("error!no found m_fade!");
+			Debug.LogWarning("error!no found m_fade!");
 		}
 		m_fade_in_time += Time.deltaTime;
 		if (m_fade_in_time >= m_fade.fadeInTime && !do_fade_in)
@@ -197,7 +197,7 @@ public class Scene_Main : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 	}

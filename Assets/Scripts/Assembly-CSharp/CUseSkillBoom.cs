@@ -9,7 +9,7 @@ public class CUseSkillBoom : CUseSkillOnce
 	{
 		if (!IsSkillValid())
 		{
-			Debug.Log("invalid skill");
+			Debug.LogWarning("invalid skill");
 			return kUseSkillStatus.Failure;
 		}
 		CCharMob cCharMob = charbase as CCharMob;

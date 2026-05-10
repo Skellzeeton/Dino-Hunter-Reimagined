@@ -56,7 +56,6 @@ public class PopupReciprocal : MonoBehaviour
 		}
 		time_now = 0f;
 		text_count--;
-		Debug.Log("Reciprocal:" + text_count);
 		if (text_count > 0)
 		{
 			if (label_reciprocal != null)

@@ -26,19 +26,12 @@ public class PopupTips : MonoBehaviour
 
 	private float bg_width = 15f;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetInfo(string m_text, Vector3 m_pos, TipsPivot m_tip_pivot)
 	{
 		if (label_text == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		CUISound.GetInstance().Play("UI_Inspect");
@@ -51,7 +44,7 @@ public class PopupTips : MonoBehaviour
 	{
 		if (label_text == null || parent_bg == null || img_bg_left == null || img_bg_mid == null || img_bg_normal == null || img_bg_right == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		float x = label_text.CalculateBounds(label_text.Text).size.x;

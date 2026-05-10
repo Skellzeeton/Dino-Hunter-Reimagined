@@ -35,12 +35,7 @@ public class iBaseCenter
 		//MyUtils.UnZipString(content, ref content);
 		//try
 		//{
-			LoadData(content);
-		//}
-		//catch (Exception ex)
-		//{
-		//	iGameApp.GetInstance().ScreenLog("exception: readindex " + m_nReadIndex + " msg " + ex.StackTrace);
-		//	Debug.LogWarning("exception: readindex " + m_nReadIndex + " msg " + ex.StackTrace);
+		LoadData(content);
 		//}
 	}
 

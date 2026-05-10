@@ -8,10 +8,6 @@ public class AndroidQuit : MonoBehaviour
 		AndroidReturnPlugin.instance.SetQuitFunc(DevicePlugin.AndroidQuit);
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (Input.GetKeyUp(KeyCode.Escape))

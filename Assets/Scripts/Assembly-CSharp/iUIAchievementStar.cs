@@ -8,13 +8,6 @@ public class iUIAchievementStar : MonoBehaviour
 
 	public gyUISwitch mStar3;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void Initialize(int nStar)
 	{

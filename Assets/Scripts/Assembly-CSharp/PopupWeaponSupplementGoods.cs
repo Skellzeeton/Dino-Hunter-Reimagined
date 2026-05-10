@@ -34,14 +34,6 @@ public class PopupWeaponSupplementGoods : MonoBehaviour
 
 	private string texture_quality06 = "kuangdj_6";
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetGoodsInfo(int m_index, int m_goods_id, int m_goods_value, GoodsQualityType m_type)
 	{
 		string stashTexture = TUIMappingInfo.Instance().GetStashTexture(m_goods_id);
@@ -63,7 +55,7 @@ public class PopupWeaponSupplementGoods : MonoBehaviour
 	{
 		if (img_price_unit == null || label_price_value == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		switch (m_unit)
@@ -91,7 +83,7 @@ public class PopupWeaponSupplementGoods : MonoBehaviour
 	{
 		if (img_price_unit == null || label_price_value == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		switch (m_unit)
@@ -155,7 +147,7 @@ public class PopupWeaponSupplementGoods : MonoBehaviour
 	{
 		if (m_sprite == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		m_sprite.texture = string.Empty;
@@ -163,7 +155,7 @@ public class PopupWeaponSupplementGoods : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!");
+			Debug.LogWarning("lose texture!");
 			return;
 		}
 		if (!m_use_NGUI)

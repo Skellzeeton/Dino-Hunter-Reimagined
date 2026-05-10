@@ -23,9 +23,6 @@ public class GoodsNeedItemBuy : MonoBehaviour
 		m_position = base.gameObject.transform.localPosition;
 	}
 
-	private void Update()
-	{
-	}
 
 	public void SetInfo(TUIPriceInfo price)
 	{

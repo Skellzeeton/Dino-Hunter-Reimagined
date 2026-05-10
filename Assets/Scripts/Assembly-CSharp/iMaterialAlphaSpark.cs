@@ -26,10 +26,6 @@ public class iMaterialAlphaSpark : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!(m_Renderer == null))

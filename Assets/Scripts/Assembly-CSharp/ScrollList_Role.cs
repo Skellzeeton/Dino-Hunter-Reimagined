@@ -11,10 +11,6 @@ public class ScrollList_Role : MonoBehaviour
 
 	private ScrollList_RoleItem item_choose;
 
-	private void Awake()
-	{
-	}
-
 	private void Start()
 	{
 		scroll_list_ex = base.gameObject.GetComponent<TUIScrollListCircle>();
@@ -29,7 +25,7 @@ public class ScrollList_Role : MonoBehaviour
 	{
 		if (m_info == null || m_info.role_list == null)
 		{
-			Debug.Log("no roll_list!");
+			Debug.LogWarning("no roll_list!");
 			return;
 		}
 		if (scroll_list_ex == null)
@@ -74,13 +70,13 @@ public class ScrollList_Role : MonoBehaviour
 	{
 		if (m_new_mark_list == null || scroll_list_ex == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		List<GameObject> itemsList = scroll_list_ex.GetItemsList();
 		if (itemsList == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		for (int i = 0; i < itemsList.Count; i++)

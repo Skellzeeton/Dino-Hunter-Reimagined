@@ -172,7 +172,6 @@ public class AndroidReturnPlugin
 			if (m_FuncBack != null)
 			{
 				m_FuncBack();
-				Debug.Log("***********************************return back ");
 			}
 			else if (m_FuncQuit != null)
 			{

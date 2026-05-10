@@ -28,14 +28,6 @@ public class PopupWeaponUpdate : MonoBehaviour
 
 	public TUIButtonClick btn_claim;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void ShowWeaponUpdate()
 	{
 		base.gameObject.transform.localPosition = new Vector3(0f, 0f, base.gameObject.transform.localPosition.z);
@@ -86,12 +78,7 @@ public class PopupWeaponUpdate : MonoBehaviour
 	{
 		if (weaponattributeinfo == null)
 		{
-			Debug.Log("no m_attribute_info!");
-			return;
-		}
-		if (weaponattributeinfo.m_nLevel >= weaponattributeinfo.m_nLevelMax)
-		{
-			Debug.Log("error!you reach max level!");
+			Debug.LogWarning("no m_attribute_info!");
 			return;
 		}
 		label_title.Text = weaponattributeinfo.m_sName;
@@ -179,7 +166,6 @@ public class PopupWeaponUpdate : MonoBehaviour
 				component2.Reset();
 			}
 		}
-		Debug.Log(weaponattributeinfo.m_nID + " " + nLevel + " " + tUIWeaponLevelInfo.m_ltGoodsNeed.Count);
 		for (int i = 0; i < tUIWeaponLevelInfo.m_ltGoodsNeed.Count && i < m_arrGoodsNeedItem.Length; i++)
 		{
 			TUIGoodsNeedInfo tUIGoodsNeedInfo = tUIWeaponLevelInfo.m_ltGoodsNeed[i];

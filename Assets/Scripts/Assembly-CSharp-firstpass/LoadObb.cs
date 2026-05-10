@@ -24,10 +24,6 @@ public class LoadObb : MonoBehaviour
 		MonoBehaviour.print("MYLOG " + t);
 	}
 
-	private void Start()
-	{
-	}
-
 	private void OnGUI()
 	{
 		GUI.skin = mySkin;

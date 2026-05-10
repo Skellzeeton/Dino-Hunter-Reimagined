@@ -14,14 +14,6 @@ public class gyUIPanelMissionFailedMutiply : MonoBehaviour
 		base.gameObject.SetActiveRecursive(false);
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void Show(bool bShow)
 	{
 		m_bShow = bShow;

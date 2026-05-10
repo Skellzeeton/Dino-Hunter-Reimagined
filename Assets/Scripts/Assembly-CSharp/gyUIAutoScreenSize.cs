@@ -24,11 +24,4 @@ public class gyUIAutoScreenSize : MonoBehaviour
 		base.transform.localScale = localScale;
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 }

@@ -25,13 +25,6 @@ public class ScrollList_SkillItem : MonoBehaviour
 
 	private NewMarkType new_mark_type;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void DoChoose()
 	{
@@ -127,19 +120,18 @@ public class ScrollList_SkillItem : MonoBehaviour
 		{
 			return skill_info.level_introduce[skill_info.level + 1];
 		}
-		Debug.Log("warning! no introduce!");
+		Debug.LogWarning("warning! no introduce!");
 		return string.Empty;
 	}
 
 	public string GetSkillIntroduceEx()
 	{
 		int key = ((skill_info.level <= 1) ? 1 : skill_info.level);
-		Debug.Log("skill_info.level:" + skill_info.level);
 		if (skill_info.level_introduce_ex.ContainsKey(key))
 		{
 			return skill_info.level_introduce_ex[key];
 		}
-		Debug.Log("warning! no introduce_ex!");
+		Debug.LogWarning("warning! no introduce_ex!");
 		return string.Empty;
 	}
 
@@ -172,7 +164,7 @@ public class ScrollList_SkillItem : MonoBehaviour
 		TUIPriceInfo result = null;
 		if (skill_info == null || skill_info.level_price == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return result;
 		}
 		if (skill_info.level_price.ContainsKey(skill_info.level + 1))
@@ -181,7 +173,7 @@ public class ScrollList_SkillItem : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		return result;
 	}
@@ -224,7 +216,7 @@ public class ScrollList_SkillItem : MonoBehaviour
 	{
 		if (skill_info == null || m_new_mark_list == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (m_new_mark_list.ContainsKey(skill_info.id))
 		{

@@ -30,10 +30,6 @@ public class gyUIPanelMissionSuccessLevelUp : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         if (!m_bShow)

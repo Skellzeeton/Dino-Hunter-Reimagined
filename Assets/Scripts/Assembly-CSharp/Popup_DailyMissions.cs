@@ -20,9 +20,6 @@ public class Popup_DailyMissions : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	public void DoCreateDailyMissions(TUIDailyMissionsInfo m_info, GameObject m_go_invoke)
 	{

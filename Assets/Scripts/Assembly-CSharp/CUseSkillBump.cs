@@ -106,7 +106,6 @@ public class CUseSkillBump : CUseSkill
 			float actionLen = charbase.GetActionLen((kAnimEnum)m_pSkillInfoLevel.nAnim);
 			if (actionLen > 0f)
 			{
-				Debug.Log(actionLen + " " + m_fBumpTime);
 				charbase.PlayAnim((kAnimEnum)m_pSkillInfoLevel.nAnim, WrapMode.ClampForever, actionLen / m_fBumpTime, 0f);
 			}
 		}

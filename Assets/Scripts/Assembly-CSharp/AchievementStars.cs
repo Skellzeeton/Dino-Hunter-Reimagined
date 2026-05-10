@@ -12,12 +12,8 @@ public class AchievementStars : MonoBehaviour
 	{
 		if (img_star01 == null || img_star02 == null || img_star03 == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
-	}
-
-	private void Update()
-	{
 	}
 
 	public void SetInfo(AchievementLevelType m_level)

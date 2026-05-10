@@ -53,9 +53,10 @@ public class CLocalNotification
 
 	public void Register(string alertBody, float fTime)
 	{
-		if (!(m_LocalNotification == null))
+		if (m_LocalNotification != null)
 		{
-			m_LocalNotification.Register(alertBody, fTime);
+			m_LocalNotification.Add(alertBody, fTime);
+			m_LocalNotification.Register();
 		}
 	}
 }

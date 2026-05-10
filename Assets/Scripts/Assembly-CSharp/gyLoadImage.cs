@@ -13,7 +13,6 @@ public class gyLoadImage
 	{
 		sPath = sPath.Replace("/", "//");
 		sPath = "file://" + sPath;
-		Debug.Log(sPath);
 		WWW wWW = new WWW(sPath);
 		while (!wWW.isDone)
 		{

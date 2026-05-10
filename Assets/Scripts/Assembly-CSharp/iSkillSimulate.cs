@@ -19,10 +19,6 @@ public class iSkillSimulate : MonoBehaviour
 
 	protected CCharMob m_Target;
 
-	private void Awake()
-	{
-	}
-
 	private void Start()
 	{
 		Initialize();
@@ -78,7 +74,6 @@ public class iSkillSimulate : MonoBehaviour
 
 	public CCharMob AddMob(int nMobID, int nMobLevel, int nUID, Vector3 v3Pos, Vector3 v3Dir)
 	{
-		Debug.Log("AddMob " + nMobID);
 		CMobInfoLevel mobInfo = m_GameData.GetMobInfo(nMobID, nMobLevel);
 		if (mobInfo == null)
 		{

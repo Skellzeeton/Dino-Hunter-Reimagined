@@ -12,12 +12,8 @@ public class PopupLevel : MonoBehaviour
 	public TUIButtonClick btn_start;
 	public PopupTips popup_tips;
 	public List<PopupLevel_Item> popup_level_item_list;
-
 	private TUIMainLevelInfo level_info;
 	private PopupLevel_Item  level_item_now;
-
-	private void Start()  { }
-	private void Update() { }
 
 	public void SetBtnStartEnable(bool m_enable)
 	{
@@ -28,8 +24,8 @@ public class PopupLevel : MonoBehaviour
 	public void SetInfo(TUIMainLevelInfo m_info)
 	{
 		level_info = m_info;
-		if (level_info == null) { Debug.Log("[PopupLevel] SetInfo: null"); return; }
-		if (popup_level_item_list == null) { Debug.Log("[PopupLevel] SetInfo: no items list"); return; }
+		if (level_info == null) { Debug.LogWarning("[PopupLevel] SetInfo: null"); return; }
+		if (popup_level_item_list == null) { Debug.LogWarning("[PopupLevel] SetInfo: no items list"); return; }
 
 		List<TUISecondaryLevelInfo> secondary_level_info = m_info.secondary_level_info;
 		int secondary_level_id   = m_info.secondary_level_id;
@@ -39,7 +35,7 @@ public class PopupLevel : MonoBehaviour
 		if (img_title_bg != null)   img_title_bg.texture = TUIMappingInfo.Instance().GetMapTexture((int)m_info.level_type);
 		if (secondary_level_info == null || secondary_level_info.Count != count)
 		{
-			Debug.Log("[PopupLevel] SetInfo: count mismatch info=" +
+			Debug.LogWarning("[PopupLevel] SetInfo: count mismatch info=" +
 			          (secondary_level_info == null ? "null" : secondary_level_info.Count.ToString()) +
 			          " items=" + count);
 			return;

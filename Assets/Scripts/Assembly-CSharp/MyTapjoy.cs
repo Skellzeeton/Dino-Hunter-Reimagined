@@ -33,9 +33,6 @@ public class MyTapjoy : MonoBehaviour
 		//TapjoyPlugin.ShowOffers();
 	}
 
-	private void Awake()
-	{
-	}
 
 	private void Start()
 	{

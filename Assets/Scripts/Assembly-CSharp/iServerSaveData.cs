@@ -202,32 +202,12 @@ public class iServerSaveData : MonoBehaviour
 		if (m_Instance == null)
 		{
 			GameObject gameObject = new GameObject("_ServerSaveData");
-			UnityEngine.Object.DontDestroyOnLoad(gameObject);
+			DontDestroyOnLoad(gameObject);
 			gameObject.transform.localPosition = Vector3.zero;
 			gameObject.transform.localRotation = Quaternion.identity;
 			m_Instance = gameObject.AddComponent<iServerSaveData>();
 		}
 		return m_Instance;
-	}
-
-	public bool IsFetchSuccess()
-	{
-		return m_State == kState.Successed;
-	}
-
-	public bool IsFetchFailed()
-	{
-		return m_State == kState.Failed;
-	}
-
-	public bool IsUploadSuccess()
-	{
-		return m_StateUpload == kStateUpload.Success;
-	}
-
-	public bool IsUploadFailed()
-	{
-		return m_StateUpload == kStateUpload.Failed;
 	}
 
 	public string GetDeviceInfoDesc()
@@ -274,7 +254,6 @@ public class iServerSaveData : MonoBehaviour
 		{
 			m_OnUploadSuccess();
 		}
-		Debug.Log("upload success");
 	}
 
 	protected void OnUploadDataFailed(string code)
@@ -284,7 +263,6 @@ public class iServerSaveData : MonoBehaviour
 		{
 			m_OnUploadFailed(code);
 		}
-		Debug.Log("upload failed");
 	}
 
 	protected bool PackData(ref string sData)
@@ -320,40 +298,14 @@ public class iServerSaveData : MonoBehaviour
 		}
 	}
 
-	protected void ShowDialog(string msg, OnEvent onok, OnEvent oncancel)
-	{
-		if (m_OnDialog == null)
-		{
-			return;
-		}
-		try
-		{
-			m_OnDialog(msg, onok, oncancel);
-		}
-		catch
-		{
-			Debug.Log("exception ShowDialog " + msg);
-		}
-	}
-
-	public void SetCurGCAccount(string sAccount)
-	{
-		m_sGameCenterId = sAccount;
-	}
-
 	public bool CheckGCAccountIsValid(string sAccount)
 	{
 		return m_sGameCenterId == sAccount;
 	}
-
-	public void SetDialog(OnDialog ondialog)
-	{
-		m_OnDialog = ondialog;
-	}
+	
 
 	public void Fetch(string sGameName, string sGameVersion, string sDeviceId, string sGameCenterId, OnEvent onsuccess, OnFailed onfailed, OnPackData onpack, OnUnPackData onunpack)
 	{
-		UnityEngine.Debug.Log("start to fetch");
 		m_sGameName = sGameName;
 		m_sGameVersion = sGameVersion;
 		m_sDeviceId = sDeviceId;
@@ -396,12 +348,7 @@ public class iServerSaveData : MonoBehaviour
 	private void Awake()
 	{
 		string sysVersion = DevicePlugin.GetSysVersion();
-		Debug.Log(sysVersion);
 		m_State = kState.None;
-	}
-
-	private void Start()
-	{
 	}
 
 	private void Update()
@@ -495,7 +442,6 @@ public class iServerSaveData : MonoBehaviour
 
 	protected void OnBackToAppFailed(iLoginManager.kFailedType type)
 	{
-		Debug.Log("OnBackToAppFailed " + type);
 		string empty = string.Empty;
 		switch (type)
 		{
@@ -555,7 +501,6 @@ public class iServerSaveData : MonoBehaviour
 
 	protected void OnUploadFailed(string code)
 	{
-		Debug.Log(code);
 		if (code == "gmOperating")
 		{
 			CMessageBoxScript.GetInstance().MessageBox(string.Empty, "Your account is under maintenance. Please try again later.", OnOK, null, "OK");
@@ -596,7 +541,6 @@ public class iServerSaveData : MonoBehaviour
 
 	protected void Step_Login_S(string serverId, string serverUrl, string deviceId, string userId, string gamecenterId)
 	{
-		UnityEngine.Debug.Log("Step_Login_S " + serverId + " " + serverUrl + " " + deviceId + " " + userId + " " + gamecenterId);
 		m_sCurDeviceId = deviceId;
 		m_sCurGameCenterId = gamecenterId;
 		Step_Fetch_Data(serverId, serverUrl, deviceId);
@@ -634,11 +578,10 @@ public class iServerSaveData : MonoBehaviour
 			{
 				throw new Exception();
 			}
-			Debug.Log("save data is ok");
 		}
 		catch
 		{
-			Debug.Log("no data on server, upload local savedata");
+			Debug.LogWarning("no data on server, upload local savedata");
 			if (!PackData(ref m_sSaveData))
 			{
 				OnFetchDataFailed(string.Empty);
@@ -656,7 +599,7 @@ public class iServerSaveData : MonoBehaviour
 
 	protected void Step_Fetch_Data_F(string sCode)
 	{
-		Debug.Log("failed " + sCode);
+		Debug.LogWarning("failed " + sCode);
 		if (m_OnFetchFailed != null)
 		{
 			m_OnFetchFailed(sCode);

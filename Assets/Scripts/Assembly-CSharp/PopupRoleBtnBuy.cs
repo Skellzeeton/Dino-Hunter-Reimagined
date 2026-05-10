@@ -23,13 +23,6 @@ public class PopupRoleBtnBuy : MonoBehaviour
 
 	private PopupRoleBuyState btn_state;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public PopupRoleBuyState GetState()
 	{

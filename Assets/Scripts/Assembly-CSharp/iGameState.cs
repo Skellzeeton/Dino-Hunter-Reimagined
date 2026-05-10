@@ -542,7 +542,6 @@ public class iGameState
 	{
 		for (int i = 0; i < m_arrMainScenePopWindow.Length; i++)
 		{
-			UnityEngine.Debug.Log(i + " " + m_arrMainScenePopWindow[i]);
 			if (m_arrMainScenePopWindow[i])
 			{
 				m_arrMainScenePopWindow[i] = false;

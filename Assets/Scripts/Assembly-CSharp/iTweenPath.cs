@@ -41,7 +41,7 @@ public class iTweenPath : MonoBehaviour
 		{
 			return paths[requestedName].nodes.ToArray();
 		}
-		Debug.Log("No path with that name exists! Are you sure you wrote it correctly?");
+		Debug.LogWarning("no path with that name exists! Are you sure you wrote it correctly?");
 		return null;
 	}
 }

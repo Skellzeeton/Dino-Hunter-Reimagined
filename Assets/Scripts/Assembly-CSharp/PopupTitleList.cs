@@ -29,18 +29,14 @@ public class PopupTitleList : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	public void SetInfo(Dictionary<int, string> m_title_info_list, List<int> m_title_id_list, int m_title_id = 0)
 	{
 		if (scroll_list == null || prefab_item == null || grid_items == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
-		Debug.Log("m_title_id:" + m_title_id);
 		PopupTitleListItem popupTitleListItem = null;
 		if (title_info_list != null || title_id_list != null || m_title_info_list == null || m_title_id_list == null)
 		{

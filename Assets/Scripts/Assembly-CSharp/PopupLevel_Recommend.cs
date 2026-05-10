@@ -35,9 +35,6 @@ public class PopupLevel_Recommend : MonoBehaviour
 		if (level_stars != null) stars_normal_pos   = level_stars.transform.localPosition;
 	}
 
-	private void Start()  { }
-	private void Update() { }
-
 	public RecommendType      GetRecommendType()     { return recommend_type; }
 	public RequiredType       GetRequiredType()      { return required_type; }
 	public bool               GetOpenStart()         { return open_start; }
@@ -56,13 +53,13 @@ public class PopupLevel_Recommend : MonoBehaviour
 		img_weapon.UseCustomize     = false;
 		img_weapon.CustomizeTexture = null;
 
-		img_role.gameObject.SetActiveRecursively(false);
+		img_role.gameObject.SetActiveRecursive(false);
 		img_role.transform.localPosition   = role_normal_pos;
-		img_weapon.gameObject.SetActiveRecursively(false);
+		img_weapon.gameObject.SetActiveRecursive(false);
 		img_weapon.transform.localPosition  = weapon_normal_pos;
-		level_stars.gameObject.SetActiveRecursively(false);
+		level_stars.gameObject.SetActiveRecursive(false);
 		level_stars.transform.localPosition = stars_normal_pos;
-		btn_buy.gameObject.SetActiveRecursively(false);
+		btn_buy.gameObject.SetActiveRecursive(false);
 	}
 
 	public void SetRecommendWeapon(TUIRecommendWeaponInfo m_recommend_weapon)
@@ -79,11 +76,11 @@ public class PopupLevel_Recommend : MonoBehaviour
 		SetTitleText(required);
 		required_type = required ? RequiredType.Weapon : RequiredType.None;
 		img_role.texture = string.Empty;
-		img_role.gameObject.SetActiveRecursively(false);
+		img_role.gameObject.SetActiveRecursive(false);
 		string texName = TUIMappingInfo.Instance().GetWeaponTexture(id);
 		string texPath = TUIMappingInfo.Instance().m_sPathRootCustomTex + "/Weapon/" + texName;
 		SetAtlasTexture(img_weapon, texPath, NGUI_weapon_atlas_path);
-		img_weapon.gameObject.SetActiveRecursively(true);
+		img_weapon.gameObject.SetActiveRecursive(true);
 		ApplyStarsAndButtons(level, level_need, have_equip, required);
 		UpdateRequiredAni();
 	}
@@ -101,15 +98,15 @@ public class PopupLevel_Recommend : MonoBehaviour
 		required_type = required ? RequiredType.Role : RequiredType.None;
 		img_weapon.UseCustomize     = false;
 		img_weapon.CustomizeTexture = null;
-		img_weapon.gameObject.SetActiveRecursively(false);
-		level_stars.gameObject.SetActiveRecursively(false);
+		img_weapon.gameObject.SetActiveRecursive(false);
+		level_stars.gameObject.SetActiveRecursive(false);
 		img_role.texture = TUIMappingInfo.Instance().GetRoleTexture(id);
-		img_role.gameObject.SetActiveRecursively(true);
+		img_role.gameObject.SetActiveRecursive(true);
 		if (!have_buy)
 		{
 			label_btn_buy_normal.Text = "Buy";
 			label_btn_buy_press.Text  = "Buy";
-			btn_buy.gameObject.SetActiveRecursively(true);
+			btn_buy.gameObject.SetActiveRecursive(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.RoleBuy;
 			img_role.transform.localPosition = role_normal_pos;
@@ -119,7 +116,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		{
 			label_btn_buy_normal.Text = "Equip";
 			label_btn_buy_press.Text  = "Equip";
-			btn_buy.gameObject.SetActiveRecursively(true);
+			btn_buy.gameObject.SetActiveRecursive(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.RoleEquip;
 			img_role.transform.localPosition = role_normal_pos;
@@ -127,7 +124,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		}
 		else
 		{
-			btn_buy.gameObject.SetActiveRecursively(false);
+			btn_buy.gameObject.SetActiveRecursive(false);
 			recommend_btn_state = RecommendBtnState.Disable;
 			img_role.transform.localPosition = role_normal_pos + delta_pos;
 		}
@@ -148,15 +145,14 @@ public class PopupLevel_Recommend : MonoBehaviour
 		SetTitleText(required);
 		required_type = required ? RequiredType.Weapon : RequiredType.None;
 		img_role.texture = string.Empty;
-		img_role.gameObject.SetActiveRecursively(false);
+		img_role.gameObject.SetActiveRecursive(false);
 		string texPath = BuildAvatarTexPath(id);
 		SetDirectTexture(img_weapon, texPath);
-		img_weapon.gameObject.SetActiveRecursively(true);
+		img_weapon.gameObject.SetActiveRecursive(true);
 		ApplyStarsAndButtons(level, level_need, have_equip, required);
 		UpdateRequiredAni();
 	}
 
-	/// Sets the title label text and shifts its X position to suit the string length.
 	private void SetTitleText(bool required)
 	{
 		if (label_recommend_title == null) return;
@@ -169,14 +165,14 @@ public class PopupLevel_Recommend : MonoBehaviour
 	private void ApplyStarsAndButtons(int level, int level_need, bool have_equip, bool required)
 	{
 		level_stars.SetStars(level_need);
-		level_stars.gameObject.SetActiveRecursively(true);
+		level_stars.gameObject.SetActiveRecursive(true);
 		level_stars.transform.localPosition = stars_normal_pos;
 
 		if (level < level_need)
 		{
 			label_btn_buy_normal.Text = "Buy";
 			label_btn_buy_press.Text  = "Buy";
-			btn_buy.gameObject.SetActiveRecursively(true);
+			btn_buy.gameObject.SetActiveRecursive(true);
 			btn_buy.Show();
 			recommend_btn_state = RecommendBtnState.WeaponBuy;
 			img_weapon.transform.localPosition = weapon_normal_pos;
@@ -185,13 +181,13 @@ public class PopupLevel_Recommend : MonoBehaviour
 		else
 		{
 			if (level_need == 0 && required)
-				level_stars.gameObject.SetActiveRecursively(false);
+				level_stars.gameObject.SetActiveRecursive(false);
 
 			if (!have_equip)
 			{
 				label_btn_buy_normal.Text = "Equip";
 				label_btn_buy_press.Text  = "Equip";
-				btn_buy.gameObject.SetActiveRecursively(true);
+				btn_buy.gameObject.SetActiveRecursive(true);
 				btn_buy.Show();
 				recommend_btn_state = RecommendBtnState.WeaponEquip;
 				img_weapon.transform.localPosition = weapon_normal_pos;
@@ -199,7 +195,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 			}
 			else
 			{
-				btn_buy.gameObject.SetActiveRecursively(false);
+				btn_buy.gameObject.SetActiveRecursive(false);
 				recommend_btn_state = RecommendBtnState.Disable;
 				img_weapon.transform.localPosition  = weapon_normal_pos + delta_pos;
 				level_stars.transform.localPosition = stars_normal_pos  + delta_pos;
@@ -234,7 +230,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		}
 		if (sprite.CustomizeTexture == null)
 		{
-			Debug.Log("[Recommend] lose texture! path=" + texPath);
+			Debug.LogWarning("[Recommend] lose texture! path=" + texPath);
 			return;
 		}
 		sprite.CustomizeRect = new Rect(0f, 0f,
@@ -249,7 +245,7 @@ public class PopupLevel_Recommend : MonoBehaviour
 		sprite.CustomizeTexture = Resources.Load(texPath) as Texture;
 		if (sprite.CustomizeTexture == null)
 		{
-			Debug.Log("[Recommend] lose texture! path=" + texPath);
+			Debug.LogWarning("[Recommend] lose texture! path=" + texPath);
 			return;
 		}
 		Rect rect = new Rect(0f, 0f, sprite.CustomizeTexture.width, sprite.CustomizeTexture.height);

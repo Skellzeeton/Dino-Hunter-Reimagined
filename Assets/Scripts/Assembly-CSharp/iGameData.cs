@@ -91,89 +91,61 @@ public class iGameData
 	{
 		try
 		{
-			iGameApp.GetInstance().ScreenLog("Loading m_WeaponCenter");
 			m_WeaponCenter.Load("weapon");
 			iServerConfigData.GetInstance().AddConfigInfo(m_WeaponCenter.sFileName, m_WeaponCenter.sMD5, m_WeaponCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_BuffCenter");
 			m_BuffCenter.Load("buff");
 			iServerConfigData.GetInstance().AddConfigInfo(m_BuffCenter.sFileName, m_BuffCenter.sMD5, m_BuffCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_SkillCenter Monster");
 			m_SkillCenter.Load_Monster("skillmonster");
 			iServerConfigData.GetInstance().AddConfigInfo(m_SkillCenter.sFileNameMonster, m_SkillCenter.sMD5Monster, m_SkillCenter.OnFetchMonsterData);
-			iGameApp.GetInstance().ScreenLog("Loading m_SkillCenter Player");
 			m_SkillCenter.Load_Player("skillplayer");
 			iServerConfigData.GetInstance().AddConfigInfo(m_SkillCenter.sFileNamePlayer, m_SkillCenter.sMD5Player, m_SkillCenter.OnFetchPlayerData);
-			iGameApp.GetInstance().ScreenLog("Loading m_MobCenter");
 			m_MobCenter.Load("mob");
 			iServerConfigData.GetInstance().AddConfigInfo(m_MobCenter.sFileName, m_MobCenter.sMD5, m_MobCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_MGCenter");
 			m_MGCenter.Load("gamewave");
 			iServerConfigData.GetInstance().AddConfigInfo(m_MGCenter.sFileName, m_MGCenter.sMD5, m_MGCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_GameLevelCenter");
 			m_GameLevelCenter.Load("gamelevel");
 			iServerConfigData.GetInstance().AddConfigInfo(m_GameLevelCenter.sFileName, m_GameLevelCenter.sMD5, m_GameLevelCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_BehaviorCenter");
 			m_BehaviorCenter.Load();
-			iGameApp.GetInstance().ScreenLog("Loading m_AICenter");
 			m_AICenter.Load("ai");
 			iServerConfigData.GetInstance().AddConfigInfo(m_AICenter.sFileName, m_AICenter.sMD5, m_AICenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_TaskCenter");
 			m_TaskCenter.Load("task");
 			iServerConfigData.GetInstance().AddConfigInfo(m_TaskCenter.sFileName, m_TaskCenter.sMD5, m_TaskCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_ItemCenter");
 			m_ItemCenter.Load("item");
 			iServerConfigData.GetInstance().AddConfigInfo(m_ItemCenter.sFileName, m_ItemCenter.sMD5, m_ItemCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_CharacterCenter");
 			m_CharacterCenter.Load("character");
 			iServerConfigData.GetInstance().AddConfigInfo(m_CharacterCenter.sFileName, m_CharacterCenter.sMD5, m_CharacterCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_BattleGroupCenter");
 			m_BattleGroupCenter.Load();
-			iGameApp.GetInstance().ScreenLog("Loading m_DropGroupCenter");
 			m_DropGroupCenter.Load("dropgroup");
 			iServerConfigData.GetInstance().AddConfigInfo(m_DropGroupCenter.sFileName, m_DropGroupCenter.sMD5, m_DropGroupCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_LoadTipCenter");
 			m_LoadTipCenter.Load("loadtip");
 			iServerConfigData.GetInstance().AddConfigInfo(m_LoadTipCenter.sFileName, m_LoadTipCenter.sMD5, m_LoadTipCenter.OnFetch);
 			m_AchievementCenter.Load("achievement");
 			iServerConfigData.GetInstance().AddConfigInfo(m_AchievementCenter.sFileName, m_AchievementCenter.sMD5, m_AchievementCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_DailyTaskCenter");
 			m_DailyTaskCenter.Load("dailytask");
 			iServerConfigData.GetInstance().AddConfigInfo(m_DailyTaskCenter.sFileName, m_DailyTaskCenter.sMD5, m_DailyTaskCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_DailyRewardCenter");
 			m_DailyRewardCenter.Load("dailyreward");
 			iServerConfigData.GetInstance().AddConfigInfo(m_DailyRewardCenter.sFileName, m_DailyRewardCenter.sMD5, m_DailyRewardCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_StashCapacityCenter");
 			m_StashCapacityCenter.Load("stashcapacity");
 			iServerConfigData.GetInstance().AddConfigInfo(m_StashCapacityCenter.sFileName, m_StashCapacityCenter.sMD5, m_StashCapacityCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_TitleCenter");
 			m_TitleCenter.Load("title");
 			iServerConfigData.GetInstance().AddConfigInfo(m_TitleCenter.sFileName, m_TitleCenter.sMD5, m_TitleCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_HunterCenter");
 			m_HunterCenter.Load("hunter");
 			iServerConfigData.GetInstance().AddConfigInfo(m_HunterCenter.sFileName, m_HunterCenter.sMD5, m_HunterCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_HunterLevelCenter");
 			m_HunterLevelCenter.Load("hunterlevel");
 			iServerConfigData.GetInstance().AddConfigInfo(m_HunterLevelCenter.sFileName, m_HunterLevelCenter.sMD5, m_HunterLevelCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_AvatarCenter");
 			m_AvatarCenter.Load("avatar");
 			iServerConfigData.GetInstance().AddConfigInfo(m_AvatarCenter.sFileName, m_AvatarCenter.sMD5, m_AvatarCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_ShopDisplayCenter");
 			m_ShopDisplayCenter.Load("shopdisplay");
 			iServerConfigData.GetInstance().AddConfigInfo(m_ShopDisplayCenter.sFileName, m_ShopDisplayCenter.sMD5, m_ShopDisplayCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_BlackMarketCenter");
 			m_BlackMarketCenter.Load("blackmarket");
 			iServerConfigData.GetInstance().AddConfigInfo(m_BlackMarketCenter.sFileName, m_BlackMarketCenter.sMD5, m_BlackMarketCenter.OnFetch);
-			iGameApp.GetInstance().ScreenLog("Loading m_DataCenter");
 			m_DataCenter.Load();
-			iGameApp.GetInstance().ScreenLog("Loading m_DataCenterNet");
 			m_DataCenterNet.Load();
 		}
 		catch (Exception ex)
 		{
 			UnityEngine.Debug.LogError(ex);
-			iGameApp.GetInstance().ScreenLog("error msg: " + ex.Message);
 		}
-		iGameApp.GetInstance().ClearScreenLog();
 		return true;
 	}
 

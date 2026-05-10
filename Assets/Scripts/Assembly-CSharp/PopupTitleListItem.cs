@@ -21,9 +21,6 @@ public class PopupTitleListItem : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
 
 	public void SetInfo(int m_id, Dictionary<int, string> m_title_list)
 	{

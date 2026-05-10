@@ -20,19 +20,12 @@ public class Sell_Stash : MonoBehaviour
 
 	private bool enable;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetParam(int m_count, TUIPriceInfo m_price_info)
 	{
 		if (m_price_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		count = m_count;

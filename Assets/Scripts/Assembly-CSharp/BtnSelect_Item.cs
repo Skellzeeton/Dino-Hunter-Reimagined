@@ -18,14 +18,6 @@ public class BtnSelect_Item : MonoBehaviour
 
 	private string texture_new = "new2";
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	private void SetCustomizeTexture(TUIMeshSprite m_sprite, string m_path, bool m_use_NGUI = false, string pathforatlas = "")
 	{
 		m_sprite.texture = string.Empty;
@@ -33,7 +25,7 @@ public class BtnSelect_Item : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!");
+			Debug.LogWarning("lose texture!");
 			return;
 		}
 		if (!m_use_NGUI)

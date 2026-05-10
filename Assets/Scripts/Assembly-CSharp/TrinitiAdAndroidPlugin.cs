@@ -61,24 +61,19 @@ public class TrinitiAdAndroidPlugin : MonoBehaviour
 
 	public void InitAdd()
 	{
-		Debug.Log("-----------------------InitAdd----------------------------------");
-		Debug.Log(Instance().IsReady());
 		if (Instance().IsReady())
 		{
 			if (Instance().CanAdmob())
 			{
-				UnityEngine.Debug.Log("admob " + Instance().GetKey());
 				OpenClikPlugin.Initialize(Instance().GetKey());
 			}
 			else if (Instance().CanChartboost())
 			{
-				UnityEngine.Debug.Log("chartboost id:" + Instance().GetID() + " key:" + Instance().GetKey());
 				ChartBoostAndroid.init(Instance().GetID(), Instance().GetKey());
 				ChartBoostAndroid.onStart();
 			}
 			else if (Instance().CanOpenclik())
 			{
-				UnityEngine.Debug.Log("openclik key:" + Instance().GetKey());
 			}
 		}
 	}
@@ -88,7 +83,6 @@ public class TrinitiAdAndroidPlugin : MonoBehaviour
 		string url = "http://184.168.67.133/trinitiadconfig_android.txt";
 		WWW www = new WWW(url);
 		yield return www;
-		UnityEngine.Debug.Log(www.text);
 		JSONObject jsonData = JSONObject.Parse(www.text);
 		try
 		{
@@ -96,19 +90,16 @@ public class TrinitiAdAndroidPlugin : MonoBehaviour
 			switch (data.GetString("type"))
 			{
 			case "admob":
-				UnityEngine.Debug.Log("TrinitiAdAndroidPlugin admob");
 				admob = true;
 				id = string.Empty;
 				key = data.GetString("admobkey");
 				break;
 			case "chartboost":
-				UnityEngine.Debug.Log("TrinitiAdAndroidPlugin chartboost");
 				chartboost = true;
 				id = data.GetString("chartboostid");
 				key = data.GetString("chartboostkey");
 				break;
 			case "openclik":
-				UnityEngine.Debug.Log("TrinitiAdAndroidPlugin openclik");
 				openclik = true;
 				id = string.Empty;
 				key = data.GetString("openclikkey");
@@ -119,7 +110,6 @@ public class TrinitiAdAndroidPlugin : MonoBehaviour
 		{
 		}
 		isready = true;
-		UnityEngine.Debug.Log("TrinitiAdAndroidPlugin isready:" + isready);
 		InitAdd();
 	}
 }

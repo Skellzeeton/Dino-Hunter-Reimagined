@@ -6,14 +6,6 @@ public class AchievementBar : MonoBehaviour
 
 	public TUILabel label_text;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void Show(int m_value, string m_text)
 	{
 		base.gameObject.SetActiveRecursive(true);

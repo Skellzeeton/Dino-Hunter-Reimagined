@@ -78,23 +78,10 @@ public class iTrinitiDataCollect : MonoBehaviour
 		logEvent(eventname, new Hashtable());
 	}
 
-	private void Awake()
-	{
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	protected void OnRequest(int taskId, int result, string server, string action, string response, string param)
 	{
 		if (result == 0)
 		{
-			UnityEngine.Debug.Log("TrinitiCollect OnRequest " + result + " " + action + " " + response + " " + param);
 		}
 	}
 }

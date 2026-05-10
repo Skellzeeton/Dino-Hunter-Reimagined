@@ -177,7 +177,7 @@ public class Scene_Equip : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_SetBattlePower)
@@ -238,7 +238,7 @@ public class Scene_Equip : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_SkillSign)
@@ -258,7 +258,7 @@ public class Scene_Equip : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_WeaponSign)
@@ -312,7 +312,7 @@ public class Scene_Equip : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_RoleEquip)
@@ -400,7 +400,6 @@ public class Scene_Equip : MonoBehaviour
 			TUIPopupInfo info3 = m_PopupShow_Equip.m_SelectItem.GetInfo();
 			if (info3 != null)
 			{
-				Debug.Log(info3.texture_id);
 				if (info3.IsWeapon())
 				{
 					go_role.ChangeWeapon(info3.texture_id);
@@ -473,7 +472,6 @@ public class Scene_Equip : MonoBehaviour
 			TUIPopupInfo info4 = m_PopupShow_Equip.m_SelectItem.GetInfo();
 			if (info4 != null)
 			{
-				Debug.Log(info4.texture_id);
 				if (info4.IsArmor() || info4.IsAccessory())
 				{
 					List<TUIPopupInfo> data2 = m_PopupShow_Role.GetData(PopupType.Roles);
@@ -803,7 +801,6 @@ public class Scene_Equip : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log("you click role");
 		if (sfx_open_now)
 		{
 			CUISound.GetInstance().Play("UI_Button");
@@ -858,7 +855,6 @@ public class Scene_Equip : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log("You click skill");
 		if (sfx_open_now)
 		{
 			CUISound.GetInstance().Play("UI_Button");
@@ -942,7 +938,6 @@ public class Scene_Equip : MonoBehaviour
 		{
 			return;
 		}
-		Debug.Log("You click weapon");
 		if (sfx_open_now)
 		{
 			CUISound.GetInstance().Play("UI_Button");
@@ -1051,7 +1046,6 @@ public class Scene_Equip : MonoBehaviour
 			{
 				m_PopupShow_Equip.SetItemSelectInfo(component);
 				int texture_id = info.texture_id;
-				Debug.Log("chooseID:" + texture_id);
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneEquip(TUIEvent.SceneEquipEventType.TUIEvent_WeaponChoose, texture_id));
 			}
 		}
@@ -1128,7 +1122,6 @@ public class Scene_Equip : MonoBehaviour
 			{
 				int nExchangeIndex = m_PopupShow_Equip.m_nExchangeIndex1;
 				int nExchangeIndex2 = m_PopupShow_Equip.m_nExchangeIndex2;
-				Debug.Log(nExchangeIndex + "  " + nExchangeIndex2);
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneEquip(TUIEvent.SceneEquipEventType.TUIEvent_WeaponExchange, nExchangeIndex, nExchangeIndex2, m_PopupShow_Equip.m_ButtonItem.nPopupType));
 			}
 			else
@@ -1270,13 +1263,13 @@ public class Scene_Equip : MonoBehaviour
 		}
 		if (control.transform.parent == null || control.transform.parent.parent == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		PopupGoBuy component = control.transform.parent.parent.GetComponent<PopupGoBuy>();
 		if (component == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (component.GetGoBuyType() == PopupGoBuy.GoBuyType.Weapon)
 		{
@@ -1358,7 +1351,6 @@ public class Scene_Equip : MonoBehaviour
 		{
 			int index = m_PopupShow_PassiveSkill.m_ButtonItem.index;
 			int texture_id = m_PopupShow_PassiveSkill.m_SelectItem.GetInfo().texture_id;
-			Debug.Log(index + "  " + texture_id);
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneEquip(TUIEvent.SceneEquipEventType.TUIEvent_SkillEquip, index, texture_id));
 			m_PopupShow_PassiveSkill.Hide();
 			TUIMappingInfo.Instance().NextNewHelpState();

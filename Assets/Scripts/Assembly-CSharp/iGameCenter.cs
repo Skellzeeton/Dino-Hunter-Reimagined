@@ -58,7 +58,6 @@ public class iGameCenter : MonoBehaviour
 
 	public void Login(OnSuccess onsuccess, OnFailed onfailed)
 	{
-		Debug.Log("start login game center");
 		if (GameCenterPlugin.IsLogin())
 		{
 			OnLogin(true);
@@ -81,10 +80,6 @@ public class iGameCenter : MonoBehaviour
 		GameCenterPlugin.Initialize();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		Update(Time.deltaTime);
@@ -102,11 +97,9 @@ public class iGameCenter : MonoBehaviour
 	{
 		if (bSuccess)
 		{
-			Debug.Log("GameCenter Login successed");
 			m_State = kState.Success;
 			return;
 		}
-		Debug.Log("GameCenter Login failed");
 		if (m_OnLoginFail != null)
 		{
 			m_OnLoginFail();

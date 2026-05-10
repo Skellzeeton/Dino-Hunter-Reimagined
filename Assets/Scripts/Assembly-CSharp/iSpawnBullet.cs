@@ -81,10 +81,6 @@ public class iSpawnBullet : MonoBehaviour
 		m_bHitDestroy = true;
 	}
 
-	private void Start()
-	{
-	}
-
 	public void Update()
 	{
 		if (!m_bActive)

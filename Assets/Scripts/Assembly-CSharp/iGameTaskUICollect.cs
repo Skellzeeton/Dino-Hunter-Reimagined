@@ -82,7 +82,6 @@ public class iGameTaskUICollect : iGameTaskUIBase
 
 	public override void Show(bool bShow)
 	{
-		Debug.Log("collect ui " + bShow);
 		if (m_TargetIcon != null)
 		{
 			m_TargetIcon.gameObject.SetActiveRecursive(bShow);

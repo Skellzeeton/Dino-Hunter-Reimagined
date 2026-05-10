@@ -96,8 +96,6 @@ public class iGameUIBase : MonoBehaviour
 				item.localScale *= num3;
 			}
 		}
-		Debug.Log("screen size = " + Screen.width + " * " + Screen.height);
-		Debug.Log("screen scale times = " + num3);
 		m_SlipAssist = new CSlipAssistant();
 		m_SlipAssist.Init(0.5f, 0.5f, 0.5f);
 	}
@@ -493,7 +491,6 @@ public class iGameUIBase : MonoBehaviour
 					CWeaponBase weapon2 = m_GameState.GetWeapon(i);
 					if (weapon2 != null && weapon2.CurWeaponLvlInfo != null && weapon2.CurWeaponLvlInfo.nType == 1)
 					{
-						Debug.Log("ShowBlackWarning " + weapon2.CurWeaponLvlInfo.sIcon);
 						UIManager.mBlackWarning.SetIcon(weapon2.CurWeaponLvlInfo.sIcon);
 						break;
 					}
@@ -628,7 +625,6 @@ public class iGameUIBase : MonoBehaviour
 
 	public void AddTeamMateProtrait(int nUID)
 	{
-		Debug.Log("add protrait " + nUID);
 		if (m_dictTeamMate.ContainsKey(nUID) || m_UIManager.mTeamMatePortraitNode == null)
 		{
 			return;
@@ -655,7 +651,6 @@ public class iGameUIBase : MonoBehaviour
 				if (!(component == null))
 				{
 					m_dictTeamMate.Add(nUID, component);
-					Debug.Log("add protrait ok " + nUID);
 				}
 			}
 			break;
@@ -1341,7 +1336,6 @@ public class iGameUIBase : MonoBehaviour
 
 	public void Event_Pause()
 	{
-		Debug.Log("click pause");
 		CUISound.GetInstance().Play("UI_Button");
 		if (/*!m_GameScene.m_bMutiplyGame && */!m_GameScene.isTutorialStage)
 		{
@@ -1351,7 +1345,6 @@ public class iGameUIBase : MonoBehaviour
 
 	protected void Event_Skip()
 	{
-		Debug.Log("click skip");
 		CCameraRoam.GetInstance().Stop();
 	}
 
@@ -1609,7 +1602,6 @@ public class iGameUIBase : MonoBehaviour
 		}
 		CCharUser user = m_GameScene.GetUser();
 		iCameraTrail iCameraTrail2 = m_GameScene.GetCamera();
-		Debug.Log("move screen");
 		if (!(delta != Vector2.zero) || !m_SlipAssist.Slip(delta))
 		{
 			return;
@@ -1820,7 +1812,6 @@ public class iGameUIBase : MonoBehaviour
 		int num = dataCenter.CheckStashVolume(1);
 		if (num < 1)
 		{
-			Debug.Log("stash full, please purchase more stash pos!");
 			CStashCapacity stashCapacity = gameData.GetStashCapacity(dataCenter.StashLevel);
 			CStashCapacity stashCapacity2 = gameData.GetStashCapacity(dataCenter.StashLevel + 1);
 			if (stashCapacity2 != null && stashCapacity2.nCapacity > 0)

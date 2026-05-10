@@ -9,14 +9,6 @@ public class DailyLoginBonus : MonoBehaviour
 
 	public TUIPriceInfo price_info;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void Show()
 	{
 		base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);
@@ -35,12 +27,12 @@ public class DailyLoginBonus : MonoBehaviour
 	{
 		if (m_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (daily_bonus_item_list == null || daily_bonus_item_list.Count != 7)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		List<TUIPriceInfo> daily_bonus_list = m_info.daily_bonus_list;

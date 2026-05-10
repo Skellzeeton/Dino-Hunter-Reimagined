@@ -246,10 +246,6 @@ public class Role_Control : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_bActive)
@@ -774,7 +770,6 @@ public class Role_Control : MonoBehaviour
 			role_now = role_107;
 			break;
 		default:
-			Debug.Log("role id error! id=" + id);
 			return;
 		}
 		role_now.gameObject.SetActiveRecursive(true);
@@ -935,10 +930,6 @@ public class Role_Control : MonoBehaviour
 		if (m_weapon_list == null)
 		{
 			return;
-		}
-		foreach (int item in m_weapon_list)
-		{
-			Debug.Log(item);
 		}
 	}
 

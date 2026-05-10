@@ -6,13 +6,6 @@ public class Popup_BtnEquip : MonoBehaviour
 
 	public TUILabel label_press;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetEquip()
 	{

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 82353310351102814}
   - component: {fileID: 114727507544288657}
   m_Layer: 0
-  m_Name: Ani_Fall_Velo_Boss
+  m_Name: SVO_Voice_Velo_Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,16 +46,16 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
-  m_Pitch: 1
+  m_Volume: 0.16
+  m_Pitch: 1.25
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 30
-  MaxDistance: 60
+  MinDistance: 12
+  MaxDistance: 36
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -153,10 +153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSfx: 1
   audioClips:
-  - {fileID: 8300000, guid: 867f3c0c11f2bff489003d08a8da0859, type: 3}
+  - {fileID: 8300000, guid: f42a3deb7dded164288302b4e8266bec, type: 3}
   probability: []
   volumOffset: 0.05
-  pitchOffset: 0.02
+  pitchOffset: 0.1
   loopMode: 0
   cutoff: 0
   delayTime: 0

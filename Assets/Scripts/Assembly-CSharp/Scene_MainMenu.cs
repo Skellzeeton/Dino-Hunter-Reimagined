@@ -211,7 +211,7 @@ public class Scene_MainMenu : MonoBehaviour
 		UpdateArrowControl();
 		if (m_fade == null)
 		{
-			Debug.Log("error! no found m_fade!");
+			Debug.LogWarning("error! no found m_fade!");
 			return;
 		}
 		m_fade_in_time += Time.deltaTime;
@@ -259,7 +259,7 @@ public class Scene_MainMenu : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_OptionInfo)
@@ -274,7 +274,7 @@ public class Scene_MainMenu : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_AcheviementInfo)
@@ -295,7 +295,7 @@ public class Scene_MainMenu : MonoBehaviour
 				TUIAchievementRewardInfo tUIAchievementRewardInfo = popup_achievement.TakeAchievement();
 				if (tUIAchievementRewardInfo == null)
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 					return;
 				}
 				TakeAchievement(tUIAchievementRewardInfo, top_bar);
@@ -653,7 +653,7 @@ public class Scene_MainMenu : MonoBehaviour
 				TUIAchievementRewardInfo tUIAchievementRewardInfo2 = popup_daily_missions.TakeReward();
 				if (tUIAchievementRewardInfo2 == null)
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 					return;
 				}
 				TakeDailyMissionsReward(tUIAchievementRewardInfo2, top_bar);
@@ -736,7 +736,6 @@ public class Scene_MainMenu : MonoBehaviour
 			RaycastHit hitInfo2;
 			if (Physics.Raycast(ray2, out hitInfo2))
 			{
-				Debug.Log("you hit: " + hitInfo2.transform.name);
 				CUISound.GetInstance().Play("UI_Click");
 				if (hitInfo2.transform == go_camp)
 				{
@@ -981,9 +980,10 @@ public class Scene_MainMenu : MonoBehaviour
                     current -= VolumeDecrement;
                 current = Mathf.Clamp(current, MinSFXVolume, MaxSFXVolume);
                 current = Mathf.Round(current * 10f) / 10f;
+#if UNITY_EDITOR
                 Debug.Log("new sound volume: " + current);
+#endif
             }
-
             TAudioManager.instance.soundVolume = current;
         }
     }
@@ -1010,13 +1010,13 @@ public class Scene_MainMenu : MonoBehaviour
 		}
 		if (control.transform.parent == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		AchievementItem component = control.transform.parent.GetComponent<AchievementItem>();
 		if (component == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		popup_achievement.SetTakeAchievementBtn(control);
@@ -1039,13 +1039,13 @@ public class Scene_MainMenu : MonoBehaviour
 		}
 		if (control.transform.parent == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		DailyMissionsItem component = control.transform.parent.GetComponent<DailyMissionsItem>();
 		if (component == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		popup_daily_missions.SetClaimBtn(control);
@@ -1294,7 +1294,7 @@ public class Scene_MainMenu : MonoBehaviour
 		}
 		if (popup_new_help == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (control == popup_new_help.GetBtnMask())
@@ -1456,7 +1456,7 @@ public class Scene_MainMenu : MonoBehaviour
 	{
 		if (camera_village == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		Vector3 eulerAngles = camera_village.transform.eulerAngles + new Vector3(-90f, 0f, 180f);
@@ -1490,7 +1490,7 @@ public class Scene_MainMenu : MonoBehaviour
 	{
 		if (m_reward_info == null || m_top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (m_reward_info.open_reward01)
@@ -1507,7 +1507,7 @@ public class Scene_MainMenu : MonoBehaviour
 	{
 		if (m_reward_info == null || m_top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (m_reward_info.open_reward01)
@@ -1524,7 +1524,7 @@ public class Scene_MainMenu : MonoBehaviour
 	{
 		if (img_arrow_left == null || img_arrow_right == null || camera_village == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		float num = 0.37f;

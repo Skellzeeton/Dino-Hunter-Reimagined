@@ -56,10 +56,6 @@ public class gyUIButton : MonoBehaviour
 		Enable = true;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void OnPress(bool press)
 	{
 		if (Enable && m_Pressed != null)

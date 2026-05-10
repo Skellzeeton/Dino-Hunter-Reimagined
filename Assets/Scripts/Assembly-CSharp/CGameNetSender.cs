@@ -75,7 +75,6 @@ public class CGameNetSender
 		{
 			nmsg_game_enter.player_pos player_pos = new nmsg_game_enter.player_pos();
 			player_pos.m_nId = room.UserList[i].Id;
-			Debug.Log(player_pos.m_nId);
 			player_pos.m_nUID = MyUtils.GetUID();
 			player_pos.m_v3Pos = new Vector3(0f, gameLevelInfo.fNavPlane, 0f);
 			if (cStartPointManager != null)

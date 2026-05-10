@@ -21,10 +21,6 @@ public class LevelPointBottom : MonoBehaviour
 		normal_scale = base.transform.localScale;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (be_choose)
@@ -42,7 +38,7 @@ public class LevelPointBottom : MonoBehaviour
 			m_sprite = base.gameObject.GetComponent<TUIMeshSprite>();
 			if (m_sprite == null)
 			{
-				Debug.Log("error! no found sprite! id:");
+				Debug.LogWarning("error! no found sprite! id:");
 				return;
 			}
 		}

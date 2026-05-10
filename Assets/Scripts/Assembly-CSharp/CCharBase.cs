@@ -22,7 +22,7 @@ public class CCharBase : MonoBehaviour
 	
 	public Transform ModelRoot
 	{
-		get { return transform.Find("Model"); } // or whatever your visual root is named
+		get { return transform.Find("Model"); }
 	}
 
 
@@ -290,16 +290,25 @@ public class CCharBase : MonoBehaviour
 		{
 			Vector3 forward = m_ModelTransform.forward;
 			forward.y = 0f;
-			return forward;
+			return forward.normalized;
 		}
 		set
 		{
 			Vector3 vector = value;
 			vector.y = 0f;
-			if (vector != Vector3.zero)
+			if (float.IsNaN(vector.x) || float.IsNaN(vector.y) || float.IsNaN(vector.z))
 			{
-				m_ModelTransform.forward = vector;
+				return;
 			}
+			if (float.IsInfinity(vector.x) || float.IsInfinity(vector.y) || float.IsInfinity(vector.z))
+			{
+				return;
+			}
+			if (vector.sqrMagnitude < 0.1f)
+			{
+				return;
+			}
+			m_ModelTransform.forward = vector.normalized;
 		}
 	}
 
@@ -491,10 +500,11 @@ public class CCharBase : MonoBehaviour
 			}
 		}
 	}
-
+	
 	public void Start()
 	{
 	}
+
 
 	public void Update()
 	{
@@ -615,7 +625,6 @@ public class CCharBase : MonoBehaviour
 		m_fStealthAlphaSrc = m_fStealthAlphaCur;
 		m_fStealthAlphaDst = ((!m_bStealth) ? 1f : 0.2f);
 		m_fStealthAlphaRate = 0f;
-		Debug.Log("SetStealth " + m_fStealthAlphaDst + " " + UID);
 	}
 
 	public virtual void SetStun(bool bStun, float fTime = 0f)
@@ -623,7 +632,6 @@ public class CCharBase : MonoBehaviour
 		m_bStun = bStun;
 		if (m_bStun)
 		{
-			Debug.Log("stun " + fTime);
 			m_fStunTime = fTime;
 			ResetAI();
 		}
@@ -757,12 +765,10 @@ public class CCharBase : MonoBehaviour
 		iBuffData2.m_nFromSkill = nFromSkill;
 		if (buffInfo.arrEffAdd[0] > 0)
 		{
-			Debug.Log(buffInfo.arrEffAdd[0]);
 			iBuffData2.EffectAdd(buffInfo.arrEffAdd[0], GetBone(buffInfo.arrEffAdd[1]));
 		}
 		if (buffInfo.arrEffHold[0] > 0)
 		{
-			Debug.Log(buffInfo.arrEffHold[0]);
 			iBuffData2.EffectHold(buffInfo.arrEffHold[0], GetBone(buffInfo.arrEffHold[1]));
 		}
 		if (buffInfo.sAudioEffAdd.Length > 0)
@@ -788,7 +794,9 @@ public class CCharBase : MonoBehaviour
 			iBuffData2.m_fEffectTimeCount = 0f;
 		}
 		m_bUpdateProBuff = true;
-		iGameApp.GetInstance().ScreenLog("add buff " + nID + " for " + fTime + "s");
+/*#if UNITY_EDITOR
+		Debug.Log("add buff " + nID + " for " + fTime + "s");
+#endif*/
 		return buffInfo.nSlot;
 	}
 
@@ -821,7 +829,6 @@ public class CCharBase : MonoBehaviour
 			StopAudio(iBuffData2.m_sAudio);
 			iBuffData2.m_sAudio = string.Empty;
 		}
-		iGameApp.GetInstance().ScreenLog("del buff " + iBuffData2.m_nID);
 		iBuffData2.m_nID = 0;
 		m_bUpdateProBuff = true;
 	}

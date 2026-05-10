@@ -87,7 +87,7 @@ public class Scene_Stash : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneStashEventType.TUIEvent_StashInfo)
@@ -98,7 +98,7 @@ public class Scene_Stash : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneStashEventType.TUIEvent_AddCapacity)
@@ -257,7 +257,7 @@ public class Scene_Stash : MonoBehaviour
 			Btn_Select_Stash component = control.GetComponent<Btn_Select_Stash>();
 			if (component == null)
 			{
-				Debug.Log("no goods control!");
+				Debug.LogWarning("no goods control!");
 			}
 			else
 			{
@@ -277,7 +277,7 @@ public class Scene_Stash : MonoBehaviour
 			Btn_Select_Stash goodsControl = popup_stash.GetGoodsControl();
 			if (goodsControl == null || goodsControl.GetGoodsInfo() == null)
 			{
-				Debug.Log("error! no goods control!");
+				Debug.LogWarning("error! no goods control!");
 				return;
 			}
 			int id = goodsControl.GetGoodsInfo().id;
@@ -362,13 +362,12 @@ public class Scene_Stash : MonoBehaviour
 			Btn_Select_Stash goodsControl = popup_stash.GetGoodsControl();
 			if (goodsControl == null || goodsControl.GetGoodsInfo() == null)
 			{
-				Debug.Log("error! no goods control!");
+				Debug.LogWarning("error! no goods control!");
 				return;
 			}
 			int id = goodsControl.GetGoodsInfo().id;
 			int quality = (int)goodsControl.GetGoodsInfo().quality;
 			int sellCount = popup_stash.GetSellCount();
-			Debug.Log("goods_id:" + id + " goods_quality:" + quality.ToString() + " sell_count:" + sellCount);
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneStash(TUIEvent.SceneStashEventType.TUIEvent_SellGoods, id, quality, sellCount));
 			popup_stash.HideSell();
 			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseSell);

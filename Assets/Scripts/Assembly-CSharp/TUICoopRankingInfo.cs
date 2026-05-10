@@ -15,7 +15,7 @@ public class TUICoopRankingInfo
 		}
 		if (m_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{

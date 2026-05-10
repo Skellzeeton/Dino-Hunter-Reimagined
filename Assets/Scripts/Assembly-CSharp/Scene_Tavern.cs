@@ -84,7 +84,7 @@ public class Scene_Tavern : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneTavernEventType.TUIEvent_AllRoleInfo)
@@ -95,7 +95,7 @@ public class Scene_Tavern : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneTavernEventType.TUIEvent_RoleUnlock)
@@ -190,7 +190,7 @@ public class Scene_Tavern : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneTavernEventType.TUIEvent_GoldToCrystal)
@@ -290,7 +290,7 @@ public class Scene_Tavern : MonoBehaviour
 				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_CloseRoleBuy);
 				break;
 			default:
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				break;
 			}
 		}

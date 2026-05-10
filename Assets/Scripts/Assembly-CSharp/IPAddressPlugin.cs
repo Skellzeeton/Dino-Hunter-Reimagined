@@ -9,26 +9,18 @@ public class IPAddressPlugin : MonoBehaviour
 
 	public static IPAddressPlugin GetInstance()
 	{
-		if (m_Instance == null)
+		/*if (m_Instance == null)
 		{
 			GameObject gameObject = new GameObject("_IPAddressPlugin");
 			UnityEngine.Object.DontDestroyOnLoad(gameObject);
 			m_Instance = gameObject.AddComponent<IPAddressPlugin>();
-		}
+		}*/
 		return m_Instance;
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
 	}
 
 	public void SendIPReqest()
 	{
-		try
+		/*try
 		{
 			Uri requestUri = new Uri("http://iframe.ip138.com/ic.asp");
 			HttpWebRequest httpWebRequest = WebRequest.Create(requestUri) as HttpWebRequest;
@@ -43,11 +35,10 @@ public class IPAddressPlugin : MonoBehaviour
 			streamReader.Close();
 			httpWebRequest.Abort();
 			httpWebResponse.Close();
-			Debug.Log(message);
 		}
 		catch
 		{
 			Debug.Log("SendIPReqest exception");
-		}
+		}*/
 	}
 }

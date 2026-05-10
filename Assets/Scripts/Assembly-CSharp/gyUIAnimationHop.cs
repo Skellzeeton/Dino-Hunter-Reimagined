@@ -41,10 +41,6 @@ public class gyUIAnimationHop : MonoBehaviour
 		m_v3Dir = mTranform.forward;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!m_bActive)

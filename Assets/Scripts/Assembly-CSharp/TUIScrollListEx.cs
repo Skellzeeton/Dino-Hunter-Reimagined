@@ -144,10 +144,6 @@ public class TUIScrollListEx : TUIControlImpl
 		}
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		UpdateItems(Time.deltaTime);
@@ -201,7 +197,7 @@ public class TUIScrollListEx : TUIControlImpl
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			if (num6 < size_scale)
 			{
@@ -301,7 +297,7 @@ public class TUIScrollListEx : TUIControlImpl
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			if (num3 < size_scale)
 			{
@@ -389,7 +385,7 @@ public class TUIScrollListEx : TUIControlImpl
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			if (num2 < size_scale)
 			{
@@ -432,7 +428,7 @@ public class TUIScrollListEx : TUIControlImpl
 	{
 		if (m_index < 0 || m_index >= items_list.Count)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		float num = 0f;
@@ -449,7 +445,7 @@ public class TUIScrollListEx : TUIControlImpl
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			if (num2 < size_scale)
 			{

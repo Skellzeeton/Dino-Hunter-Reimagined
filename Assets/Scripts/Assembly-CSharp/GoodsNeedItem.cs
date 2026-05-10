@@ -20,14 +20,6 @@ public class GoodsNeedItem : MonoBehaviour
 		btn_buy.m_nIndex = m_nIndex;
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void ShowGoodsNeedItem(int nID, int nCurCount, int nMaxCount)
 	{
 		TUIMappingInfo.CTUIMaterialInfo material = TUIMappingInfo.Instance().GetMaterial(nID);
@@ -67,7 +59,7 @@ public class GoodsNeedItem : MonoBehaviour
 	{
 		if (go_goods_effect == null || label_goods_need == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		GameObject gameObject = (GameObject)Object.Instantiate(go_goods_effect);

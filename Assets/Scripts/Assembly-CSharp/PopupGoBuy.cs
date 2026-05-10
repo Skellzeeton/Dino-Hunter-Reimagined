@@ -22,9 +22,6 @@ public class PopupGoBuy : MonoBehaviour
 		m_nLinkID = -1;
 	}
 
-	private void Update()
-	{
-	}
 
 	public void Show(GoBuyType m_go_buy_type, int linkid)
 	{

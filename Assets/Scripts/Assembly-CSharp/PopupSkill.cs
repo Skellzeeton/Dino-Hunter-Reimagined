@@ -45,10 +45,6 @@ public class PopupSkill : MonoBehaviour
 
 	public PopupGoEquip popup_go_equip;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		CheckScrollChoose();
@@ -58,7 +54,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (m_item == null)
 		{
-			Debug.Log("no m_item!");
+			Debug.LogWarning("no m_item!");
 			return;
 		}
 		label_skill_name.Text = m_item.GetSkillName();
@@ -109,7 +105,7 @@ public class PopupSkill : MonoBehaviour
 		{
 			if (m_item.GetSkillUnlockPrice() == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				return;
 			}
 			btn_click.SetStateUnlock();
@@ -119,7 +115,7 @@ public class PopupSkill : MonoBehaviour
 		{
 			if (m_item.GetSkillBuyPrice() == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				return;
 			}
 			btn_click.SetStateBuy();
@@ -176,7 +172,7 @@ public class PopupSkill : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		SetInfo(item_choose);
 		int wparam = 0;
@@ -226,7 +222,7 @@ public class PopupSkill : MonoBehaviour
 		PopupSkillBtnRole component = m_control.GetComponent<PopupSkillBtnRole>();
 		if (component == null)
 		{
-			Debug.Log("error! no popup_skill_btn_role!");
+			Debug.LogWarning("error! no popup_skill_btn_role!");
 			return;
 		}
 		popup_skill_btn_role_now = component;
@@ -248,7 +244,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (m_role_skill_info == null || m_role_skill_info.all_role_skill_list == null)
 		{
-			Debug.Log("no skill!");
+			Debug.LogWarning("no skill!");
 			return;
 		}
 		scroll_skill.AddScrollList(m_role_skill_info);
@@ -267,7 +263,7 @@ public class PopupSkill : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 			tUIButtonSelect.invokeObject = m_go_invoke;
 			btn_role_list[i] = tUIButtonSelect;
@@ -280,7 +276,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (scroll_skill == null || m_role_skill_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{
@@ -297,7 +293,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (item_choose.GetSkillUnlockPrice() == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		int price = item_choose.GetSkillUnlockPrice().price;
 		UnitType unit_type = item_choose.GetSkillUnlockPrice().unit_type;
@@ -317,7 +313,7 @@ public class PopupSkill : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 				}
 				label_skill_introduce.Text = item_choose.GetSkillIntroduceEx();
 				label_skill_introduce_unlock.Text = string.Empty;
@@ -331,12 +327,8 @@ public class PopupSkill : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 				}
-			}
-			else
-			{
-				Debug.Log("!!!you have no gold enough!!!");
 			}
 			break;
 		case UnitType.Crystal:
@@ -352,7 +344,7 @@ public class PopupSkill : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 				}
 				label_skill_introduce.Text = item_choose.GetSkillIntroduceEx();
 				label_skill_introduce_unlock.Text = string.Empty;
@@ -366,12 +358,8 @@ public class PopupSkill : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 				}
-			}
-			else
-			{
-				Debug.Log("!!!you have no crystal enough!!!");
 			}
 			break;
 		}
@@ -381,13 +369,13 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (item_choose.GetSkillBuyPrice() == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUIPriceInfo skillBuyPrice = item_choose.GetSkillBuyPrice();
 		if (skillBuyPrice == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return;
 		}
 		float discount = item_choose.GetDiscount();
@@ -419,14 +407,10 @@ public class PopupSkill : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 				}
 				label_skill_introduce.Text = item_choose.GetSkillIntroduceEx();
 				label_skill_introduce_unlock.Text = string.Empty;
-			}
-			else
-			{
-				Debug.Log("!!!you have no gold enough!!!");
 			}
 			break;
 		case UnitType.Crystal:
@@ -447,14 +431,10 @@ public class PopupSkill : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 				}
 				label_skill_introduce.Text = item_choose.GetSkillIntroduceEx();
 				label_skill_introduce_unlock.Text = string.Empty;
-			}
-			else
-			{
-				Debug.Log("!!!you have no crystal enough!!!");
 			}
 			break;
 		}
@@ -466,7 +446,7 @@ public class PopupSkill : MonoBehaviour
 		{
 			if (item_choose.GetSkillBuyPrice() == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				return;
 			}
 			float discount = item_choose.GetDiscount();
@@ -483,7 +463,6 @@ public class PopupSkill : MonoBehaviour
 			case UnitType.Gold:
 				num2 = top_bar.GetGoldValue();
 				num2 -= num;
-				Debug.Log("cost:" + num + unit_type.ToString());
 				if (num2 >= 0)
 				{
 					top_bar.SetGoldValue(num2);
@@ -504,18 +483,13 @@ public class PopupSkill : MonoBehaviour
 					}
 					else
 					{
-						Debug.Log("error!");
+						Debug.LogWarning("error!");
 					}
-				}
-				else
-				{
-					Debug.Log("!!!you have no gold enough!!!");
 				}
 				break;
 			case UnitType.Crystal:
 				num2 = top_bar.GetCrystalValue();
 				num2 -= num;
-				Debug.Log("coss:" + num + unit_type.ToString());
 				if (num2 >= 0)
 				{
 					top_bar.SetCrystalValue(num2);
@@ -536,19 +510,11 @@ public class PopupSkill : MonoBehaviour
 					}
 					else
 					{
-						Debug.Log("error!");
+						Debug.LogWarning("error!");
 					}
-				}
-				else
-				{
-					Debug.Log("!!!you have no crystal enough!!!");
 				}
 				break;
 			}
-		}
-		else
-		{
-			Debug.Log("you reach max level!");
 		}
 	}
 
@@ -556,7 +522,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (m_player_info == null)
 		{
-			Debug.Log("error! no found info");
+			Debug.LogWarning("error! no found info");
 			return;
 		}
 		int role_id = m_player_info.role_id;
@@ -577,7 +543,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (item_choose == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (scene_skill != null)
@@ -589,7 +555,7 @@ public class PopupSkill : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		int skillLevelMax = item_choose.GetSkillLevelMax();
 		int skillLevel = item_choose.GetSkillLevel();
@@ -625,7 +591,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (role_skill_info == null || role_skill_info.all_role_skill_list == null)
 		{
-			Debug.Log("no role info!");
+			Debug.LogWarning("no role info!");
 		}
 		else
 		{
@@ -649,7 +615,7 @@ public class PopupSkill : MonoBehaviour
 			}
 			if (tUISkillListInfo == null)
 			{
-				Debug.Log("no m_role_skill_list!");
+				Debug.LogWarning("no m_role_skill_list!");
 				return;
 			}
 			int skill_index = 0;
@@ -708,7 +674,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (popup_gold_to_crystal == null || top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int goldExchangeCount = popup_gold_to_crystal.GetGoldExchangeCount();
@@ -719,7 +685,7 @@ public class PopupSkill : MonoBehaviour
 		crystalValue -= crystalExchangeCount;
 		if (crystalValue < 0)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		top_bar.SetGoldValue(goldValue);
@@ -774,7 +740,7 @@ public class PopupSkill : MonoBehaviour
 	{
 		if (item_choose == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (m_sfx_open_now)

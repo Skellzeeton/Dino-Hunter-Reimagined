@@ -11,14 +11,6 @@ public class Btn_Achievement : MonoBehaviour
 
 	public TUILabel label_text;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetStateText(BtnAchievementState m_state)
 	{
 		string empty = string.Empty;

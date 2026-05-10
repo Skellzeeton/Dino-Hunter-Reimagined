@@ -16,11 +16,7 @@ public class iRotate : MonoBehaviour
 	{
 		m_Transform = base.transform;
 	}
-
-	private void Start()
-	{
-	}
-
+	
 	private void Update()
 	{
 		float deltaTime = Time.deltaTime;

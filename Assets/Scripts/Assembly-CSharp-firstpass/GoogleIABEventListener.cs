@@ -32,48 +32,37 @@ public class GoogleIABEventListener : MonoBehaviour
 
 	private void billingSupportedEvent()
 	{
-		Debug.Log("billingSupportedEvent");
 	}
 
 	private void billingNotSupportedEvent(string error)
 	{
-		Debug.Log("billingNotSupportedEvent: " + error);
 	}
 
 	private void queryInventorySucceededEvent(List<GooglePurchase> purchases, List<GoogleSkuInfo> skus)
 	{
-		Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
-		Debug.Log(purchases);
-		Debug.Log(skus);
 	}
 
 	private void queryInventoryFailedEvent(string error)
 	{
-		Debug.Log("queryInventoryFailedEvent: " + error);
 	}
 
 	private void purchaseCompleteAwaitingVerificationEvent(string purchaseData, string signature)
 	{
-		Debug.Log("purchaseCompleteAwaitingVerificationEvent. purchaseData: " + purchaseData + ", signature: " + signature);
 	}
 
 	private void purchaseSucceededEvent(GooglePurchase purchase)
 	{
-		Debug.Log("purchaseSucceededEvent: " + purchase);
 	}
 
 	private void purchaseFailedEvent(string error)
 	{
-		Debug.Log("purchaseFailedEvent: " + error);
 	}
 
 	private void consumePurchaseSucceededEvent(GooglePurchase purchase)
 	{
-		Debug.Log("consumePurchaseSucceededEvent: " + purchase);
 	}
 
 	private void consumePurchaseFailedEvent(string error)
 	{
-		Debug.Log("consumePurchaseFailedEvent: " + error);
 	}
 }

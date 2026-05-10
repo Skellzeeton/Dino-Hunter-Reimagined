@@ -58,10 +58,6 @@ public class gyUIPanelMissionSuccess : MonoBehaviour
 		base.gameObject.SetActiveRecursive(false);
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!m_bShow)

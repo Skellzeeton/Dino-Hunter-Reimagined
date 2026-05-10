@@ -49,12 +49,10 @@ public class doStunTask : Task
 			}
 		}
 		cCharBase.SetCurTask(this);
-		Debug.Log("enter stun");
 	}
 
 	public override void OnExit(Object inputParam)
 	{
-		Debug.Log("exit stun");
 		CCharBase cCharBase = inputParam as CCharBase;
 		if (cCharBase != null)
 		{

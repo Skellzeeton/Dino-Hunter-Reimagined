@@ -12,13 +12,6 @@ public class Popup_Option : MonoBehaviour
 
 	private bool sfx_open_now = true;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void SetOption(bool m_music_open, bool m_sfx_open)
 	{

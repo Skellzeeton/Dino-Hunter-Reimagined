@@ -71,10 +71,6 @@ public class LevelPoint : MonoBehaviour
 		ShowPassLevelText(false);
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		UpdateWayPointAni(Time.deltaTime);
@@ -210,7 +206,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (btn_level == null || img_bottom == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (m_open)
 		{
@@ -229,7 +225,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (way_points_list == null)
 		{
-			Debug.Log("error! no level way!");
+			Debug.LogWarning("error! no level way!");
 			return;
 		}
 		for (int i = 0; i < way_points_list.Count; i++)
@@ -242,7 +238,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (m_next_level == null)
 		{
-			Debug.Log("error! no next level info!");
+			Debug.LogWarning("error! no next level info!");
 			return;
 		}
 		open_way_points_show = true;
@@ -255,7 +251,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (finished_sign == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{
@@ -267,7 +263,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (drop_sign == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{
@@ -279,7 +275,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (btn_level == null || m_prefab_effect == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{
@@ -291,7 +287,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (label_text == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{
@@ -303,7 +299,7 @@ public class LevelPoint : MonoBehaviour
 	{
 		if (label_text == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{

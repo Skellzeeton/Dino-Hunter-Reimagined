@@ -24,10 +24,6 @@ public class UnlockBlink : MonoBehaviour
 
 	private string skill_path = "TUI/Skill/";
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (open_blink)
@@ -97,7 +93,6 @@ public class UnlockBlink : MonoBehaviour
 
 	public void OpenBlinkWeapon(string m_text, bool m_use_customize, string sPath)
 	{
-		Debug.Log(sPath);
 		open_blink = true;
 		now_time = 0f;
 		base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);
@@ -235,7 +230,7 @@ public class UnlockBlink : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture! " + m_path);
+			Debug.LogWarning("lose texture! " + m_path);
 			return;
 		}
 		if (!m_use_NGUI)

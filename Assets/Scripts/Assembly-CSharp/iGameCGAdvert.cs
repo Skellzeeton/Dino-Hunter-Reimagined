@@ -24,7 +24,6 @@ public class iGameCGAdvert : MonoBehaviour
 
         protected bool GetAttribute(XmlNode node, string name, ref string value)
         {
-            // Stubbed: Always return false
             return false;
         }
     }
@@ -43,10 +42,6 @@ public class iGameCGAdvert : MonoBehaviour
     private void Start()
     {
         SceneManager.LoadSceneAsync("Scene_Main");
-    }
-
-    private void Update()
-    {
     }
 
     protected void OnResult(string filename, string url = "")

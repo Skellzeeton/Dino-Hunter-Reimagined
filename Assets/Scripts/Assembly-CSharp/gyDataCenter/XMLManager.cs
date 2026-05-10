@@ -11,7 +11,7 @@ namespace gyDataCenter
 			XmlNodeList xmlNodeList = doc.SelectNodes(xpath);
 			if (xmlNodeList.Count < 1)
 			{
-				Debug.Log("cant find node for xpath:" + xpath);
+				Debug.LogError("cant find node for xpath:" + xpath);
 				return false;
 			}
 			foreach (XmlNode item in xmlNodeList)

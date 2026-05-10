@@ -31,8 +31,7 @@ public class PopupLevel_Frame03 : MonoBehaviour
 	{
 		if (goods01 == null || goods02 == null || goods03 == null || goods04 == null ||
 		    goods05 == null || goods06 == null || goods07 == null || goods08 == null)
-			Debug.Log("error!");
-
+			Debug.LogWarning("error!");
 		goods01_position = goods01.transform.localPosition;
 		goods02_position = goods02.transform.localPosition;
 		goods03_position = goods03.transform.localPosition;
@@ -42,9 +41,6 @@ public class PopupLevel_Frame03 : MonoBehaviour
 		goods07_position = goods07.transform.localPosition;
 		goods08_position = goods08.transform.localPosition;
 	}
-
-	private void Start()  { }
-	private void Update() { }
 
 	public void SetGoodsInfo(List<TUIGoodsInfo> m_goods_drop_list)
 	{
@@ -113,7 +109,7 @@ public class PopupLevel_Frame03 : MonoBehaviour
 	private void ApplyFrame02Visibility(bool show)
 	{
 		if (frame02 != null)
-			frame02.gameObject.SetActiveRecursively(show);
+			frame02.gameObject.SetActiveRecursive(show);
 	}
 
 	private void ApplyArrowRotation()
@@ -186,7 +182,7 @@ public class PopupLevel_Frame03 : MonoBehaviour
 			goods05.gameObject.SetActiveRecursive(true);
 			break;
 		default:
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			break;
 		}
 	}

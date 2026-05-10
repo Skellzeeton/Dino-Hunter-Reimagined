@@ -77,7 +77,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		m_ltFriends = new List<string>();
 		if (m_fade == null)
 		{
-			Debug.Log("error!no found m_fade!");
+			Debug.LogWarning("error!no found m_fade!");
 		}
 		TUIDataServer.Instance().Initialize();
 		TUIMappingInfo.Instance().SetCurrentScene(base.gameObject);
@@ -137,7 +137,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 			}
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_EnterInfo)
@@ -157,7 +157,6 @@ public class Scene_CoopMainMenu : MonoBehaviour
 				if (villiage_enter_info != null)
 				{
 					unlock_list = villiage_enter_info.unlock_list;
-					Debug.Log("unlock count " + unlock_list.Count);
 				}
 			}
 		}
@@ -766,30 +765,6 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_IAP(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_EnterIAP));
-		}
-	}
-
-	public void TUIEvent_Gold(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
-		if (event_type == 3)
-		{
-			if (sfx_open_now)
-			{
-				CUISound.GetInstance().Play("UI_Button");
-			}
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_EnterGold));
-		}
-	}
-
 	public void DoSceneChange(int m_scene_id, string m_scene_normal)
 	{
 		string sceneName = TUIMappingInfo.Instance().GetSceneName(m_scene_id);
@@ -806,33 +781,6 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			is_fade_out = true;
 			m_fade.FadeOut();
 		}
-	}
-
-	public bool GetRankingShow()
-	{
-		if (popup_player_info != null)
-		{
-			return popup_player_info.GetRankingShow();
-		}
-		return false;
-	}
-
-	public bool GetFriendsListShow()
-	{
-		if (popup_player_info != null)
-		{
-			return popup_player_info.GetFriendsListShow();
-		}
-		return false;
-	}
-
-	public bool GetInfoCardShow()
-	{
-		if (popup_player_info != null)
-		{
-			return popup_player_info.GetInfoCardShow();
-		}
-		return false;
 	}
 
 	private void CheckBackupInfo()
@@ -1001,13 +949,11 @@ public class Scene_CoopMainMenu : MonoBehaviour
 
 	public void OpenKeyBoard(string text)
 	{
-		Debug.Log(text);
 		IphoneInputPlugin.GetInstance().Open("Enter your status(max 40 letters or numbers)", text, 40, OnKeyBoardDone, TouchScreenKeyboardType.ASCIICapable, "^[\\w\\?\\,\\.\\!\\@\\#\\$\\%\\^&\\*\\(\\)]${0,40}", false, true, true);
 	}
 
 	protected void OnKeyBoardDone(string sValue)
 	{
-		Debug.Log(sValue);
 		status_input_text = sValue;
 		if (label_status != null)
 		{

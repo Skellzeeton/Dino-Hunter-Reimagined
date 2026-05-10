@@ -26,10 +26,6 @@ public class LabelBattlePower : MonoBehaviour
 		m_Label = GetComponent<TUILabel>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!m_bActive)

@@ -15,17 +15,7 @@ public class Popup_Sale : MonoBehaviour
 
 	public Popup_Sale_Blink sale_blink;
 
-	private void Awake()
-	{
-	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void Show()
 	{
@@ -53,13 +43,13 @@ public class Popup_Sale : MonoBehaviour
 	{
 		if (m_all_sale_info == null)
 		{
-			Debug.Log("no info");
+			Debug.LogWarning("no info");
 			return;
 		}
 		List<TUISingleSaleInfo> all_sale_info = m_all_sale_info.all_sale_info;
 		if (all_sale_info == null || prefab_item_group == null || go_popup == null || prefab_item == null || scroll_list == null)
 		{
-			Debug.Log("warning!");
+			Debug.LogWarning("warning!");
 			return;
 		}
 		GameObject gameObject = null;
@@ -70,7 +60,7 @@ public class Popup_Sale : MonoBehaviour
 				gameObject = (GameObject)Object.Instantiate(prefab_item_group);
 				if (gameObject == null)
 				{
-					Debug.Log("error!");
+					Debug.LogWarning("error!");
 					break;
 				}
 				gameObject.transform.parent = scroll_list.transform;
@@ -80,7 +70,7 @@ public class Popup_Sale : MonoBehaviour
 			Popup_Sale_Item popup_Sale_Item = (Popup_Sale_Item)Object.Instantiate(prefab_item);
 			if (popup_Sale_Item == null)
 			{
-				Debug.Log("error!");
+				Debug.LogWarning("error!");
 				break;
 			}
 			popup_Sale_Item.transform.parent = gameObject.transform;

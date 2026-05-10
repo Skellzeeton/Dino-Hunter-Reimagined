@@ -670,7 +670,9 @@ public class CCharPlayer : CCharBase
 		{
 			gameUI.SetProtraitIcon(m_curCharacterInfoLevel.sIcon, base.UID);
 			gameUI.SetProtraitLife(m_fHP / m_fHPMax, base.UID);
-			UnityEngine.Debug.Log(base.UID + " " + m_fHP + " " + m_fHPMax);
+#if UNITY_EDITOR
+			Debug.Log(base.UID + " " + m_fHP + " " + m_fHPMax);
+#endif
 		}
 	}
 
@@ -2427,7 +2429,9 @@ public class CCharPlayer : CCharBase
 		{
 			num3 = 95f;
 		}
-		UnityEngine.Debug.Log(base.UID + " protect = " + num3);
+#if UNITY_EDITOR
+		Debug.Log(base.UID + " protect = " + num3);
+#endif
 		return num3;
 	}
 
@@ -2513,7 +2517,6 @@ public class CCharPlayer : CCharBase
 
 	public virtual void UseSkill(int nSkill, int nSkillLevel)
 	{
-		UnityEngine.Debug.Log(base.UID + " useskill " + nSkill + " " + nSkillLevel);
 		CSkillInfoLevel skillInfo = base.m_GameData.GetSkillInfo(nSkill, nSkillLevel);
 		if (skillInfo == null)
 		{

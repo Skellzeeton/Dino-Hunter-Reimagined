@@ -18,9 +18,6 @@ public class iAnimationPlayer : MonoBehaviour
 
 	protected int m_nLoopCount;
 
-	private void Awake()
-	{
-	}
 
 	private void Start()
 	{

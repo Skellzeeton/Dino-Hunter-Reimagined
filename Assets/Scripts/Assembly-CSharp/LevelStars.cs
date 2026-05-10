@@ -22,7 +22,7 @@ public class LevelStars : MonoBehaviour
 	{
 		if (texture_empty == string.Empty || texture_full == string.Empty)
 		{
-			Debug.Log("no texture!");
+			Debug.LogWarning("no texture!");
 			return;
 		}
 		star01.texture = texture_empty;
@@ -32,19 +32,15 @@ public class LevelStars : MonoBehaviour
 		star05.texture = texture_empty;
 	}
 
-	private void Update()
-	{
-	}
-
 	public void SetStars(int count, Vector3 m_position, int blink_index = 0)
 	{
 		if (texture_empty == string.Empty || texture_full == string.Empty)
 		{
-			Debug.Log("no texture!");
+			Debug.LogWarning("no texture!");
 			return;
 		}
-		base.gameObject.SetActiveRecursive(true);
-		base.gameObject.transform.localPosition = m_position;
+		gameObject.SetActiveRecursive(true);
+		gameObject.transform.localPosition = m_position;
 		switch (count)
 		{
 		case 0:
@@ -142,10 +138,10 @@ public class LevelStars : MonoBehaviour
 	{
 		if (texture_empty == string.Empty || texture_full == string.Empty)
 		{
-			Debug.Log("no texture!");
+			Debug.LogWarning("no texture!");
 			return;
 		}
-		base.gameObject.SetActiveRecursive(true);
+		gameObject.SetActiveRecursive(true);
 		switch (count)
 		{
 		case 0:
@@ -191,10 +187,5 @@ public class LevelStars : MonoBehaviour
 			star05.texture = texture_full;
 			break;
 		}
-	}
-
-	public void SetStarsDisable()
-	{
-		base.gameObject.SetActiveRecursive(false);
 	}
 }

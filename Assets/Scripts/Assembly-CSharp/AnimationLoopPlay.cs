@@ -12,8 +12,4 @@ public class AnimationLoopPlay : MonoBehaviour
 			ani_myseft.Play();
 		}
 	}
-
-	private void Update()
-	{
-	}
 }

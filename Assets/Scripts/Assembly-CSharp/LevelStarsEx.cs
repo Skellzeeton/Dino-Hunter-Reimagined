@@ -16,19 +16,15 @@ public class LevelStarsEx : MonoBehaviour
 	{
 		if (texture_empty == string.Empty || texture_full == string.Empty)
 		{
-			Debug.Log("no texture!");
+			Debug.LogWarning("nono texture!");
 		}
-	}
-
-	private void Update()
-	{
 	}
 
 	public void SetStars(int m_count, Vector3 m_position, bool m_blink = false)
 	{
 		if (texture_empty == string.Empty || texture_full == string.Empty)
 		{
-			Debug.Log("no texture!");
+			Debug.LogWarning("nono texture!");
 			return;
 		}
 		base.gameObject.SetActiveRecursive(true);

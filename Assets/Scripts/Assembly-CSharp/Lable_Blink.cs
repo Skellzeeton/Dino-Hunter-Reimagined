@@ -8,11 +8,7 @@ public class Lable_Blink : MonoBehaviour
 	{
 		blink_time = 0f;
 	}
-
-	private void Update()
-	{
-	}
-
+	
 	private void LateUpdate()
 	{
 		blink_time += Time.deltaTime;

@@ -221,7 +221,6 @@ public class CNameCardInfo
 				m_Photo = gyLoadImage.Resize(m_Photo, 40, 40);
 			}
 			m_NCPack.photo = m_Photo.EncodeToPNG();
-			Debug.Log("from byte[] photo size = " + m_NCPack.photo.Length);
 		}
 		catch
 		{
@@ -240,7 +239,6 @@ public class CNameCardInfo
 				m_Photo = gyLoadImage.Resize(m_Photo, 40, 40);
 			}
 			m_NCPack.photo = m_Photo.EncodeToPNG();
-			Debug.Log("from texture2d photo size = " + m_NCPack.photo.Length);
 		}
 	}
 

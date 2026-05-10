@@ -10,10 +10,6 @@ public class ScrollSkill : MonoBehaviour
 
 	private ScrollList_SkillItem item_choose;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		CheckItemChoose();
@@ -23,7 +19,7 @@ public class ScrollSkill : MonoBehaviour
 	{
 		if (m_all_role_skill_info == null || m_all_role_skill_info.all_role_skill_list == null)
 		{
-			Debug.Log("no role skill!");
+			Debug.LogWarning("no role skill!");
 			return;
 		}
 		scroll_list_ex_list = new TUIScrollListEx[m_all_role_skill_info.all_role_skill_list.Length];
@@ -41,7 +37,7 @@ public class ScrollSkill : MonoBehaviour
 	{
 		if (scroll_list_ex_list == null || m_role_skill_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		TUISkillListInfo[] all_role_skill_list = m_role_skill_info.all_role_skill_list;
@@ -66,7 +62,7 @@ public class ScrollSkill : MonoBehaviour
 	{
 		if (m_index < 0 || m_index > scroll_list_ex_list.Length)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		if (scroll_list_ex_now != null)

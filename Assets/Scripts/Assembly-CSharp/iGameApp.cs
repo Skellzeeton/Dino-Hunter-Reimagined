@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 public class iGameApp
 {
 	public static iGameApp m_Instance;
-
-	public DebugGUI m_Debug;
-
+	
 	public iGizmos m_Gizmos;
 
 	public iGameSceneBase m_GameScene;
@@ -38,13 +36,6 @@ public class iGameApp
 			gameObject.transform.position = Vector3.zero;
 			gameObject.transform.rotation = Quaternion.identity;
 			m_Gizmos = gameObject.AddComponent<iGizmos>();
-		}
-		gameObject = new GameObject("_DebugGUI");
-		if (gameObject != null)
-		{
-			gameObject.transform.position = Vector3.zero;
-			gameObject.transform.rotation = Quaternion.identity;
-			m_Debug = gameObject.AddComponent<DebugGUI>();
 		}
 		gameObject = new GameObject("_ClearMemoryObject");
 		if (gameObject != null)
@@ -99,7 +90,6 @@ public class iGameApp
 		{
 			DestroyScene();
 		}
-		Debug.Log("play theme " + gotoscene);
 		CUISound.GetInstance().Play("");
 		switch (gotoscene)
 		{
@@ -285,19 +275,6 @@ public class iGameApp
 		}
 	}
 
-	public void ScreenLog(string str)
-	{
-		m_Debug.Debug(str);
-	}
-
-	public void ClearScreenLog()
-	{
-		if (!(m_Debug == null))
-		{
-			m_Debug.Clear();
-		}
-	}
-
 	public void ClearMemory()
 	{
 		if (!(m_ClearMemory == null))
@@ -336,7 +313,6 @@ public class iGameApp
 							dataCenter.AddUnlockSign(1, value.nID);
 						}
 						flag = true;
-						ScreenLog("unlock character " + value.nID);
 					}
 				}
 			}
@@ -371,7 +347,6 @@ public class iGameApp
 						dataCenter.AddUnlockSign(2, skillInfo.nID);
 					}
 					flag = true;
-					ScreenLog("unlock skill " + skillInfo.nID);
 				}
 			}
 		}
@@ -393,7 +368,6 @@ public class iGameApp
 							dataCenter.AddUnlockSign(3, value2.nID);
 						}
 						flag = true;
-						ScreenLog("sign weapon " + value2.nID);
 					}
 				}
 			}
@@ -415,7 +389,6 @@ public class iGameApp
 							dataCenter.AddUnlockSign(4, value3.m_nID);
 						}
 						flag = true;
-						ScreenLog("sign avatar " + value3.m_nID);
 					}
 				}
 			}
@@ -508,7 +481,6 @@ public class iGameApp
 		}
 		if (flag)
 		{
-			ScreenLog("===============================");
 			dataCenter.Save();
 		}
 	}
@@ -535,10 +507,9 @@ public class iGameApp
 			CAchievementInfo achievementInfo = m_GameData.GetAchievementInfo(value.nID);
 			if (achievementInfo != null && !achievementInfo.isDaily)
 			{
-				UnityEngine.Debug.Log(value.nID + " has " + achiStar + " stars");
+				//UnityEngine.Debug.Log(value.nID + " has " + achiStar + " stars");
 				if (!value.IsGotReward(achiStar - 1))
 				{
-					UnityEngine.Debug.Log("You has not take reward " + (achiStar - 1));
 					return true;
 				}
 			}
@@ -1775,7 +1746,9 @@ public class iGameApp
 		{
 			return false;
 		}
-		UnityEngine.Debug.Log(string.Concat("newhelpstate ", nTutorialVillageState, " ", nStageID));
+#if UNITY_EDITOR
+		Debug.Log(string.Concat("newhelpstate ", nTutorialVillageState, " ", nStageID));
+#endif
 		if (nStageID == 1001 && nTutorialVillageState == NewHelpState.None)
 		{
 			return true;
@@ -1856,7 +1829,6 @@ public class iGameApp
 						{
 							int nSrcID = serverConfigInfo.m_ltItemIDChange[j].m_nSrcID;
 							int nDstID = serverConfigInfo.m_ltItemIDChange[j].m_nDstID;
-							UnityEngine.Debug.Log(nSrcID + " -> " + nDstID);
 							int materialNum = dataCenter.GetMaterialNum(nSrcID);
 							if (materialNum > 0)
 							{
@@ -1938,7 +1910,6 @@ public class iGameApp
 					{
 						if (m_GameData.GetItemInfo(item2.Key) == null)
 						{
-							UnityEngine.Debug.Log(item2.Key);
 							list.Add(item2.Key);
 						}
 					}
@@ -1952,7 +1923,6 @@ public class iGameApp
 								{
 									int nSrcID2 = serverConfigInfo2.m_ltItemIDChange[k].m_nSrcID;
 									int nDstID2 = serverConfigInfo2.m_ltItemIDChange[k].m_nDstID;
-									UnityEngine.Debug.Log(nSrcID2 + " -> " + nDstID2);
 									int materialNum2 = dataCenter.GetMaterialNum(nSrcID2);
 									if (materialNum2 > 0)
 									{
@@ -1986,7 +1956,7 @@ public class iGameApp
 		}
 		catch
 		{
-			Debug.Log("?");
+			Debug.LogError("?");
 			return false;
 		}
 		SaveData(true);

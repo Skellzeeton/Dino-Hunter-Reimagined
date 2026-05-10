@@ -363,7 +363,7 @@ public class TAudioEffectRandom : ITAudioEvent
 
 		if (TAudioManager.instance == null)
 		{
-			Debug.Log("Trigger null");
+			Debug.LogWarning("Trigger null");
 			return;
 		}
 

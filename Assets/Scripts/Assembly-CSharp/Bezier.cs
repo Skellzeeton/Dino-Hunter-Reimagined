@@ -70,7 +70,6 @@ public class Bezier : MonoBehaviour
 			float num = (float)i / (float)pointcount;
 			array[i] = p0 * Mathf.Pow(1f - num, 3f) + 3f * p1 * num * Mathf.Pow(1f - num, 2f) + 3f * p2 * num * num * (1f - num) + p3 * num * num * num;
 		}
-		Debug.Log("CalcBeiser1 time " + (Time.realtimeSinceStartup - realtimeSinceStartup));
 		return array;
 	}
 
@@ -90,7 +89,6 @@ public class Bezier : MonoBehaviour
 			vector = Vector3.Lerp(vector, to, t);
 			array[i] = Vector3.Lerp(from, vector, t);
 		}
-		Debug.Log("CalcBeiser2 time " + (Time.realtimeSinceStartup - realtimeSinceStartup));
 		return array;
 	}
 }

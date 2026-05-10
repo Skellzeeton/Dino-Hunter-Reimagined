@@ -4,13 +4,6 @@ public class Popup_Review : MonoBehaviour
 {
 	public GameObject go_popup;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void Show()
 	{

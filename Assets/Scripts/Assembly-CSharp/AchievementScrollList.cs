@@ -11,25 +11,17 @@ public class AchievementScrollList : MonoBehaviour
 
     private List<TUIOneAchievementInfo> achievement_list;
 
-    private void Start()
-    {
-    }
-
-    private void Update()
-    {
-    }
-
     public void DoCreate(TUIAchievementInfo m_info, GameObject m_go_invoke)
     {
         if (scrollist == null || prefab_item == null)
         {
-            Debug.Log("error!");
+            Debug.LogWarning("error!");
             return;
         }
         achievement_list = m_info.achievement_list;
         if (achievement_list == null)
         {
-            Debug.Log("error! no info!");
+            Debug.LogWarning("error! no info!");
             return;
         }
         for (int i = 0; i < achievement_list.Count; i++)
@@ -50,7 +42,7 @@ public class AchievementScrollList : MonoBehaviour
             }
             else
             {
-                Debug.Log("errror!");
+                Debug.LogWarning("error!");
             }
         }
     }

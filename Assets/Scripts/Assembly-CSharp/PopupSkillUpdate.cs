@@ -14,13 +14,6 @@ public class PopupSkillUpdate : MonoBehaviour
 
 	public TUILabel label_sale_sign;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void ShowSkillUpdate()
 	{
@@ -37,7 +30,7 @@ public class PopupSkillUpdate : MonoBehaviour
 	{
 		if (m_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		bool skillUnlock = m_item.GetSkillUnlock();
@@ -50,7 +43,7 @@ public class PopupSkillUpdate : MonoBehaviour
 		TUIPriceInfo skillUpdatePrice = m_item.GetSkillUpdatePrice();
 		if (skillUpdatePrice == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int price = skillUpdatePrice.price;

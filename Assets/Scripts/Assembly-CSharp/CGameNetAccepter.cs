@@ -204,7 +204,6 @@ public class CGameNetAccepter
 		{
 			return;
 		}
-		Debug.Log(sender.Id + " leave room");
 		if (m_GameScene == null)
 		{
 			CGameNetManager.GetInstance().DelNetUserInfo(netUserInfo.m_nId);
@@ -214,7 +213,6 @@ public class CGameNetAccepter
 		netUserInfo.m_bLeaved = true;
 		if (!sender.IsItMe)
 		{
-			Debug.Log("uid = " + netUserInfo.m_nUID);
 			m_GameScene.RemovePlayer(netUserInfo.m_nUID);
 		}
 	}
@@ -331,7 +329,6 @@ public class CGameNetAccepter
 				}
 			}
 		}
-		Debug.Log(nmsg_game_enter2.m_nGameLevelID);
 		m_GameState.GameLevel = nmsg_game_enter2.m_nGameLevelID;
 		m_GameState.m_nCurHunterLevelID = nmsg_game_enter2.m_nHunterLevelID;
 		iGameApp.GetInstance().EnterScene(kGameSceneEnum.Game);

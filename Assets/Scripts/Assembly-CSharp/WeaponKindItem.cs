@@ -11,13 +11,6 @@ public class WeaponKindItem : MonoBehaviour
 		m_nCurIndex = -1;
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public GameObject Get(int nIndex)
 	{

@@ -48,10 +48,6 @@ public class gyUIScreenTip : MonoBehaviour
 		m_AnimArrow = m_Arrow.GetComponentInChildren<gyUIAnimationHop>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_bActive && !(m_Actor == null) && !(m_Target == null))

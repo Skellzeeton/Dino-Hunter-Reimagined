@@ -154,7 +154,6 @@ public class CMonsterGenerate
 		onUnitSphere.y = 0f;
 		int num = 0;
 		num = ((m_GameScene.m_curHunterLevelInfo == null) ? ((waveMobInfo.nLevel != 0) ? waveMobInfo.nLevel : m_curWaveInfo.nDefaultMobLevel) : Random.Range(m_GameScene.m_curHunterLevelInfo.m_nMonsterLvlMin, m_GameScene.m_curHunterLevelInfo.m_nMonsterLvlMax + 1));
-		//Debug.Log(waveMobInfo.nID + " " + num);
 		CMobInfoLevel mobInfo = m_GameData.GetMobInfo(waveMobInfo.nID, num);
 		if (mobInfo == null)
 		{

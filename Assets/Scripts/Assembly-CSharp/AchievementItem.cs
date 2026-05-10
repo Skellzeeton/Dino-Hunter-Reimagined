@@ -37,16 +37,12 @@ public class AchievementItem : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
-
 	public void DoCreate(TUIOneAchievementInfo m_chievement_info,  bool m_change_bg = false, GameObject m_go_invoke = null)
 	{
 		chievement_info = m_chievement_info;
 		if (chievement_info == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return;
 		}
 		if (btn_achievement != null && m_go_invoke != null)
@@ -166,10 +162,6 @@ public class AchievementItem : MonoBehaviour
 		{
 			DoCreateEx(star_level, text, introduce, num, reward, unit, reward2, unit2, progress_text);
 		}
-		else
-		{
-			Debug.Log("no reward?!Next Level:" + (int)(star_level + 1));
-		}
 		if (img_bg != null)
 		{
 			img_bg.gameObject.SetActiveRecursive(!m_change_bg);
@@ -272,7 +264,7 @@ public class AchievementItem : MonoBehaviour
 	{
 		if (chievement_info == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return;
 		}
 		Dictionary<int, string> name_list = chievement_info.name_list;
@@ -282,7 +274,7 @@ public class AchievementItem : MonoBehaviour
 		Dictionary<int, string> progress_text_list = chievement_info.progress_text_list;
 		if (star_level + 1 > AchievementLevelType.Level3)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		star_level++;
@@ -381,10 +373,6 @@ public class AchievementItem : MonoBehaviour
 		{
 			DoCreateEx(star_level, text, introduce, progress, reward, unit, reward2, unit2, progress_text);
 		}
-		else
-		{
-			Debug.Log("no reward?!Next Level:" + (int)(star_level + 1));
-		}
 		if (effect_stars_prefab != null)
 		{
 			GameObject gameObject = (GameObject)Object.Instantiate(effect_stars_prefab);
@@ -398,7 +386,7 @@ public class AchievementItem : MonoBehaviour
 	{
 		if (chievement_info == null)
 		{
-			Debug.Log("no info!");
+			Debug.LogWarning("no info!");
 			return null;
 		}
 		Dictionary<int, TUIAchievementRewardInfo> reward_list = chievement_info.reward_list;

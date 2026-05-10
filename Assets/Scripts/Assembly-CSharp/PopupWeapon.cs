@@ -55,10 +55,6 @@ public class PopupWeapon : MonoBehaviour
 		m_dictScrollListWeapon = new Dictionary<kShopWeaponCategory, ScrollList_Weapon>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		CheckScrollChoose();
@@ -322,7 +318,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (m_curWeaponAttributeInfo == null)
 		{
-			Debug.Log("error! no item_choose");
+			Debug.LogWarning("error! no item_choose");
 			return;
 		}
 		popup_weapon_update.ShowWeaponUpdate();
@@ -338,7 +334,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (popup_weapon_supplement == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		popup_weapon_supplement.SetSupplementInfo(supplementinfo);
@@ -350,7 +346,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (popup_weapon_supplement == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		popup_weapon_supplement.Hide();
@@ -503,7 +499,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (m_player_info == null)
 		{
-			Debug.Log("error! no found info");
+			Debug.LogWarning("error! no found info");
 			return;
 		}
 		int role_id = m_player_info.role_id;
@@ -588,7 +584,7 @@ public class PopupWeapon : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 	}
 
@@ -712,7 +708,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (popup_gold_to_crystal == null || top_bar == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int goldExchangeCount = popup_gold_to_crystal.GetGoldExchangeCount();
@@ -723,7 +719,7 @@ public class PopupWeapon : MonoBehaviour
 		crystalValue -= crystalExchangeCount;
 		if (crystalValue < 0)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		top_bar.SetGoldValue(goldValue);
@@ -794,7 +790,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (popup_tips == null || m_control == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		GoodsNeedItemImg component = m_control.GetComponent<GoodsNeedItemImg>();
@@ -809,7 +805,7 @@ public class PopupWeapon : MonoBehaviour
 	{
 		if (popup_tips == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else
 		{

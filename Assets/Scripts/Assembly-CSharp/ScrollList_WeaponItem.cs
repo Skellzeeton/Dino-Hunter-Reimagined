@@ -42,19 +42,11 @@ public class ScrollList_WeaponItem : MonoBehaviour
 
 	public NewMarkType m_MarkType { get; private set; }
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void DoCreate(TUIWeaponAttributeInfo weaponattributeinfo)
 	{
 		if (weaponattributeinfo == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		attribute_info = weaponattributeinfo;
@@ -157,7 +149,7 @@ public class ScrollList_WeaponItem : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!" + m_path);
+			Debug.LogWarning("lose texture!" + m_path);
 			return;
 		}
 		if (!m_use_NGUI)

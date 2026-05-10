@@ -101,12 +101,10 @@ namespace gyTaskSystem
 				item.Update(deltaTime);
 				if (item.isCompleted)
 				{
-					Debug.Log("task completed " + item.GetTaskInfo().nID);
 					m_nTaskNumCompleted++;
 				}
 				else if (item.isFailed)
 				{
-					Debug.Log("task failed " + item.GetTaskInfo().nID);
 					m_nTaskNumFailed++;
 				}
 			}

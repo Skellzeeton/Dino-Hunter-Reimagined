@@ -11,25 +11,17 @@ public class DailyMissionsScrollList : MonoBehaviour
 
 	private List<TUIOneDailyMissionsInfo> daily_missions_list;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void DoCreate(TUIDailyMissionsInfo m_info, GameObject m_go_invoke)
 	{
 		if (scrollist == null || prefab_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		daily_missions_list = m_info.daily_missions_list;
 		if (daily_missions_list == null)
 		{
-			Debug.Log("error! no info!");
+			Debug.LogWarning("error! no info!");
 			return;
 		}
 		for (int i = 0; i < daily_missions_list.Count; i++)
@@ -44,7 +36,7 @@ public class DailyMissionsScrollList : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("errror!");
+				Debug.LogWarning("errror!");
 			}
 		}
 	}

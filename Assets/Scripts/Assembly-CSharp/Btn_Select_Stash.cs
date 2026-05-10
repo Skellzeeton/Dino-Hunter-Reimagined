@@ -36,30 +36,22 @@ public class Btn_Select_Stash : MonoBehaviour
 	{
 		if (img_quality == null)
 		{
-			Debug.Log("error! no img_quality!");
+			Debug.LogWarning("error! no img_quality!");
 		}
 		if (img_mask == null)
 		{
-			Debug.Log("error! no img_mask!");
+			Debug.LogWarning("error! no img_mask!");
 		}
 		if (img_texture == null)
 		{
-			Debug.Log("error! no img_texture!");
+			Debug.LogWarning("error! no img_texture!");
 		}
 		if (label_count == null)
 		{
-			Debug.Log("error! no label_count!");
+			Debug.LogWarning("error! no label_count!");
 		}
 		img_mask.gameObject.SetActiveRecursive(false);
 		img_quality.gameObject.SetActiveRecursive(false);
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
 	}
 
 	public void SetIndex(int id)
@@ -88,7 +80,7 @@ public class Btn_Select_Stash : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.Log("lose texture!");
+			Debug.LogWarning("lose texture!");
 			return;
 		}
 		if (!m_use_NGUI)

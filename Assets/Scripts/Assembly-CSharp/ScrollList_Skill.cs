@@ -13,19 +13,12 @@ public class ScrollList_Skill : MonoBehaviour
 
 	private int id;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void AddItem(TUISkillListInfo m_skill_list_info, int m_index)
 	{
 		if (m_skill_list_info == null)
 		{
-			Debug.Log("no skill!");
+			Debug.LogWarning("no skill!");
 			return;
 		}
 		TUISkillInfo[] skill_list_info = m_skill_list_info.skill_list_info;
@@ -50,7 +43,7 @@ public class ScrollList_Skill : MonoBehaviour
 	{
 		if (m_new_mark_list == null || scroll_list_ex == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		List<GameObject> itemsList = scroll_list_ex.GetItemsList();
@@ -102,7 +95,7 @@ public class ScrollList_Skill : MonoBehaviour
 	{
 		if (scroll_list_ex == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		grid.repositionStart = false;

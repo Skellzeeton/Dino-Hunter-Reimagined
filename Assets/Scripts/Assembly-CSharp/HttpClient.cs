@@ -82,7 +82,6 @@ public class HttpClient
 			{
 				m_timeout = Time.realtimeSinceStartup + timeout;
 			}
-			UnityEngine.Debug.Log("requestdata = " + m_request);
 			if (m_key != null && m_key.Length > 0)
 			{
 				m_requestData = XXTEAUtils.Encrypt(Encoding.UTF8.GetBytes(m_request), Encoding.UTF8.GetBytes(m_key));
@@ -103,7 +102,6 @@ public class HttpClient
 			try
 			{
 				m_www = new WWW(m_url + "?action=" + m_action, m_requestData);
-				UnityEngine.Debug.Log(m_url + "?action=" + m_action + " ....  requestdata length = " + m_requestData.Length);
 			}
 			catch
 			{
@@ -124,18 +122,14 @@ public class HttpClient
 			}
 			if (!m_complete && m_www.isDone)
 			{
-				UnityEngine.Debug.Log("--responseHeaders--");
 				foreach (KeyValuePair<string, string> responseHeader in m_www.responseHeaders)
 				{
-					UnityEngine.Debug.Log(responseHeader.Key + " " + responseHeader.Value);
 				}
-				UnityEngine.Debug.Log("-----");
 				m_complete = true;
 				if (m_www.error != null)
 				{
 					m_result = -4;
-					Debug.LogError(m_www.error);
-					Debug.Log("error url = " + m_www.url);
+					Debug.LogError("error url = " + m_www.url);
 				}
 				else
 				{
@@ -163,7 +157,7 @@ public class HttpClient
 					catch (Exception ex)
 					{
 						m_result = -4;
-						Debug.Log("unknown error " + ex.StackTrace);
+						Debug.LogError("unknown error " + ex.StackTrace);
 					}
 				}
 			}

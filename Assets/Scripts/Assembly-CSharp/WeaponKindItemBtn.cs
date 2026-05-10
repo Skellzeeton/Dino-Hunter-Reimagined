@@ -21,16 +21,8 @@ public class WeaponKindItemBtn : MonoBehaviour
 		btn_select = base.gameObject.GetComponent<TUIButtonSelect>();
 		if (btn_select == null)
 		{
-			Debug.Log("no btn_select!");
+			Debug.LogWarning("no btn_select!");
 		}
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
 	}
 
 	public void SetMark(NewMarkType mark)

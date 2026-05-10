@@ -36,7 +36,7 @@ public class Scene_CoopInputName : MonoBehaviour
     {
         if (m_fade == null)
         {
-            Debug.Log("error!no found m_fade!");
+            Debug.LogWarning("error!no found m_fade!");
         }
         TUIDataServer.Instance().Initialize();
         global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneCoopInputName>(TUIEvent_SetUIInfo);
@@ -114,7 +114,7 @@ public class Scene_CoopInputName : MonoBehaviour
             }
             else
             {
-                Debug.Log("error!");
+                Debug.LogWarning("error!");
             }
         }
         else if (m_event.GetEventName() == TUIEvent.SceneCoopInputNameEventType.TUIEvent_Continue)

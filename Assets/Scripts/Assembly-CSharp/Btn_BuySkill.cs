@@ -24,14 +24,6 @@ public class Btn_BuySkill : MonoBehaviour
 
 	private StateButtonSkill state_btnskill;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void SetStateUnlock()
 	{
 		base.gameObject.SetActiveRecursive(false);

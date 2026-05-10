@@ -19,10 +19,6 @@ public class iBuildingUnit : MonoBehaviour
 		m_fColorRate = 1f;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!(m_Renderer == null) && !(m_Renderer.material == null) && m_fColorRate < 1f)

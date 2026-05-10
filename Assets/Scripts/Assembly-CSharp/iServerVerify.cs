@@ -266,7 +266,6 @@ public class iServerVerify : MonoBehaviour
 							if (item6.Name == "message")
 							{
 								m_sServerMessage = item6.InnerText;
-								UnityEngine.Debug.Log(m_sServerMessage);
 								break;
 							}
 						}
@@ -274,7 +273,6 @@ public class iServerVerify : MonoBehaviour
 				}
 				else if (item2.Name == "serverlist")
 				{
-					UnityEngine.Debug.Log(item2.Name);
 					foreach (XmlNode item7 in item2)
 					{
 						if (!(item7.Name != "node") && GetAttribute(item7, "name", ref value))
@@ -329,7 +327,6 @@ public class iServerVerify : MonoBehaviour
 				}
 				else if (item2.Name == "discount")
 				{
-					UnityEngine.Debug.Log("discount");
 					m_ltServerDiscount.Clear();
 					foreach (XmlNode item9 in item2)
 					{
@@ -351,7 +348,6 @@ public class iServerVerify : MonoBehaviour
 				}
 				else if (item2.Name == "gift")
 				{
-					Debug.Log("gift");
 					m_ltGift.Clear();
 					foreach (XmlNode item10 in item2)
 					{
@@ -553,11 +549,6 @@ public class iServerVerify : MonoBehaviour
 		return m_Instance;
 	}
 
-	public bool IsSuccess()
-	{
-		return m_PingState == kPingState.Success;
-	}
-
 	public bool IsFailed()
 	{
 		return m_PingState == kPingState.Fail;
@@ -571,10 +562,6 @@ public class iServerVerify : MonoBehaviour
 	private void Awake()
 	{
 		m_ServerConfigInfo = new CServerConfigInfo();
-	}
-
-	private void Start()
-	{
 	}
 
 	private void Update()
@@ -598,7 +585,6 @@ public class iServerVerify : MonoBehaviour
 			if (m_fTimeOutCount >= m_fTimeOut)
 			{
 				m_fTimeOutCount = 0f;
-				UnityEngine.Debug.Log("test ping time out ");
 				m_PingState = kPingState.Fail;
 				if (m_OnNetError != null)
 				{
@@ -630,7 +616,6 @@ public class iServerVerify : MonoBehaviour
 	{
 		//m_PingState = kPingState.Pinging;
 		//WWW www = new WWW(m_sUrl + "?rand=" + UnityEngine.Random.Range(10, 99999));
-		//Debug.Log(www.url);
 		//yield return www;
 		//if (m_PingState != kPingState.Pinging)
 		//{
@@ -638,7 +623,6 @@ public class iServerVerify : MonoBehaviour
 		//}
 		//if (www.error != null)
 		//{
-		//	UnityEngine.Debug.Log("net error " + www.error);
 		//	m_PingState = kPingState.Fail;
 		//	if (m_OnNetError != null)
 		//	{
@@ -648,7 +632,6 @@ public class iServerVerify : MonoBehaviour
 		//}
 		//if (www.text == null || www.text.Length < 1)
 		//{
-		//	UnityEngine.Debug.Log("text is not exist ");
 		//	m_PingState = kPingState.Fail;
 		//	if (m_OnFailed != null)
 		//	{
@@ -659,7 +642,6 @@ public class iServerVerify : MonoBehaviour
 		//LoadServerData(www.text);
 		//if (m_sVersion != m_ServerConfigInfo.m_sVersion)
 		//{
-		//	UnityEngine.Debug.Log("version error " + m_ServerConfigInfo.m_sVersion);
 		//	m_PingState = kPingState.Fail;
 		//	if (m_OnFailed != null)
 		//	{
@@ -668,7 +650,6 @@ public class iServerVerify : MonoBehaviour
 		//}
 		//else
 		//{
-		//	UnityEngine.Debug.Log("serverconfig successed ");
 		//	m_PingState = kPingState.Success;
 		//	if (m_OnSuccess != null)
 		//	{
@@ -681,25 +662,6 @@ public class iServerVerify : MonoBehaviour
 		//}
 	}
 
-	protected void LoadServerData(string input)
-	{
-		UnityEngine.Debug.Log("LoadServerData " + input);
-		m_ServerConfigInfo.Clear();
-		string empty = string.Empty;
-		try
-		{
-			empty = XXTEAUtils.Decrypt(input, m_sServerInfoKey);
-			MyUtils.UnZipString(empty, ref empty);
-			XmlDocument xmlDocument = new XmlDocument();
-			xmlDocument.LoadXml(empty);
-			m_ServerConfigInfo.LoadData(xmlDocument);
-		}
-		catch (Exception ex)
-		{
-			UnityEngine.Debug.LogError("LoadServerData Error " + ex);
-		}
-	}
-
 	protected void TransformXML2TXT(string srcpath, string dstpath, string key)
 	{
 		if (srcpath.Length < 1 || dstpath.Length < 1)
@@ -707,7 +669,6 @@ public class iServerVerify : MonoBehaviour
 			return;
 		}
 		string text = string.Empty;
-		UnityEngine.Debug.Log(srcpath);
 		if (File.Exists(srcpath))
 		{
 			StreamReader streamReader = null;
@@ -718,7 +679,7 @@ public class iServerVerify : MonoBehaviour
 			}
 			catch
 			{
-				Debug.Log("ERROR - Encrypt()!!!");
+				Debug.LogError("ERROR - Encrypt()!!!");
 			}
 			finally
 			{

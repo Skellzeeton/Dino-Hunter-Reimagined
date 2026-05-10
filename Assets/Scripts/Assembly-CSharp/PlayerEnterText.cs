@@ -15,11 +15,7 @@ public class PlayerEnterText : MonoBehaviour
 	private float time_show = 2f;
 
 	private bool event_text_over;
-
-	private void Start()
-	{
-	}
-
+	
 	private void Update()
 	{
 		UpdateShow();

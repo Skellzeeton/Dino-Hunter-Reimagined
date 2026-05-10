@@ -30,10 +30,6 @@ public class iRoadSignPath : MonoBehaviour
 		m_fDelayTime = 0f;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!m_bActive || m_ltRoadSign.Count < 1)

@@ -169,10 +169,6 @@ public class iServerConfigData : MonoBehaviour
 		m_ltExpireConfig = new List<CExpireConfig>();
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (m_ltExpireConfig.Count > 0)
@@ -242,7 +238,6 @@ public class iServerConfigData : MonoBehaviour
 
 	protected void OnFetchMD5_S(string sFileData)
 	{
-		UnityEngine.Debug.Log("OnFetchMD5_S " + sFileData);
 		m_ServerConfigInfo.Clear();
 		string empty = string.Empty;
 		try
@@ -269,7 +264,6 @@ public class iServerConfigData : MonoBehaviour
 					cExpireConfig.m_sFileName = value.m_sFileName;
 					cExpireConfig.m_State = CExpireConfig.State.Wait;
 					m_ltExpireConfig.Add(cExpireConfig);
-					UnityEngine.Debug.Log("expireconfig " + value.m_sFileName + " " + value.m_sMD5);
 				}
 			}
 		}
@@ -281,7 +275,6 @@ public class iServerConfigData : MonoBehaviour
 
 	protected void OnFetchMD5_F()
 	{
-		UnityEngine.Debug.Log("OnFetchMD5_F ");
 		if (m_OnFailed != null)
 		{
 			m_OnFailed();
@@ -307,7 +300,6 @@ public class iServerConfigData : MonoBehaviour
 				if (configInfo != null && configInfo.m_UnPack != null)
 				{
 					configInfo.m_UnPack(sFileData);
-					UnityEngine.Debug.Log("fetch success " + cExpireConfig.m_sFileName);
 				}
 				m_ltExpireConfig.RemoveAt(0);
 				if (m_ltExpireConfig.Count < 1 && m_OnSuccess != null)
@@ -318,7 +310,6 @@ public class iServerConfigData : MonoBehaviour
 		}
 		catch
 		{
-			Debug.Log("fetch failed " + cExpireConfig.m_sFileName);
 			m_ltExpireConfig.Clear();
 			if (m_OnFailed != null)
 			{
@@ -334,7 +325,6 @@ public class iServerConfigData : MonoBehaviour
 			CExpireConfig cExpireConfig = m_ltExpireConfig[0];
 			if (cExpireConfig.m_State == CExpireConfig.State.Fetch)
 			{
-				UnityEngine.Debug.Log("fetch failed " + cExpireConfig.m_sFileName);
 			}
 		}
 		m_ltExpireConfig.Clear();
@@ -351,7 +341,6 @@ public class iServerConfigData : MonoBehaviour
 			return string.Empty;
 		}
 		string zipedcontent = string.Empty;
-		UnityEngine.Debug.Log(srcpath);
 		if (File.Exists(srcpath))
 		{
 			StreamReader streamReader = null;
@@ -362,7 +351,7 @@ public class iServerConfigData : MonoBehaviour
 			}
 			catch
 			{
-				Debug.Log("ERROR - Encrypt()!!!");
+				Debug.LogError("ERROR - Encrypt()!!!");
 			}
 			finally
 			{

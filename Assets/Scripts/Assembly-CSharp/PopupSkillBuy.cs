@@ -19,20 +19,12 @@ public class PopupSkillBuy : MonoBehaviour
 	public TUIMeshSprite img_sale_sign;
 
 	public TUILabel label_sale_sign;
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
+	
 	public void SetInfo(ScrollList_SkillItem m_item)
 	{
 		if (m_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		bool skillUnlock = m_item.GetSkillUnlock();
@@ -42,13 +34,12 @@ public class PopupSkillBuy : MonoBehaviour
 		int skillLevelMax = m_item.GetSkillLevelMax();
 		if (skillLevel >= skillLevelMax)
 		{
-			Debug.Log("!!!you reach max level!!!");
 			return;
 		}
 		TUIPriceInfo skillBuyPrice = m_item.GetSkillBuyPrice();
 		if (skillBuyPrice == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int price = skillBuyPrice.price;

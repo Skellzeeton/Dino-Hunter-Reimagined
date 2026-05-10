@@ -117,7 +117,6 @@ public class CMonsterGenerateManager
             return true;
 
         int num = (int)ltParam[0];
-        Debug.Log("MGStart " + num);
         WaveInfo waveInfo = m_GameData.GetWaveInfo(num);
         if (waveInfo == null)
             return true;

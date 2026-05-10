@@ -6,15 +6,7 @@ public class iClearMemory : MonoBehaviour
 {
 	private void Awake()
 	{
-		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
-	}
-
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
+		DontDestroyOnLoad(base.gameObject);
 	}
 
 	public void ClearMemory()
@@ -24,14 +16,12 @@ public class iClearMemory : MonoBehaviour
 
 	protected IEnumerator Clear()
 	{
-		Debug.Log("Clear");
 		GC.Collect();
 		yield return Resources.UnloadUnusedAssets();
 	}
 
 	protected void ClearImmidately()
 	{
-		Debug.Log("Clear");
 		GC.Collect();
 		Resources.UnloadUnusedAssets();
 	}

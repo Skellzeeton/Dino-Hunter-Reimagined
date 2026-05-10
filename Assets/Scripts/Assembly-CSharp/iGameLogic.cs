@@ -209,7 +209,6 @@ public class iGameLogic
 					return;
 				}
 				target.AddBuff(num2, num3, hitinfo.nFromSkill);
-				UnityEngine.Debug.Log("add buff " + target.UID + " " + num3);
 				if (!hitinfo.ismutiply)
 				{
 					break;
@@ -219,7 +218,6 @@ public class iGameLogic
 					if (!(item3 == target) && !item3.isDead)
 					{
 						item3.AddBuff(num2, (float)num3 * (1f - hitinfo.mutiplyefftime / 100f), hitinfo.nFromSkill);
-						UnityEngine.Debug.Log("add buff " + item3.UID + " " + (float)num3 * (1f - hitinfo.mutiplyefftime / 100f) + " " + hitinfo.mutiplyefftime);
 					}
 				}
 				break;
@@ -302,7 +300,6 @@ public class iGameLogic
 			}
 			case 10:
 				target.SetStealth(true, num2);
-				UnityEngine.Debug.Log("add Stealth " + target.UID + " " + num2);
 				if (!hitinfo.ismutiply)
 				{
 					break;
@@ -312,7 +309,6 @@ public class iGameLogic
 					if (!(item5 == target) && !item5.isDead)
 					{
 						item5.SetStealth(true, (float)num2 * (1f - hitinfo.mutiplyefftime / 100f));
-						UnityEngine.Debug.Log("add Stealth " + item5.UID + " " + (float)num2 * (1f - hitinfo.mutiplyefftime / 100f) + " " + hitinfo.mutiplyefftime);
 					}
 				}
 				break;
@@ -342,7 +338,6 @@ public class iGameLogic
 				CCharUser cCharUser2 = target as CCharUser;
 				if (cCharUser2 != null)
 				{
-					UnityEngine.Debug.Log("kSkillFunc.AddCrystal " + num2);
 					m_GameState.AddCrystal(num2);
 					m_GameScene.AddCrystalText(num2, cCharUser2.GetBone(1).position);
 				}
@@ -401,7 +396,6 @@ public class iGameLogic
 			hitinfo.ismutiply = skillinfolevel.m_bMutiply;
 			hitinfo.mutiplyeff = skillinfolevel.m_fMutiplyEff;
 			hitinfo.mutiplyefftime = skillinfolevel.m_fMutiplyEffTime;
-			UnityEngine.Debug.Log(skillinfolevel.nID + " " + skillinfolevel.m_bMutiply + " " + skillinfolevel.m_fMutiplyEff + " " + skillinfolevel.m_fMutiplyEffTime);
 			Vector3 normalized = (defender.Pos - attacker.Pos).normalized;
 			CCharPlayer cCharPlayer = attacker as CCharPlayer;
 			if (cCharPlayer != null && cCharPlayer.Property != null && cCharPlayer.Property.GetSkillPro(skillinfolevel.nID) != null)

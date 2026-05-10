@@ -29,13 +29,6 @@ public class iStartPointEditor : MonoBehaviour
 		base.gameObject.name = "iStartPointEditor";
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	private void OnEnable()
 	{

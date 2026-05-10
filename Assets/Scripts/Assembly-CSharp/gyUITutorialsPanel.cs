@@ -6,13 +6,6 @@ public class gyUITutorialsPanel : MonoBehaviour
 
 	public GameObject[] arrTutorials;
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
 
 	public void Show(bool bShow)
 	{

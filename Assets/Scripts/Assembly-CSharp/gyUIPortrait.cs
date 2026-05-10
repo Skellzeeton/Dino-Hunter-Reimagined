@@ -46,14 +46,6 @@ public class gyUIPortrait : MonoBehaviour
 		ShowDeathFlag(false);
 	}
 
-	private void Start()
-	{
-	}
-
-	private void Update()
-	{
-	}
-
 	public void Show(bool bShow)
 	{
 		if (!(m_Protrait == null))

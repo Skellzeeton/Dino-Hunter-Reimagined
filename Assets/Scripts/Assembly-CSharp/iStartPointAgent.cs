@@ -7,10 +7,6 @@ public class iStartPointAgent : MonoBehaviour
 
 	protected iStartPointEditor m_StartPointManager;
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (!(m_StartPointManager == null))

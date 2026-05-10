@@ -32,10 +32,7 @@ public class gyUIHopNumber : MonoBehaviour
 			mLabel.text = "0";
 		}
 	}
-
-	private void Start()
-	{
-	}
+	
 
 	private void Update()
 	{

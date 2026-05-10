@@ -53,7 +53,7 @@ public class CUseSkillOnce : CUseSkill
 	{
 		if (!IsSkillValid())
 		{
-			Debug.Log("invalid skill");
+			Debug.LogWarning("invalid skill");
 			return kUseSkillStatus.Failure;
 		}
 		if (m_fTimePointCount < m_fTimePoint)

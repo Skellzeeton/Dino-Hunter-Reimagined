@@ -15,15 +15,12 @@ public class ImgPrice : MonoBehaviour
 		SetCenterPos();
 	}
 
-	private void Update()
-	{
-	}
 
 	private void SetCenterPos()
 	{
 		if (label_value == null || img_unit == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		float x = label_value.CalculateBounds(label_value.Text).size.x;
@@ -46,7 +43,7 @@ public class ImgPrice : MonoBehaviour
 	{
 		if (label_value == null || img_unit == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		label_value.Text = m_value.ToString();
@@ -66,7 +63,7 @@ public class ImgPrice : MonoBehaviour
 	{
 		if (label_value == null || img_unit == null || m_info == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		int price = m_info.price;
@@ -88,7 +85,7 @@ public class ImgPrice : MonoBehaviour
 	{
 		if (label_value == null || img_unit == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 		}
 		else if (m_bool)
 		{

@@ -65,10 +65,6 @@ public class PopupRanking : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-	}
-
 	public void SetInfo(RankingType m_type, Dictionary<string, TUICoopPlayerInfo> m_coop_player_info_list, GameObject m_invoke_go, ref Dictionary<int, string> m_title_list)
 	{
 		if ((ranking_state == RankingState.All && m_type != 0 && m_type != RankingType.All_Mine) || (ranking_state == RankingState.Friends && m_type != RankingType.Friends_All && m_type != RankingType.Friends_Mine))
@@ -95,7 +91,7 @@ public class PopupRanking : MonoBehaviour
 		}
 		if (m_coop_player_info_list == null || scrolllist_items_all == null || scrolllist_items_friends == null || prefab_ranking_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		Dictionary<string, TUICoopPlayerInfo> dictionary = null;
@@ -117,7 +113,6 @@ public class PopupRanking : MonoBehaviour
 		tUIScrollList.Clear(true);
 		dictionary2.Clear();
 		dictionary.Clear();
-		Debug.Log("Clear All.");
 		int num = 0;
 		foreach (KeyValuePair<string, TUICoopPlayerInfo> item in m_coop_player_info_list)
 		{
@@ -160,7 +155,7 @@ public class PopupRanking : MonoBehaviour
 	{
 		if (m_coop_player_info_list == null || scrolllist_items_all == null || scrolllist_items_friends == null || prefab_ranking_item == null)
 		{
-			Debug.Log("error!");
+			Debug.LogWarning("error!");
 			return;
 		}
 		Dictionary<string, TUICoopPlayerInfo> dictionary = null;
@@ -227,7 +222,6 @@ public class PopupRanking : MonoBehaviour
 				PopupRankingItem popupRankingItem = dictionary2[value.id];
 				popupRankingItem.SetInfo(m_type, value, m_invoke_go, ref m_title_list);
 				dictionary[value.id] = popupRankingItem.GetPlayerInfo();
-				Debug.Log("Replace:" + value.id);
 			}
 			else if (tUIScrollList != null)
 			{
@@ -282,7 +276,6 @@ public class PopupRanking : MonoBehaviour
 	{
 		if (m_is_all)
 		{
-			Debug.Log("Change to all.");
 			ranking_state = RankingState.All;
 			go_all_bg.SetActiveRecursive(true);
 			go_friends_bg.SetActiveRecursive(false);
@@ -301,7 +294,6 @@ public class PopupRanking : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("Change to friends.");
 			ranking_state = RankingState.Friends;
 			go_all_bg.SetActiveRecursive(false);
 			go_friends_bg.SetActiveRecursive(true);
