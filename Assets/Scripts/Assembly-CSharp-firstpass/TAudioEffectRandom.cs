@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("AudioEffect/AudioEffect Random")]
 [RequireComponent(typeof(AudioSource))]
+[AddComponentMenu("AudioEffect/AudioEffect Random")]
 public class TAudioEffectRandom : ITAudioEvent
 {
 	public enum LoopMode
 	{
-		Default,
-		SingleLoop,
-		MultiLoop
+		Default = 0,
+		SingleLoop = 1,
+		MultiLoop = 2
 	}
 
 	public bool isSfx = true;
-
+	[Header("Preload Control")]
+	public bool alwaysPreload = false;
 	public AudioClip[] audioClips;
 
 	public float[] probability;
@@ -39,10 +40,6 @@ public class TAudioEffectRandom : ITAudioEvent
 
 	public int intervalRangeMax;
 
-	public bool forceDeleteOnSceneChange = false;
-
-	public bool preserveOnSceneChange = false;
-
 	private static Dictionary<string, int> s_random_index = new Dictionary<string, int>();
 
 	private static Dictionary<string, float> s_play_interval = new Dictionary<string, float>();
@@ -61,40 +58,20 @@ public class TAudioEffectRandom : ITAudioEvent
 
 	private bool m_awake;
 
-	private AudioSource m_audioSource;
-
-	private Coroutine scheduledDestroyCoroutine = null;
-	private float m_lastPlayTime = -99999f;
-
-	private const float SceneChangeDestroyDelay = 15f;
-
-	private static bool IsSceneToIgnore(string sceneName)
-	{
-		return sceneName == "SceneLoad";
-	}
-
-	[ContextMenu("Force Deletion On Scene Change")]
-	public void EnableForceDelete()
-	{
-		forceDeleteOnSceneChange = true;
-		preserveOnSceneChange = false;
-	}
-
-	[ContextMenu("Preserve")]
-	public void EnablePreserve()
-	{
-		preserveOnSceneChange = true;
-		forceDeleteOnSceneChange = false;
-	}
-
 	public int currentPlayIndex
 	{
-		get { return m_lastRandomIndex; }
+		get
+		{
+			return m_lastRandomIndex;
+		}
 	}
 
 	public override bool isPlaying
 	{
-		get { return m_isPlaying; }
+		get
+		{
+			return m_isPlaying;
+		}
 	}
 
 	public override bool isLoop
@@ -105,8 +82,25 @@ public class TAudioEffectRandom : ITAudioEvent
 			{
 				return base.GetComponent<AudioSource>().loop;
 			}
-
 			return true;
+		}
+	}
+	
+	private void PreloadClips()
+	{
+		AudioSource source = GetComponent<AudioSource>();
+		if (source == null || audioClips == null)
+		{
+			return;
+		}
+		for (int i = 0; i < audioClips.Length; i++)
+		{
+			AudioClip clip = audioClips[i];
+			if (clip == null)
+			{
+				continue;
+			}
+			clip.LoadAudioData();
 		}
 	}
 
@@ -123,29 +117,24 @@ public class TAudioEffectRandom : ITAudioEvent
 			{
 				num += num2;
 			}
-
 			if (num < 0.999f)
 			{
 				nullProbability = 1f - num;
 			}
 		}
-
+		if (alwaysPreload)
+		{
+			PreloadClips();
+		}
 		if (audioClips.Length == 1 && loopMode == LoopMode.MultiLoop)
 		{
 			loopMode = LoopMode.Default;
 		}
-
 		m_awake = true;
 	}
 
 	private void OnDestroy()
 	{
-		if (scheduledDestroyCoroutine != null)
-		{
-			StopCoroutine(scheduledDestroyCoroutine);
-			scheduledDestroyCoroutine = null;
-		}
-
 		if (TAudioManager.checkInstance)
 		{
 			Stop();
@@ -159,7 +148,6 @@ public class TAudioEffectRandom : ITAudioEvent
 		{
 			yield return 0;
 		}
-
 		Trigger(true);
 	}
 
@@ -170,7 +158,6 @@ public class TAudioEffectRandom : ITAudioEvent
 		{
 			yield return 0;
 		}
-
 		m_isPlaying = false;
 		if (autoDestroy)
 		{
@@ -198,12 +185,10 @@ public class TAudioEffectRandom : ITAudioEvent
 		{
 			Debug.LogWarning("TAudioEffectRandom is not Awake");
 		}
-
 		if (audioClips.Length == 0)
 		{
 			return;
 		}
-
 		ITAudioLimit[] audioLimits = m_audioLimits;
 		foreach (ITAudioLimit iTAudioLimit in audioLimits)
 		{
@@ -212,7 +197,6 @@ public class TAudioEffectRandom : ITAudioEvent
 				return;
 			}
 		}
-
 		string key = "AudioRandomIndex_" + base.name;
 		if (loopMode == LoopMode.Default && !delay)
 		{
@@ -232,15 +216,13 @@ public class TAudioEffectRandom : ITAudioEvent
 					{
 						if (Time.realtimeSinceStartup - num3 < (float)intervalRangeMin * 0.001f)
 						{
-							num2 = num3 + Random.Range((float)intervalRangeMin * 0.001f,
-								(float)intervalRangeMax * 0.001f);
+							num2 = num3 + Random.Range((float)intervalRangeMin * 0.001f, (float)intervalRangeMax * 0.001f);
 							num = num2 - Time.realtimeSinceStartup;
 						}
 						else
 						{
 							num2 = Time.realtimeSinceStartup + num;
 						}
-
 						s_play_interval[key] = num2;
 					}
 				}
@@ -250,14 +232,12 @@ public class TAudioEffectRandom : ITAudioEvent
 					s_play_interval.Add(key, num2);
 				}
 			}
-
 			if (num > 0.001f)
 			{
 				StartCoroutine(TriggerDelay(num));
 				return;
 			}
 		}
-
 		bool flag = false;
 		if (probability.Length == 0)
 		{
@@ -273,7 +253,6 @@ public class TAudioEffectRandom : ITAudioEvent
 				{
 					m_lastRandomIndex = s_random_index[key];
 				}
-
 				if (m_lastRandomIndex == -1)
 				{
 					num4 %= audioClips.Length;
@@ -284,7 +263,6 @@ public class TAudioEffectRandom : ITAudioEvent
 					num4 %= audioClips.Length - 1;
 					m_lastRandomIndex = (m_lastRandomIndex + num4 + 1) % audioClips.Length;
 				}
-
 				flag = true;
 			}
 		}
@@ -294,7 +272,6 @@ public class TAudioEffectRandom : ITAudioEvent
 			{
 				m_lastRandomIndex = s_random_index[key];
 			}
-
 			float num5 = 0f;
 			for (int j = 0; j < probability.Length; j++)
 			{
@@ -303,12 +280,10 @@ public class TAudioEffectRandom : ITAudioEvent
 					num5 += probability[j];
 				}
 			}
-
 			if (nullProbability > 0.001f)
 			{
 				num5 += nullProbability;
 			}
-
 			float num6 = Random.Range(0f, num5);
 			if (nullProbability > 0.001f)
 			{
@@ -319,7 +294,6 @@ public class TAudioEffectRandom : ITAudioEvent
 					flag = true;
 				}
 			}
-
 			if (!flag)
 			{
 				for (int num7 = probability.Length - 1; num7 >= 0; num7--)
@@ -337,7 +311,6 @@ public class TAudioEffectRandom : ITAudioEvent
 				}
 			}
 		}
-
 		if (flag)
 		{
 			if (s_random_index.ContainsKey(key))
@@ -349,52 +322,41 @@ public class TAudioEffectRandom : ITAudioEvent
 				s_random_index.Add(key, m_lastRandomIndex);
 			}
 		}
-
 		if (m_lastRandomIndex == -1)
 		{
 			return;
 		}
-
 		AudioClip audioClip = audioClips[m_lastRandomIndex];
 		if (!(null != audioClip))
 		{
 			return;
 		}
-
 		if (TAudioManager.instance == null)
 		{
-			Debug.LogWarning("Trigger null");
+			Debug.Log("Trigger null");
 			return;
 		}
-
-		base.GetComponent<AudioSource>().volume =
-			Mathf.Clamp01(Random.Range(m_volumBase - volumOffset, m_volumBase + volumOffset));
-		base.GetComponent<AudioSource>().pitch =
-			Mathf.Clamp(Random.Range(m_pitchBase / (1f + pitchOffset), m_pitchBase * (1f + pitchOffset)), 0.01f, 3f);
+		base.GetComponent<AudioSource>().volume = Mathf.Clamp01(Random.Range(m_volumBase - volumOffset, m_volumBase + volumOffset));
+		base.GetComponent<AudioSource>().pitch = Mathf.Clamp(Random.Range(m_pitchBase / (1f + pitchOffset), m_pitchBase * (1f + pitchOffset)), 0.01f, 3f);
 		if (loopMode == LoopMode.Default)
 		{
 			if (isSfx)
 			{
-				TAudioManager.instance.PlaySound(base.GetComponent<AudioSource>(), audioClip,
-					base.GetComponent<AudioSource>().loop, cutoff);
+				TAudioManager.instance.PlaySound(base.GetComponent<AudioSource>(), audioClip, base.GetComponent<AudioSource>().loop, cutoff);
 			}
 			else
 			{
-				TAudioManager.instance.PlayMusic(base.GetComponent<AudioSource>(), audioClip,
-					base.GetComponent<AudioSource>().loop, cutoff);
+				TAudioManager.instance.PlayMusic(base.GetComponent<AudioSource>(), audioClip, base.GetComponent<AudioSource>().loop, cutoff);
 			}
-
 			if (randomStartPosition)
 			{
 				base.GetComponent<AudioSource>().time = Random.Range(0f, audioClip.length);
 			}
-
 			if (!base.GetComponent<AudioSource>().loop)
 			{
 				StopAllCoroutines();
 				StartCoroutine(PlayOver(audioClip.length / base.GetComponent<AudioSource>().pitch));
 			}
-
 			SendTriggerEvent(audioClip);
 		}
 		else if (loopMode == LoopMode.MultiLoop)
@@ -407,12 +369,10 @@ public class TAudioEffectRandom : ITAudioEvent
 			{
 				TAudioManager.instance.PlayMusic(base.GetComponent<AudioSource>(), audioClip, true, true);
 			}
-
 			if (!m_isPlaying && randomStartPosition)
 			{
 				base.GetComponent<AudioSource>().time = Random.Range(0f, audioClip.length);
 			}
-
 			StopAllCoroutines();
 			StartCoroutine(TriggerDelay(audioClip.length / base.GetComponent<AudioSource>().pitch));
 			SendTriggerEvent(audioClip);
@@ -427,21 +387,13 @@ public class TAudioEffectRandom : ITAudioEvent
 			{
 				TAudioManager.instance.PlayMusic(base.GetComponent<AudioSource>(), audioClip, true);
 			}
-
 			if (!m_isPlaying && randomStartPosition)
 			{
 				base.GetComponent<AudioSource>().time = Random.Range(0f, audioClip.length);
 			}
-
 			SendTriggerEvent(audioClip);
 		}
 		m_isPlaying = true;
-		m_lastPlayTime = Time.realtimeSinceStartup;
-		if (scheduledDestroyCoroutine != null)
-		{
-			StopCoroutine(scheduledDestroyCoroutine);
-			scheduledDestroyCoroutine = null;
-		}
 	}
 
 	public override void Stop()
@@ -455,7 +407,6 @@ public class TAudioEffectRandom : ITAudioEvent
 		{
 			StopAllCoroutines();
 		}
-
 		if (isSfx)
 		{
 			TAudioManager.instance.StopSound(base.GetComponent<AudioSource>());
@@ -463,66 +414,6 @@ public class TAudioEffectRandom : ITAudioEvent
 		else
 		{
 			TAudioManager.instance.StopMusic(base.GetComponent<AudioSource>());
-		}
-	}
-
-	private void OnEnable()
-	{
-		UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-	}
-
-	private void OnDisable()
-	{
-		UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-	}
-
-	private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
-	{
-		if (IsSceneToIgnore(scene.name))
-			return;
-
-		DestroyAllSfxInstances();
-	}
-
-	private IEnumerator DelayedDestroy(float delay)
-	{
-		yield return new WaitForSecondsRealtime(delay);
-		if (this == null)
-			yield break;
-		if (preserveOnSceneChange)
-		{
-			scheduledDestroyCoroutine = null;
-			yield break;
-		}
-		if (Time.realtimeSinceStartup - m_lastPlayTime >= delay && !m_isPlaying)
-		{
-			Object.Destroy(gameObject);
-		}
-		scheduledDestroyCoroutine = null;
-	}
-
-	public static void DestroyAllSfxInstances()
-	{
-		TAudioEffectRandom[] allInstances = FindObjectsOfType<TAudioEffectRandom>();
-		foreach (TAudioEffectRandom instance in allInstances)
-		{
-			if (instance == null)
-				continue;
-			if (instance.preserveOnSceneChange)
-				continue;
-			if (instance.forceDeleteOnSceneChange)
-			{
-				instance.Stop();
-				Object.Destroy(instance.gameObject);
-				continue;
-			}
-			if (instance.isSfx)
-			{
-				if (instance.scheduledDestroyCoroutine == null)
-				{
-					instance.scheduledDestroyCoroutine = instance.StartCoroutine(instance.DelayedDestroy(SceneChangeDestroyDelay));
-				}
-			}
 		}
 	}
 }

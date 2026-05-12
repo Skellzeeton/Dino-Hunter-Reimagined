@@ -41,7 +41,7 @@ public class CMobInfoLevel
 
 	public bool isWaitRot;
 
-	public int nGoldRate;
+	public int nGoldRate = 5;
 
 	public int nGold;
 

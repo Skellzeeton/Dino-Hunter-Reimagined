@@ -59,14 +59,6 @@ public class CWeaponBase
 		}
 	}
 
-    public void ForceResume(CCharPlayer player)
-    {
-        m_bPauseFire = false;
-        m_fFireIntervalCount = 0f;
-        UpdateLight(Time.deltaTime);
-        OnUpdate(player, Time.deltaTime);
-    }
-
 
 	public int ID
 	{
@@ -157,24 +149,13 @@ public class CWeaponBase
 		m_nWeaponLevel = nWeaponLevel;
 		OnInit();
 	}
-
-	/*public void Destroy()
-	{
-		OnDestroy();
-		if (m_FireLight != null)
-		{
-			Object.Destroy(m_FireLight.gameObject);
-			m_FireLight = null;
-		}
-	}*/
-
+	
 	public void Equip(CCharPlayer player)
 	{
 		if (m_nBulletNumMax == 0 && m_pWeaponLvlInfo != null && m_pWeaponLvlInfo.nType != 1)
 		{
 			if (player != null && player.Property != null)
 			{
-				Debug.Log(player.Property.GetValue(kProEnum.All_Capacity));
 				m_nBulletNumMax = (int)((float)m_pWeaponLvlInfo.nCapacity * (1f + player.Property.GetValue(kProEnum.All_Capacity) / 100f));
 			}
 			else

@@ -75,7 +75,7 @@ public class CCharBoss : CCharMob
 
 	public new void Awake()
 	{
-		Awake();
+		base.Awake();
 		m_nType = kCharType.Boss;
 		m_dictBodyPart = new Dictionary<int, CBodyPart>();
 		m_curAIManager = null;
@@ -90,12 +90,12 @@ public class CCharBoss : CCharMob
 
 	public new void Start()
 	{
-		Start();
+		base.Start();
 	}
 
 	public new void Update()
 	{
-		Update();
+		base.Update();
 		m_fLifeTime += Time.deltaTime;
 		UpdateAITrigger(Time.deltaTime);
 		if (m_nChangeAI <= 0)
@@ -118,7 +118,7 @@ public class CCharBoss : CCharMob
 
 	public override void InitMob(int nMobID, int nMobLevel)
 	{
-		InitMob(nMobID, nMobLevel);
+		base.InitMob(nMobID, nMobLevel);
 		if (m_GameScene.CurGameLevelInfo != null && m_GameScene.CurGameLevelInfo.sSceneName == "SceneSnow")
 		{
 			iStepEffectLeft component = m_ModelEntity.GetComponent<iStepEffectLeft>();
@@ -142,7 +142,7 @@ public class CCharBoss : CCharMob
 	public override void Destroy()
 	{
 		ClearBodyEffect();
-		Destroy();
+		base.Destroy();
 	}
 
 	public override void InitHardiness(int nMobID, int nMobLevel)
@@ -166,7 +166,7 @@ public class CCharBoss : CCharMob
 
 	public override void OnDead(kDeadMode nDeathMode)
 	{
-		OnDead(nDeathMode);
+		base.OnDead(nDeathMode);
 		if (m_GameData.m_DataCenter != null)
 		{
 			m_GameData.m_DataCenter.AddKillMonster(ID);
@@ -252,7 +252,7 @@ public class CCharBoss : CCharMob
 
 	public override void InitAI(int nAIManager)
 	{
-		InitAI(nAIManager);
+		base.InitAI(nAIManager);
 		CAIManagerInfo aIManagerInfo = m_GameData.GetAIManagerInfo(nAIManager);
 		if (aIManagerInfo == null)
 		{

@@ -37,7 +37,7 @@ public class WaveInfo
 
 	public WaveInfo()
 	{
-		m_bRandom = false;
+		m_bRandom = true;
 		m_nMobCount = 0;
 		m_fDelayTime = 0f;
 		m_fInterval = 0.1f;

@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSfx: 1
+  alwaysPreload: 0
   audioClips:
   - {fileID: 8300000, guid: 2866b62428aad2f48aeccde8ff974d5c, type: 3}
   probability: []
@@ -157,8 +158,6 @@ MonoBehaviour:
   maxIntervalTime: 0
   intervalRangeMin: 0
   intervalRangeMax: 0
-  forceDeleteOnSceneChange: 0
-  preserveOnSceneChange: 0
 --- !u!114 &-4783412979362139455
 MonoBehaviour:
   m_ObjectHideFlags: 0
