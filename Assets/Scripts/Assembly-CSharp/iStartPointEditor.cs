@@ -47,10 +47,6 @@ public class iStartPointEditor : MonoBehaviour
 	{
 	}
 
-	private void OnLevelWasLoaded()
-	{
-	}
-
 	private void OnDrawGizmos()
 	{
 		if (m_StartPointManager == null)
