@@ -10,7 +10,7 @@ public class PopupWeapon : MonoBehaviour
 
 	public WeaponKindItem weapon_kind_item;
 
-	public LevelStarsEx level_stars;
+	public LevelStars level_stars;
 
 	public LabelInfo_Weapon label_info_weapon;
 
@@ -265,12 +265,13 @@ public class PopupWeapon : MonoBehaviour
 			return;
 		}
 		label_title.Text = weaponattributeinfo.m_sName;
-		if (weaponattributeinfo.m_nLevel > 0)
+		float x = label_title.CalculateBounds(label_title.Text).size.x;
+		x *= label_title.transform.localScale.x;
+		Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, label_title.transform.localPosition.y, label_title.transform.localPosition.z);
+		if (weaponattributeinfo.m_nLevelMax > 0)
 		{
-			float x = label_title.CalculateBounds(label_title.Text).size.x;
-			x *= label_title.transform.localScale.x;
-			Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, label_title.transform.localPosition.y, label_title.transform.localPosition.z);
-			level_stars.SetStars(weaponattributeinfo.m_nLevel, position);
+			int currentLevel = (weaponattributeinfo.m_nLevel > 0) ? weaponattributeinfo.m_nLevel : 0;
+			level_stars.SetStars(currentLevel, weaponattributeinfo.m_nLevelMax, position);
 		}
 		else
 		{
@@ -564,12 +565,13 @@ public class PopupWeapon : MonoBehaviour
 		{
 			return;
 		}
-		if (m_curWeaponAttributeInfo.m_nLevel > 0)
+		float x = label_title.CalculateBounds(label_title.Text).size.x;
+		x *= label_title.transform.localScale.x;
+		Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, label_title.transform.localPosition.y, label_title.transform.localPosition.z);
+		if (m_curWeaponAttributeInfo.m_nLevelMax > 0)
 		{
-			float x = label_title.CalculateBounds(label_title.Text).size.x;
-			x *= label_title.transform.localScale.x;
-			Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, label_title.transform.localPosition.y, label_title.transform.localPosition.z);
-			level_stars.SetStars(m_curWeaponAttributeInfo.m_nLevel, position, true);
+			int currentLevel = (m_curWeaponAttributeInfo.m_nLevel > 0) ? m_curWeaponAttributeInfo.m_nLevel : 0;
+			level_stars.SetStars(currentLevel, m_curWeaponAttributeInfo.m_nLevelMax, position, currentLevel);
 		}
 		else
 		{

@@ -168,18 +168,6 @@ public class iCharacterCenter : iBaseCenter
 			{
 				cCharacterInfoLevel.nExp = int.Parse(value);
 			}
-			if (MyUtils.GetAttribute(childNode, "avatarhead", ref value))
-			{
-				cCharacterInfoLevel.nAvatarHead = int.Parse(value);
-			}
-			if (MyUtils.GetAttribute(childNode, "avatarupper", ref value))
-			{
-				cCharacterInfoLevel.nAvatarUpper = int.Parse(value);
-			}
-			if (MyUtils.GetAttribute(childNode, "avatarlower", ref value))
-			{
-				cCharacterInfoLevel.nAvatarLower = int.Parse(value);
-			}
 		}
 	}
 }

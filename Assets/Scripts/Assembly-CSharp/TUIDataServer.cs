@@ -2528,7 +2528,8 @@ public class TUIDataServer
 						Dictionary<int, TUIPriceInfo> dictionary = new Dictionary<int, TUIPriceInfo>();
 						if (j == 0)
 						{
-							for (int k = 1; k <= 2; k++)
+							//Passive skill limit
+							for (int k = 1; k <= 3; k++)
 							{
 								cSkillInfoLevel = cSkillInfo.Get(k);
 								if (cSkillInfoLevel != null)

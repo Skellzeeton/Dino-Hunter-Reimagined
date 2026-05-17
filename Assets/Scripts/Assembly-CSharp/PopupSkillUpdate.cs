@@ -13,7 +13,8 @@ public class PopupSkillUpdate : MonoBehaviour
 	public TUIMeshSprite img_sale_sign;
 
 	public TUILabel label_sale_sign;
-
+	
+	public LevelStars level_stars;
 
 	public void ShowSkillUpdate()
 	{
@@ -40,6 +41,21 @@ public class PopupSkillUpdate : MonoBehaviour
 		int skillLevel = m_item.GetSkillLevel();
 		label_introduce.Text = m_item.GetSkillIntroduce();
 		label_title.Text = m_item.GetSkillName();
+		if (level_stars != null)
+		{
+			float x = label_title.CalculateBounds(label_title.Text).size.x;
+			x *= label_title.transform.localScale.x;
+			Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, label_title.transform.localPosition.y, label_title.transform.localPosition.z);
+			if (skillLevelMax > 0)
+			{
+				int currentLevel = (skillLevel > 0) ? skillLevel : 0;
+				level_stars.SetStars(currentLevel, skillLevelMax, position);
+			}
+			else
+			{
+				level_stars.SetStarsDisable();
+			}
+		}
 		TUIPriceInfo skillUpdatePrice = m_item.GetSkillUpdatePrice();
 		if (skillUpdatePrice == null)
 		{
@@ -53,7 +69,7 @@ public class PopupSkillUpdate : MonoBehaviour
 			int now_price = Mathf.CeilToInt(discount * (float)skillUpdatePrice.price);
 			if (btn_salebuy != null)
 			{
-				btn_salebuy.gameObject.SetActiveRecursive(true);
+				btn_salebuy.gameObject.SetActive(true);
 				TUIButtonClick component = btn_salebuy.GetComponent<TUIButtonClick>();
 				if (component != null)
 				{
@@ -63,34 +79,34 @@ public class PopupSkillUpdate : MonoBehaviour
 			}
 			if (btn_buy != null)
 			{
-				btn_buy.gameObject.SetActiveRecursive(false);
+				btn_buy.gameObject.SetActive(false);
 			}
 			if (img_sale_sign != null)
 			{
-				img_sale_sign.gameObject.SetActiveRecursive(true);
+				img_sale_sign.gameObject.SetActive(true);
 			}
 			if (label_sale_sign != null)
 			{
-				label_sale_sign.gameObject.SetActiveRecursive(true);
+				label_sale_sign.gameObject.SetActive(true);
 				label_sale_sign.Text = (int)((1f - discount) * 100f + 0.5f) + "% off";
 			}
 			return;
 		}
 		if (btn_salebuy != null)
 		{
-			btn_salebuy.gameObject.SetActiveRecursive(false);
+			btn_salebuy.gameObject.SetActive(false);
 		}
 		if (img_sale_sign != null)
 		{
-			img_sale_sign.gameObject.SetActiveRecursive(false);
+			img_sale_sign.gameObject.SetActive(false);
 		}
 		if (label_sale_sign != null)
 		{
-			label_sale_sign.gameObject.SetActiveRecursive(false);
+			label_sale_sign.gameObject.SetActive(false);
 		}
 		if (btn_buy != null)
 		{
-			btn_buy.gameObject.SetActiveRecursive(true);
+			btn_buy.gameObject.SetActive(true);
 			TUIButtonClick component2 = btn_buy.GetComponent<TUIButtonClick>();
 			if (component2 != null)
 			{

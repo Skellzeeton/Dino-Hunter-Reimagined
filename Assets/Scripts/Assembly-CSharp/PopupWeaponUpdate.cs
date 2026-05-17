@@ -6,7 +6,7 @@ public class PopupWeaponUpdate : MonoBehaviour
 
 	public TUILabel label_introduce;
 
-	public LevelStarsEx level_stars;
+	public LevelStars level_stars;
 
 	public PopupWeaponUpdateBuy btn_buy;
 
@@ -50,27 +50,27 @@ public class PopupWeaponUpdate : MonoBehaviour
 		}
 		if (btn_buy != null)
 		{
-			btn_buy.gameObject.SetActiveRecursive(false);
+			btn_buy.gameObject.SetActive(false);
 		}
 		if (btn_claim != null)
 		{
-			btn_claim.gameObject.SetActiveRecursive(false);
+			btn_claim.gameObject.SetActive(false);
 		}
 		if (btn_salebuy != null)
 		{
-			btn_salebuy.gameObject.SetActiveRecursive(false);
+			btn_salebuy.gameObject.SetActive(false);
 		}
 		if (label_sale_introduce != null)
 		{
-			label_sale_introduce.gameObject.SetActiveRecursive(false);
+			label_sale_introduce.gameObject.SetActive(false);
 		}
 		if (img_sale_sign != null)
 		{
-			img_sale_sign.gameObject.SetActiveRecursive(false);
+			img_sale_sign.gameObject.SetActive(false);
 		}
 		if (label_sale_sign != null)
 		{
-			label_sale_sign.gameObject.SetActiveRecursive(false);
+			label_sale_sign.gameObject.SetActive(false);
 		}
 	}
 
@@ -89,12 +89,13 @@ public class PopupWeaponUpdate : MonoBehaviour
 		}
 		label_introduce.Text = next.m_sLevelupDesc;
 		Clear();
-		if (weaponattributeinfo.m_nLevel > 0)
+		float x = label_title.CalculateBounds(label_title.Text).size.x;
+		x *= label_title.transform.localScale.x;
+		Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, level_stars.transform.localPosition.y, label_title.transform.localPosition.z);
+		if (weaponattributeinfo.m_nLevelMax > 0)
 		{
-			float x = label_title.CalculateBounds(label_title.Text).size.x;
-			x *= label_title.transform.localScale.x;
-			Vector3 position = new Vector3(label_title.transform.localPosition.x + x + 12f, level_stars.transform.localPosition.y, label_title.transform.localPosition.z);
-			level_stars.SetStars(weaponattributeinfo.m_nLevel, position);
+			int currentLevel = (weaponattributeinfo.m_nLevel > 0) ? weaponattributeinfo.m_nLevel : 0;
+			level_stars.SetStars(currentLevel, weaponattributeinfo.m_nLevelMax, position);
 		}
 		else
 		{
@@ -104,22 +105,22 @@ public class PopupWeaponUpdate : MonoBehaviour
 		{
 			if (btn_claim != null)
 			{
-				btn_claim.gameObject.SetActiveRecursive(true);
+				btn_claim.gameObject.SetActive(true);
 				btn_claim.Disable(!weaponattributeinfo.m_bActiveCanGet);
 			}
 			if (label_sale_introduce != null)
 			{
-				label_sale_introduce.gameObject.SetActiveRecursive(true);
+				label_sale_introduce.gameObject.SetActive(true);
 				label_sale_introduce.Text = weaponattributeinfo.m_sActiveStr;
 			}
 			if (img_sale_sign != null)
 			{
-				img_sale_sign.gameObject.SetActiveRecursive(true);
+				img_sale_sign.gameObject.SetActive(true);
 				img_sale_sign.texture = img_sale_sign_texture02;
 			}
 			if (label_sale_sign != null)
 			{
-				label_sale_sign.gameObject.SetActiveRecursive(true);
+				label_sale_sign.gameObject.SetActive(true);
 				label_sale_sign.Text = "Free!!!";
 			}
 			return;
@@ -137,7 +138,7 @@ public class PopupWeaponUpdate : MonoBehaviour
 			int now_price = Mathf.CeilToInt(weaponattributeinfo.m_fDiscount * (float)price.price);
 			if (btn_salebuy != null)
 			{
-				btn_salebuy.gameObject.SetActiveRecursive(true);
+				btn_salebuy.gameObject.SetActive(true);
 				TUIButtonClick component = btn_salebuy.GetComponent<TUIButtonClick>();
 				if (component != null)
 				{
@@ -147,18 +148,18 @@ public class PopupWeaponUpdate : MonoBehaviour
 			}
 			if (img_sale_sign != null)
 			{
-				img_sale_sign.gameObject.SetActiveRecursive(true);
+				img_sale_sign.gameObject.SetActive(true);
 				img_sale_sign.texture = img_sale_sign_texture01;
 			}
 			if (label_sale_sign != null)
 			{
-				label_sale_sign.gameObject.SetActiveRecursive(true);
+				label_sale_sign.gameObject.SetActive(true);
 				label_sale_sign.Text = (int)((1f - weaponattributeinfo.m_fDiscount) * 100f + 0.5f) + "% off";
 			}
 		}
 		else if (btn_buy != null)
 		{
-			btn_buy.gameObject.SetActiveRecursive(true);
+			btn_buy.gameObject.SetActive(true);
 			btn_buy.SetBtnText(price.price, price.unit_type);
 			TUIButtonClick component2 = btn_buy.GetComponent<TUIButtonClick>();
 			if (component2 != null)

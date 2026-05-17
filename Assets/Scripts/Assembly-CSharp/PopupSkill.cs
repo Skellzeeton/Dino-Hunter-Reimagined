@@ -13,8 +13,8 @@ public class PopupSkill : MonoBehaviour
 
 	public TUILabel label_skill_name;
 
-	public LevelStarsEx level_stars;
-
+	public LevelStars level_stars;
+	
 	public Btn_BuySkill btn_click;
 
 	public UnlockBlink unlock_blink;
@@ -62,6 +62,7 @@ public class PopupSkill : MonoBehaviour
 		int skillLevel = m_item.GetSkillLevel();
 		bool skillActive = m_item.GetSkillActive();
 		int skillLevelMax = m_item.GetSkillLevelMax();
+		
 		if (skillActive)
 		{
 			label_skill_introduce.Text = m_item.GetSkillIntroduceEx();
@@ -79,9 +80,9 @@ public class PopupSkill : MonoBehaviour
 			float x = label_skill_name.CalculateBounds(label_skill_name.Text).size.x;
 			x *= label_skill_name.transform.localScale.x;
 			Vector3 position = new Vector3(label_skill_name.transform.localPosition.x + x + 12f, label_skill_name.transform.localPosition.y, label_skill_name.transform.localPosition.z);
-			if (skillLevel > 0)
+			if (skillLevelMax > 0 && skillLevel > 0)
 			{
-				level_stars.SetStars(skillLevel, position);
+				level_stars.SetStars(skillLevel, skillLevelMax, position);
 			}
 			else
 			{
@@ -93,9 +94,10 @@ public class PopupSkill : MonoBehaviour
 		float x2 = label_skill_name.CalculateBounds(label_skill_name.Text).size.x;
 		x2 *= label_skill_name.transform.localScale.x;
 		Vector3 position2 = new Vector3(label_skill_name.transform.localPosition.x + x2 + 12f, label_skill_name.transform.localPosition.y, label_skill_name.transform.localPosition.z);
-		if (skillLevel > 0)
+		if (skillLevelMax > 0)
 		{
-			level_stars.SetStars(skillLevel, position2);
+			int currentLevel = (skillLevel > 0) ? skillLevel : 0;
+			level_stars.SetStars(currentLevel, skillLevelMax, position2);
 		}
 		else
 		{
@@ -562,9 +564,9 @@ public class PopupSkill : MonoBehaviour
 		float x = label_skill_name.CalculateBounds(label_skill_name.Text).size.x;
 		x *= label_skill_name.transform.localScale.x;
 		Vector3 position = new Vector3(label_skill_name.transform.localPosition.x + x + 12f, label_skill_name.transform.localPosition.y, label_skill_name.transform.localPosition.z);
-		if (skillLevel > 0)
+		if (skillLevelMax > 0 && skillLevel > 0)
 		{
-			level_stars.SetStars(skillLevel, position, true);
+			level_stars.SetStars(skillLevel, skillLevelMax, position, skillLevel);
 		}
 		else
 		{

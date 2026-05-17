@@ -2429,9 +2429,6 @@ public class CCharPlayer : CCharBase
 		{
 			num3 = 95f;
 		}
-#if UNITY_EDITOR
-		Debug.Log(base.UID + " protect = " + num3);
-#endif
 		return num3;
 	}
 

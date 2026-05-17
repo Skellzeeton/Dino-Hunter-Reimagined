@@ -22,11 +22,11 @@ public class CCharacterInfoLevel
 
 	public int nExp;
 
-	public int nAvatarHead;
+	public int nAvatarHead = 101;
 
-	public int nAvatarUpper;
+	public int nAvatarUpper = 301;
 
-	public int nAvatarLower;
+	public int nAvatarLower = 501;
 
 	public CCharacterInfoLevel()
 	{

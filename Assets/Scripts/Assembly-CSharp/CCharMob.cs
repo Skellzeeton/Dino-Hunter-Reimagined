@@ -25,12 +25,6 @@ public class CCharMob : CCharBase
 		public Color m_ColorShallow;
 	}
 
-	[SerializeField]
-	
-	private const int LayerSceneFloor = 29;
-	private float m_FloorCheckRadius = 0.2f;
-	private float m_FloorCheckOffset = 0.1f;
-
 	public int MobBehavior;
 
 	public int GenerateWaveID;
@@ -63,51 +57,51 @@ public class CCharMob : CCharBase
 
 	public int m_nCurComboIndex;
 
-	[NonSerialized]
-	public bool m_bHasPurposePoint;
+	[NonSerialized] public bool m_bHasPurposePoint;
 
-	[NonSerialized]
-	public Vector3 m_v3PurposePoint;
+	[NonSerialized] public Vector3 m_v3PurposePoint;
 
-	[NonSerialized]
-	public List<Vector3> m_ltPath;
+	[NonSerialized] public List<Vector3> m_ltPath;
 
-	[NonSerialized]
-	public int m_nDstHoverIndex;
+	[NonSerialized] public int m_nDstHoverIndex;
 
-	[NonSerialized]
-	public Vector3 m_v3DstHoverPoint;
+	[NonSerialized] public Vector3 m_v3DstHoverPoint;
 
-	[NonSerialized]
-	public float m_fHoverTime;
+	[NonSerialized] public float m_fHoverTime;
 
 	public List<Vector3> m_ltPathHover;
-	
-	[NonSerialized]
-	public List<Vector3> m_LockedAttackPoints = new List<Vector3>();
 
+	[NonSerialized] public List<Vector3> m_LockedAttackPoints = new List<Vector3>();
 
-	[NonSerialized]
-	public kDeadMode m_DeadMode;
+	[NonSerialized] public kDeadMode m_DeadMode;
 
 	public float m_fDeadDistance;
 
 	public Vector3 m_v3DeadDirection;
 
-	[NonSerialized]
-	public Vector3 m_v3BirthPos;
+	[NonSerialized] public Vector3 m_v3BirthPos;
 
-	[NonSerialized]
-	public bool m_bShowTime;
+	[NonSerialized] public bool m_bShowTime;
 
-	[NonSerialized]
-	public bool m_bFreeze;
+	[NonSerialized] public bool m_bFreeze;
 
-	[NonSerialized]
-	public float m_fFreezeTime;
+	[NonSerialized] public float m_fFreezeTime;
 
-	[NonSerialized]
-	public bool m_bReadyToBlack;
+	[NonSerialized] public bool m_bReadyToBlack;
+
+	[NonSerialized] private float m_fNavMeshCheckTime = 0f;
+
+	private const float NavMeshCheckInterval = 2.5f;
+
+	private const float NavMeshMaxDistance = 5f;
+
+	private const float NavMeshTeleportThreshold = 2.5f;
+
+	[NonSerialized] public bool m_bIsOffNavMesh = false;
+
+	[NonSerialized] public bool m_bRecoveryActive = false;
+
+	private UnityEngine.AI.NavMeshHit m_CachedNavMeshHit;
 
 	public float m_fReadyToBlackLife;
 
@@ -131,35 +125,22 @@ public class CCharMob : CCharBase
 
 	protected Dictionary<int, int> m_dictUseSkill;
 
-	[SerializeField]
 	public int MobType { get; set; }
 
 	public kMobBehaviour MobBehaviourMode
 	{
-		get
-		{
-			return m_MobBehaviourMode;
-		}
-		set
-		{
-			m_MobBehaviourMode = value;
-		}
+		get { return m_MobBehaviourMode; }
+		set { m_MobBehaviourMode = value; }
 	}
 
 	public float Hardiness
 	{
-		get
-		{
-			return m_fHardinessCur;
-		}
+		get { return m_fHardinessCur; }
 	}
 
 	public float HardinessMax
 	{
-		get
-		{
-			return m_fHardinessMax;
-		}
+		get { return m_fHardinessMax; }
 	}
 
 	public new void Awake()
@@ -197,60 +178,60 @@ public class CCharMob : CCharBase
 		base.Start();
 	}
 
+
 	public new void Update()
-	{
-		if (!m_bActive)
-		{
-			return;
-		}
-		base.Update();
-		float num = Time.deltaTime * m_fTimeScale;
-		if (m_Behavior != null)
-		{
-			m_Behavior.Update(this, num);
-		}
-		if (base.m_GameState.isNetGame)
-		{
-			m_fUpdateMoveTime -= num;
-			if (m_fUpdateMoveTime <= 0f)
-			{
-				m_fUpdateMoveTime = 0.1f;
-			}
-		}
-		foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
-		{
-			ltSkill.Update(num);
-		}
-		foreach (SkillComboUserInfo item in m_ltSkillListAI)
-		{
-			item.Update(num);
-		}
-	}
-	
-	private IEnumerator FloorCheckRoutine()
-	{
-		WaitForSeconds wait = new WaitForSeconds(0.1f);
-		int layerMask = 1 << LayerSceneFloor;
-
-		while (true)
-		{
-			Vector3 origin = GetBone(2).position + Vector3.down * 0.1f;
-			float radius = 0.2f;
-			float maxDistance = 0.3f;
-
-			RaycastHit hit;
-			bool isTouchingFloor = Physics.SphereCast(origin, radius, Vector3.down, out hit, maxDistance, layerMask);
-
-			if (!isTouchingFloor)
-			{
-				transform.position += new Vector3(0f, -0.1f, 0f);
-			}
-
-			yield return wait;
-		}
-	}
-
-
+    {
+        if (!m_bActive)
+        {
+            return;
+        }
+        base.Update();
+        float num = Time.deltaTime * m_fTimeScale;
+		if (CGameNetManager.GetInstance().IsRoomMaster() && !base.isDead)
+        {
+            m_fNavMeshCheckTime -= num;
+            if (m_fNavMeshCheckTime <= 0f)
+            {
+                m_fNavMeshCheckTime = NavMeshCheckInterval;
+				if (!IsOnNavMesh())
+                {
+                    if (!m_bRecoveryActive)
+                    {
+                        RecoverToNavMesh();
+                    }
+                }
+                else if (m_bIsOffNavMesh || m_bRecoveryActive)
+                {
+                    m_bIsOffNavMesh = false;
+                    m_bRecoveryActive = false;
+                }
+            }
+			if (m_bRecoveryActive)
+            {
+                CheckRecoveryComplete();
+            }
+        }
+        if (m_Behavior != null)
+        {
+            m_Behavior.Update(this, num);
+        }
+        if (base.m_GameState.isNetGame)
+        {
+            m_fUpdateMoveTime -= num;
+            if (m_fUpdateMoveTime <= 0f)
+            {
+                m_fUpdateMoveTime = 0.1f;
+            }
+        }
+        foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
+        {
+            ltSkill.Update(num);
+        }
+        foreach (SkillComboUserInfo item in m_ltSkillListAI)
+        {
+            item.Update(num);
+        }
+    }
 
 	public new void LateUpdate()
 	{
@@ -269,8 +250,10 @@ public class CCharMob : CCharBase
 			{
 				gameUI.RemoveLifeBar(base.UID);
 			}
+
 			m_LifeBar = null;
 		}
+
 		base.Destroy();
 	}
 
@@ -300,6 +283,7 @@ public class CCharMob : CCharBase
 		{
 			return false;
 		}
+
 		m_fHardinessCur = m_fHardinessMax;
 		m_HurtAnim = kAnimEnum.Mob_Hurt;
 		return true;
@@ -316,6 +300,7 @@ public class CCharMob : CCharBase
 		{
 			m_fHP = 0f;
 		}
+
 		if (m_LifeBar != null)
 		{
 			m_LifeBar.SetLife(m_fHP / m_fHPMax);
@@ -332,8 +317,10 @@ public class CCharMob : CCharBase
 				SetMoribund(true, m_fHPMax / 2f, value);
 				return;
 			}
+
 			nDeathMode = kDeadMode.MoribundDead;
 		}
+
 		base.isDead = true;
 		m_DeadMode = nDeathMode;
 		ResetAI();
@@ -351,11 +338,14 @@ public class CCharMob : CCharBase
 						CUISound.GetInstance().Play("UI_Material_appear");
 						Vector3 onUnitSphere = UnityEngine.Random.onUnitSphere;
 						onUnitSphere.y = 1f;
-						m_GameScene.AddItem(dropItem, GetBone(0).position, onUnitSphere * UnityEngine.Random.Range(300f, 500f), -1f);
+						m_GameScene.AddItem(dropItem, GetBone(0).position,
+							onUnitSphere * UnityEngine.Random.Range(300f, 500f), -1f);
 					}
 				}
 			}
-			if (m_nCarryGoldMax < 1 && m_nCarryCrystalMax < 1 && UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldRate)
+
+			if (m_nCarryGoldMax < 1 && m_nCarryCrystalMax < 1 &&
+			    UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldRate)
 			{
 				GameObject poolObject = PrefabManager.GetPoolObject(302, 0f);
 				if (poolObject != null)
@@ -364,13 +354,16 @@ public class CCharMob : CCharBase
 					if (component != null)
 					{
 						int num = 0;
-						num = ((!base.m_GameScene.m_bMutiplyGame) ? m_curMobInfoLevel.nGold : MyUtils.formula_monstergold(m_curMobInfoLevel.nGold, base.Level));
+						num = ((!base.m_GameScene.m_bMutiplyGame)
+							? m_curMobInfoLevel.nGold
+							: MyUtils.formula_monstergold(m_curMobInfoLevel.nGold, base.Level));
 						component.Initialize(num);
 						component.transform.position = GetBone(0).position;
 					}
 				}
 			}
 		}
+
 		if (m_nCarryGoldMax > 0 && m_nCarryGoldCur > 0)
 		{
 			GameObject poolObject2 = PrefabManager.GetPoolObject(302, 0f);
@@ -385,6 +378,7 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
+
 		if (m_nCarryCrystalMax > 0 && m_nCarryCrystalCur > 0)
 		{
 			GameObject poolObject3 = PrefabManager.GetPoolObject(302, 0f);
@@ -399,6 +393,7 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
+
 		base.m_GameScene.AddMonsterNumLimit(base.ID, MobType, MobBehavior, -1);
 		base.m_GameScene.AddWaveMobNumber(GenerateWaveID, -1);
 		if (base.m_GameScene.m_MGManager != null)
@@ -428,6 +423,7 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
+
 		if (base.m_GameScene.m_TaskManager != null)
 		{
 			base.m_GameScene.m_TaskManager.OnKillMonster(base.ID);
@@ -435,16 +431,21 @@ public class CCharMob : CCharBase
 			{
 				base.m_GameState.LastKillBoss = base.UID;
 			}
-			if (base.m_GameScene.m_MGManager != null && base.m_GameScene.m_MGManager.IsWaveCompleted() && base.m_GameScene.GetMobAliveCount() == 0)
+
+			if (base.m_GameScene.m_MGManager != null && base.m_GameScene.m_MGManager.IsWaveCompleted() &&
+			    base.m_GameScene.GetMobAliveCount() == 0)
 			{
 				base.m_GameScene.m_TaskManager.OnKillAllMonsters();
 			}
 		}
+
 		CAchievementManager.GetInstance().AddAchievement(5);
 		if (m_curMobInfoLevel != null)
 		{
-			CAchievementManager.GetInstance().AddAchievement(6, new object[2] { m_curMobInfoLevel.nRareType, m_curMobInfoLevel.nType });
+			CAchievementManager.GetInstance()
+				.AddAchievement(6, new object[2] { m_curMobInfoLevel.nRareType, m_curMobInfoLevel.nType });
 		}
+
 		if (base.m_GameScene.IsWorldMonster(base.ID))
 		{
 			iDataCenter dataCenter = base.m_GameData.GetDataCenter();
@@ -461,6 +462,7 @@ public class CCharMob : CCharBase
 		{
 			return 0;
 		}
+
 		return m_ltSkillList.Count;
 	}
 
@@ -470,6 +472,7 @@ public class CCharMob : CCharBase
 		{
 			return null;
 		}
+
 		return m_ltSkillList[nIndex];
 	}
 
@@ -487,6 +490,7 @@ public class CCharMob : CCharBase
 		{
 			return 0;
 		}
+
 		return m_ltSkillListAI.Count;
 	}
 
@@ -496,6 +500,7 @@ public class CCharMob : CCharBase
 		{
 			return null;
 		}
+
 		return m_ltSkillListAI[nIndex];
 	}
 
@@ -518,6 +523,7 @@ public class CCharMob : CCharBase
 				ltSkillPassive.Add(item);
 			}
 		}
+
 		return result;
 	}
 
@@ -532,6 +538,7 @@ public class CCharMob : CCharBase
 		{
 			return false;
 		}
+
 		if (m_fHP <= 0f)
 		{
 			if (CGameNetManager.GetInstance().IsRoomMaster())
@@ -541,19 +548,22 @@ public class CCharMob : CCharBase
 				{
 					switch (pWeaponLvlInfo.nAttackMode)
 					{
-					case 1:
-					case 3:
-					case 4:
-					case 6:
-						kDeadMode2 = kDeadMode.HitFly;
-						m_fDeadDistance = 10f;
-						break;
+						case 1:
+						case 3:
+						case 4:
+						case 6:
+							kDeadMode2 = kDeadMode.HitFly;
+							m_fDeadDistance = 10f;
+							break;
 					}
 				}
-				if (kDeadMode2 == kDeadMode.None && MobType == 1 && !(m_curTask is doUseSkillTask) && !(m_curTask is doHurtTask))
+
+				if (kDeadMode2 == kDeadMode.None && MobType == 1 && !(m_curTask is doUseSkillTask) &&
+				    !(m_curTask is doHurtTask))
 				{
 					kDeadMode2 = kDeadMode.FlyDead;
 				}
+
 				OnDead(kDeadMode2);
 				if (CGameNetManager.GetInstance().IsConnected())
 				{
@@ -571,6 +581,7 @@ public class CCharMob : CCharBase
 				{
 				}
 			}
+
 			if (m_nCarryGoldMax > 0 && m_nCarryGoldCur > 0)
 			{
 				int num = Mathf.FloorToInt((float)m_nCarryGoldMax * 0.5f * fDmg / m_fHPMax);
@@ -578,6 +589,7 @@ public class CCharMob : CCharBase
 				{
 					num = 1;
 				}
+
 				m_nCarryGoldCur -= num;
 				GameObject poolObject = PrefabManager.GetPoolObject(302, 0f);
 				if (poolObject != null)
@@ -592,6 +604,7 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -604,6 +617,7 @@ public class CCharMob : CCharBase
 		{
 			return;
 		}
+
 		InitAnimData();
 		InitAudioData();
 		m_ltSkillList.Clear();
@@ -615,11 +629,13 @@ public class CCharMob : CCharBase
 				CSkillComboInfo skillComboInfo = base.m_GameData.GetSkillComboInfo(nID);
 				if (skillComboInfo != null)
 				{
-					SkillComboUserInfo item = new SkillComboUserInfo(nID, m_curMobInfoLevel.ltSkill[i].m_fRate, skillComboInfo.fCoolDown);
+					SkillComboUserInfo item = new SkillComboUserInfo(nID, m_curMobInfoLevel.ltSkill[i].m_fRate,
+						skillComboInfo.fCoolDown);
 					m_ltSkillList.Add(item);
 				}
 			}
 		}
+
 		m_ltSkillPassive.Clear();
 		if (m_curMobInfoLevel.ltSkillPassive != null)
 		{
@@ -633,10 +649,12 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
+
 		if (m_tmpDropGroupInfo == null)
 		{
 			m_tmpDropGroupInfo = new CDropGroupInfo();
 		}
+
 		if (m_tmpDropGroupInfo != null)
 		{
 			m_tmpDropGroupInfo.Clear();
@@ -647,11 +665,13 @@ public class CCharMob : CCharBase
 				{
 					for (int k = 0; k < dropGrouInfo.ltItem.Count; k++)
 					{
-						m_tmpDropGroupInfo.Add(new CDropItem(dropGrouInfo.ltItem[k].nItemID, dropGrouInfo.ltItem[k].fRate));
+						m_tmpDropGroupInfo.Add(new CDropItem(dropGrouInfo.ltItem[k].nItemID,
+							dropGrouInfo.ltItem[k].fRate));
 					}
 				}
 			}
 		}
+
 		m_Property.Initialize(base.ID, base.Level, base.m_GameScene.m_bMutiplyGame);
 		m_Property.UpdateSkill(this);
 		m_fHPMax = m_Property.GetValue(kProEnum.HPMax);
@@ -662,12 +682,14 @@ public class CCharMob : CCharBase
 		{
 			m_nCarryGoldMax = MyUtils.formula_goldendragon(user.Level);
 		}
+
 		m_nCarryGoldCur = m_nCarryGoldMax;
 		m_nCarryCrystalMax = (int)m_Property.GetValue(kProEnum.Mob_Crystal_Carry);
 		if (m_nCarryCrystalMax == 1 && user != null)
 		{
 			m_nCarryCrystalMax = MyUtils.formula_crystaldragon(user.Level);
 		}
+
 		m_nCarryCrystalCur = m_nCarryCrystalMax;
 		InitHardiness(base.ID, base.Level);
 		iGameUIBase gameUI = base.m_GameScene.GetGameUI();
@@ -676,6 +698,7 @@ public class CCharMob : CCharBase
 			m_LifeBar = gameUI.CreateLifeBar(this);
 			SetLifeBarStyle(0, 1f);
 		}
+
 		InitAssistAimInfo();
 	}
 
@@ -705,6 +728,7 @@ public class CCharMob : CCharBase
 		{
 			return;
 		}
+
 		int nCurAIID = m_nCurAIID;
 		m_nCurAIID = nAI;
 		m_ltSkillListAI.Clear();
@@ -717,11 +741,13 @@ public class CCharMob : CCharBase
 				m_ltSkillListAI.Add(item);
 			}
 		}
+
 		m_ltSkillPassiveAI.Clear();
 		foreach (int item3 in aIInfo.ltSkillPassive)
 		{
 			m_ltSkillPassiveAI.Add(item3);
 		}
+
 		m_Property.UpdateSkill(this);
 		if (CGameNetManager.GetInstance().IsRoomMaster())
 		{
@@ -731,6 +757,7 @@ public class CCharMob : CCharBase
 		{
 			SetBehavior(aIInfo.nBehavior + 100);
 		}
+
 		OnEnterAI(nCurAIID, nAI);
 		if (aIInfo.nBehavior == 2)
 		{
@@ -744,8 +771,10 @@ public class CCharMob : CCharBase
 					component.enabled = false;
 				}
 			}
+
 			return;
 		}
+
 		InitAnimData_Ground();
 		if (m_ModelEntity != null && !base.m_GameScene.IsSkyScene())
 		{
@@ -771,6 +800,7 @@ public class CCharMob : CCharBase
 			{
 				m_Behavior.Uninstall();
 			}
+
 			m_Behavior.Install(behavior);
 		}
 	}
@@ -804,14 +834,15 @@ public class CCharMob : CCharBase
 		{
 			return false;
 		}
+
 		return true;
 	}
 
 	//u can make dinos go crazy with this SetFreeze section
-	
+
 	public void SetFreeze(bool bFreeze, float fTime = 0f)
 	{
-		if (ID == 7 || ID == 8 || ID == 14 || ID == 3 || ID == 6 || ID == 60000 )
+		if (ID == 7 || ID == 8 || ID == 14 || ID == 3 || ID == 6 || ID == 60000)
 		{
 			//fTime = Mathf.Min(fTime, 3.25f);
 			return;
@@ -835,11 +866,13 @@ public class CCharMob : CCharBase
 		{
 			return false;
 		}
+
 		assistaiminfo.m_Target = this;
 		foreach (int key in m_dictAssistAim.Keys)
 		{
 			assistaiminfo.m_ltBone.Add(GetBone(key));
 		}
+
 		return true;
 	}
 
@@ -850,6 +883,7 @@ public class CCharMob : CCharBase
 		{
 			num = 0f;
 		}
+
 		num = MyUtils.formula_armor2protect(num);
 		if (m_bMoribund)
 		{
@@ -859,6 +893,7 @@ public class CCharMob : CCharBase
 				return num + value;
 			}
 		}
+
 		return num;
 	}
 
@@ -877,6 +912,7 @@ public class CCharMob : CCharBase
 			m_dictUseSkill.Add(nSkillID, 1);
 			return;
 		}
+
 		Dictionary<int, int> dictUseSkill;
 		Dictionary<int, int> dictionary = (dictUseSkill = m_dictUseSkill);
 		int key;
@@ -891,6 +927,7 @@ public class CCharMob : CCharBase
 		{
 			return 0;
 		}
+
 		return m_dictUseSkill[nSkillID];
 	}
 
@@ -901,16 +938,93 @@ public class CCharMob : CCharBase
 		{
 			sourcePosition = m_ltPath[m_ltPath.Count - 1];
 		}
+
 		UnityEngine.AI.NavMeshPath navMeshPath = new UnityEngine.AI.NavMeshPath();
 		if (!UnityEngine.AI.NavMesh.CalculatePath(sourcePosition, v3Dst, -1, navMeshPath))
 		{
 			m_ltPath.Add(v3Dst);
 			return;
 		}
+
 		m_ltPath.Clear();
 		for (int i = 0; i < navMeshPath.corners.Length; i++)
 		{
 			m_ltPath.Add(navMeshPath.corners[i]);
 		}
+	}
+
+	public bool IsOnNavMesh()
+	{
+		if (!m_bIsOffNavMesh && Vector3.Distance(base.Pos, m_CachedNavMeshHit.position) < 0.05f)
+		{
+			return true;
+		}
+
+		if (UnityEngine.AI.NavMesh.SamplePosition(base.Pos, out m_CachedNavMeshHit, 1.0f,
+			    UnityEngine.AI.NavMesh.AllAreas))
+		{
+			float distance = Vector3.Distance(base.Pos, m_CachedNavMeshHit.position);
+			return distance < 0.05f;
+		}
+
+		return false;
+	}
+
+	public bool GetNearestNavMeshPoint(out Vector3 nearestPoint)
+	{
+		if (m_CachedNavMeshHit.hit && Vector3.Distance(base.Pos, m_CachedNavMeshHit.position) < NavMeshMaxDistance)
+		{
+			nearestPoint = m_CachedNavMeshHit.position;
+			return true;
+		}
+
+		if (UnityEngine.AI.NavMesh.SamplePosition(base.Pos, out m_CachedNavMeshHit, NavMeshMaxDistance,
+			    UnityEngine.AI.NavMesh.AllAreas))
+		{
+			nearestPoint = m_CachedNavMeshHit.position;
+			return true;
+		}
+
+		nearestPoint = Vector3.zero;
+		return false;
+	}
+
+	public bool RecoverToNavMesh()
+	{
+		Vector3 nearestPoint;
+		if (!GetNearestNavMeshPoint(out nearestPoint))
+		{
+			Debug.LogWarning($"Mob {base.UID} cannot find navmesh within {NavMeshMaxDistance} units!");
+			return false;
+		}
+		float distanceToNavMesh = Vector3.Distance(base.Pos, nearestPoint);
+		if (distanceToNavMesh < NavMeshTeleportThreshold)
+		{
+			base.transform.position = nearestPoint;
+			m_bIsOffNavMesh = false;
+			m_bRecoveryActive = false;
+			return true;
+		}
+		m_ltPath.Clear();
+		m_ltPath.Add(nearestPoint);
+		m_bHasPurposePoint = true;
+		m_v3PurposePoint = nearestPoint;
+		m_bIsOffNavMesh = true;
+		m_bRecoveryActive = true;
+		ResetAI();
+		return true;
+	}
+	
+	public void CheckRecoveryComplete()
+    {
+        if (!m_bRecoveryActive)
+            return;
+            
+        if (m_ltPath.Count == 0 || Vector3.Distance(base.Pos, m_v3PurposePoint) < 0.06f)
+        {
+            m_bRecoveryActive = false;
+            m_bIsOffNavMesh = false;
+            m_bHasPurposePoint = false;
+        }
 	}
 }

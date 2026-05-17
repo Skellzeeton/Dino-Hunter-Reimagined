@@ -39,14 +39,6 @@ public class iStartPointEditor : MonoBehaviour
 		Load();
 	}
 
-	private void OnDisable()
-	{
-	}
-
-	private void OnDestroy()
-	{
-	}
-
 	private void OnDrawGizmos()
 	{
 		if (m_StartPointManager == null)

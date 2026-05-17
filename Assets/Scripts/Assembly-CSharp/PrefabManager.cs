@@ -228,6 +228,7 @@ public class PrefabManager
 		m_dictData.Add(1114, "Artist/Effect/Weapon/weapon_030/weapon_030_03_pfb");
 		m_dictData.Add(1115, "Artist/Effect/Weapon/hit_01/hit_01_02_pfb");
 		m_dictData.Add(1116, "Artist/Effect/Weapon/hit_01/hit_01_pfb");
+		m_dictData.Add(1117, "Artist/Effect/Weapon/hit_staff/hit_staff_2_pfb");
 		m_dictData.Add(1200, "Artist/Effect/Skill/HP_UP/HP_up_start");
 		m_dictData.Add(1201, "Artist/Effect/Skill/HP_UP/HP_up_keep");
 		m_dictData.Add(1202, "Artist/Effect/Skill/power_up/power_up_start");

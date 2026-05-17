@@ -34,7 +34,7 @@ Shader "Triniti/Character/COL_VL_AD"
         {
             fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
             o.Albedo = c.rgb;
-            o.Emission = c.rgb * 0.3;
+            o.Emission = c.rgb * 0.35;
         }
         ENDCG
     }
