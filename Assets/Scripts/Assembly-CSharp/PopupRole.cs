@@ -135,7 +135,7 @@ public class PopupRole : MonoBehaviour
 
 	public void SetRoleID(int role_id, int model, int head, int upper, int lower, int headup, int neck, int bracelet)
 	{
-		role_control.ChangeRole(model);
+		role_control.ChangeRole(model, true);
 		if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
 		{
 			GameObject modelprefab = null;

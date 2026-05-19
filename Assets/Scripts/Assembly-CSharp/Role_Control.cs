@@ -690,9 +690,9 @@ public class Role_Control : MonoBehaviour
 		}
 	}
 
-	public void ChangeRole(int id)
+	public void ChangeRole(int id, bool ignoreArmorCheck = false)
 	{
-		if (HasArmorEquipped()) id = 7;
+		if (!ignoreArmorCheck && HasArmorEquipped()) id = 7;
 		if (role_now != null)
 		{
 			role_now.gameObject.SetActiveRecursive(false);

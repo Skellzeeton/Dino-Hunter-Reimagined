@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4117093074770746}
   - component: {fileID: 111432669582480046}
   - component: {fileID: 114672070369908058}
+  - component: {fileID: 8430978135792243967}
   m_Layer: 0
   m_Name: role_101
   m_TagString: Untagged
@@ -111,6 +112,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_hand: {fileID: 4173567960145066}
+--- !u!114 &8430978135792243967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063174472993606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e018d73c76f07d84e8aff9bb02ed73ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Shader: {fileID: 0}
+  m_AvatarPart:
+  - {fileID: 1386629308946412}
+  - {fileID: 1119727623291656}
+  - {fileID: 1177282633967468}
+  - {fileID: 1386629308946412}
+  - {fileID: 1774860297917872}
+  - {fileID: 1567814683015068}
+  - {fileID: 1019515477939744}
 --- !u!1 &1091557328651822
 GameObject:
   m_ObjectHideFlags: 0

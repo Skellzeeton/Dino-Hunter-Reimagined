@@ -567,8 +567,49 @@ public class Scene_Equip : MonoBehaviour
 					}
 				}
 			}
-			go_role.ChangeRole(top_bar.GetRoleID());
-			m_PopupShow_Equip.UnEquip();
+			go_role.ChangeRole(top_bar.GetRoleID()); 
+			List<TUIPopupInfo> roleData = m_PopupShow_Role.GetData(PopupType.Roles); 
+			if (roleData != null) 
+			{ 
+				foreach (TUIPopupInfo roleItem in roleData) 
+				{ 
+					if (roleItem.texture_id == top_bar.GetRoleID() && roleItem.m_CharacterAttribute != null) 
+					{ 
+						if (roleItem.m_CharacterAttribute.m_nAvatarHeadup > 0 && TUIMappingInfo.Instance().m_GetAvatarModel != null) 
+						{ 
+							GameObject modelprefab = null; 
+							Texture modeltexture = null; 
+							if (TUIMappingInfo.Instance().m_GetAvatarModel(roleItem.m_CharacterAttribute.m_nAvatarHeadup, top_bar.GetRoleID(), ref modelprefab, ref modeltexture)) 
+							{ 
+								go_role.ChangeAvatarEffect(3, modelprefab); 
+							} 
+						} 
+						if (roleItem.m_CharacterAttribute.m_nAvatarNeck > 0 && TUIMappingInfo.Instance().m_GetAvatarModel != null) 
+						{
+							GameObject modelprefab = null; 
+							Texture modeltexture = null; 
+							if (TUIMappingInfo.Instance().m_GetAvatarModel(roleItem.m_CharacterAttribute.m_nAvatarNeck, top_bar.GetRoleID(), ref modelprefab, ref modeltexture)) 
+							{
+								go_role.ChangeAvatarEffect(6, modelprefab);
+								
+							}
+							
+						} 
+						if (roleItem.m_CharacterAttribute.m_nAvatarBracelet > 0 && TUIMappingInfo.Instance().m_GetAvatarModel != null) 
+						{ 
+							GameObject modelprefab = null; 
+							Texture modeltexture = null; 
+							if (TUIMappingInfo.Instance().m_GetAvatarModel(roleItem.m_CharacterAttribute.m_nAvatarBracelet, top_bar.GetRoleID(), ref modelprefab, ref modeltexture)) 
+							{ 
+								go_role.ChangeAvatarEffect(4, modelprefab); 
+								go_role.ChangeAvatarEffect(5, modelprefab); 
+							} 
+						} 
+						break; 
+					} 
+				} 
+			}
+			m_PopupShow_Equip.UnEquip(); 
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_WeaponExchange)
 		{
