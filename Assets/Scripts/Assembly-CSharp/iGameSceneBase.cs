@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using gyAchievementSystem;
@@ -5,6 +6,8 @@ using gyEvent;
 using gyTaskSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class iGameSceneBase
 {
@@ -150,6 +153,8 @@ public class iGameSceneBase
 	protected UnityEngine.AI.NavMeshPath m_NavPath;
 
 	protected List<MonsterNumInfo> m_ltMonsterNumInfo;
+	
+	protected List<CWorldMonster> m_ltPendingWorldMonsterSpawns;
 
 	protected CStartPointManager m_curBPManager;
 
@@ -277,22 +282,6 @@ public class iGameSceneBase
 		}
 	}
 
-	public float CurEggLife
-	{
-		get
-		{
-			return m_fCurEggLife;
-		}
-	}
-
-	public float MaxEggLife
-	{
-		get
-		{
-			return m_fMaxEggLife;
-		}
-	}
-
 	public kGameStatus GameStatus
 	{
 		get
@@ -306,27 +295,6 @@ public class iGameSceneBase
 		get
 		{
 			return m_GameOverUIStatus;
-		}
-	}
-
-	public float GameStatusStepTime
-	{
-		get
-		{
-			return m_StatusTime;
-		}
-		set
-		{
-			m_StatusTime = value;
-			m_StatusTimeCount = 0f;
-		}
-	}
-
-	public bool isMissionSuccess
-	{
-		get
-		{
-			return m_bMissionSuccess;
 		}
 	}
 
@@ -466,6 +434,7 @@ public class iGameSceneBase
 			m_NavPath = new UnityEngine.AI.NavMeshPath();
 		}
 		m_ltRefreshWorldMonster = new List<CWorldMonster>();
+		m_ltPendingWorldMonsterSpawns = new List<CWorldMonster>();
 		m_nBlackMonsterCount = 0;
 	}
 
@@ -878,6 +847,7 @@ public class iGameSceneBase
 		InitTask(m_nCurTaskID);
 		m_TaskManager.Start();
 		m_MGManager.Start();
+		//Currency dino spawn (first part)
 		m_ltRefreshWorldMonster.Clear();
 		if (!m_bIsSkyScene && !isTutorialStage)
 		{
@@ -885,18 +855,32 @@ public class iGameSceneBase
 			if (serverConfigInfo != null && serverConfigInfo.m_ltWorldMonsterInfo != null)
 			{
 				CTaskInfo taskInfo = m_GameData.GetTaskInfo(m_nCurTaskID);
+				string currentSceneName = SceneManager.GetActiveScene().name;
 				foreach (iServerVerify.CServerConfigInfo.CWorldMonsterInfo item2 in serverConfigInfo.m_ltWorldMonsterInfo)
 				{
-					if ((taskInfo == null || !item2.m_ltTaskTypeLimit.Contains(taskInfo.nType)) && dataCenter.GetWorldMonsterKill(item2.m_nMobID) < item2.m_nDailyMax)
+					bool isIgnoredMap = false;
+					if (taskInfo != null && taskInfo.nType == 4 && item2.m_ltIgnoreMap != null && item2.m_ltIgnoreMap.Count > 0)
 					{
-						int num = Random.Range(0, 100000000);
-						if ((float)num <= item2.m_fRate * 1000000f)
+						foreach (string ignoreMapName in item2.m_ltIgnoreMap)
 						{
-							CWorldMonster cWorldMonster = new CWorldMonster();
-							cWorldMonster.nMobID = item2.m_nMobID;
-							cWorldMonster.fRefreshTime = Random.Range(item2.m_arrRefreshTime[0], item2.m_arrRefreshTime[1]);
-							m_ltRefreshWorldMonster.Add(cWorldMonster);
+							if (string.Equals(currentSceneName, ignoreMapName, StringComparison.OrdinalIgnoreCase))
+							{
+								isIgnoredMap = true;
+								break;
+							}
 						}
+					}
+					if (isIgnoredMap)
+					{
+						continue;
+					}
+					if ((taskInfo == null || !item2.m_ltTaskTypeLimit.Contains(taskInfo.nType)) && 
+					    dataCenter.GetWorldMonsterKill(item2.m_nMobID) < item2.m_nDailyMax)
+					{
+						CWorldMonster cWorldMonster = new CWorldMonster();
+						cWorldMonster.nMobID = item2.m_nMobID;
+						cWorldMonster.fRefreshTime = -1f;
+						m_ltRefreshWorldMonster.Add(cWorldMonster);
 					}
 				}
 			}
@@ -1671,7 +1655,8 @@ public class iGameSceneBase
 				{
 					m_TaskManager.OnPlayerDead();
 				}
-				if ((m_TaskManager.isAllCompleted || m_TaskManager.isFailed) && (CGameNetManager.GetInstance().IsConnected() || (!m_bWaitingRevive && !m_bUserDeath)))
+				if ((m_TaskManager.isAllCompleted || m_TaskManager.isFailed) &&
+				    (CGameNetManager.GetInstance().IsConnected() || (!m_bWaitingRevive && !m_bUserDeath)))
 				{
 					FinishRevive(false);
 					FinishGame(m_TaskManager.isAllCompleted);
@@ -1679,6 +1664,7 @@ public class iGameSceneBase
 					{
 						CGameNetSender.GetInstance().SendMsg_GAME_OVER(m_TaskManager.isAllCompleted);
 					}
+
 					return;
 				}
 			}
@@ -1692,75 +1678,139 @@ public class iGameSceneBase
 					{
 						continue;
 					}
+
 					switch (taskInfo.nType)
 					{
-					case 1:
-						if (!(m_User == null) && m_User.IsTakenItem() && m_curTriggerManagerEnd.IsInside2D(m_User.Pos))
-						{
-							int carryItem = m_User.GetCarryItem();
-							m_TaskManager.OnGetItem(carryItem);
-							m_User.DropItem();
-							AddStealItem(carryItem, 1);
-							CAchievementManager.GetInstance().AddAchievement(7, new object[1] { carryItem });
-							CEventManager eventManager = m_MGManager.GetEventManager();
-							if (eventManager != null)
+						case 1:
+							if (!(m_User == null) && m_User.IsTakenItem() &&
+							    m_curTriggerManagerEnd.IsInside2D(m_User.Pos))
 							{
-								eventManager.Trigger(new EventCondition_StealEgg_Home(carryItem, GetStealItem(carryItem)));
+								int carryItem = m_User.GetCarryItem();
+								m_TaskManager.OnGetItem(carryItem);
+								m_User.DropItem();
+								AddStealItem(carryItem, 1);
+								CAchievementManager.GetInstance().AddAchievement(7, new object[1] { carryItem });
+								CEventManager eventManager = m_MGManager.GetEventManager();
+								if (eventManager != null)
+								{
+									eventManager.Trigger(
+										new EventCondition_StealEgg_Home(carryItem, GetStealItem(carryItem)));
+								}
 							}
-						}
-						break;
-					case 3:
-						foreach (CCharMob value2 in m_MobMap.Values)
-						{
-							if (m_curTriggerManagerEnd.IsInside2D(value2.Pos))
+							break;
+						case 3:
+							foreach (CCharMob value2 in m_MobMap.Values)
 							{
-								m_TaskManager.OnMonsterEnter(value2.ID);
+								if (m_curTriggerManagerEnd.IsInside2D(value2.Pos))
+								{
+									m_TaskManager.OnMonsterEnter(value2.ID);
+								}
 							}
-						}
-						break;
+
+							break;
 					}
 				}
 			}
-			if (m_ltRefreshWorldMonster.Count > 0)
+			//Currency dino spawn (second part)
+			if (m_ltRefreshWorldMonster.Count > 0 && m_Status == kGameStatus.Gameing)
 			{
+				float currentGameTime = m_GameState.GetGameTime();
 				foreach (CWorldMonster item3 in m_ltRefreshWorldMonster)
 				{
-					if (!(item3.fRefreshTime >= 0f) || !(item3.fRefreshTime <= m_GameState.GetGameTime()))
+					if (item3.fRefreshTime >= 0f)
 					{
 						continue;
 					}
-					item3.fRefreshTime = -1f;
-					Vector3 vector = Vector3.zero;
-					Vector3 v3Dir = Vector3.forward;
-					if (m_User != null)
+					if (Time.frameCount % Mathf.Max(1, Mathf.RoundToInt(1f / Time.deltaTime)) != 0)
 					{
-						vector = m_User.Pos;
-						if (m_curSPManagerGround != null)
+						continue;
+					}
+					iServerVerify.CServerConfigInfo
+						serverConfigInfo = iServerVerify.GetInstance().GetServerConfigInfo();
+					if (serverConfigInfo == null || serverConfigInfo.m_ltWorldMonsterInfo == null)
+					{
+						continue;
+					}
+					iDataCenter dataCenter = m_GameData.GetDataCenter();
+					if (dataCenter == null)
+					{
+						continue;
+					}
+					iServerVerify.CServerConfigInfo.CWorldMonsterInfo worldMonsterInfo = null;
+					foreach (iServerVerify.CServerConfigInfo.CWorldMonsterInfo info in serverConfigInfo
+						         .m_ltWorldMonsterInfo)
+					{
+						if (info.m_nMobID == item3.nMobID)
 						{
-							CStartPoint randomClosePoint = m_curSPManagerGround.GetRandomClosePoint(m_User.Pos, 3, 10f);
-							if (randomClosePoint != null)
+							worldMonsterInfo = info;
+							break;
+						}
+					}
+					if (worldMonsterInfo == null)
+					{
+						continue;
+					}
+					CTaskInfo taskInfo = m_GameData.GetTaskInfo(m_nCurTaskID);
+					string currentSceneName = SceneManager.GetActiveScene().name;
+					bool isIgnoredMap = false;
+					if (taskInfo != null && taskInfo.nType == 3 && worldMonsterInfo.m_ltIgnoreMap != null &&
+					    worldMonsterInfo.m_ltIgnoreMap.Count > 0)
+					{
+						foreach (string ignoreMapName in worldMonsterInfo.m_ltIgnoreMap)
+						{
+							if (string.Equals(currentSceneName, ignoreMapName, StringComparison.OrdinalIgnoreCase))
 							{
-								vector = randomClosePoint.GetRandom();
-								v3Dir = (m_User.Pos - vector).normalized;
+								isIgnoredMap = true;
+								break;
 							}
 						}
 					}
-					if (!CGameNetManager.GetInstance().IsRoomMaster())
+					if (isIgnoredMap)
 					{
+						continue;
+					}
+					if (dataCenter.GetWorldMonsterKill(item3.nMobID) >= worldMonsterInfo.m_nDailyMax)
+					{
+						continue;
+					}
+					int num = Random.Range(0, 100000000);
+					if ((float)num <= worldMonsterInfo.m_fRate * 1000000f)
+					{
+						item3.fRefreshTime = 0f;
+						Vector3 vector = Vector3.zero;
+						Vector3 v3Dir = Vector3.forward;
+						if (m_User != null)
+						{
+							vector = m_User.Pos;
+							if (m_curSPManagerGround != null)
+							{
+								CStartPoint randomClosePoint =
+									m_curSPManagerGround.GetRandomClosePoint(m_User.Pos, 3, 10f);
+								if (randomClosePoint != null)
+								{
+									vector = randomClosePoint.GetRandom();
+									v3Dir = (m_User.Pos - vector).normalized;
+								}
+							}
+						}
+						if (!CGameNetManager.GetInstance().IsRoomMaster())
+						{
+							break;
+						}
+						int uID = MyUtils.GetUID();
+						CCharMob cCharMob = AddMob(item3.nMobID, m_User.Level, uID, vector, v3Dir);
+						if (cCharMob != null)
+						{
+							cCharMob.m_bShowTime = false;
+							AddEffect(cCharMob.GetBone(0).position, Vector3.forward, 2f, 1950);
+							if (CGameNetManager.GetInstance().IsConnected())
+							{
+								CGameNetSender.GetInstance()
+									.SendMsg_MGMANAGER_ADDMOB_SPECIAL(item3.nMobID, m_User.Level, uID, vector, v3Dir);
+							}
+						}
 						break;
 					}
-					int uID = MyUtils.GetUID();
-					CCharMob cCharMob = AddMob(item3.nMobID, m_User.Level, uID, vector, v3Dir);
-					if (cCharMob != null)
-					{
-						cCharMob.m_bShowTime = false;
-						AddEffect(cCharMob.GetBone(0).position, Vector3.forward, 2f, 1950);
-						if (CGameNetManager.GetInstance().IsConnected())
-						{
-							CGameNetSender.GetInstance().SendMsg_MGMANAGER_ADDMOB_SPECIAL(item3.nMobID, m_User.Level, uID, vector, v3Dir);
-						}
-					}
-					break;
 				}
 			}
 		}

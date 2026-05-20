@@ -60,12 +60,15 @@ public class iServerVerify : MonoBehaviour
 			public int m_nDailyMax;
 
 			public List<int> m_ltTaskTypeLimit;
+			
+			public List<string> m_ltIgnoreMap;
 
 			public float[] m_arrRefreshTime;
 
 			public CWorldMonsterInfo()
 			{
 				m_ltTaskTypeLimit = new List<int>();
+				m_ltIgnoreMap = new List<string>();
 			}
 		}
 
@@ -367,16 +370,19 @@ public class iServerVerify : MonoBehaviour
 						{
 							continue;
 						}
+
 						CWorldMonsterInfo cWorldMonsterInfo = new CWorldMonsterInfo();
 						cWorldMonsterInfo.m_nMobID = int.Parse(value);
 						if (GetAttribute(item12, "rate", ref value))
 						{
 							cWorldMonsterInfo.m_fRate = MyUtils.ParseFloat(value);
 						}
+
 						if (GetAttribute(item12, "dailymax", ref value))
 						{
 							cWorldMonsterInfo.m_nDailyMax = int.Parse(value);
 						}
+
 						if (GetAttribute(item12, "scenetypelimit", ref value))
 						{
 							cWorldMonsterInfo.m_ltTaskTypeLimit.Clear();
@@ -386,6 +392,18 @@ public class iServerVerify : MonoBehaviour
 								for (int i = 0; i < array.Length; i++)
 								{
 									cWorldMonsterInfo.m_ltTaskTypeLimit.Add(int.Parse(array[i]));
+								}
+							}
+						}
+						if (GetAttribute(item12, "ignoremap", ref value))
+						{
+							cWorldMonsterInfo.m_ltIgnoreMap.Clear();
+							string[] array = value.Split(',');
+							if (array != null)
+							{
+								for (int i = 0; i < array.Length; i++)
+								{
+									cWorldMonsterInfo.m_ltIgnoreMap.Add(array[i].Trim());
 								}
 							}
 						}

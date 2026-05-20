@@ -22,10 +22,9 @@
         <node type="4" id="4001" discount="50"/>
         <node type="4" id="5001" discount="50"/>
         <node type="4" id="6001" discount="50"/>
-        <node type="3" id="1" discount="50"/>
     </discount>
     <worldmonster>
-        <node mobid="19" dailymax="2" rate="4" ratetypelimit="0" refreshtime="0.6,0.6"/>
-        <node mobid="20" dailymax="2" rate="4" ratetypelimit="0" refreshtime="0.6,0.6"/>
+        <node mobid="19" dailymax="2" rate="0.333" ratetypelimit="0" refreshtime="0.6,0.6" ignoremap="SceneLava,SceneLava2,SceneSnow,SceneIce,Yulin_shouwei01,Yulin_shouwei01_dusk"/>
+        <node mobid="20" dailymax="2" rate="0.222" ratetypelimit="0" refreshtime="0.6,0.6" ignoremap="SceneLava,SceneLava2,SceneSnow,SceneIce,Yulin_shouwei01,Yulin_shouwei01_dusk"/>
     </worldmonster>
 </root>
