@@ -365,7 +365,6 @@ public class Popup_Show : MonoBehaviour
 	{
 		if (btn_equip == null)
 		{
-			Debug.LogWarning("error!");
 			return;
 		}
 		Popup_BtnEquip component = btn_equip.GetComponent<Popup_BtnEquip>();

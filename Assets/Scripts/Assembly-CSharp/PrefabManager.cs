@@ -236,15 +236,12 @@ public class PrefabManager
 		m_dictData.Add(1204, "Artist/Effect/Skill/Defense_UP/Defense_up_start");
 		m_dictData.Add(1205, "Artist/EffectCustom/defence_keep");
 		m_dictData.Add(1206, "Artist/Effect/Skill/stealth/stealth_pfb");
-		m_dictData.Add(1208, "Artist/Effect/Skill/SPD/SPD_UP_pfb");
-		m_dictData.Add(1209, "Artist/Effect/Skill/SPD/SPD_UP_02_pfb");
 		m_dictData.Add(1300, "Artist/Effect/Character/Level_up/Level_up_pfb");
 		m_dictData.Add(1301, "Artist/Effect/Item/item/item_04_pfb");
 		m_dictData.Add(1351, "Artist/Effect/Character/roar/roar_pfb");
 		m_dictData.Add(1400, "Artist/Effect/Skill/atk01/atk01_pfb");
 		m_dictData.Add(1401, "Artist/Effect/Skill/atk02/atk02_pfb");
 		m_dictData.Add(1402, "Artist/Effect/Skill/rush/rush");
-		m_dictData.Add(1403, "Artist/Effect/Skill/shock/shock_01_pfb");
 		m_dictData.Add(1404, "Artist/Effect/Character/charge_02/charge_02_01_pfb");
 		m_dictData.Add(1405, "Artist/Effect/Character/charge_03/charge_03_01_pfb");
 		m_dictData.Add(1406, "Artist/Effect/Skill/blink/blink_01_pfb");
@@ -269,7 +266,6 @@ public class PrefabManager
 		m_dictData.Add(1913, "Artist/EffectCustom/snow_walker_step");
 		m_dictData.Add(1914, "Artist/EffectCustom/snow_monster_step");
 		m_dictData.Add(1915, "Artist/Effect/Skill/fart/fart_pfb");
-		m_dictData.Add(1916, "Artist/Effect/Skill/sigh/sigh_pfb");
 		m_dictData.Add(1920, "Artist/Effect/Skill/role_009&010_fx/role_009_atk02_01_pfb");
 		m_dictData.Add(1921, "Artist/Effect/Skill/role_009&010_fx/role_009_atk02_02_pfb");
 		m_dictData.Add(1922, "Artist/Effect/Skill/role_009&010_fx/role_009_atk02_03_pfb");

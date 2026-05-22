@@ -994,7 +994,7 @@ public class CCharMob : CCharBase
 		Vector3 nearestPoint;
 		if (!GetNearestNavMeshPoint(out nearestPoint))
 		{
-			Debug.LogWarning($"Mob {base.UID} cannot find navmesh within {NavMeshMaxDistance} units!");
+			//Debug.LogWarning($"Mob {base.UID} cannot find navmesh within {NavMeshMaxDistance} units!");
 			return false;
 		}
 		float distanceToNavMesh = Vector3.Distance(base.Pos, nearestPoint);

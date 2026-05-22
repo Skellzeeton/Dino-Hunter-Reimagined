@@ -342,10 +342,6 @@ public class PrefabPath
 
 	public const int buff_stealth_hold = 1207;
 
-	public const int buff_speed_add = 1208;
-
-	public const int buff_speed_hold = 1209;
-
 	public const int player_levelup = 1300;
 
 	public const int player_eatitem = 1301;
@@ -357,9 +353,7 @@ public class PrefabPath
 	public const int slash_tail = 1401;
 
 	public const int pterodactyl_rush = 1402;
-
-	public const int headhitground = 1403;
-
+	
 	public const int dragon_car = 1404;
 
 	public const int triceratops_rush = 1405;
@@ -407,9 +401,7 @@ public class PrefabPath
 	public const int snow_monster_step = 1914;
 
 	public const int dilophosaurus_pee = 1915;
-
-	public const int sigh = 1916;
-
+	
 	public const int dig_attack01 = 1920;
 
 	public const int dig_attack02 = 1921;

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: rineapple
-  m_Shader: {fileID: 4800000, guid: 6667362aabe669348b59ca1168511eb6, type: 3}
+  m_Name: weapon_020_04
+  m_Shader: {fileID: 4800000, guid: 1e696c0b7f09cf649941a353b3442f0f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,17 +23,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _LightMap:
-        m_Texture: {fileID: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 2d9f0b31e8c9cac4282a698480a63c23, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0334c189c73c6e083a4d5f4ea8154b2f, type: 3}
+    - _MainTex2:
+        m_Texture: {fileID: 2800000, guid: 4ba390ab244ee3d4487751c612172244, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 0.41960785, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.9528302, g: 0.95283014, b: 0.22022964, a: 1}
+    - _Color2: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

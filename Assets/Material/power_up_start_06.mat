@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bineapple
-  m_Shader: {fileID: 4800000, guid: 6667362aabe669348b59ca1168511eb6, type: 3}
+  m_Name: power_up_start_06
+  m_Shader: {fileID: 4800000, guid: 1e696c0b7f09cf649941a353b3442f0f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,17 +23,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _LightMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0334c189c73c6e083a4d5f4ea8154b2f, type: 3}
+        m_Texture: {fileID: 2800000, guid: d38248432d57b724580f18ad7644b87d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Parallax: 0.02
     m_Colors:
-    - _Color: {r: 0, g: 0, b: 0.41960785, a: 1}
+    - _Color: {r: 1, g: 0.16504854, b: 0, a: 0.16470589}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
