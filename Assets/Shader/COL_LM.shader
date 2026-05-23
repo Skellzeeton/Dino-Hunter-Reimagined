@@ -1,4 +1,4 @@
-Shader "Triniti/Scene/COL_LM_Unlit_Optimized" {
+Shader "Triniti/Scene/COL_LM" {
 Properties {
     _Color ("Main Color", Color) = (1,1,1,1)
     _MainTex ("MainTex", 2D) = "" {}

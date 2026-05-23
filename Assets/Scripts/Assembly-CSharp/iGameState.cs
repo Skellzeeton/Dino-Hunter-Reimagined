@@ -133,9 +133,7 @@ public class iGameState
 	protected CMaterialInfo[] m_arrGainMaterialInGame;
 
 	protected int m_nGainCrystalInGame;
-
-	public iGameCGAdvert.CServerAdvertInfo m_ServerAdvertInfo;
-
+	
 	public int m_nDaysFromLastLogin;
 
 	public DayOfWeek m_DayOfWeek;
