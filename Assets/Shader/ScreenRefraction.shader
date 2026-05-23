@@ -16,7 +16,7 @@ Shader "Triniti/Particle/ScreenRefraction" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma target 3.0
+            #pragma target 3.5
             
             #include "UnityCG.cginc"
             

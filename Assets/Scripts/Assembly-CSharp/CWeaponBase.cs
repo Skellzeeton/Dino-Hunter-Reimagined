@@ -347,10 +347,8 @@ public class CWeaponBase
 				break;
 			}
 			m_FireLight.range = 5f;
-			m_FireLight.intensity = 10f;
 			m_FireLight.bounceIntensity = 0f;
 			m_FireLight.cullingMask = (1 << 0) | (1 << 27);
-			//m_FireLight.lightmapBakeType = LightmapBakeType.Baked;
 			m_FireLight.renderMode = LightRenderMode.ForcePixel;
 			m_fFireLightTime = 0.5f + 1.6666667f * (m_pWeaponLvlInfo.fShootSpeed - 0.1f);
 		}

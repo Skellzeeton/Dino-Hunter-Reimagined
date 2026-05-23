@@ -11,8 +11,7 @@ Shader "Triniti/Character/COL_VL_AD"
         Tags { "RenderType"="Opaque" }
         CGPROGRAM
         #pragma surface surf CustomLambert fullforwardshadows noambient
-        #pragma target 3.0
-
+        #pragma target 3.5
         sampler2D _MainTex;
         fixed4 _Color;
         struct Input

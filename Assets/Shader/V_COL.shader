@@ -7,10 +7,9 @@ Properties {
 	
 	SubShader{
 		Tags { "RenderType" = "Opaque" }
-		LOD 200
 		CGPROGRAM
 #pragma surface surf Standard fullforwardshadows
-#pragma target 3.0
+#pragma target 3.5
 		sampler2D _MainTex;
 		struct Input
 		{
