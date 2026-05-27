@@ -234,7 +234,9 @@ public class Role_Control : MonoBehaviour
 	private bool stop_event;
 
 	private bool exit_event;
-
+	
+	private int m_nCurrentCharacterID = -1;
+	
 	protected bool m_bActive = true;
 
 	private void Awake()
@@ -690,8 +692,88 @@ public class Role_Control : MonoBehaviour
 		}
 	}
 
+	public void LoadCharacterEquip(bool forceLoad = false)
+	{
+		if (role_now == null)
+		{
+			return;
+		}
+		if (!forceLoad && !HasArmorEquipped())
+		{
+			return;
+		}
+		iGameData gameData = iGameApp.GetInstance().m_GameData;
+		if (gameData == null)
+		{
+			return;
+		}
+    
+		// Get the current character's level 1 info directly
+		CCharacterInfoLevel charLevelInfo = gameData.GetCharacterInfo(m_nCurrentCharacterID, 1);
+		if (charLevelInfo == null)
+		{
+			return;
+		}
+		if (string.IsNullOrEmpty(charLevelInfo.sEquipModel))
+		{
+			return;
+		}
+		Transform spineBone = FindBoneRecursive(role_now, "Bip01 Spine");
+		if (spineBone == null)
+		{
+			Debug.LogWarning("Role_Control: Bip01 Spine not found");
+			return;
+		}
+		string equipPath = "artist/model/equip/" + charLevelInfo.sEquipModel;
+		GameObject equipPrefab = Resources.Load<GameObject>(equipPath);
+		if (equipPrefab == null)
+		{
+			Debug.LogWarning("Role_Control: Equip prefab not found: " + equipPath);
+			return;
+		}
+    
+		// Destroy existing equip and create new one
+		foreach (Transform child in spineBone)
+		{
+			if (child.name.Contains("Equip") || child.name.Contains("equip"))
+			{
+				Destroy(child.gameObject);
+			}
+		}
+    
+		GameObject equipInstance = Instantiate(equipPrefab);
+		equipInstance.transform.parent = spineBone;
+		equipInstance.transform.localPosition = equipPrefab.transform.position;
+		equipInstance.transform.localRotation = equipPrefab.transform.rotation;
+		equipInstance.transform.localScale = equipPrefab.transform.localScale;
+	}
+
+	private Transform FindBoneRecursive(Transform parent, string boneName)
+	{
+		if (parent.name == boneName)
+			return parent;
+
+		foreach (Transform child in parent)
+		{
+			Transform result = FindBoneRecursive(child, boneName);
+			if (result != null)
+				return result;
+		}
+
+		return null;
+	}
+	
+	public void SetCurrentCharacterID(int id)
+	{
+		m_nCurrentCharacterID = id;
+	}
+
 	public void ChangeRole(int id, bool ignoreArmorCheck = false)
 	{
+		if (id != 7 || ignoreArmorCheck)
+		{
+			m_nCurrentCharacterID = id;
+		}
 		if (!ignoreArmorCheck && HasArmorEquipped()) id = 7;
 		if (role_now != null)
 		{
@@ -788,6 +870,7 @@ public class Role_Control : MonoBehaviour
 			weapon_now.localPosition = new Vector3(0f, 0f, 0f);
 			weapon_now.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
 		}
+		LoadCharacterEquip(id == 7);
 	}
 
 	public void ChangeAvatar(int index, GameObject model, Texture tex)

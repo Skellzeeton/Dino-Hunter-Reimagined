@@ -615,6 +615,89 @@ public class CCharPlayer : CCharBase
 		}
 	}
 
+	public void LoadCharacterEquip()
+	{
+		iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dataCenter == null)
+		{
+			return;
+		}
+		bool hasArmor = (dataCenter.AvatarHead > 0 && dataCenter.AvatarHead != 101) ||
+		                (dataCenter.AvatarUpper > 0 && dataCenter.AvatarUpper != 301) ||
+		                (dataCenter.AvatarLower > 0 && dataCenter.AvatarLower != 501);
+		if (!hasArmor)
+		{
+			return;
+		}
+		CCharacterInfoLevel levelOneInfo = null;
+		if (m_curCharacterInfo != null)
+		{
+			levelOneInfo = m_curCharacterInfo.Get(1);
+		}
+		if (levelOneInfo == null || string.IsNullOrEmpty(levelOneInfo.sEquipModel))
+		{
+			return;
+		}
+		Transform spineBone = null;
+		if (m_ModelEntityTransform != null)
+		{
+			spineBone = FindBoneRecursive(m_ModelEntityTransform, "Bip01 Spine");
+		}
+		if (spineBone == null)
+		{
+			Debug.LogWarning("CCharPlayer: Bip01 Spine bone not found on character model");
+			return;
+		}
+		string equipPath = "artist/model/equip/" + levelOneInfo.sEquipModel;
+		GameObject equipPrefab = Resources.Load<GameObject>(equipPath);
+		if (equipPrefab == null)
+		{
+			Debug.LogWarning("CCharPlayer: Equip prefab not found at path: " + equipPath);
+			return;
+		}
+		GameObject equipInstance = Object.Instantiate(equipPrefab);
+		if (equipInstance == null)
+		{
+			return;
+		}
+		equipInstance.transform.parent = spineBone;
+		equipInstance.transform.localPosition = equipPrefab.transform.position;
+		equipInstance.transform.localRotation = equipPrefab.transform.rotation;
+		equipInstance.transform.localScale = equipPrefab.transform.localScale;
+		iCharacterModel characterModel = GetComponent<iCharacterModel>();
+		if (characterModel != null)
+		{
+			if (characterModel.mPendant != null)
+			{
+				Object.Destroy(characterModel.mPendant);
+			}
+			characterModel.mPendant = equipInstance;
+		}
+		else
+		{
+			Debug.Log("CCharPlayer: iCharacterModel not found on character, equip added without pendant assignment");
+		}
+	}
+
+	private Transform FindBoneRecursive(Transform parent, string boneName)
+	{
+		if (parent.name == boneName)
+		{
+			return parent;
+		}
+
+		foreach (Transform child in parent)
+		{
+			Transform result = FindBoneRecursive(child, boneName);
+			if (result != null)
+			{
+				return result;
+			}
+		}
+
+		return null;
+	}
+
 	public virtual void InitChar(int nCharID, int nLevel, int nExp = 0, int nAvatarHead = -1, int nAvatarUpper = -1, int nAvatarLower = -1, int nAvatarHeadup = -1, int nAvatarNeck = -1, int nAvatarWrist = -1, int nAvatarBadge = -1, int nAvatarStone = -1)
 	{
 		base.ID = nCharID;
@@ -674,6 +757,7 @@ public class CCharPlayer : CCharBase
 			Debug.Log(base.UID + " " + m_fHP + " " + m_fHPMax);
 #endif
 		}
+		LoadCharacterEquip();
 	}
 
 	public void UpdateUpBody(Vector3 v3LookDir)

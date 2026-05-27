@@ -11,6 +11,8 @@ public class CCharacterInfoLevel
 	public string sIcon;
 
 	public int nModel;
+	
+	public string sEquipModel;
 
 	public float fLifeBase;
 
@@ -31,5 +33,6 @@ public class CCharacterInfoLevel
 	public CCharacterInfoLevel()
 	{
 		ltSkillPassive = new List<int>();
+		sEquipModel = string.Empty;
 	}
 }
