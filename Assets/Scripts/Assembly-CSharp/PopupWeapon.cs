@@ -381,62 +381,54 @@ public class PopupWeapon : MonoBehaviour
 			{
 				m_nOriginalCharacterModel = top_bar.GetRoleID();
 			}
+			int originalCharacterID = top_bar.GetRoleID();
 			SetRoleModel(7);
-			// Reapply all equipped accessories to model 7
+			role_control.SetCurrentCharacterID(originalCharacterID);
 			ReapplyEquippedAccessories();
 		}
 	}
 	
-	private void ReapplyEquippedAccessories() 
-	{ 
-		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter(); 
+	private void ReapplyEquippedAccessories()
+	{
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
 		int role_id = top_bar.GetRoleID();
-    if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
-    {
-        GameObject modelprefab = null;
-        Texture modeltexture = null;
-        
-        // Reapply head (even if 0, it will apply default model 101 textures)
-        int headId = (dc.AvatarHead > 0) ? dc.AvatarHead : 101;
-        if (TUIMappingInfo.Instance().m_GetAvatarModel(headId, role_id, ref modelprefab, ref modeltexture))
-        {
-            SetRoleAvatar(0, modelprefab, modeltexture);
-        }
-        
-        // Reapply body (even if 0, it will apply default model 301 textures)
-        int bodyId = (dc.AvatarUpper > 0) ? dc.AvatarUpper : 301;
-        if (TUIMappingInfo.Instance().m_GetAvatarModel(bodyId, role_id, ref modelprefab, ref modeltexture))
-        {
-            SetRoleAvatar(1, modelprefab, modeltexture);
-        }
-        
-        // Reapply legs (even if 0, it will apply default model 501 textures)
-        int legId = (dc.AvatarLower > 0) ? dc.AvatarLower : 501;
-        if (TUIMappingInfo.Instance().m_GetAvatarModel(legId, role_id, ref modelprefab, ref modeltexture))
-        {
-            SetRoleAvatar(2, modelprefab, modeltexture);
-        }
-        
-        // Reapply halo (index 3)
-        if (dc.AvatarHeadup > 0 && TUIMappingInfo.Instance().m_GetAvatarModel(dc.AvatarHeadup, role_id, ref modelprefab, ref modeltexture))
-        {
-            SetRoleAvatarEffect(3, modelprefab);
-        }
-        
-        // Reapply necklace (index 6)
-        if (dc.AvatarNeck > 0 && TUIMappingInfo.Instance().m_GetAvatarModel(dc.AvatarNeck, role_id, ref modelprefab, ref modeltexture))
-        {
-            SetRoleAvatarEffect(6, modelprefab);
-        }
-        
-        // Reapply bracelets (indices 4 and 5)
-        if (dc.AvatarWrist > 0 && TUIMappingInfo.Instance().m_GetAvatarModel(dc.AvatarWrist, role_id, ref modelprefab, ref modeltexture))
-        {
-            SetRoleAvatarEffect(4, modelprefab);
-            SetRoleAvatarEffect(5, modelprefab);
-        }
-    }
-}
+		if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
+		{
+			GameObject modelprefab = null;
+			Texture modeltexture = null;
+			int headId = (dc.AvatarHead > 0) ? dc.AvatarHead : 101;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel(headId, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatar(0, modelprefab, modeltexture);
+			}
+			int bodyId = (dc.AvatarUpper > 0) ? dc.AvatarUpper : 301;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel(bodyId, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatar(1, modelprefab, modeltexture);
+			}
+			int legId = (dc.AvatarLower > 0) ? dc.AvatarLower : 501;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel(legId, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatar(2, modelprefab, modeltexture);
+			}
+			if (dc.AvatarHeadup > 0 && TUIMappingInfo.Instance()
+				    .m_GetAvatarModel(dc.AvatarHeadup, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatarEffect(3, modelprefab);
+			}
+			if (dc.AvatarNeck > 0 && TUIMappingInfo.Instance()
+				    .m_GetAvatarModel(dc.AvatarNeck, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatarEffect(6, modelprefab);
+			}
+			if (dc.AvatarWrist > 0 && TUIMappingInfo.Instance()
+				    .m_GetAvatarModel(dc.AvatarWrist, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatarEffect(4, modelprefab);
+				SetRoleAvatarEffect(5, modelprefab);
+			}
+		}
+	}
 
 	private void RestoreCharacterModelIfForced(WeaponType oldWeaponType, WeaponType newWeaponType)
 	{
@@ -444,7 +436,6 @@ public class PopupWeapon : MonoBehaviour
 		    oldWeaponType != WeaponType.Armor_Body && 
 		    oldWeaponType != WeaponType.Armor_Leg)
 			return;
-
 		if (m_nOriginalCharacterModel != -1)
 		{
 			if (newWeaponType != WeaponType.Armor_Head && 
@@ -453,7 +444,6 @@ public class PopupWeapon : MonoBehaviour
 			{
 				SetRoleModel(m_nOriginalCharacterModel);
 				m_nOriginalCharacterModel = -1;
-				// Reapply accessories after restoring original model
 				ReapplyEquippedAccessories();
 			}
 		}

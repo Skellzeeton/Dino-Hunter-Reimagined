@@ -143,6 +143,10 @@ public class iCharacterCenter : iBaseCenter
 			{
 				cCharacterInfoLevel.nModel = int.Parse(value);
 			}
+			if (MyUtils.GetAttribute(childNode, "equip", ref value))
+			{
+				cCharacterInfoLevel.sEquipModel = value;
+			}
 			if (MyUtils.GetAttribute(childNode, "life", ref value))
 			{
 				cCharacterInfoLevel.fLifeBase = MyUtils.ParseFloat(value);

@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 111520945100691582}
   - component: {fileID: 114706303283667094}
   - component: {fileID: 114084603332392606}
+  - component: {fileID: 8085625081942496518}
   m_Layer: 26
   m_Name: Entity
   m_TagString: Untagged
@@ -434,6 +435,22 @@ MonoBehaviour:
   m_bLava: 0
   m_bIce: 0
   m_bZombie: 0
+--- !u!114 &8085625081942496518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223765735617580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c987d813972128a4bb2ceddbabb7e622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Node: {fileID: 4831442126487434}
+  m_fTime: 0
+  m_Effect: {fileID: 0}
+  fDisappearTime: 2
 --- !u!1 &1252230977058102
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +565,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -569,9 +588,11 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 1
   m_UpdateWhenOffscreen: 0
