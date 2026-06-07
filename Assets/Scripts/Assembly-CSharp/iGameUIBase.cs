@@ -86,8 +86,8 @@ public class iGameUIBase : MonoBehaviour
 		m_dictLifeBar = new Dictionary<int, gyLifeBarHUD>();
 		m_dictTeamMate = new Dictionary<int, gyUIPortrait>();
 		m_GameTaskUIPlane = GetControl<iGameTaskUIPlane>("_AnchorTop/NGUITaskUIPlane");
-		float num = (float)Screen.height / 320f;
-		float num2 = (float)Screen.width / 480f;
+		float num = (float)Screen.height / 360f;
+		float num2 = (float)Screen.width / 520f;
 		float num3 = ((!(num < num2)) ? num2 : num);
 		foreach (Transform item in m_UIManager.mParent)
 		{

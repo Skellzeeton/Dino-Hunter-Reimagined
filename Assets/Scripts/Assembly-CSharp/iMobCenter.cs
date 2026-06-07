@@ -84,14 +84,6 @@ public class iMobCenter : iBaseCenter
 			{
 				cMobInfoLevel.nModel = int.Parse(value);
 			}
-			if (MyUtils.GetAttribute(childNode, "name", ref value))
-			{
-				cMobInfoLevel.sName = value;
-			}
-			if (MyUtils.GetAttribute(childNode, "desc", ref value))
-			{
-				cMobInfoLevel.sDesc = value;
-			}
 			if (MyUtils.GetAttribute(childNode, "icon", ref value))
 			{
 				cMobInfoLevel.sIcon = value;

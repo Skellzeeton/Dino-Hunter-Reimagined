@@ -98,8 +98,8 @@ Shader "Triniti/Character/COL_VL_AB"
                 float NdotL = max(0, dot(normal, lightDir));
                 float3 lightContribution = _LightColor0.rgb * NdotL * atten;
                 float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos);
-                float fresnelTerm = pow(1 - abs(dot(normal, viewDir)), 1.0);
-                float3 reflection = lightContribution * fresnelTerm * 1.0;
+                float fresnelTerm = pow(1 - abs(dot(normal, viewDir)), 0.5);
+                float3 reflection = lightContribution * fresnelTerm * 0.5;
                 float3 finalColor = (albedo * lightContribution) + reflection;
                 UNITY_APPLY_FOG(i.fogCoord, finalColor);
                 return fixed4(finalColor, 0);
