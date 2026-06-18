@@ -4,3 +4,5 @@ my server btw [for support and stuff]
 COM Developer Community:
 https://discord.gg/gv7Ebnmg7u
 
+(This readme file will be updated when demo 2 is released.)
+
