@@ -5,87 +5,105 @@ using UnityEngine;
 [Serializable]
 public class CMobInfoLevel
 {
-	public int nLevel;
+    public int nLevel;
 
-	public int nRareType;
+    public int nRareType;
 
-	public int nType;
+    public int nType;
 
-	public int nModel;
+    public int nModel;
 
-	public string sName;
+    public string sName;
 
-	public string sDesc;
+    public string sDesc;
 
-	public string sIcon;
+    public string sIcon;
 
-	public float fLife;
+    public float fLife;
+    
+    public float fLifeMax;
+	
+    public float fMoveSpeed;
+    
+    public float fMoveSpeedMax;
 
-	public float fMoveSpeed;
+    public float fMeleeRange = 5f;
 
-	public float fMeleeRange = 5f;
+    public float fDamage;
+    
+    public float fDamageMax;
 
-	public float fDamage;
+    public float fHardiness;
+    
+    public float fHardinessMax;
+    
+    public bool bIgnoreKnock;
+    
+    public int nMinBoost;
+    
+    public int nMaxBoost;
 
-	public float fHardiness;
+    public List<SkillComboRateInfo> ltSkill;
 
-	public List<SkillComboRateInfo> ltSkill;
+    public List<int> ltSkillPassive;
 
-	public List<int> ltSkillPassive;
+    public int nAIManagerID;
 
-	public int nAIManagerID;
+    public float fMoveSpeedRate = 1f;
 
-	public float fMoveSpeedRate = 1f;
+    public float fRushSpeedRate = 1f;
 
-	public float fRushSpeedRate = 1f;
+    public bool isWaitRot;
 
-	public bool isWaitRot;
+    public int nGoldRate = 5;
 
-	public int nGoldRate = 5;
+    public int nGold;
+    
+    public int nGoldMax;
 
-	public int nGold;
+    public int nExp;
+    
+    public int nExpMax;
 
-	public int nExp;
+    public int nDropGroup;
 
-	public int nDropGroup;
+    public int[] arrDropCount;
 
-	public int[] arrDropCount;
+    public int[] arrDropCountRate;
 
-	public int[] arrDropCountRate;
+    public List<CHardinessInfo> ltHardinessInfo;
 
-	public List<CHardinessInfo> ltHardinessInfo;
+    public CMobInfoLevel()
+    {
+        ltSkill = new List<SkillComboRateInfo>();
+        ltSkillPassive = new List<int>();
+        ltHardinessInfo = new List<CHardinessInfo>();
+        arrDropCount = new int[3] { -1, -1, -1 };
+        arrDropCountRate = new int[3];
+    }
 
-	public CMobInfoLevel()
-	{
-		ltSkill = new List<SkillComboRateInfo>();
-		ltSkillPassive = new List<int>();
-		ltHardinessInfo = new List<CHardinessInfo>();
-		arrDropCount = new int[3] { -1, -1, -1 };
-		arrDropCountRate = new int[3];
-	}
-
-	public int GetDropItemCount()
-	{
-		float[] array = new float[arrDropCount.Length];
-		for (int i = 0; i < arrDropCount.Length && i < arrDropCountRate.Length; i++)
-		{
-			if (i == 0)
-			{
-				array[i] = arrDropCountRate[i];
-			}
-			else
-			{
-				array[i] = array[i - 1] + (float)arrDropCountRate[i];
-			}
-		}
-		float num = UnityEngine.Random.Range(0f, array[arrDropCountRate.Length - 1]);
-		for (int j = 0; j < arrDropCount.Length; j++)
-		{
-			if (num <= array[j])
-			{
-				return arrDropCount[j];
-			}
-		}
-		return -1;
-	}
+    public int GetDropItemCount()
+    {
+        float[] array = new float[arrDropCount.Length];
+        for (int i = 0; i < arrDropCount.Length && i < arrDropCountRate.Length; i++)
+        {
+            if (i == 0)
+            {
+                array[i] = arrDropCountRate[i];
+            }
+            else
+            {
+                array[i] = array[i - 1] + (float)arrDropCountRate[i];
+            }
+        }
+        float num = UnityEngine.Random.Range(0f, array[arrDropCountRate.Length - 1]);
+        for (int j = 0; j < arrDropCount.Length; j++)
+        {
+            if (num <= array[j])
+            {
+                return arrDropCount[j];
+            }
+        }
+        return -1;
+    }
 }

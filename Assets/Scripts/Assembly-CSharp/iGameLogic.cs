@@ -227,6 +227,11 @@ public class iGameLogic
 				{
 					break;
 				}
+				CCharMob mobTarget = target as CCharMob;
+				if (mobTarget != null && mobTarget.GetMobInfo() != null && mobTarget.GetMobInfo().bIgnoreKnock)
+				{
+					break;
+				}
 				float num23 = num2;
 				float value3 = target.Property.GetValue(kProEnum.ResistBeatBack);
 				if (value3 > 0f)
