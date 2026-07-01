@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml;
 using UnityEngine;
 
 public class iDataCenter
@@ -10,9 +9,7 @@ public class iDataCenter
 	public class CCrystalInBackground
 	{
 		public float m_fMoney;
-
 		public string m_sCombineKey;
-
 		public SafeInteger m_nCrystal;
 
 		public CCrystalInBackground()
@@ -25,332 +22,179 @@ public class iDataCenter
 	public class CUnlockSign
 	{
 		public int m_nType;
-
 		public int m_nID;
 
-		public CUnlockSign()
-		{
-		}
-
+		public CUnlockSign() { }
 		public CUnlockSign(int type, int id)
 		{
 			m_nType = type;
 			m_nID = id;
 		}
 	}
-	
+
+	private const string SAVE_FILE = "gamedata.json";
+	private const string BACKUP_FILE = "gamedata.json.bak";
+	private const string TEMP_FILE = "gamedata.json.tmp";
+
 	public bool isFirstTimePlay
 	{
-		get
-		{
-			return m_bFirstTimePlay;
-		}
+		get { return m_bFirstTimePlay; }
 	}
 
 	protected string m_sSaveVersion = "1.0.0";
-
 	protected string m_sGameVersion = "3.1.7a";
-
 	protected SafeInteger m_nGold;
-
 	protected SafeInteger m_nCrystal;
-
 	protected List<CCrystalInBackground> m_ltCrystalInBackground;
-
 	protected SafeInteger m_nStashLevel;
-
 	protected int m_nCrystalTotalGain;
-
 	protected int m_nCrystalTotalConsume;
-
 	protected Dictionary<int, int> m_dictMaterials;
-
 	protected Dictionary<int, int> m_dictWeapon;
-
 	protected Dictionary<int, int> m_dictEquipStone;
-
 	protected Dictionary<int, int> m_dictSkill;
-
 	protected Dictionary<int, int> m_dictPassiveSkill;
-
 	protected Dictionary<int, int> m_dictAvatar;
-
 	protected Dictionary<int, CCharSaveInfo> m_dictCharSaveInfo;
-
 	protected List<CLevelSaveInfo> m_ltLevelSaveInfo;
-	
 	protected List<int> m_ltFreeWeapon;
-
 	protected Dictionary<int, CAchievementData> m_dictAchievementData;
-
 	protected DateTime m_lastLoginTime;
-
 	protected int m_nDailyRewardCount;
-
 	protected int m_nDailyRewardHasGot;
-
 	protected List<int> m_ltDailyTask;
-
 	protected bool m_bMusic;
-
 	protected bool m_bSound;
-
 	protected bool m_bAutoAim;
-
 	protected List<CUnlockSign> m_ltUnlockSign;
-
 	protected float m_fSceneProccess;
-
 	protected bool m_bTutorial;
-
 	protected int m_nTutorialVillageState;
-
 	protected bool m_bEvaluate;
-
 	protected int m_nEnterAppCount;
-
 	protected Dictionary<int, int> m_dictWeaponSign;
-
 	protected Dictionary<int, int> m_dictEquipStoneSign;
-
 	protected Dictionary<int, int> m_dictSkillSign;
-
 	protected Dictionary<int, int> m_dictCharacterSign;
-
 	protected Dictionary<int, int> m_dictAvatarSign;
-
 	protected int m_nCurCharID;
-
 	protected int[] m_arrSelectWeapon;
-
 	protected Dictionary<int, int[]> m_dictSelectPassiveSkill;
-
 	protected int m_nCurEquipStone;
-
 	protected SafeInteger m_nAvatarHead;
-
 	protected SafeInteger m_nAvatarUpper;
-
 	protected SafeInteger m_nAvatarLower;
-
 	protected SafeInteger m_nAvatarHeadup;
-
 	protected SafeInteger m_nAvatarNeck;
-
 	protected SafeInteger m_nAvatarWrist;
-
 	protected SafeInteger m_nAvatarBadge;
-
 	protected SafeInteger m_nAvatarStone;
-
 	protected int m_nLatestLevel;
-
 	protected int m_nLastLevel;
-
 	protected bool m_bUnLockLevel;
-
 	protected List<int> m_ltLevelList;
-
 	protected bool m_bFirstTimePlay;
-
 	protected Dictionary<int, int> m_dictWorldMonsterKill;
-
 	protected List<int> m_ltTitle;
-
 	protected Dictionary<int, int> m_dictKillMonster;
-
 	protected SafeInteger m_MVPCount;
-
 	protected SafeInteger m_ReviveInCoopCount;
-
 	protected SafeInteger m_DeadInCoopCount;
-
 	protected string m_sNickName = string.Empty;
-
 	protected SafeInteger m_nHunterLvl;
-
 	protected SafeInteger m_nHunterExp;
-
 	protected SafeInteger m_nHunterExpTotal;
-
 	protected SafeInteger m_nCombatPower;
-
 	protected int m_nRank;
-
 	protected int m_nLastRank;
-
 	protected SafeInteger m_nBeAdmired;
-
 	protected SafeInteger m_nTitle;
-
 	protected string m_sSignature = "Let's go hunting!";
-
 	protected List<string> m_ltFriends;
-
 	public byte[] m_Photo;
-
 	public bool m_bInBlackName { get; set; }
-
 	public bool m_bInWhiteName { get; set; }
 
 	public string GameVersion
 	{
-		get
-		{
-			return m_sGameVersion;
-		}
-		set
-		{
-			m_sGameVersion = value;
-		}
+		get { return m_sGameVersion; }
+		set { m_sGameVersion = value; }
 	}
 
 	public bool isTutorial
 	{
-		get
-		{
-			return m_bTutorial;
-		}
-		set
-		{
-			m_bTutorial = value;
-		}
+		get { return m_bTutorial; }
+		set { m_bTutorial = value; }
 	}
 
 	public int nTutorialVillageState
 	{
-		get
-		{
-			return m_nTutorialVillageState;
-		}
-		set
-		{
-			m_nTutorialVillageState = value;
-		}
+		get { return m_nTutorialVillageState; }
+		set { m_nTutorialVillageState = value; }
 	}
 
 	public bool MusicSwitch
 	{
-		get
-		{
-			return m_bMusic;
-		}
-		set
-		{
-			m_bMusic = value;
-		}
+		get { return m_bMusic; }
+		set { m_bMusic = value; }
 	}
 
 	public bool SoundSwitch
 	{
-		get
-		{
-			return m_bSound;
-		}
-		set
-		{
-			m_bSound = value;
-		}
+		get { return m_bSound; }
+		set { m_bSound = value; }
 	}
 
 	public bool AutoAimSwitch
 	{
-		get
-		{
-			return m_bAutoAim;
-		}
-		set
-		{
-			m_bAutoAim = value;
-		}
+		get { return m_bAutoAim; }
+		set { m_bAutoAim = value; }
 	}
 
 	public int Gold
 	{
-		get
-		{
-			return m_nGold.Get();
-		}
+		get { return m_nGold.Get(); }
 	}
 
 	public int Crystal
 	{
-		get
-		{
-			return m_nCrystal.Get();
-		}
+		get { return m_nCrystal.Get(); }
 	}
 
 	public int CurCharID
 	{
-		get
-		{
-			return m_nCurCharID;
-		}
-		set
-		{
-			m_nCurCharID = value;
-		}
+		get { return m_nCurCharID; }
+		set { m_nCurCharID = value; }
 	}
 
 	public int CurEquipStone
 	{
-		get
-		{
-			return m_nCurEquipStone;
-		}
-		set
-		{
-			m_nCurEquipStone = value;
-		}
+		get { return m_nCurEquipStone; }
+		set { m_nCurEquipStone = value; }
 	}
 
 	public int LatestLevel
 	{
-		get
-		{
-			return m_nLatestLevel;
-		}
-		set
-		{
-			m_nLatestLevel = value;
-		}
+		get { return m_nLatestLevel; }
+		set { m_nLatestLevel = value; }
 	}
 
 	public int LastLevel
 	{
-		get
-		{
-			return m_nLastLevel;
-		}
-		set
-		{
-			m_nLastLevel = value;
-		}
+		get { return m_nLastLevel; }
+		set { m_nLastLevel = value; }
 	}
 
 	public float SceneProccess
 	{
-		get
-		{
-			return m_fSceneProccess;
-		}
-		set
-		{
-			m_fSceneProccess = value;
-		}
+		get { return m_fSceneProccess; }
+		set { m_fSceneProccess = value; }
 	}
 
 	public int StashLevel
 	{
-		get
-		{
-			return m_nStashLevel.Get();
-		}
-		set
-		{
-			m_nStashLevel.Set(value);
-		}
+		get { return m_nStashLevel.Get(); }
+		set { m_nStashLevel.Set(value); }
 	}
 
 	public int StashCount
@@ -402,322 +246,163 @@ public class iDataCenter
 
 	public DateTime LastLoginTime
 	{
-		get
-		{
-			return m_lastLoginTime;
-		}
-		set
-		{
-			m_lastLoginTime = value;
-		}
+		get { return m_lastLoginTime; }
+		set { m_lastLoginTime = value; }
 	}
 
 	public int DailyRewardCount
 	{
-		get
-		{
-			return m_nDailyRewardCount;
-		}
-		set
-		{
-			m_nDailyRewardCount = value;
-		}
+		get { return m_nDailyRewardCount; }
+		set { m_nDailyRewardCount = value; }
 	}
 
 	public int DailyRewardHasGot
 	{
-		get
-		{
-			return m_nDailyRewardHasGot;
-		}
-		set
-		{
-			m_nDailyRewardHasGot = value;
-		}
+		get { return m_nDailyRewardHasGot; }
+		set { m_nDailyRewardHasGot = value; }
 	}
 
 	public bool isEvaluate
 	{
-		get
-		{
-			return m_bEvaluate;
-		}
-		set
-		{
-			m_bEvaluate = value;
-		}
+		get { return m_bEvaluate; }
+		set { m_bEvaluate = value; }
 	}
 
 	public int EnterAppCount
 	{
-		get
-		{
-			return m_nEnterAppCount;
-		}
-		set
-		{
-			m_nEnterAppCount = value;
-		}
+		get { return m_nEnterAppCount; }
+		set { m_nEnterAppCount = value; }
 	}
 
 	public int AvatarHead
 	{
-		get
-		{
-			return m_nAvatarHead.Get();
-		}
-		set
-		{
-			m_nAvatarHead.Set(value);
-		}
+		get { return m_nAvatarHead.Get(); }
+		set { m_nAvatarHead.Set(value); }
 	}
 
 	public int AvatarUpper
 	{
-		get
-		{
-			return m_nAvatarUpper.Get();
-		}
-		set
-		{
-			m_nAvatarUpper.Set(value);
-		}
+		get { return m_nAvatarUpper.Get(); }
+		set { m_nAvatarUpper.Set(value); }
 	}
 
 	public int AvatarLower
 	{
-		get
-		{
-			return m_nAvatarLower.Get();
-		}
-		set
-		{
-			m_nAvatarLower.Set(value);
-		}
+		get { return m_nAvatarLower.Get(); }
+		set { m_nAvatarLower.Set(value); }
 	}
 
 	public int AvatarWrist
 	{
-		get
-		{
-			return m_nAvatarWrist.Get();
-		}
-		set
-		{
-			m_nAvatarWrist.Set(value);
-		}
+		get { return m_nAvatarWrist.Get(); }
+		set { m_nAvatarWrist.Set(value); }
 	}
 
 	public int AvatarHeadup
 	{
-		get
-		{
-			return m_nAvatarHeadup.Get();
-		}
-		set
-		{
-			m_nAvatarHeadup.Set(value);
-		}
+		get { return m_nAvatarHeadup.Get(); }
+		set { m_nAvatarHeadup.Set(value); }
 	}
 
 	public int AvatarNeck
 	{
-		get
-		{
-			return m_nAvatarNeck.Get();
-		}
-		set
-		{
-			m_nAvatarNeck.Set(value);
-		}
+		get { return m_nAvatarNeck.Get(); }
+		set { m_nAvatarNeck.Set(value); }
 	}
 
 	public int AvatarBadge
 	{
-		get
-		{
-			return m_nAvatarBadge.Get();
-		}
-		set
-		{
-			m_nAvatarBadge.Set(value);
-		}
+		get { return m_nAvatarBadge.Get(); }
+		set { m_nAvatarBadge.Set(value); }
 	}
 
 	public int AvatarStone
 	{
-		get
-		{
-			return m_nAvatarStone.Get();
-		}
-		set
-		{
-			m_nAvatarStone.Set(value);
-		}
+		get { return m_nAvatarStone.Get(); }
+		set { m_nAvatarStone.Set(value); }
 	}
 
 	public bool isUnLockLevel
 	{
-		get
-		{
-			return m_bUnLockLevel;
-		}
+		get { return m_bUnLockLevel; }
 	}
 
 	public string NickName
 	{
-		get
-		{
-			return m_sNickName;
-		}
-		set
-		{
-			m_sNickName = value;
-		}
+		get { return m_sNickName; }
+		set { m_sNickName = value; }
 	}
 
 	public int HunterLvl
 	{
-		get
-		{
-			return m_nHunterLvl.Get();
-		}
-		set
-		{
-			m_nHunterLvl.Set(value);
-		}
+		get { return m_nHunterLvl.Get(); }
+		set { m_nHunterLvl.Set(value); }
 	}
 
 	public int HunterExp
 	{
-		get
-		{
-			return m_nHunterExp.Get();
-		}
-		set
-		{
-			m_nHunterExp.Set(value);
-		}
+		get { return m_nHunterExp.Get(); }
+		set { m_nHunterExp.Set(value); }
 	}
 
 	public int HunterExpTotal
 	{
-		get
-		{
-			return m_nHunterExpTotal.Get();
-		}
-		set
-		{
-			m_nHunterExpTotal.Set(value);
-		}
+		get { return m_nHunterExpTotal.Get(); }
+		set { m_nHunterExpTotal.Set(value); }
 	}
 
 	public int CombatPower
 	{
-		get
-		{
-			return m_nCombatPower.Get();
-		}
-		set
-		{
-			m_nCombatPower.Set(value);
-		}
+		get { return m_nCombatPower.Get(); }
+		set { m_nCombatPower.Set(value); }
 	}
 
 	public int Rank
 	{
-		get
-		{
-			return m_nRank;
-		}
-		set
-		{
-			m_nRank = value;
-		}
+		get { return m_nRank; }
+		set { m_nRank = value; }
 	}
 
 	public int LastRank
 	{
-		get
-		{
-			return m_nLastRank;
-		}
-		set
-		{
-			m_nLastRank = value;
-		}
+		get { return m_nLastRank; }
+		set { m_nLastRank = value; }
 	}
 
 	public int BeAdmire
 	{
-		get
-		{
-			return m_nBeAdmired.Get();
-		}
-		set
-		{
-			m_nBeAdmired.Set(value);
-		}
+		get { return m_nBeAdmired.Get(); }
+		set { m_nBeAdmired.Set(value); }
 	}
 
 	public int Title
 	{
-		get
-		{
-			return m_nTitle.Get();
-		}
-		set
-		{
-			m_nTitle.Set(value);
-		}
+		get { return m_nTitle.Get(); }
+		set { m_nTitle.Set(value); }
 	}
 
 	public string Signature
 	{
-		get
-		{
-			return m_sSignature;
-		}
-		set
-		{
-			m_sSignature = value;
-		}
+		get { return m_sSignature; }
+		set { m_sSignature = value; }
 	}
 
 	public int MVPCount
 	{
-		get
-		{
-			return m_MVPCount.Get();
-		}
-		set
-		{
-			m_MVPCount.Set(value);
-		}
+		get { return m_MVPCount.Get(); }
+		set { m_MVPCount.Set(value); }
 	}
 
 	public int ReviveInCoopCount
 	{
-		get
-		{
-			return m_ReviveInCoopCount.Get();
-		}
-		set
-		{
-			m_ReviveInCoopCount.Set(value);
-		}
+		get { return m_ReviveInCoopCount.Get(); }
+		set { m_ReviveInCoopCount.Set(value); }
 	}
 
 	public int DeadInCoopCount
 	{
-		get
-		{
-			return m_DeadInCoopCount.Get();
-		}
-		set
-		{
-			m_DeadInCoopCount.Set(value);
-		}
+		get { return m_DeadInCoopCount.Get(); }
+		set { m_DeadInCoopCount.Set(value); }
 	}
 
 	public iDataCenter()
@@ -850,316 +535,458 @@ public class iDataCenter
 		m_bInWhiteName = false;
 	}
 
-	public bool Load()
+	private string GetSavePath(string fileName)
 	{
-		string content = string.Empty;
-		if (!Utils.FileGetString("gamedata.xml", ref content))
+		return System.IO.Path.Combine(Application.persistentDataPath, fileName);
+	}
+
+	private string GetCurrentPath()
+	{
+		return GetSavePath(SAVE_FILE);
+	}
+
+	private string GetBackupPath()
+	{
+		return GetSavePath(BACKUP_FILE);
+	}
+
+	private string GetTempPath()
+	{
+		return GetSavePath(TEMP_FILE);
+	}
+
+	[Serializable]
+	private class SaveData
+	{
+		public string version;
+		public string gameversion;
+		public int gold;
+		public int crystal;
+		public int stashlevel;
+		public int latestlevel;
+		public int lastlevel;
+		public bool isunlocklevel;
+		public float proccess;
+		public int crystaltotalgain;
+		public int crystaltotalconsume;
+		public bool isMusic;
+		public bool isSound;
+		public bool isTutorial;
+		public int tutorialVillageState;
+		public bool isEvaluate;
+		public int enterappcount;
+		public int dailyrewardcount;
+		public int dailyrewardhasgot;
+		public string nickname;
+		public int hunterlvl;
+		public int hunterexp;
+		public int hunterexptotal;
+		public int combatpower;
+		public int rank;
+		public int beadmired;
+		public int title;
+		public string signature;
+		public int deadincoop;
+		public int reviveincoop;
+		public int mvpincoop;
+		public bool isinblackname;
+		public bool isinwhitename;
+		public string photo;
+		public string killmonster;
+		public string worldmonsterkill;
+		public string lastlogintime;
+		public string dailytask;
+		
+		public List<LevelSaveInfoData> passedlevel;
+		public CharacterData character;
+		public WeaponData weapon;
+		public AvatarData avatar;
+		public SkillData skill;
+		public EquipStoneData equipstone;
+		public List<MaterialData> materials;
+		public List<UnlockSignData> unlocksign;
+		public List<CrystalInBackgroundData> crystalinbackground;
+		public List<AchievementData> achievement;
+		public List<int> freeweapon;
+		public List<string> friends;
+		public List<int> titles;
+	}
+
+	[Serializable]
+	private class LevelSaveInfoData
+	{
+		public int id;
+		public bool isignorecg;
+	}
+
+	[Serializable]
+	private class CharacterData
+	{
+		public int select;
+		public List<CharacterNode> nodes;
+	}
+
+	[Serializable]
+	private class CharacterNode
+	{
+		public int id;
+		public int level;
+		public int exp;
+	}
+
+	[Serializable]
+	private class WeaponData
+	{
+		public List<int> select;
+		public List<WeaponNode> nodes;
+	}
+
+	[Serializable]
+	private class WeaponNode
+	{
+		public int id;
+		public int level;
+	}
+
+	[Serializable]
+	private class AvatarData
+	{
+		public int avatarhead;
+		public int avatarupper;
+		public int avatarlower;
+		public int avatarheadup;
+		public int avatarneck;
+		public int avatarwrist;
+		public int avatarbadge;
+		public int avatarstone;
+		public List<AvatarNode> nodes;
+	}
+
+	[Serializable]
+	private class AvatarNode
+	{
+		public int id;
+		public int level;
+	}
+
+	[Serializable]
+	private class SkillData
+	{
+		public List<SelectPassiveSkill> selectnodes;
+		public List<SkillNode> nodes;
+		public List<SkillNode2> nodes2;
+	}
+
+	[Serializable]
+	private class SelectPassiveSkill
+	{
+		public int charid;
+		public List<int> select;
+	}
+
+	[Serializable]
+	private class SkillNode
+	{
+		public int id;
+		public int level;
+	}
+
+	[Serializable]
+	private class SkillNode2
+	{
+		public int id;
+		public int level;
+	}
+
+	[Serializable]
+	private class EquipStoneData
+	{
+		public int select;
+		public List<EquipStoneNode> nodes;
+	}
+
+	[Serializable]
+	private class EquipStoneNode
+	{
+		public int id;
+		public int level;
+	}
+
+	[Serializable]
+	private class MaterialData
+	{
+		public int id;
+		public int count;
+	}
+
+	[Serializable]
+	private class UnlockSignData
+	{
+		public int type;
+		public int id;
+	}
+
+	[Serializable]
+	private class CrystalInBackgroundData
+	{
+		public string combinekey;
+		public float money;
+		public int crystal;
+	}
+
+	[Serializable]
+	private class AchievementData
+	{
+		public int id;
+		public int state;
+		public int value;
+		public List<bool> isgotreward;
+	}
+
+	private bool TryReadEncryptedFile(string path, ref string decryptedContent)
+	{
+		decryptedContent = string.Empty;
+
+		if (!File.Exists(path))
 		{
-			LoadData(content);
 			return false;
 		}
-		MyUtils.UnZipString(content, ref content);
-		content = XXTEAUtils.Decrypt(content, iServerConfigData.GetInstance().m_sServerInfoKey);
-		LoadData(content);
+		try
+		{
+			string encrypted = File.ReadAllText(path);
+			if (string.IsNullOrEmpty(encrypted))
+			{
+				return false;
+			}
+			decryptedContent = XXTEAUtils.Decrypt(encrypted, iServerConfigData.GetInstance().m_sServerInfoKey);
+			return !string.IsNullOrEmpty(decryptedContent);
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
+	private bool TryLoadFromJson(string path, out SaveData data)
+	{
+		data = null;
+		
+		string jsonText = string.Empty;
+		if (!TryReadEncryptedFile(path, ref jsonText))
+		{
+			return false;
+		}
+		try
+		{
+			data = JsonUtility.FromJson<SaveData>(jsonText);
+			return data != null;
+		}
+		catch
+		{
+			data = null;
+			return false;
+		}
+	}
+
+	private bool IsValidSaveData(SaveData data)
+	{
+		if (data == null)
+		{
+			return false;
+		}
+		if (data.character == null || data.weapon == null || data.skill == null || 
+			data.equipstone == null || data.materials == null)
+		{
+			return false;
+		}
 		return true;
 	}
 
-	public void Save()
+	private bool IsSeverelyDifferent(SaveData current, SaveData backup)
 	{
-		XmlDocument xmlDocument = new XmlDocument();
-		SaveData(xmlDocument);
-		string outerXML = xmlDocument.OuterXml;
-		outerXML = XXTEAUtils.Encrypt(outerXML, iServerConfigData.GetInstance().m_sServerInfoKey);
-		MyUtils.ZipString(outerXML, ref outerXML);
-		string filename = Utils.SavePath() + "/gamedata.xml";
-		File.WriteAllText(filename, outerXML);
+		if (!IsValidSaveData(current) || !IsValidSaveData(backup))
+		{
+			return false;
+		}
+		
+		int currentSections = 0;
+		int backupSections = 0;
+		
+		if (current.character != null && current.character.nodes != null) currentSections++;
+		if (current.weapon != null && current.weapon.nodes != null) currentSections++;
+		if (current.skill != null) currentSections++;
+		if (current.equipstone != null && current.equipstone.nodes != null) currentSections++;
+		if (current.materials != null) currentSections++;
+		
+		if (backup.character != null && backup.character.nodes != null) backupSections++;
+		if (backup.weapon != null && backup.weapon.nodes != null) backupSections++;
+		if (backup.skill != null) backupSections++;
+		if (backup.equipstone != null && backup.equipstone.nodes != null) backupSections++;
+		if (backup.materials != null) backupSections++;
+		
+		int diff = Math.Abs(currentSections - backupSections);
+		if (diff >= 3)
+		{
+			return true;
+		}
+		if (currentSections < 3 && backupSections >= 3)
+		{
+			return true;
+		}
+		return false;
 	}
 
-	protected void SaveData(XmlDocument doc)
+	private void RestoreBackupToCurrent()
 	{
-		XmlNode newChild = doc.CreateXmlDeclaration("1.0", "UTF-8", "no");
-		doc.AppendChild(newChild);
-		string empty = string.Empty;
-		XmlElement xmlElement = doc.CreateElement("gamedata");
-		doc.AppendChild(xmlElement);
-		xmlElement.SetAttribute("version", m_sSaveVersion);
-		xmlElement.SetAttribute("gameversion", "3.1.7a");
-		xmlElement.SetAttribute("gold", m_nGold.Get().ToString());
-		xmlElement.SetAttribute("crystal", m_nCrystal.Get().ToString());
-		xmlElement.SetAttribute("stashlevel", m_nStashLevel.Get().ToString());
-		xmlElement.SetAttribute("latestlevel", m_nLatestLevel.ToString());
-		xmlElement.SetAttribute("lastlevel", m_nLastLevel.ToString());
-		xmlElement.SetAttribute("isunlocklevel", m_bUnLockLevel.ToString());
-		xmlElement.SetAttribute("proccess", m_fSceneProccess.ToString());
-		xmlElement.SetAttribute("crystaltotalgain", m_nCrystalTotalGain.ToString());
-		xmlElement.SetAttribute("crystaltotalconsume", m_nCrystalTotalConsume.ToString());
-		xmlElement.SetAttribute("isMusic", m_bMusic.ToString());
-		xmlElement.SetAttribute("isSound", m_bSound.ToString());
-		xmlElement.SetAttribute("isTutorial", m_bTutorial.ToString());
-		xmlElement.SetAttribute("tutorialVillageState", m_nTutorialVillageState.ToString());
-		xmlElement.SetAttribute("isEvaluate", m_bEvaluate.ToString());
-		xmlElement.SetAttribute("enterappcount", m_nEnterAppCount.ToString());
-		xmlElement.SetAttribute("dailyrewardcount", m_nDailyRewardCount.ToString());
-		xmlElement.SetAttribute("dailyrewardhasgot", m_nDailyRewardHasGot.ToString());
-		xmlElement.SetAttribute("nickname", m_sNickName);
-		xmlElement.SetAttribute("hunterlvl", m_nHunterLvl.Get().ToString());
-		xmlElement.SetAttribute("hunterexp", m_nHunterExp.Get().ToString());
-		xmlElement.SetAttribute("hunterexptotal", m_nHunterExpTotal.Get().ToString());
-		xmlElement.SetAttribute("combatpower", m_nCombatPower.Get().ToString());
-		xmlElement.SetAttribute("rank", m_nRank.ToString());
-		xmlElement.SetAttribute("beadmired", m_nBeAdmired.Get().ToString());
-		xmlElement.SetAttribute("title", m_nTitle.Get().ToString());
-		xmlElement.SetAttribute("signature", m_sSignature);
-		xmlElement.SetAttribute("deadincoop", m_DeadInCoopCount.Get().ToString());
-		xmlElement.SetAttribute("reviveincoop", m_ReviveInCoopCount.Get().ToString());
-		xmlElement.SetAttribute("mvpincoop", m_MVPCount.Get().ToString());
-		xmlElement.SetAttribute("isinblackname", m_bInBlackName.ToString());
-		xmlElement.SetAttribute("isinwhitename", m_bInWhiteName.ToString());
-		if (m_Photo != null)
-		{
-			xmlElement.SetAttribute("photo", Convert.ToBase64String(m_Photo));
-		}
-		empty = string.Empty;
-		foreach (KeyValuePair<int, int> item in m_dictKillMonster)
-		{
-			empty = ((empty.Length >= 1) ? (empty + "," + item.Key + "," + item.Value) : (item.Key + "," + item.Value));
-		}
-		xmlElement.SetAttribute("killmonster", empty);
-		empty = string.Empty;
-		foreach (KeyValuePair<int, int> item2 in m_dictWorldMonsterKill)
-		{
-			empty = ((empty.Length >= 1) ? (empty + "," + item2.Key + "," + item2.Value) : (item2.Key + "," + item2.Value));
-		}
-		xmlElement.SetAttribute("worldmonsterkill", empty);
-		empty = m_lastLoginTime.Year + "," + m_lastLoginTime.Month + "," + m_lastLoginTime.Day + "," + m_lastLoginTime.Hour + "," + m_lastLoginTime.Minute + "," + m_lastLoginTime.Second;
-		xmlElement.SetAttribute("lastlogintime", empty);
-		empty = string.Empty;
-		for (int i = 0; i < m_ltDailyTask.Count; i++)
-		{
-			empty = ((i != 0) ? (empty + "," + m_ltDailyTask[i]) : m_ltDailyTask[i].ToString());
-		}
-		xmlElement.SetAttribute("dailytask", empty);
-		XmlElement xmlElement2 = doc.CreateElement("passedlevel");
-		xmlElement.AppendChild(xmlElement2);
-		foreach (CLevelSaveInfo item3 in m_ltLevelSaveInfo)
-		{
-			XmlElement xmlElement3 = doc.CreateElement("node");
-			xmlElement2.AppendChild(xmlElement3);
-			xmlElement3.SetAttribute("id", item3.nID.ToString());
-			xmlElement3.SetAttribute("isignorecg", item3.isIgnoreCG.ToString());
-		}
-		XmlElement xmlElement4 = doc.CreateElement("character");
-		xmlElement.AppendChild(xmlElement4);
-		xmlElement4.SetAttribute("select", m_nCurCharID.ToString());
-		foreach (CCharSaveInfo value2 in m_dictCharSaveInfo.Values)
-		{
-			XmlElement xmlElement5 = doc.CreateElement("node");
-			xmlElement4.AppendChild(xmlElement5);
-			xmlElement5.SetAttribute("id", value2.nID.ToString());
-			xmlElement5.SetAttribute("level", value2.nLevel.ToString());
-			xmlElement5.SetAttribute("exp", value2.nExp.ToString());
-		}
-		XmlElement xmlElement6 = doc.CreateElement("weapon");
-		xmlElement.AppendChild(xmlElement6);
-		empty = string.Empty;
-		int[] arrSelectWeapon = m_arrSelectWeapon;
-		for (int j = 0; j < arrSelectWeapon.Length; j++)
-		{
-			int num = arrSelectWeapon[j];
-			empty = ((empty.Length >= 1) ? (empty + "," + num) : num.ToString());
-		}
-		xmlElement6.SetAttribute("select", empty);
-		foreach (KeyValuePair<int, int> item4 in m_dictWeapon)
-		{
-			XmlElement xmlElement7 = doc.CreateElement("node");
-			xmlElement6.AppendChild(xmlElement7);
-			xmlElement7.SetAttribute("id", item4.Key.ToString());
-			xmlElement7.SetAttribute("level", item4.Value.ToString());
-		}
-		XmlElement xmlElement8 = doc.CreateElement("avatar");
-		xmlElement.AppendChild(xmlElement8);
-		xmlElement8.SetAttribute("avatarhead", AvatarHead.ToString());
-		xmlElement8.SetAttribute("avatarupper", AvatarUpper.ToString());
-		xmlElement8.SetAttribute("avatarlower", AvatarLower.ToString());
-		xmlElement8.SetAttribute("avatarheadup", AvatarHeadup.ToString());
-		xmlElement8.SetAttribute("avatarneck", AvatarNeck.ToString());
-		xmlElement8.SetAttribute("avatarwrist", AvatarWrist.ToString());
-		xmlElement8.SetAttribute("avatarbadge", AvatarBadge.ToString());
-		xmlElement8.SetAttribute("avatarstone", AvatarStone.ToString());
-		foreach (KeyValuePair<int, int> item5 in m_dictAvatar)
-		{
-			XmlElement xmlElement9 = doc.CreateElement("node");
-			xmlElement8.AppendChild(xmlElement9);
-			xmlElement9.SetAttribute("id", item5.Key.ToString());
-			xmlElement9.SetAttribute("level", item5.Value.ToString());
-		}
-		XmlElement xmlElement10 = doc.CreateElement("skill");
-		xmlElement.AppendChild(xmlElement10);
-		foreach (KeyValuePair<int, int[]> item6 in m_dictSelectPassiveSkill)
-		{
-			XmlElement xmlElement11 = doc.CreateElement("selectnode");
-			xmlElement10.AppendChild(xmlElement11);
-			xmlElement11.SetAttribute("charid", item6.Key.ToString());
-			empty = string.Empty;
-			int[] value = item6.Value;
-			for (int k = 0; k < value.Length; k++)
-			{
-				int num2 = value[k];
-				empty = ((empty.Length >= 1) ? (empty + "," + num2) : num2.ToString());
-			}
-			xmlElement11.SetAttribute("select", empty);
-		}
-		foreach (KeyValuePair<int, int> item7 in m_dictPassiveSkill)
-		{
-			XmlElement xmlElement12 = doc.CreateElement("node");
-			xmlElement10.AppendChild(xmlElement12);
-			xmlElement12.SetAttribute("id", item7.Key.ToString());
-			xmlElement12.SetAttribute("level", item7.Value.ToString());
-		}
-		foreach (KeyValuePair<int, int> item8 in m_dictSkill)
-		{
-			XmlElement xmlElement13 = doc.CreateElement("node2");
-			xmlElement10.AppendChild(xmlElement13);
-			xmlElement13.SetAttribute("id", item8.Key.ToString());
-			xmlElement13.SetAttribute("level", item8.Value.ToString());
-		}
-		XmlElement xmlElement14 = doc.CreateElement("equipstone");
-		xmlElement.AppendChild(xmlElement14);
-		xmlElement14.SetAttribute("select", m_nCurEquipStone.ToString());
-		foreach (KeyValuePair<int, int> item9 in m_dictEquipStone)
-		{
-			XmlElement xmlElement15 = doc.CreateElement("node");
-			xmlElement14.AppendChild(xmlElement15);
-			xmlElement15.SetAttribute("id", item9.Key.ToString());
-			xmlElement15.SetAttribute("level", item9.Value.ToString());
-		}
-		XmlElement xmlElement16 = doc.CreateElement("materials");
-		xmlElement.AppendChild(xmlElement16);
-		foreach (KeyValuePair<int, int> dictMaterial in m_dictMaterials)
-		{
-			if (dictMaterial.Value != 0)
-			{
-				XmlElement xmlElement17 = doc.CreateElement("node");
-				xmlElement16.AppendChild(xmlElement17);
-				xmlElement17.SetAttribute("id", dictMaterial.Key.ToString());
-				xmlElement17.SetAttribute("count", dictMaterial.Value.ToString());
-			}
-		}
-		XmlElement xmlElement18 = doc.CreateElement("unlocksign");
-		xmlElement.AppendChild(xmlElement18);
-		foreach (CUnlockSign item10 in m_ltUnlockSign)
-		{
-			XmlElement xmlElement19 = doc.CreateElement("promptsign");
-			xmlElement18.AppendChild(xmlElement19);
-			xmlElement19.SetAttribute("type", item10.m_nType.ToString());
-			xmlElement19.SetAttribute("id", item10.m_nID.ToString());
-		}
-		foreach (KeyValuePair<int, int> item11 in m_dictWeaponSign)
-		{
-			XmlElement xmlElement20 = doc.CreateElement("weaponsign");
-			xmlElement18.AppendChild(xmlElement20);
-			xmlElement20.SetAttribute("id", item11.Key.ToString());
-			xmlElement20.SetAttribute("sign", item11.Value.ToString());
-		}
-		foreach (KeyValuePair<int, int> item12 in m_dictAvatarSign)
-		{
-			XmlElement xmlElement21 = doc.CreateElement("avatarsign");
-			xmlElement18.AppendChild(xmlElement21);
-			xmlElement21.SetAttribute("id", item12.Key.ToString());
-			xmlElement21.SetAttribute("sign", item12.Value.ToString());
-		}
-		foreach (KeyValuePair<int, int> item13 in m_dictEquipStoneSign)
-		{
-			XmlElement xmlElement22 = doc.CreateElement("equipstonesign");
-			xmlElement18.AppendChild(xmlElement22);
-			xmlElement22.SetAttribute("id", item13.Key.ToString());
-			xmlElement22.SetAttribute("sign", item13.Value.ToString());
-		}
-		foreach (KeyValuePair<int, int> item14 in m_dictSkillSign)
-		{
-			XmlElement xmlElement23 = doc.CreateElement("skillsign");
-			xmlElement18.AppendChild(xmlElement23);
-			xmlElement23.SetAttribute("id", item14.Key.ToString());
-			xmlElement23.SetAttribute("sign", item14.Value.ToString());
-		}
-		foreach (KeyValuePair<int, int> item15 in m_dictCharacterSign)
-		{
-			XmlElement xmlElement24 = doc.CreateElement("charactersign");
-			xmlElement18.AppendChild(xmlElement24);
-			xmlElement24.SetAttribute("id", item15.Key.ToString());
-			xmlElement24.SetAttribute("sign", item15.Value.ToString());
-		}
-		if (m_ltCrystalInBackground.Count > 0)
-		{
-			XmlElement xmlElement27 = doc.CreateElement("crystalinbackground");
-			xmlElement.AppendChild(xmlElement27);
-			foreach (CCrystalInBackground item17 in m_ltCrystalInBackground)
-			{
-				XmlElement xmlElement28 = doc.CreateElement("node");
-				xmlElement27.AppendChild(xmlElement28);
-				xmlElement28.SetAttribute("combinekey", item17.m_sCombineKey);
-				xmlElement28.SetAttribute("money", item17.m_fMoney.ToString());
-				xmlElement28.SetAttribute("crystal", item17.m_nCrystal.Get().ToString());
-			}
-		}
-		if (m_dictAchievementData.Count > 0)
-		{
-			XmlElement xmlElement29 = doc.CreateElement("achievement");
-			xmlElement.AppendChild(xmlElement29);
-			foreach (CAchievementData value3 in m_dictAchievementData.Values)
-			{
-				XmlElement xmlElement30 = doc.CreateElement("node");
-				xmlElement29.AppendChild(xmlElement30);
-				xmlElement30.SetAttribute("id", value3.nID.ToString());
-				xmlElement30.SetAttribute("state", value3.nState.ToString());
-				xmlElement30.SetAttribute("value", value3.nCurValue.ToString());
-				empty = string.Empty;
-				for (int l = 0; l < 3; l++)
-				{
-					empty = ((l != 0) ? (empty + "," + value3.IsGotReward(l)) : value3.IsGotReward(l).ToString());
-				}
-				xmlElement30.SetAttribute("isgotreward", empty);
-			}
-		}
-		if (m_ltFreeWeapon.Count > 0)
-		{
-			XmlElement xmlElement31 = doc.CreateElement("freeweapon");
-			xmlElement.AppendChild(xmlElement31);
-			empty = string.Empty;
-			for (int m = 0; m < m_ltFreeWeapon.Count; m++)
-			{
-				empty = ((m != 0) ? (empty + "," + m_ltFreeWeapon[m]) : m_ltFreeWeapon[m].ToString());
-			}
-			xmlElement31.SetAttribute("list", empty);
-		}
-		if (m_ltFriends.Count > 0)
-		{
-			XmlElement xmlElement32 = doc.CreateElement("friends");
-			xmlElement.AppendChild(xmlElement32);
-			foreach (string ltFriend in m_ltFriends)
-			{
-				XmlElement xmlElement33 = doc.CreateElement("node");
-				xmlElement32.AppendChild(xmlElement33);
-				xmlElement33.SetAttribute("id", ltFriend);
-			}
-		}
-		if (m_ltTitle.Count <= 0)
+		string currentPath = GetCurrentPath();
+		string backupPath = GetBackupPath();
+		if (!File.Exists(backupPath))
 		{
 			return;
 		}
-		XmlElement xmlElement34 = doc.CreateElement("titles");
-		xmlElement.AppendChild(xmlElement34);
-		foreach (int item18 in m_ltTitle)
+		try
 		{
-			XmlElement xmlElement35 = doc.CreateElement("node");
-			xmlElement34.AppendChild(xmlElement35);
-			xmlElement35.SetAttribute("id", item18.ToString());
+			string backupEncrypted = File.ReadAllText(backupPath);
+			if (string.IsNullOrEmpty(backupEncrypted))
+			{
+				return;
+			}
+			File.WriteAllText(currentPath, backupEncrypted);
+			Debug.Log("[iDataCenter] Restored save from backup");
+		}
+		catch (Exception ex)
+		{
+			Debug.LogWarning("[iDataCenter] Failed to restore backup: " + ex.Message);
 		}
 	}
 
+	private void SaveEncryptedAtomic(string jsonText)
+	{
+		string currentPath = GetCurrentPath();
+		string backupPath = GetBackupPath();
+		string tempPath = GetTempPath();
+		string encrypted = XXTEAUtils.Encrypt(jsonText, iServerConfigData.GetInstance().m_sServerInfoKey);
+		
+		try
+		{
+			File.WriteAllText(tempPath, encrypted);
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError("[iDataCenter] Failed to write temp file: " + ex.Message);
+			return;
+		}
+		
+		SaveData tempData;
+		if (!TryLoadFromJson(tempPath, out tempData) || !IsValidSaveData(tempData))
+		{
+			Debug.LogError("[iDataCenter] Temp file validation failed, aborting save");
+			return;
+		}
+		
+		SaveData currentData;
+		bool currentValid = TryLoadFromJson(currentPath, out currentData) && IsValidSaveData(currentData);
+		
+		try
+		{
+			if (currentValid && File.Exists(currentPath))
+			{
+				File.Replace(tempPath, currentPath, backupPath, true);
+			}
+			else
+			{
+				if (File.Exists(currentPath))
+				{
+					File.Delete(currentPath);
+				}
+				File.Move(tempPath, currentPath);
+			}
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError("[iDataCenter] Atomic save failed: " + ex.Message);
+			try
+			{
+				if (File.Exists(currentPath))
+				{
+					File.Delete(currentPath);
+				}
+				File.Move(tempPath, currentPath);
+				Debug.Log("[iDataCenter] Fallback save succeeded");
+			}
+			catch (Exception ex2)
+			{
+				Debug.LogError("[iDataCenter] Fallback save also failed: " + ex2.Message);
+			}
+		}
+	}
+
+	public bool Load()
+	{
+		SaveData currentData;
+		SaveData backupData;
+		bool currentOk = TryLoadFromJson(GetCurrentPath(), out currentData) && IsValidSaveData(currentData);
+		bool backupOk = TryLoadFromJson(GetBackupPath(), out backupData) && IsValidSaveData(backupData);
+		
+		SaveData chosenData = null;
+		
+		if (currentOk && backupOk)
+		{
+			if (IsSeverelyDifferent(currentData, backupData))
+			{
+				Debug.LogWarning("[iDataCenter] Current and backup are severely different, using backup");
+				chosenData = backupData;
+				RestoreBackupToCurrent();
+			}
+			else
+			{
+				chosenData = currentData;
+			}
+		}
+		else if (currentOk)
+		{
+			chosenData = currentData;
+		}
+		else if (backupOk)
+		{
+			Debug.LogWarning("[iDataCenter] Current save corrupted, using backup");
+			chosenData = backupData;
+			RestoreBackupToCurrent();
+		}
+		else
+		{
+			Debug.Log("[iDataCenter] No valid save found, creating default");
+			Clear();
+			m_bFirstTimePlay = true;
+			m_nTutorialVillageState = -1;
+			SetCharacter(1, 1, 0);
+			SetCharacter(6, 1, 0);
+			SetWeaponLevel(1, 1);
+			SetWeaponLevel(2, 1);
+			Save();
+			return false;
+		}
+		
+		if (chosenData == null)
+		{
+			Clear();
+			m_bFirstTimePlay = true;
+			m_nTutorialVillageState = -1;
+			SetCharacter(1, 1, 0);
+			SetCharacter(6, 1, 0);
+			SetWeaponLevel(1, 1);
+			SetWeaponLevel(2, 1);
+			Save();
+			return false;
+		}
+		
+		LoadFromData(chosenData);
+		return true;
+	}
+	
 	public void LoadData(string content)
 	{
-		if (content.Length < 1)
+		if (string.IsNullOrEmpty(content))
 		{
 			Clear();
 			m_bFirstTimePlay = true;
@@ -1171,171 +998,344 @@ public class iDataCenter
 			Save();
 			return;
 		}
-		XmlDocument xmlDocument = new XmlDocument();
-		xmlDocument.LoadXml(content);
-		string value = string.Empty;
-		string text = string.Empty;
-		XmlNode documentElement = xmlDocument.DocumentElement;
-		if (MyUtils.GetAttribute(documentElement, "version", ref value))
+		try
 		{
-			text = value;
+			SaveData data = JsonUtility.FromJson<SaveData>(content);
+			if (data != null && IsValidSaveData(data))
+			{
+				LoadFromData(data);
+			}
+			else
+			{
+				Clear();
+				m_bFirstTimePlay = true;
+				m_nTutorialVillageState = -1;
+				SetCharacter(1, 1, 0);
+				SetCharacter(6, 1, 0);
+				SetWeaponLevel(1, 1);
+				SetWeaponLevel(2, 1);
+				Save();
+			}
 		}
-		if (text == "1.0.0")
+		catch
 		{
 			Clear();
-			Load_1_0(documentElement);
+			m_bFirstTimePlay = true;
+			m_nTutorialVillageState = -1;
+			SetCharacter(1, 1, 0);
+			SetCharacter(6, 1, 0);
+			SetWeaponLevel(1, 1);
+			SetWeaponLevel(2, 1);
+			Save();
 		}
-		else
+	}
+	
+	public string Pack()
+	{
+		try
 		{
-			Clear();
-			Load_1_0(documentElement);
+			SaveData data = BuildSaveData();
+			string json = JsonUtility.ToJson(data);
+			string zippedContent = string.Empty;
+			MyUtils.ZipString(json, ref zippedContent);
+			return zippedContent;
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError("[iDataCenter] Pack failed: " + ex.Message);
+			return string.Empty;
 		}
 	}
 
-	protected void Load_1_0(XmlNode root)
+	public bool UnPack(string sData)
 	{
-		string value = string.Empty;
-		if (MyUtils.GetAttribute(root, "gameversion", ref value))
+		try
 		{
-			m_sGameVersion = value;
-		}
-		if (MyUtils.GetAttribute(root, "gold", ref value))
-		{
-			m_nGold.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "crystal", ref value))
-		{
-			m_nCrystal.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "stashlevel", ref value))
-		{
-			m_nStashLevel.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "latestlevel", ref value))
-		{
-			m_nLatestLevel = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "lastlevel", ref value))
-		{
-			m_nLastLevel = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "isunlocklevel", ref value))
-		{
-			m_bUnLockLevel = bool.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "proccess", ref value))
-		{
-			m_fSceneProccess = MyUtils.ParseFloat(value);
-		}
-		if (MyUtils.GetAttribute(root, "crystaltotalgain", ref value))
-		{
-			m_nCrystalTotalGain = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "crystaltotalconsume", ref value))
-		{
-			m_nCrystalTotalConsume = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "isMusic", ref value))
-		{
-			m_bMusic = bool.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "isSound", ref value))
-		{
-			m_bSound = bool.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "isTutorial", ref value))
-		{
-			m_bTutorial = bool.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "tutorialVillageState", ref value))
-		{
-			m_nTutorialVillageState = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "isEvaluate", ref value))
-		{
-			m_bEvaluate = bool.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "enterappcount", ref value))
-		{
-			m_nEnterAppCount = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "dailyrewardcount", ref value))
-		{
-			m_nDailyRewardCount = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "dailyrewardhasgot", ref value))
-		{
-			m_nDailyRewardHasGot = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "nickname", ref value))
-		{
-			m_sNickName = value;
-		}
-		if (MyUtils.GetAttribute(root, "hunterlvl", ref value))
-		{
-			m_nHunterLvl.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "hunterexp", ref value))
-		{
-			m_nHunterExp.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "hunterexptotal", ref value))
-		{
-			m_nHunterExpTotal.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "combatpower", ref value))
-		{
-			m_nCombatPower.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "rank", ref value))
-		{
-			m_nRank = int.Parse(value);
-		}
-		if (MyUtils.GetAttribute(root, "beadmired", ref value))
-		{
-			m_nBeAdmired.Set(int.Parse(value));
-		}
-		if (MyUtils.GetAttribute(root, "title", ref value))
-		{
-			int num = int.Parse(value);
-			if (num <= 0)
+			if (string.IsNullOrEmpty(sData))
 			{
-				num = 1;
+				return false;
 			}
-			m_nTitle.Set(num);
+			string unzippedContent = string.Empty;
+			MyUtils.UnZipString(sData, ref unzippedContent);
+			LoadData(unzippedContent);
+			return true;
 		}
-		if (MyUtils.GetAttribute(root, "signature", ref value))
+		catch (Exception ex)
 		{
-			m_sSignature = value;
+			Debug.LogError("[iDataCenter] UnPack failed: " + ex.Message);
+			return false;
 		}
-		if (MyUtils.GetAttribute(root, "deadincoop", ref value))
+	}
+
+	private SaveData BuildSaveData()
+	{
+		SaveData data = new SaveData();
+		data.version = m_sSaveVersion;
+		data.gameversion = m_sGameVersion;
+		data.gold = m_nGold.Get();
+		data.crystal = m_nCrystal.Get();
+		data.stashlevel = m_nStashLevel.Get();
+		data.latestlevel = m_nLatestLevel;
+		data.lastlevel = m_nLastLevel;
+		data.isunlocklevel = m_bUnLockLevel;
+		data.proccess = m_fSceneProccess;
+		data.crystaltotalgain = m_nCrystalTotalGain;
+		data.crystaltotalconsume = m_nCrystalTotalConsume;
+		data.isMusic = m_bMusic;
+		data.isSound = m_bSound;
+		data.isTutorial = m_bTutorial;
+		data.tutorialVillageState = m_nTutorialVillageState;
+		data.isEvaluate = m_bEvaluate;
+		data.enterappcount = m_nEnterAppCount;
+		data.dailyrewardcount = m_nDailyRewardCount;
+		data.dailyrewardhasgot = m_nDailyRewardHasGot;
+		data.nickname = m_sNickName;
+		data.hunterlvl = m_nHunterLvl.Get();
+		data.hunterexp = m_nHunterExp.Get();
+		data.hunterexptotal = m_nHunterExpTotal.Get();
+		data.combatpower = m_nCombatPower.Get();
+		data.rank = m_nRank;
+		data.beadmired = m_nBeAdmired.Get();
+		data.title = m_nTitle.Get();
+		data.signature = m_sSignature;
+		data.deadincoop = m_DeadInCoopCount.Get();
+		data.reviveincoop = m_ReviveInCoopCount.Get();
+		data.mvpincoop = m_MVPCount.Get();
+		data.isinblackname = m_bInBlackName;
+		data.isinwhitename = m_bInWhiteName;
+		if (m_Photo != null)
 		{
-			m_DeadInCoopCount.Set(int.Parse(value));
+			data.photo = Convert.ToBase64String(m_Photo);
 		}
-		if (MyUtils.GetAttribute(root, "reviveincoop", ref value))
+		string killMonsterStr = string.Empty;
+		foreach (KeyValuePair<int, int> item in m_dictKillMonster)
 		{
-			m_ReviveInCoopCount.Set(int.Parse(value));
+			killMonsterStr = ((killMonsterStr.Length >= 1)
+				? (killMonsterStr + "," + item.Key + "," + item.Value)
+				: (item.Key + "," + item.Value));
 		}
-		if (MyUtils.GetAttribute(root, "mvpincoop", ref value))
+		data.killmonster = killMonsterStr;
+		string worldMonsterStr = string.Empty;
+		foreach (KeyValuePair<int, int> item2 in m_dictWorldMonsterKill)
 		{
-			m_MVPCount.Set(int.Parse(value));
+			worldMonsterStr = ((worldMonsterStr.Length >= 1)
+				? (worldMonsterStr + "," + item2.Key + "," + item2.Value)
+				: (item2.Key + "," + item2.Value));
 		}
-		if (MyUtils.GetAttribute(root, "isinblackname", ref value))
+		data.worldmonsterkill = worldMonsterStr;
+		string lastLoginStr = m_lastLoginTime.Year + "," + m_lastLoginTime.Month + "," + m_lastLoginTime.Day + "," +
+		                      m_lastLoginTime.Hour + "," + m_lastLoginTime.Minute + "," + m_lastLoginTime.Second;
+		data.lastlogintime = lastLoginStr;
+		string dailyTaskStr = string.Empty;
+		for (int i = 0; i < m_ltDailyTask.Count; i++)
 		{
-			m_bInBlackName = bool.Parse(value);
+			dailyTaskStr = ((i != 0) ? (dailyTaskStr + "," + m_ltDailyTask[i]) : m_ltDailyTask[i].ToString());
 		}
-		if (MyUtils.GetAttribute(root, "isinwhitename", ref value))
+		data.dailytask = dailyTaskStr;
+		data.passedlevel = new List<LevelSaveInfoData>();
+		foreach (CLevelSaveInfo levelInfo in m_ltLevelSaveInfo)
 		{
-			m_bInWhiteName = bool.Parse(value);
+			LevelSaveInfoData levelData = new LevelSaveInfoData();
+			levelData.id = levelInfo.nID;
+			levelData.isignorecg = levelInfo.isIgnoreCG;
+			data.passedlevel.Add(levelData);
 		}
-		if (MyUtils.GetAttribute(root, "photo", ref value))
+		data.character = new CharacterData();
+		data.character.select = m_nCurCharID;
+		data.character.nodes = new List<CharacterNode>();
+		foreach (CCharSaveInfo charInfo in m_dictCharSaveInfo.Values)
 		{
-			m_Photo = Convert.FromBase64String(value);
+			CharacterNode node = new CharacterNode();
+			node.id = charInfo.nID;
+			node.level = charInfo.nLevel;
+			node.exp = charInfo.nExp;
+			data.character.nodes.Add(node);
 		}
-		if (MyUtils.GetAttribute(root, "killmonster", ref value))
+		data.weapon = new WeaponData();
+		data.weapon.select = new List<int>();
+		foreach (int weapon in m_arrSelectWeapon)
+		{
+			data.weapon.select.Add(weapon);
+		}
+		data.weapon.nodes = new List<WeaponNode>();
+		foreach (KeyValuePair<int, int> item3 in m_dictWeapon)
+		{
+			WeaponNode node = new WeaponNode();
+			node.id = item3.Key;
+			node.level = item3.Value;
+			data.weapon.nodes.Add(node);
+		}
+		data.avatar = new AvatarData();
+		data.avatar.avatarhead = AvatarHead;
+		data.avatar.avatarupper = AvatarUpper;
+		data.avatar.avatarlower = AvatarLower;
+		data.avatar.avatarheadup = AvatarHeadup;
+		data.avatar.avatarneck = AvatarNeck;
+		data.avatar.avatarwrist = AvatarWrist;
+		data.avatar.avatarbadge = AvatarBadge;
+		data.avatar.avatarstone = AvatarStone;
+		data.avatar.nodes = new List<AvatarNode>();
+		foreach (KeyValuePair<int, int> item4 in m_dictAvatar)
+		{
+			AvatarNode node = new AvatarNode();
+			node.id = item4.Key;
+			node.level = item4.Value;
+			data.avatar.nodes.Add(node);
+		}
+		data.skill = new SkillData();
+		data.skill.selectnodes = new List<SelectPassiveSkill>();
+		foreach (KeyValuePair<int, int[]> item5 in m_dictSelectPassiveSkill)
+		{
+			SelectPassiveSkill selectSkill = new SelectPassiveSkill();
+			selectSkill.charid = item5.Key;
+			selectSkill.select = new List<int>();
+			foreach (int skillId in item5.Value)
+			{
+				selectSkill.select.Add(skillId);
+			}
+			data.skill.selectnodes.Add(selectSkill);
+		}
+		data.skill.nodes = new List<SkillNode>();
+		foreach (KeyValuePair<int, int> item6 in m_dictPassiveSkill)
+		{
+			SkillNode node = new SkillNode();
+			node.id = item6.Key;
+			node.level = item6.Value;
+			data.skill.nodes.Add(node);
+		}
+		data.skill.nodes2 = new List<SkillNode2>();
+		foreach (KeyValuePair<int, int> item7 in m_dictSkill)
+		{
+			SkillNode2 node = new SkillNode2();
+			node.id = item7.Key;
+			node.level = item7.Value;
+			data.skill.nodes2.Add(node);
+		}
+		data.equipstone = new EquipStoneData();
+		data.equipstone.select = m_nCurEquipStone;
+		data.equipstone.nodes = new List<EquipStoneNode>();
+		foreach (KeyValuePair<int, int> item8 in m_dictEquipStone)
+		{
+			EquipStoneNode node = new EquipStoneNode();
+			node.id = item8.Key;
+			node.level = item8.Value;
+			data.equipstone.nodes.Add(node);
+		}
+		data.materials = new List<MaterialData>();
+		foreach (KeyValuePair<int, int> item9 in m_dictMaterials)
+		{
+			if (item9.Value != 0)
+			{
+				MaterialData mat = new MaterialData();
+				mat.id = item9.Key;
+				mat.count = item9.Value;
+				data.materials.Add(mat);
+			}
+		}
+		data.unlocksign = new List<UnlockSignData>();
+		foreach (CUnlockSign sign in m_ltUnlockSign)
+		{
+			UnlockSignData signData = new UnlockSignData();
+			signData.type = sign.m_nType;
+			signData.id = sign.m_nID;
+			data.unlocksign.Add(signData);
+		}
+		data.crystalinbackground = new List<CrystalInBackgroundData>();
+		foreach (CCrystalInBackground crystal in m_ltCrystalInBackground)
+		{
+			CrystalInBackgroundData crystalData = new CrystalInBackgroundData();
+			crystalData.combinekey = crystal.m_sCombineKey;
+			crystalData.money = crystal.m_fMoney;
+			crystalData.crystal = crystal.m_nCrystal.Get();
+			data.crystalinbackground.Add(crystalData);
+		}
+		data.achievement = new List<AchievementData>();
+		foreach (CAchievementData achi in m_dictAchievementData.Values)
+		{
+			AchievementData achiData = new AchievementData();
+			achiData.id = achi.nID;
+			achiData.state = achi.nState;
+			achiData.value = achi.nCurValue;
+			achiData.isgotreward = new List<bool>();
+			for (int j = 0; j < 3; j++)
+			{
+				achiData.isgotreward.Add(achi.IsGotReward(j));
+			}
+			data.achievement.Add(achiData);
+		}
+
+		data.freeweapon = new List<int>();
+		foreach (int weaponId in m_ltFreeWeapon)
+		{
+			data.freeweapon.Add(weaponId);
+		}
+
+		data.friends = new List<string>();
+		foreach (string friend in m_ltFriends)
+		{
+			data.friends.Add(friend);
+		}
+
+		data.titles = new List<int>();
+		foreach (int titleId in m_ltTitle)
+		{
+			data.titles.Add(titleId);
+		}
+
+		return data;
+	}
+
+	private void LoadFromData(SaveData data)
+	{
+		if (!string.IsNullOrEmpty(data.gameversion))
+		{
+			m_sGameVersion = data.gameversion;
+		}
+		m_nGold.Set(data.gold);
+		m_nCrystal.Set(data.crystal);
+		m_nStashLevel.Set(data.stashlevel);
+		m_nLatestLevel = data.latestlevel;
+		m_nLastLevel = data.lastlevel;
+		m_bUnLockLevel = data.isunlocklevel;
+		m_fSceneProccess = data.proccess;
+		m_nCrystalTotalGain = data.crystaltotalgain;
+		m_nCrystalTotalConsume = data.crystaltotalconsume;
+		m_bMusic = data.isMusic;
+		m_bSound = data.isSound;
+		m_bTutorial = data.isTutorial;
+		m_nTutorialVillageState = data.tutorialVillageState;
+		m_bEvaluate = data.isEvaluate;
+		m_nEnterAppCount = data.enterappcount;
+		m_nDailyRewardCount = data.dailyrewardcount;
+		m_nDailyRewardHasGot = data.dailyrewardhasgot;
+		m_sNickName = data.nickname ?? string.Empty;
+		m_nHunterLvl.Set(data.hunterlvl);
+		m_nHunterExp.Set(data.hunterexp);
+		m_nHunterExpTotal.Set(data.hunterexptotal);
+		m_nCombatPower.Set(data.combatpower);
+		m_nRank = data.rank;
+		m_nBeAdmired.Set(data.beadmired);
+		int titleVal = data.title;
+		if (titleVal <= 0) titleVal = 1;
+		m_nTitle.Set(titleVal);
+		m_sSignature = data.signature ?? "Let's go hunting!";
+		m_DeadInCoopCount.Set(data.deadincoop);
+		m_ReviveInCoopCount.Set(data.reviveincoop);
+		m_MVPCount.Set(data.mvpincoop);
+		m_bInBlackName = data.isinblackname;
+		m_bInWhiteName = data.isinwhitename;
+		if (!string.IsNullOrEmpty(data.photo))
+		{
+			try
+			{
+				m_Photo = Convert.FromBase64String(data.photo);
+			}
+			catch { m_Photo = null; }
+		}
+		if (!string.IsNullOrEmpty(data.killmonster))
 		{
 			m_dictKillMonster.Clear();
-			string[] array = value.Split(',');
+			string[] array = data.killmonster.Split(',');
 			if (array != null && array.Length > 0)
 			{
 				for (int i = 0; i < array.Length / 2; i++)
@@ -1344,10 +1344,10 @@ public class iDataCenter
 				}
 			}
 		}
-		if (MyUtils.GetAttribute(root, "worldmonsterkill", ref value))
+		if (!string.IsNullOrEmpty(data.worldmonsterkill))
 		{
 			m_dictWorldMonsterKill.Clear();
-			string[] array = value.Split(',');
+			string[] array = data.worldmonsterkill.Split(',');
 			if (array != null && array.Length > 0)
 			{
 				for (int j = 0; j < array.Length / 2; j++)
@@ -1356,18 +1356,19 @@ public class iDataCenter
 				}
 			}
 		}
-		if (MyUtils.GetAttribute(root, "lastlogintime", ref value))
+		if (!string.IsNullOrEmpty(data.lastlogintime))
 		{
-			string[] array = value.Split(',');
+			string[] array = data.lastlogintime.Split(',');
 			if (array != null && array.Length == 6)
 			{
-				m_lastLoginTime = new DateTime(int.Parse(array[0]), int.Parse(array[1]), int.Parse(array[2]), int.Parse(array[3]), int.Parse(array[4]), int.Parse(array[5]));
+				m_lastLoginTime = new DateTime(int.Parse(array[0]), int.Parse(array[1]), int.Parse(array[2]), 
+					int.Parse(array[3]), int.Parse(array[4]), int.Parse(array[5]));
 			}
 		}
-		if (MyUtils.GetAttribute(root, "dailytask", ref value))
+		if (!string.IsNullOrEmpty(data.dailytask))
 		{
 			m_ltDailyTask.Clear();
-			string[] array = value.Split(',');
+			string[] array = data.dailytask.Split(',');
 			if (array != null)
 			{
 				for (int k = 0; k < array.Length; k++)
@@ -1376,407 +1377,191 @@ public class iDataCenter
 				}
 			}
 		}
-		foreach (XmlNode item2 in root)
+		if (data.passedlevel != null)
 		{
-			if (item2.Name == "passedlevel")
+			m_ltLevelSaveInfo.Clear();
+			foreach (var levelData in data.passedlevel)
 			{
-				foreach (XmlNode item3 in item2)
+				CLevelSaveInfo info = new CLevelSaveInfo();
+				info.nID = levelData.id;
+				info.isIgnoreCG = levelData.isignorecg;
+				m_ltLevelSaveInfo.Add(info);
+			}
+		}
+		if (data.character != null)
+		{
+			m_nCurCharID = data.character.select;
+			if (data.character.nodes != null)
+			{
+				foreach (var node in data.character.nodes)
 				{
-					CLevelSaveInfo cLevelSaveInfo = new CLevelSaveInfo();
-					if (MyUtils.GetAttribute(item3, "id", ref value))
-					{
-						cLevelSaveInfo.nID = int.Parse(value);
-					}
-					if (MyUtils.GetAttribute(item3, "isignorecg", ref value))
-					{
-						cLevelSaveInfo.isIgnoreCG = bool.Parse(value);
-					}
-					m_ltLevelSaveInfo.Add(cLevelSaveInfo);
+					SetCharacter(node.id, node.level, node.exp);
 				}
 			}
-			else if (item2.Name == "character")
+		}
+		if (data.weapon != null)
+		{
+			if (data.weapon.select != null)
 			{
-				if (MyUtils.GetAttribute(item2, "select", ref value))
+				for (int l = 0; l < data.weapon.select.Count && l < m_arrSelectWeapon.Length; l++)
 				{
-					m_nCurCharID = int.Parse(value);
-				}
-				foreach (XmlNode item4 in item2)
-				{
-					if (!(item4.Name != "node") && MyUtils.GetAttribute(item4, "id", ref value))
-					{
-						int nCharID = int.Parse(value);
-						int nLevel = 1;
-						int nExp = 0;
-						if (MyUtils.GetAttribute(item4, "level", ref value))
-						{
-							nLevel = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item4, "exp", ref value))
-						{
-							nExp = int.Parse(value);
-						}
-						SetCharacter(nCharID, nLevel, nExp);
-					}
+					m_arrSelectWeapon[l] = data.weapon.select[l];
 				}
 			}
-			else if (item2.Name == "weapon")
+			if (data.weapon.nodes != null)
 			{
-				if (MyUtils.GetAttribute(item2, "select", ref value))
+				foreach (var node in data.weapon.nodes)
 				{
-					string[] array = value.Split(',');
-					for (int l = 0; l < array.Length && l < m_arrSelectWeapon.Length; l++)
-					{
-						m_arrSelectWeapon[l] = int.Parse(array[l]);
-					}
-				}
-				foreach (XmlNode item5 in item2)
-				{
-					if (!(item5.Name != "node") && MyUtils.GetAttribute(item5, "id", ref value))
-					{
-						int nWeaponID = int.Parse(value);
-						int nWeaponLevel = 0;
-						if (MyUtils.GetAttribute(item5, "level", ref value))
-						{
-							nWeaponLevel = int.Parse(value);
-						}
-						SetWeaponLevel(nWeaponID, nWeaponLevel);
-					}
+					SetWeaponLevel(node.id, node.level);
 				}
 			}
-			else if (item2.Name == "avatar")
+		}
+		if (data.avatar != null)
+		{
+			AvatarHead = data.avatar.avatarhead;
+			AvatarUpper = data.avatar.avatarupper;
+			AvatarLower = data.avatar.avatarlower;
+			AvatarHeadup = data.avatar.avatarheadup;
+			AvatarNeck = data.avatar.avatarneck;
+			AvatarWrist = data.avatar.avatarwrist;
+			AvatarBadge = data.avatar.avatarbadge;
+			AvatarStone = data.avatar.avatarstone;
+			if (data.avatar.nodes != null)
 			{
-				if (MyUtils.GetAttribute(item2, "avatarhead", ref value))
+				foreach (var node in data.avatar.nodes)
 				{
-					AvatarHead = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarupper", ref value))
-				{
-					AvatarUpper = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarlower", ref value))
-				{
-					AvatarLower = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarheadup", ref value))
-				{
-					AvatarHeadup = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarneck", ref value))
-				{
-					AvatarNeck = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarwrist", ref value))
-				{
-					AvatarWrist = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarbadge", ref value))
-				{
-					AvatarBadge = int.Parse(value);
-				}
-				if (MyUtils.GetAttribute(item2, "avatarstone", ref value))
-				{
-					AvatarStone = int.Parse(value);
-				}
-				foreach (XmlNode item6 in item2)
-				{
-					if (!(item6.Name != "node") && MyUtils.GetAttribute(item6, "id", ref value))
-					{
-						int avatarid = int.Parse(value);
-						int avatarlevel = 0;
-						if (MyUtils.GetAttribute(item6, "level", ref value))
-						{
-							avatarlevel = int.Parse(value);
-						}
-						SetAvatar(avatarid, avatarlevel);
-					}
+					SetAvatar(node.id, node.level);
 				}
 			}
-			else if (item2.Name == "skill")
+		}
+		if (data.skill != null)
+		{
+			if (data.skill.selectnodes != null)
 			{
-				foreach (XmlNode item7 in item2)
+				foreach (var selectNode in data.skill.selectnodes)
 				{
-					if (item7.Name == "selectnode")
+					if (selectNode.select != null)
 					{
-						if (!MyUtils.GetAttribute(item7, "charid", ref value))
+						for (int m = 0; m < selectNode.select.Count; m++)
 						{
-							continue;
-						}
-						int nCharID2 = int.Parse(value);
-						if (MyUtils.GetAttribute(item7, "select", ref value))
-						{
-							string[] array = value.Split(',');
-							for (int m = 0; m < array.Length; m++)
-							{
-								SetSelectPassiveSkill(nCharID2, m, int.Parse(array[m]));
-							}
-						}
-					}
-					else if (item7.Name == "node")
-					{
-						if (MyUtils.GetAttribute(item7, "id", ref value))
-						{
-							int nSkillID = int.Parse(value);
-							int nLevel2 = 0;
-							if (MyUtils.GetAttribute(item7, "level", ref value))
-							{
-								nLevel2 = int.Parse(value);
-							}
-							SetPassiveSkill(nSkillID, nLevel2);
-						}
-					}
-					else if (item7.Name == "node2" && MyUtils.GetAttribute(item7, "id", ref value))
-					{
-						int nSkillID2 = int.Parse(value);
-						int nLevel3 = 0;
-						if (MyUtils.GetAttribute(item7, "level", ref value))
-						{
-							nLevel3 = int.Parse(value);
-						}
-						SetSkill(nSkillID2, nLevel3);
-					}
-				}
-			}
-			else if (item2.Name == "equipstone")
-			{
-				if (MyUtils.GetAttribute(item2, "select", ref value))
-				{
-					m_nCurEquipStone = int.Parse(value);
-				}
-				foreach (XmlNode item8 in item2)
-				{
-					if (!(item8.Name != "node") && MyUtils.GetAttribute(item8, "id", ref value))
-					{
-						int nItemID = int.Parse(value);
-						int nLevel4 = 0;
-						if (MyUtils.GetAttribute(item8, "level", ref value))
-						{
-							nLevel4 = int.Parse(value);
-						}
-						SetEquipStone(nItemID, nLevel4);
-					}
-				}
-			}
-			else if (item2.Name == "materials")
-			{
-				foreach (XmlNode item9 in item2)
-				{
-					if (!(item9.Name != "node") && MyUtils.GetAttribute(item9, "id", ref value))
-					{
-						int nItemID2 = int.Parse(value);
-						int nCount = 0;
-						if (MyUtils.GetAttribute(item9, "count", ref value))
-						{
-							nCount = int.Parse(value);
-						}
-						SetMaterialNum(nItemID2, nCount);
-					}
-				}
-			}
-			else if (item2.Name == "unlocksign")
-			{
-				foreach (XmlNode item10 in item2)
-				{
-					if (item10.Name == "promptsign")
-					{
-						int num2 = -1;
-						int id = -1;
-						if (MyUtils.GetAttribute(item2, "type", ref value))
-						{
-							num2 = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item2, "id", ref value))
-						{
-							id = int.Parse(value);
-						}
-						if (num2 != -1)
-						{
-							AddUnlockSign(num2, id);
-						}
-					}
-					else if (item10.Name == "weaponsign")
-					{
-						int num3 = 0;
-						int value2 = 0;
-						if (MyUtils.GetAttribute(item10, "id", ref value))
-						{
-							num3 = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item10, "sign", ref value))
-						{
-							value2 = int.Parse(value);
-						}
-						if (num3 > 0 && !m_dictWeaponSign.ContainsKey(num3))
-						{
-							m_dictWeaponSign.Add(num3, value2);
-						}
-					}
-					else if (item10.Name == "avatarsign")
-					{
-						int num4 = 0;
-						int value3 = 0;
-						if (MyUtils.GetAttribute(item10, "id", ref value))
-						{
-							num4 = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item10, "sign", ref value))
-						{
-							value3 = int.Parse(value);
-						}
-						if (num4 > 0 && !m_dictWeaponSign.ContainsKey(num4))
-						{
-							m_dictAvatarSign.Add(num4, value3);
-						}
-					}
-					else if (item10.Name == "equipstonesign")
-					{
-						int num5 = 0;
-						int value4 = 0;
-						if (MyUtils.GetAttribute(item10, "id", ref value))
-						{
-							num5 = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item10, "sign", ref value))
-						{
-							value4 = int.Parse(value);
-						}
-						if (num5 > 0 && !m_dictEquipStoneSign.ContainsKey(num5))
-						{
-							m_dictEquipStoneSign.Add(num5, value4);
-						}
-					}
-					else if (item10.Name == "skillsign")
-					{
-						int num6 = 0;
-						int value5 = 0;
-						if (MyUtils.GetAttribute(item10, "id", ref value))
-						{
-							num6 = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item10, "sign", ref value))
-						{
-							value5 = int.Parse(value);
-						}
-						if (num6 > 0 && !m_dictSkillSign.ContainsKey(num6))
-						{
-							m_dictSkillSign.Add(num6, value5);
-						}
-					}
-					else if (item10.Name == "charactersign")
-					{
-						int num7 = 0;
-						int value6 = 0;
-						if (MyUtils.GetAttribute(item10, "id", ref value))
-						{
-							num7 = int.Parse(value);
-						}
-						if (MyUtils.GetAttribute(item10, "sign", ref value))
-						{
-							value6 = int.Parse(value);
-						}
-						if (num7 > 0 && !m_dictCharacterSign.ContainsKey(num7))
-						{
-							m_dictCharacterSign.Add(num7, value6);
+							SetSelectPassiveSkill(selectNode.charid, m, selectNode.select[m]);
 						}
 					}
 				}
 			}
-			else if (item2.Name == "crystalinbackground")
+			if (data.skill.nodes != null)
 			{
-				m_ltCrystalInBackground.Clear();
-				foreach (XmlNode item12 in item2)
+				foreach (var node in data.skill.nodes)
 				{
-					if (item12.Name == "node")
-					{
-						CCrystalInBackground cCrystalInBackground = new CCrystalInBackground();
-						if (MyUtils.GetAttribute(item12, "combinekey", ref value))
-						{
-							cCrystalInBackground.m_sCombineKey = value;
-						}
-						if (MyUtils.GetAttribute(item12, "money", ref value))
-						{
-							cCrystalInBackground.m_fMoney = MyUtils.ParseFloat(value);
-						}
-						if (MyUtils.GetAttribute(item12, "crystal", ref value))
-						{
-							cCrystalInBackground.m_nCrystal.Set(int.Parse(value));
-						}
-						m_ltCrystalInBackground.Add(cCrystalInBackground);
-					}
+					SetPassiveSkill(node.id, node.level);
 				}
 			}
-			else if (item2.Name == "achievement")
+			if (data.skill.nodes2 != null)
 			{
-				m_dictAchievementData.Clear();
-				foreach (XmlNode childNode in item2.ChildNodes)
+				foreach (var node in data.skill.nodes2)
 				{
-					if (!MyUtils.GetAttribute(childNode, "id", ref value))
-					{
-						continue;
-					}
-					CAchievementData cAchievementData = new CAchievementData();
-					cAchievementData.nID = int.Parse(value);
-					if (MyUtils.GetAttribute(childNode, "state", ref value))
-					{
-						cAchievementData.nState = int.Parse(value);
-					}
-					if (MyUtils.GetAttribute(childNode, "value", ref value))
-					{
-						cAchievementData.nCurValue = int.Parse(value);
-					}
-					if (MyUtils.GetAttribute(childNode, "isgotreward", ref value))
-					{
-						string[] array = value.Split(',');
-						for (int n = 0; n < array.Length && n < 3; n++)
-						{
-							cAchievementData.SetGotReward(n, bool.Parse(array[n]));
-						}
-					}
-					AddAchiData(cAchievementData.nID, cAchievementData);
+					SetSkill(node.id, node.level);
 				}
 			}
-			else if (item2.Name == "freeweapon")
+		}
+		if (data.equipstone != null)
+		{
+			m_nCurEquipStone = data.equipstone.select;
+			if (data.equipstone.nodes != null)
 			{
-				if (MyUtils.GetAttribute(item2, "list", ref value))
+				foreach (var node in data.equipstone.nodes)
 				{
-					m_ltFreeWeapon.Clear();
-					string[] array = value.Split(',');
-					for (int num8 = 0; num8 < array.Length; num8++)
-					{
-						AddFreeWeapon(int.Parse(array[num8]));
-					}
+					SetEquipStone(node.id, node.level);
 				}
 			}
-			else if (item2.Name == "friends")
+		}
+		if (data.materials != null)
+		{
+			foreach (var mat in data.materials)
 			{
-				m_ltFriends.Clear();
-				foreach (XmlNode childNode2 in item2.ChildNodes)
+				SetMaterialNum(mat.id, mat.count);
+			}
+		}
+		if (data.unlocksign != null)
+		{
+			m_ltUnlockSign.Clear();
+			foreach (var sign in data.unlocksign)
+			{
+				AddUnlockSign(sign.type, sign.id);
+			}
+		}
+		if (data.crystalinbackground != null)
+		{
+			m_ltCrystalInBackground.Clear();
+			foreach (var crystalData in data.crystalinbackground)
+			{
+				CCrystalInBackground crystal = new CCrystalInBackground();
+				crystal.m_sCombineKey = crystalData.combinekey;
+				crystal.m_fMoney = crystalData.money;
+				crystal.m_nCrystal.Set(crystalData.crystal);
+				m_ltCrystalInBackground.Add(crystal);
+			}
+		}
+		if (data.achievement != null)
+		{
+			m_dictAchievementData.Clear();
+			foreach (var achiData in data.achievement)
+			{
+				CAchievementData achievement = new CAchievementData();
+				achievement.nID = achiData.id;
+				achievement.nState = achiData.state;
+				achievement.nCurValue = achiData.value;
+				if (achiData.isgotreward != null)
 				{
-					if (MyUtils.GetAttribute(childNode2, "id", ref value))
+					for (int n = 0; n < achiData.isgotreward.Count && n < 3; n++)
 					{
-						AddFriend(value);
+						achievement.SetGotReward(n, achiData.isgotreward[n]);
 					}
 				}
+				AddAchiData(achievement.nID, achievement);
 			}
-			else
+		}
+		if (data.freeweapon != null)
+		{
+			m_ltFreeWeapon.Clear();
+			foreach (int weaponId in data.freeweapon)
 			{
-				if (!(item2.Name == "titles"))
+				AddFreeWeapon(weaponId);
+			}
+		}
+		if (data.friends != null)
+		{
+			m_ltFriends.Clear();
+			foreach (string friend in data.friends)
+			{
+				AddFriend(friend);
+			}
+		}
+		if (data.titles != null)
+		{
+			m_ltTitle.Clear();
+			m_ltTitle.Add(1);
+			foreach (int titleId in data.titles)
+			{
+				if (!m_ltTitle.Contains(titleId))
 				{
-					continue;
-				}
-				m_ltTitle.Clear();
-				m_ltTitle.Add(1);
-				foreach (XmlNode childNode3 in item2.ChildNodes)
-				{
-					if (MyUtils.GetAttribute(childNode3, "id", ref value))
-					{
-						int item = int.Parse(value);
-						if (!m_ltTitle.Contains(item))
-						{
-							m_ltTitle.Add(item);
-						}
-					}
+					m_ltTitle.Add(titleId);
 				}
 			}
+		}
+	}
+
+	public void Save()
+	{
+		try
+		{
+			SaveData data = BuildSaveData();
+			string json = JsonUtility.ToJson(data, true);
+			SaveEncryptedAtomic(json);
+		}
+		catch (Exception ex)
+		{
+			Debug.LogError("[iDataCenter] Failed to save: " + ex.Message);
 		}
 	}
 
@@ -2402,32 +2187,6 @@ public class iDataCenter
 		return false;
 	}
 
-	public string Pack()
-	{
-		XmlDocument xmlDocument = new XmlDocument();
-		SaveData(xmlDocument);
-		StringWriter stringWriter = new StringWriter();
-		xmlDocument.Save(stringWriter);
-		string zipedcontent = stringWriter.ToString();
-		MyUtils.ZipString(zipedcontent, ref zipedcontent);
-		return zipedcontent;
-	}
-
-	public bool UnPack(string sData)
-	{
-		try
-		{
-			MyUtils.UnZipString(sData, ref sData);
-			LoadData(sData);
-			return true;
-		}
-		catch
-		{
-			Debug.LogError("exception UnPack");
-			return false;
-		}
-	}
-
 	public void AddAchiData(int nID, CAchievementData data)
 	{
 		if (!m_dictAchievementData.ContainsKey(nID))
@@ -2480,9 +2239,9 @@ public class iDataCenter
 		iGameState gameState = iGameApp.GetInstance().m_GameState;
 		if (gameState != null)
 		{
-#if UNITY_EDITOR
+			#if UNITY_EDITOR
 			Debug.Log(string.Concat("lastday is ", m_lastLoginTime, " today is ", now));
-#endif
+			#endif
 			gameState.m_nDaysFromLastLogin = CalcPassedDays(m_lastLoginTime, now);
 			gameState.m_DayOfWeek = now.DayOfWeek;
 			m_lastLoginTime = now;
@@ -2497,10 +2256,9 @@ public class iDataCenter
 
 	public void RefreshDailyRewardCount(int nPassDays)
 	{
-
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		Debug.Log("days from lastlogin = " + nPassDays);
-#endif
+		#endif
 		if (nPassDays < 1)
 		{
 			return;
@@ -2528,9 +2286,9 @@ public class iDataCenter
 
 	public void RefreshDailyTask(DayOfWeek dayofweek)
 	{
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		Debug.Log("today is " + dayofweek);
-#endif
+		#endif
 		List<int> list = new List<int>();
 		foreach (CAchievementData value in m_dictAchievementData.Values)
 		{
@@ -2858,12 +2616,10 @@ public class iDataCenter
 	
 	public void ClampToLimits()
 	{
-
 		if (m_nGold.Get() > 150000)
 			m_nGold.Set(150000);
 
 		if (m_nCrystal.Get() > 2000)
 			m_nCrystal.Set(2000);
 	}
-
 }
