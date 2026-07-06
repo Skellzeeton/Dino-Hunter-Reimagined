@@ -39,9 +39,9 @@ public class CMobInfoLevel
     
     public bool bIgnoreKnock;
     
-    public int nMinBoost;
+    public int nMinBoost = 1;
     
-    public int nMaxBoost;
+    public int nMaxBoost = 45;
 
     public List<SkillComboRateInfo> ltSkill;
 
@@ -60,10 +60,16 @@ public class CMobInfoLevel
     public int nGold;
     
     public int nGoldMax;
+    
+    public int nGoldBonusRate = 20;
 
     public int nExp;
     
     public int nExpMax;
+    
+    public int nCrystal = 1;
+    
+    public float nCrystalRate = 0.2f;
 
     public int nDropGroup;
 

@@ -67,7 +67,7 @@ public class iMobCenter : iBaseCenter
 		{
 			return baseValue;
 		}
-		float boostAmount = 0.24f;
+		float boostAmount = 2f;
 		float boostFactor = 1f;
 		if (currentLevel <= minBoost)
 		{
@@ -76,7 +76,7 @@ public class iMobCenter : iBaseCenter
 		else if (currentLevel <= maxBoost)
 		{
 			float fadeT = (float)(currentLevel - minBoost) / (maxBoost - minBoost);
-			fadeT = 1f - Mathf.Pow(1f - fadeT, 1.24f);
+			fadeT = 1f - Mathf.Pow(1f - fadeT, 3f);
 			boostFactor = 1f + boostAmount * (1f - fadeT);
 		}
 		else
@@ -324,10 +324,16 @@ public class iMobCenter : iBaseCenter
 				mobInfoLevel.nGold = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "goldmax", ref value))
 				mobInfoLevel.nGoldMax = int.Parse(value);
+			if (MyUtils.GetAttribute(childNode, "goldbonusrate", ref value))
+				mobInfoLevel.nGoldBonusRate = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "exp", ref value))
 				mobInfoLevel.nExp = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "expmax", ref value))
 				mobInfoLevel.nExpMax = int.Parse(value);
+			if (MyUtils.GetAttribute(childNode, "crystal", ref value))
+				mobInfoLevel.nCrystal = int.Parse(value);
+			if (MyUtils.GetAttribute(childNode, "crystalrate", ref value))
+				mobInfoLevel.nCrystalRate = MyUtils.ParseFloat(value);
 			if (MyUtils.GetAttribute(childNode, "dropgroup", ref value))
 				mobInfoLevel.nDropGroup = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "dropcount", ref value))

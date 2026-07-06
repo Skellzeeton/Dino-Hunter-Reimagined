@@ -37,10 +37,6 @@ public class iItemDynamic : iItem
         m_bAbsorb = false;
     }
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         m_fAbsorbDelayTimer += Time.deltaTime;
@@ -48,13 +44,11 @@ public class iItemDynamic : iItem
         {
             m_bAbsorb = true;
             m_bBump = false;
-
             if (m_GroundEffect != null)
             {
                 Object.Destroy(m_GroundEffect);
                 m_GroundEffect = null;
             }
-
             if (m_Collider != null)
             {
                 Object.Destroy(m_Collider);
@@ -67,9 +61,7 @@ public class iItemDynamic : iItem
                 m_Rigidbody = null;
             }
         }
-
         float deltaTime = Time.deltaTime;
-
         if (m_bBump)
         {
             Vector3 position = m_Transform.position;
@@ -85,9 +77,7 @@ public class iItemDynamic : iItem
                     m_fBumpDamping += 0.2f;
                 }
             }
-
             m_Transform.position = position;
-
             if (fAbsorbDistance > 0f)
             {
                 CCharUser user = m_GameScene.GetUser();
@@ -108,22 +98,18 @@ public class iItemDynamic : iItem
                 }
             }
         }
-
         if (!m_bAbsorb)
         {
             return;
         }
-
         CCharUser user2 = m_GameScene.GetUser();
         if (user2 == null)
         {
             Object.Destroy(base.gameObject);
             return;
         }
-
         Vector3 vector = user2.GetBone(2).position - m_Transform.position;
         float num = fAbsorbSpeed * deltaTime;
-
         if (num >= vector.magnitude)
         {
             if (ToughItem(user2))
@@ -143,7 +129,6 @@ public class iItemDynamic : iItem
         {
             m_GameScene = iGameApp.GetInstance().m_GameScene;
         }
-
         if (m_Rigidbody != null && m_GameScene != null &&
             base.transform.position.y <= m_fFloorHeight + m_Entity.transform.localPosition.y &&
             m_Rigidbody.linearVelocity.y > -0.2f && m_Rigidbody.linearVelocity.y < 0.2f)
@@ -152,7 +137,6 @@ public class iItemDynamic : iItem
             Object.Destroy(m_Rigidbody);
             m_Rigidbody = null;
             m_Collider.isTrigger = true;
-
             if (m_GroundEffect != null)
             {
                 m_GroundEffect.SetActiveRecursive(true);
@@ -162,13 +146,16 @@ public class iItemDynamic : iItem
                     m_fFloorHeight + 0.01f,
                     m_GroundEffect.transform.position.z);
             }
-
             Vector3 position = base.transform.position;
             position.y = m_fFloorHeight;
             m_bBump = true;
             m_fBumpSrcHeight = position.y;
             m_fBumpCurSpeed = m_fBumpSpeed;
             m_fBumpDamping = 0f;
+            if (!string.IsNullOrEmpty(sLandAudio))
+            {
+                PlayItemAudio(sLandAudio);
+            }
         }
     }
 
@@ -176,10 +163,8 @@ public class iItemDynamic : iItem
     {
         base.Initialize(nItemID, bAbsorb);
         base.transform.eulerAngles = Vector3.zero;
-
         Vector3 position = base.transform.position;
         position.y += 100f;
-
         RaycastHit hitInfo;
         if (Physics.Raycast(new Ray(position, Vector3.down), out hitInfo, 1000f, 536870912))
         {
@@ -189,7 +174,6 @@ public class iItemDynamic : iItem
         {
             bAbsorb = true;
         }
-
         if (bAbsorb)
         {
             if (m_Rigidbody != null)
@@ -221,6 +205,37 @@ public class iItemDynamic : iItem
         if (m_Rigidbody != null)
         {
             m_Rigidbody.AddForce(v3Force);
+        }
+    }
+    
+    public void ForceAbsorb(float overrideSpeed)
+    {
+        fAbsorbSpeed = overrideSpeed;
+        BeginAbsorbCleanup();
+    }
+
+    private void BeginAbsorbCleanup()
+    {
+        if (m_GroundEffect != null)
+        {
+            Object.Destroy(m_GroundEffect);
+            m_GroundEffect = null;
+        }
+        m_bAbsorb = true;
+        m_bBump = false;
+        if (m_Rigidbody != null)
+        {
+            try
+            {
+                m_Rigidbody.Sleep();
+            }
+            catch { }
+            Object.Destroy(m_Rigidbody);
+            m_Rigidbody = null;
+        }
+        if (m_Collider != null)
+        {
+            m_Collider.isTrigger = true;
         }
     }
 }

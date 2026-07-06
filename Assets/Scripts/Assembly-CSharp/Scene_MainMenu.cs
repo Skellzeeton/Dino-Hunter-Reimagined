@@ -995,6 +995,16 @@ public class Scene_MainMenu : MonoBehaviour
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_Forum));
 		}
 	}
+	
+	private bool DailyMissionHasCrystalReward(GameObject itemObject)
+	{
+		if (itemObject == null)
+			return false;
+		DailyMissionsItem item = itemObject.GetComponent<DailyMissionsItem>();
+		if (item == null)
+			return false;
+		return item.HasCrystalReward();
+	}
 
 	public void TUIEvent_TakeAchievement(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
@@ -1035,7 +1045,29 @@ public class Scene_MainMenu : MonoBehaviour
 		{
 			CUISound.GetInstance().Play("UI_Button");
 			CUISound.GetInstance().Play("UI_Coin_get");
-			CUISound.GetInstance().Play("UI_Collection");
+			if (control.transform.parent != null)
+			{
+				DailyMissionsItem item = control.transform.parent.GetComponent<DailyMissionsItem>();
+				if (item != null)
+				{
+					if (item.HasCrystalReward())
+					{
+						CUISound.GetInstance().Play("UI_Collection");
+					}
+					else
+					{
+						CUISound.GetInstance().Play("UI_Collection_gold");
+					}
+				}
+				else
+				{
+					CUISound.GetInstance().Play("UI_Collection_gold");
+				}
+			}
+			else
+			{
+				CUISound.GetInstance().Play("UI_Collection_gold");
+			}
 		}
 		if (control.transform.parent == null)
 		{
@@ -1052,7 +1084,7 @@ public class Scene_MainMenu : MonoBehaviour
 		int iD = component.GetID();
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_TakeDailyMissionsReward, iD));
 	}
-
+	
 	public void TUIEvent_CloseAchievement(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
 		if (event_type == 3)

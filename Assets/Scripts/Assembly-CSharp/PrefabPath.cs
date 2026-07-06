@@ -345,6 +345,12 @@ public class PrefabPath
 	public const int player_levelup = 1300;
 
 	public const int player_eatitem = 1301;
+	
+	public const int player_eatmaterial = 1302;
+	
+	public const int player_eatcrystal = 1303;
+	
+	public const int player_eatgoldbonus = 1304;
 
 	public const int monster_roar = 1351;
 
@@ -429,10 +435,6 @@ public class PrefabPath
 	public const int pterodactylboos_rush01 = 1939;
 
 	public const int pterodactylboos_rush02 = 1940;
-
-	public const int goldendragon_step = 1945;
-
-	public const int crystaldragon_step = 1946;
 
 	public const int ballstate1 = 1947;
 

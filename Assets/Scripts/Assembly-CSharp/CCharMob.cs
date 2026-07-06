@@ -119,6 +119,8 @@ public class CCharMob : CCharBase
 
 	protected int m_nCarryCrystalMax;
 
+	protected int m_nCrystalDropAmount;
+
 	protected CHUDLifeStyle[] m_arrHUDLifeStyle;
 
 	protected int m_nHUDLifeStyle;
@@ -180,58 +182,64 @@ public class CCharMob : CCharBase
 
 
 	public new void Update()
-    {
-        if (!m_bActive)
-        {
-            return;
-        }
-        base.Update();
-        float num = Time.deltaTime * m_fTimeScale;
+	{
+		if (!m_bActive)
+		{
+			return;
+		}
+
+		base.Update();
+		float num = Time.deltaTime * m_fTimeScale;
 		if (CGameNetManager.GetInstance().IsRoomMaster() && !base.isDead)
-        {
-            m_fNavMeshCheckTime -= num;
-            if (m_fNavMeshCheckTime <= 0f)
-            {
-                m_fNavMeshCheckTime = NavMeshCheckInterval;
+		{
+			m_fNavMeshCheckTime -= num;
+			if (m_fNavMeshCheckTime <= 0f)
+			{
+				m_fNavMeshCheckTime = NavMeshCheckInterval;
 				if (!IsOnNavMesh())
-                {
-                    if (!m_bRecoveryActive)
-                    {
-                        RecoverToNavMesh();
-                    }
-                }
-                else if (m_bIsOffNavMesh || m_bRecoveryActive)
-                {
-                    m_bIsOffNavMesh = false;
-                    m_bRecoveryActive = false;
-                }
-            }
+				{
+					if (!m_bRecoveryActive)
+					{
+						RecoverToNavMesh();
+					}
+				}
+				else if (m_bIsOffNavMesh || m_bRecoveryActive)
+				{
+					m_bIsOffNavMesh = false;
+					m_bRecoveryActive = false;
+				}
+			}
+
 			if (m_bRecoveryActive)
-            {
-                CheckRecoveryComplete();
-            }
-        }
-        if (m_Behavior != null)
-        {
-            m_Behavior.Update(this, num);
-        }
-        if (base.m_GameState.isNetGame)
-        {
-            m_fUpdateMoveTime -= num;
-            if (m_fUpdateMoveTime <= 0f)
-            {
-                m_fUpdateMoveTime = 0.1f;
-            }
-        }
-        foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
-        {
-            ltSkill.Update(num);
-        }
-        foreach (SkillComboUserInfo item in m_ltSkillListAI)
-        {
-            item.Update(num);
-        }
-    }
+			{
+				CheckRecoveryComplete();
+			}
+		}
+
+		if (m_Behavior != null)
+		{
+			m_Behavior.Update(this, num);
+		}
+
+		if (base.m_GameState.isNetGame)
+		{
+			m_fUpdateMoveTime -= num;
+			if (m_fUpdateMoveTime <= 0f)
+			{
+				m_fUpdateMoveTime = 0.1f;
+			}
+		}
+
+		foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
+		{
+			ltSkill.Update(num);
+		}
+
+		foreach (SkillComboUserInfo item in m_ltSkillListAI)
+		{
+			item.Update(num);
+		}
+	}
 
 	public new void LateUpdate()
 	{
@@ -320,11 +328,12 @@ public class CCharMob : CCharBase
 
 			nDeathMode = kDeadMode.MoribundDead;
 		}
-
 		base.isDead = true;
 		m_DeadMode = nDeathMode;
 		ResetAI();
 		base.m_GameScene.m_fCombatRatingData_DamageTotal += base.MaxHP;
+		bool bGoldBonusTriggered = false;
+		bool bCrystalTriggered = false;
 		if (m_curMobInfoLevel != null && m_tmpDropGroupInfo != null)
 		{
 			int dropItemCount = m_curMobInfoLevel.GetDropItemCount();
@@ -343,7 +352,6 @@ public class CCharMob : CCharBase
 					}
 				}
 			}
-
 			if (m_nCarryGoldMax < 1 && m_nCarryCrystalMax < 1 &&
 			    UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldRate)
 			{
@@ -357,13 +365,59 @@ public class CCharMob : CCharBase
 						num = ((!base.m_GameScene.m_bMutiplyGame)
 							? m_curMobInfoLevel.nGold
 							: MyUtils.formula_monstergold(m_curMobInfoLevel.nGold, base.Level));
+						if (UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldBonusRate)
+						{
+							num *= 2;
+							bGoldBonusTriggered = true;
+						}
 						component.Initialize(num);
 						component.transform.position = GetBone(0).position;
 					}
 				}
 			}
+			if (m_nCarryCrystalMax < 1 && m_curMobInfoLevel.nCrystal > 0)
+			{
+				float crystalChance = m_curMobInfoLevel.nCrystalRate / 100f;
+				if (UnityEngine.Random.value <= crystalChance)
+				{
+					GameObject crystalObject = PrefabManager.GetPoolObject(302, 0f);
+					if (crystalObject != null)
+					{
+						iGoldEmitter crystalEmitter = crystalObject.GetComponent<iGoldEmitter>();
+						if (crystalEmitter != null)
+						{
+							int crystalAmount = m_curMobInfoLevel.nCrystal;
+							crystalEmitter.Initialize(crystalAmount, true);
+							crystalEmitter.transform.position = GetBone(0).position;
+							bCrystalTriggered = true;
+						}
+					}
+				}
+			}
 		}
-
+		if (bGoldBonusTriggered)
+		{
+			GameObject goldBonusEffect = PrefabManager.GetPoolObject(1304, 3.5f);
+			if (goldBonusEffect != null)
+			{
+				goldBonusEffect.SetActiveRecursive(true);
+				Vector3 spawnPosition = GetBone(0).position;
+				goldBonusEffect.transform.position = spawnPosition;
+			}
+			else
+			{
+				Debug.LogWarning("Failed to get gold bonus prefab (ID: 1304) from PrefabManager");
+			}
+			CUISound.GetInstance().Play("UI_Goldbonus");
+		}
+		else if (bCrystalTriggered)
+		{
+			CUISound.GetInstance().Play("UI_Crystal_appear");
+		}
+		else
+		{
+			CUISound.GetInstance().Play("UI_Exp_get");
+		}
 		if (m_nCarryGoldMax > 0 && m_nCarryGoldCur > 0)
 		{
 			GameObject poolObject2 = PrefabManager.GetPoolObject(302, 0f);
@@ -378,7 +432,6 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
-
 		if (m_nCarryCrystalMax > 0 && m_nCarryCrystalCur > 0)
 		{
 			GameObject poolObject3 = PrefabManager.GetPoolObject(302, 0f);
@@ -393,7 +446,6 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
-
 		base.m_GameScene.AddMonsterNumLimit(base.ID, MobType, MobBehavior, -1);
 		base.m_GameScene.AddWaveMobNumber(GenerateWaveID, -1);
 		if (base.m_GameScene.m_MGManager != null)
@@ -423,7 +475,6 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
-
 		if (base.m_GameScene.m_TaskManager != null)
 		{
 			base.m_GameScene.m_TaskManager.OnKillMonster(base.ID);
@@ -438,14 +489,12 @@ public class CCharMob : CCharBase
 				base.m_GameScene.m_TaskManager.OnKillAllMonsters();
 			}
 		}
-
 		CAchievementManager.GetInstance().AddAchievement(5);
 		if (m_curMobInfoLevel != null)
 		{
 			CAchievementManager.GetInstance()
 				.AddAchievement(6, new object[2] { m_curMobInfoLevel.nRareType, m_curMobInfoLevel.nType });
 		}
-
 		if (base.m_GameScene.IsWorldMonster(base.ID))
 		{
 			iDataCenter dataCenter = base.m_GameData.GetDataCenter();
@@ -617,7 +666,6 @@ public class CCharMob : CCharBase
 		{
 			return;
 		}
-
 		InitAnimData();
 		InitAudioData();
 		m_ltSkillList.Clear();
@@ -635,7 +683,6 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
-
 		m_ltSkillPassive.Clear();
 		if (m_curMobInfoLevel.ltSkillPassive != null)
 		{
@@ -649,12 +696,10 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
-
 		if (m_tmpDropGroupInfo == null)
 		{
 			m_tmpDropGroupInfo = new CDropGroupInfo();
 		}
-
 		if (m_tmpDropGroupInfo != null)
 		{
 			m_tmpDropGroupInfo.Clear();
@@ -671,7 +716,6 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
-
 		m_Property.Initialize(base.ID, base.Level, base.m_GameScene.m_bMutiplyGame);
 		m_Property.UpdateSkill(this);
 		m_fHPMax = m_Property.GetValue(kProEnum.HPMax);
@@ -682,14 +726,13 @@ public class CCharMob : CCharBase
 		{
 			m_nCarryGoldMax = MyUtils.formula_goldendragon(user.Level);
 		}
-
 		m_nCarryGoldCur = m_nCarryGoldMax;
+		m_nCrystalDropAmount = m_curMobInfoLevel.nCrystal;
 		m_nCarryCrystalMax = (int)m_Property.GetValue(kProEnum.Mob_Crystal_Carry);
 		if (m_nCarryCrystalMax == 1 && user != null)
 		{
 			m_nCarryCrystalMax = MyUtils.formula_crystaldragon(user.Level);
 		}
-
 		m_nCarryCrystalCur = m_nCarryCrystalMax;
 		InitHardiness(base.ID, base.Level);
 		iGameUIBase gameUI = base.m_GameScene.GetGameUI();
@@ -698,7 +741,6 @@ public class CCharMob : CCharBase
 			m_LifeBar = gameUI.CreateLifeBar(this);
 			SetLifeBarStyle(0, 1f);
 		}
-
 		InitAssistAimInfo();
 	}
 

@@ -24,17 +24,20 @@ public class UnlockBlink : MonoBehaviour
 
 	private string skill_path = "TUI/Skill/";
 
-	private void Update()
+	private float rotationSpeed = 60f;
+
+	private void FixedUpdate()
 	{
 		if (open_blink)
 		{
+			float deltaTime = Time.fixedDeltaTime;
 			if (now_time < fade_time)
 			{
-				now_time += Time.deltaTime;
+				now_time += deltaTime;
 				float num = Mathf.Clamp01(now_time / fade_time) * 2f;
 				go_blink.transform.localScale = new Vector3(num, num, 1f);
 			}
-			go_blink.transform.localEulerAngles += new Vector3(0f, 0f, -1f);
+			go_blink.transform.localEulerAngles += new Vector3(0f, 0f, -rotationSpeed * deltaTime);
 		}
 	}
 

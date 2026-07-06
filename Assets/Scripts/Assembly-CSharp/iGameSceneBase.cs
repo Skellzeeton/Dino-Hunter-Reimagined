@@ -1024,15 +1024,15 @@ public class iGameSceneBase
 			{
 				if (cWeaponBase.CurWeaponLvlInfo.nFire != -1)
 				{
-					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nFire, 1);
+					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nFire, 10);
 				}
 				if (cWeaponBase.CurWeaponLvlInfo.nHit != -1)
 				{
-					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nHit, 1);
+					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nHit, 10);
 				}
 				if (cWeaponBase.CurWeaponLvlInfo.nBullet != -1)
 				{
-					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nBullet, 1);
+					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nBullet, 10);
 				}
 			}
 		}
@@ -1057,7 +1057,7 @@ public class iGameSceneBase
 				}
 			}
 		}
-		PrefabManager.AddPool(1115, 1);
+		PrefabManager.AddPool(1115, 15);
 	}
 
 	public virtual void FinishGame(bool bSuccess, int nLastKillBoss = -1)
@@ -1211,6 +1211,17 @@ public class iGameSceneBase
 			}
 			CSoundScene.GetInstance().PlayBGM("BGM_Victory");
 			iGameApp.GetInstance().Flurry_WinStage(m_curGameLevelInfo.nID);
+			iItemDynamic[] allDrops = Object.FindObjectsOfType(typeof(iItemDynamic)) as iItemDynamic[];
+			if (allDrops != null)
+			{
+				foreach (iItemDynamic drop in allDrops)
+				{
+					if (drop != null)
+					{
+						drop.ForceAbsorb(50f);
+					}
+				}
+			}
 		}
 		else
 		{
@@ -2191,15 +2202,6 @@ public class iGameSceneBase
 		return m_dictStealItem[nItemID];
 	}
 
-	public void DelPlayer(int nUID)
-	{
-		if (m_PlayerMap.ContainsKey(nUID))
-		{
-			Object.Destroy(m_PlayerMap[nUID].gameObject);
-			m_PlayerMap.Remove(nUID);
-		}
-	}
-
 	public void AddBulletTrack(Vector3 v3Src, Vector3 v3Dst, int nPrefab)
 	{
 		GameObject poolObject = PrefabManager.GetPoolObject(nPrefab, 0f);
@@ -2716,7 +2718,6 @@ public class iGameSceneBase
 		{
 			WorldToScreenPointNGUI(v3Pos, ref v3Pos);
 			m_GameUI.AddExpText(v3Pos, nExp);
-			CUISound.GetInstance().Play("UI_Exp_get");
 		}
 	}
 

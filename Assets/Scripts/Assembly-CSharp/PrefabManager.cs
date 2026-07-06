@@ -238,6 +238,9 @@ public class PrefabManager
 		m_dictData.Add(1206, "Artist/Effect/Skill/stealth/stealth_pfb");
 		m_dictData.Add(1300, "Artist/Effect/Character/Level_up/Level_up_pfb");
 		m_dictData.Add(1301, "Artist/Effect/Item/item/item_04_pfb");
+		m_dictData.Add(1302, "Artist/Effect/Item/item/item_06_pfb");
+		m_dictData.Add(1303, "Artist/Effect/Item/item/crystal_item_01_pfb");
+		m_dictData.Add(1304, "Artist/Effect/Item/item/item_goldbonus_pfb");
 		m_dictData.Add(1351, "Artist/Effect/Character/roar/roar_pfb");
 		m_dictData.Add(1400, "Artist/Effect/Skill/atk01/atk01_pfb");
 		m_dictData.Add(1401, "Artist/Effect/Skill/atk02/atk02_pfb");
@@ -280,8 +283,6 @@ public class PrefabManager
 		m_dictData.Add(1938, "Artist/Effect/Skill/role_008_fx/role_008_atk03_ground_pfb");
 		m_dictData.Add(1939, "Artist/Effect/Skill/role_008_fx/role_008_atk04_01_ground_pfb");
 		m_dictData.Add(1940, "Artist/Effect/Skill/role_008_fx/role_008_atk04_02_ground_pfb");
-		m_dictData.Add(1945, "Artist/Effect/Character/footprint/footprint_npc_gold");
-		m_dictData.Add(1946, "Artist/Effect/Character/footprint/footprint_npc_crystal");
 		m_dictData.Add(1947, "Artist/Effect/Skill/recover/recover_01_pfb");
 		m_dictData.Add(1948, "Artist/Effect/Skill/recover/recover_02_pfb");
 		m_dictData.Add(1949, "Artist/Effect/Skill/recover/recover_03_pfb");
@@ -385,12 +386,15 @@ public class PrefabManager
 
 	public static void PreLoad()
 	{
-		AddPool(302, 1);
-		AddPool(251, 1);
-		AddPool(252, 1);
-		AddPool(1301, 1);
-		AddPool(1351);
-		AddPool(253, 1);
+		AddPool(302, 5);
+		AddPool(251, 5);
+		AddPool(252, 5);
+		AddPool(1301, 10);
+		AddPool(1302, 5);
+		AddPool(1303, 10);
+		AddPool(1304, 3);
+		AddPool(1351,2);
+		AddPool(253, 5);
 	}
 
 	public static void DestroyPreLoad()

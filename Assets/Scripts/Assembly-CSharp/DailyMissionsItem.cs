@@ -18,6 +18,8 @@ public class DailyMissionsItem : MonoBehaviour
 	
 	public TUIMeshSprite img_bg;
 
+	public GameObject effect_stars_prefab;
+
 	private TUIOneDailyMissionsInfo daily_missions_info;
 
 	private void Start()
@@ -238,6 +240,71 @@ public class DailyMissionsItem : MonoBehaviour
 		{
 			Debug.LogWarning("no reward?!");
 		}
+		PlayArrowAnimation();
+		PlayRewardEffect();
+	}
+	
+	private void PlayRewardEffect()
+	{
+		if (effect_stars_prefab == null)
+		{
+			Debug.LogWarning("effect_stars_prefab is not assigned!");
+			return;
+		}
+		if (img_arrow == null)
+		{
+			Debug.LogWarning("img_arrow is null!");
+			return;
+		}
+		if (!img_arrow.gameObject.activeSelf)
+		{
+			Debug.Log("Arrow is not active, skipping effect");
+			return;
+		}
+		MeshRenderer arrowRenderer = img_arrow.GetComponent<MeshRenderer>();
+		if (arrowRenderer != null && !arrowRenderer.enabled)
+		{
+			Debug.Log("Arrow renderer is disabled, skipping effect");
+			return;
+		}
+		GameObject effect = (GameObject)Object.Instantiate(effect_stars_prefab);
+		effect.transform.parent = img_arrow.transform;
+		effect.transform.localPosition = new Vector3(0f, 0f, -2f);
+		effect.transform.localRotation = Quaternion.identity;
+		effect.transform.localScale = Vector3.one;
+		effect.layer = 9;
+		Transform[] childTransforms = effect.GetComponentsInChildren<Transform>(true);
+		foreach (Transform child in childTransforms)
+		{
+			child.gameObject.layer = 9;
+		}
+		Object.Destroy(effect, 1.5f);
+	}
+	
+	private void PlayArrowAnimation()
+	{
+		if (img_arrow == null)
+		{
+			Debug.LogWarning("img_arrow is null, cannot play animation");
+			return;
+		}
+		if (!img_arrow.gameObject.activeSelf)
+		{
+			Debug.Log("Arrow is not active, skipping animation");
+			return;
+		}
+		Animation arrowAnimation = img_arrow.GetComponent<Animation>();
+		if (arrowAnimation == null)
+		{
+			Debug.LogWarning("No Animation component found on img_arrow");
+			return;
+		}
+		if (arrowAnimation.clip == null)
+		{
+			Debug.LogWarning("No animation clip assigned to the Animation component on img_arrow");
+			return;
+		}
+		arrowAnimation.Play();
 	}
 
 	public TUIAchievementRewardInfo TakeReward()
@@ -253,6 +320,24 @@ public class DailyMissionsItem : MonoBehaviour
 			return reward_info;
 		}
 		return null;
+	}
+	
+	public bool HasCrystalReward()
+	{
+		if (daily_missions_info == null || daily_missions_info.reward_info == null)
+			return false;
+		TUIAchievementRewardInfo reward = daily_missions_info.reward_info;
+		return (reward.open_reward01 && reward.reward_unit01 == UnitType.Crystal) ||
+		       (reward.open_reward02 && reward.reward_unit02 == UnitType.Crystal);
+	}
+	
+	public bool HasGoldReward()
+	{
+		if (daily_missions_info == null || daily_missions_info.reward_info == null)
+			return false;
+		TUIAchievementRewardInfo reward = daily_missions_info.reward_info;
+		return (reward.open_reward01 && reward.reward_unit01 == UnitType.Gold) ||
+		       (reward.open_reward02 && reward.reward_unit02 == UnitType.Gold);
 	}
 
 	public int GetID()

@@ -52,9 +52,39 @@ public class PopupWeapon : MonoBehaviour
 
 	public TUIWeaponAttributeInfo m_curWeaponAttributeInfo { get; private set; }
 
+	private Dictionary<kShopWeaponCategory, string> categorySoundMap;
+
 	private void Awake()
 	{
 		m_dictScrollListWeapon = new Dictionary<kShopWeaponCategory, ScrollList_Weapon>();
+		InitializeCategorySounds();
+	}
+
+	private void InitializeCategorySounds()
+	{
+		categorySoundMap = new Dictionary<kShopWeaponCategory, string>
+		{
+			{ kShopWeaponCategory.Melee, "Forge_melee" },
+			{ kShopWeaponCategory.Crossbow, "Forge_crossbow" },
+			{ kShopWeaponCategory.AutoRifle, "Forge_rifle" },
+			{ kShopWeaponCategory.ShotGun, "Forge_shotgun" },
+			{ kShopWeaponCategory.HoldGun, "Forge_flame" },
+			{ kShopWeaponCategory.Rocket, "Forge_rocket" },  
+			{ kShopWeaponCategory.Armor, "Forge_armor" },
+			{ kShopWeaponCategory.Accessory, "Forge_stone" }
+		};
+	}
+
+	private void PlayCategorySound(kShopWeaponCategory category)
+	{
+		if (categorySoundMap != null && categorySoundMap.ContainsKey(category))
+		{
+			string soundName = categorySoundMap[category];
+			if (!string.IsNullOrEmpty(soundName))
+			{
+				CUISound.GetInstance().Play(soundName);
+			}
+		}
 	}
 
 	private void Update()
@@ -709,6 +739,7 @@ public class PopupWeapon : MonoBehaviour
 		{
 			return;
 		}
+		PlayCategorySound(nCategory);
 		weapon_kind_item.SetSelectWeaponBtn(nCategory);
 		if (m_nCurWeaponCategory != 0)
 		{

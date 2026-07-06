@@ -179,7 +179,7 @@ public class CCharBoss : CCharMob
 		{
 			return false;
 		}
-		info.m_fHardinessCur += fValue * (info.m_fDmgRate / 100f);
+		info.m_fHardinessCur -= fValue * (info.m_fDmgRate / 100f);
 		if (info.m_fHardinessCur <= 0f)
 		{
 			info.m_fHardinessCur = info.m_fHardinessMax;
