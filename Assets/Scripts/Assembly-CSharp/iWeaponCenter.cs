@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Xml;
+using UnityEngine;
 
 public class iWeaponCenter : iBaseCenter
 {
@@ -18,9 +19,7 @@ public class iWeaponCenter : iBaseCenter
 	public CWeaponInfo Get(int nID)
 	{
 		if (!m_dictWeaponInfo.ContainsKey(nID))
-		{
 			return null;
-		}
 		return m_dictWeaponInfo[nID];
 	}
 
@@ -28,9 +27,7 @@ public class iWeaponCenter : iBaseCenter
 	{
 		CWeaponInfo cWeaponInfo = Get(nID);
 		if (cWeaponInfo == null)
-		{
 			return null;
-		}
 		return cWeaponInfo.Get(nLevel);
 	}
 
@@ -38,10 +35,140 @@ public class iWeaponCenter : iBaseCenter
 	{
 		CWeaponInfo cWeaponInfo = Get(nID);
 		if (cWeaponInfo == null)
-		{
 			return 0;
-		}
 		return cWeaponInfo.GetLvlCount();
+	}
+
+	public string GetLevelUpDesc(int weaponID, int level)
+	{
+		CWeaponInfo info = Get(weaponID);
+		if (info == null) return string.Empty;
+		CWeaponInfoLevel cur = info.Get(level);
+		CWeaponInfoLevel prev = null;
+		int bestPrev = int.MinValue;
+		foreach (var kvp in info.m_dictWeaponLvlInfo)
+		{
+			if (kvp.Key < level && kvp.Key > bestPrev)
+			{
+				bestPrev = kvp.Key;
+				prev = kvp.Value;
+			}
+		}
+		return WeaponDescriptionBuilder.BuildLevelUpDesc(cur, prev);
+	}
+
+	public static class WeaponDescriptionBuilder
+	{
+		private static readonly string[] WeaponTypeDescriptions = new string[]
+		{
+			"{color:FF0000FF}Crossbows deal high dps to singular targets. An excellent boss killer.{color}",
+			"{color:00ABFFFF}Melee weapons are incredible crowd control weapons and boss killers, but they're very heavy and hard to use.{color}",
+			"{color:870096FF}Rifles are great because they increase your speed, although they lack damage and cannot crit.{color}",
+			"{color:009600FF}Shotguns are overall good crowd control weapons, though they deal noticeably less DPS than weapons like Crossbows.{color}",
+			"{color:000096FF}Flamethrowers deal crowd control damage and set enemies on fire, dealing extra damage over time. Good for weakening enemies.{color}",
+			"{color:D1FF00FF}Cannons are amazing for crowd control, but their weight makes them hard to use and they cannot crit while lacking DPS.{color}"
+		};
+
+		private static float RoundDelta(float value) => Mathf.Round(value * 100f) / 100f;
+
+		private static string GetDeltaColor(float delta, bool isFireRate = false)
+		{
+			if (delta == 0) return string.Empty;
+			if (isFireRate)
+				return delta < 0 ? "1EFF0000" : "FF0000FF";
+			else
+				return delta > 0 ? "1EFF0000" : "FF0000FF";
+		}
+
+		public static string BuildLevelUpDesc(CWeaponInfoLevel curLevel, CWeaponInfoLevel prevLevel)
+		{
+			if (curLevel == null) return string.Empty;
+
+			bool isInitial = prevLevel == null;
+			List<string> statStrings = new List<string>();
+			if (curLevel.fDamage > 0)
+			{
+				float prevVal = prevLevel?.fDamage ?? 0;
+				float delta = RoundDelta(curLevel.fDamage - prevVal);
+				if (isInitial)
+					statStrings.Add($"DMG: {{color:1EFF0000}}{curLevel.fDamage}{{color}}");
+				else if (delta != 0)
+				{
+					string color = GetDeltaColor(delta);
+					string sign = delta > 0 ? "+" : "";
+					statStrings.Add($"DMG: {curLevel.fDamage} {{color:{color}}}({sign}{delta}){{color}}");
+				}
+			}
+			if (curLevel.fCritical > 0)
+			{
+				float prevVal = prevLevel?.fCritical ?? 0;
+				float delta = RoundDelta(curLevel.fCritical - prevVal);
+				if (isInitial)
+					statStrings.Add($"Crit Chance: {{color:1EFF0000}}{curLevel.fCritical}%{{color}}");
+				else if (delta != 0)
+				{
+					string color = GetDeltaColor(delta);
+					string sign = delta > 0 ? "+" : "";
+					statStrings.Add($"Crit Chance: {curLevel.fCritical}% {{color:{color}}}({sign}{delta}%){{color}}");
+				}
+			}
+			if (curLevel.fCriticalDmg > 0)
+			{
+				float prevVal = prevLevel?.fCriticalDmg ?? 0;
+				float delta = RoundDelta(curLevel.fCriticalDmg - prevVal);
+				if (isInitial)
+					statStrings.Add($"Crit DMG: {{color:1EFF0000}}{curLevel.fCriticalDmg}%{{color}}");
+				else if (delta != 0)
+				{
+					string color = GetDeltaColor(delta);
+					string sign = delta > 0 ? "+" : "";
+					statStrings.Add($"Crit DMG: {curLevel.fCriticalDmg}% {{color:{color}}}({sign}{delta}%){{color}}");
+				}
+			}
+			if (curLevel.fShootSpeed > 0)
+			{
+				float prevVal = prevLevel?.fShootSpeed ?? 0;
+				float delta = RoundDelta(curLevel.fShootSpeed - prevVal);
+				if (isInitial)
+					statStrings.Add($"Fire Rate: {{color:1EFF0000}}{curLevel.fShootSpeed}{{color}}");
+				else if (delta != 0)
+				{
+					string color = GetDeltaColor(delta, true);
+					string sign = delta > 0 ? "+" : "";
+					statStrings.Add($"Fire Rate: {curLevel.fShootSpeed} {{color:{color}}}({sign}{delta}){{color}}");
+				}
+			}
+			if (curLevel.nCapacity > 0)
+			{
+				int prevVal = prevLevel?.nCapacity ?? 0;
+				int delta = curLevel.nCapacity - prevVal;
+				if (isInitial)
+					statStrings.Add($"Ammo: {{color:1EFF0000}}{curLevel.nCapacity}{{color}}");
+				else if (delta != 0)
+				{
+					string color = GetDeltaColor(delta);
+					string sign = delta > 0 ? "+" : "";
+					statStrings.Add($"Ammo: {curLevel.nCapacity} {{color:{color}}}({sign}{delta}){{color}}");
+				}
+			}
+			List<string> lines = new List<string>();
+			string typeDesc = GetWeaponTypeDescription(curLevel.nType);
+			if (!string.IsNullOrEmpty(typeDesc))
+				lines.Add(typeDesc);
+			lines.Add(isInitial ? "Initial Stats:" : "Next Upgrade:");
+			if (statStrings.Count > 0)
+				lines.Add(string.Join(", ", statStrings));
+			else
+				lines.Add("No stat changes at this level");
+			return string.Join("\n", lines);
+		}
+
+		private static string GetWeaponTypeDescription(int type)
+		{
+			if (type >= 0 && type < WeaponTypeDescriptions.Length)
+				return WeaponTypeDescriptions[type];
+			return string.Empty;
+		}
 	}
 
 	protected override void LoadData(string content)
@@ -144,7 +271,7 @@ public class iWeaponCenter : iBaseCenter
 			}
 			else
 			{
-				cWeaponInfoLevel.sDesc = "This is Desc of WeaponID " + cWeaponInfo.nID;
+				cWeaponInfoLevel.sDesc = "Weapon Description";
 			}
 			if (MyUtils.GetAttribute(childNode, "icon", ref value))
 			{
@@ -263,11 +390,18 @@ public class iWeaponCenter : iBaseCenter
 			{
 				cWeaponInfoLevel.nPurchasePrice = int.Parse(value);
 			}
-			if (MyUtils.GetAttribute(childNode, "levelupdesc", ref value))
+			CWeaponInfoLevel prevLevel = null;
+			int bestPrev = int.MinValue;
+			foreach (var kvp in cWeaponInfo.m_dictWeaponLvlInfo)
 			{
-				cWeaponInfoLevel.sLevelUpDesc = value;
+				if (kvp.Key < nLevel && kvp.Key > bestPrev)
+				{
+					bestPrev = kvp.Key;
+					prevLevel = kvp.Value;
+				}
 			}
-			else
+			cWeaponInfoLevel.sLevelUpDesc = WeaponDescriptionBuilder.BuildLevelUpDesc(cWeaponInfoLevel, prevLevel);
+			if (string.IsNullOrEmpty(cWeaponInfoLevel.sLevelUpDesc))
 			{
 				cWeaponInfoLevel.sLevelUpDesc = "DMG: " + cWeaponInfoLevel.fDamage;
 			}

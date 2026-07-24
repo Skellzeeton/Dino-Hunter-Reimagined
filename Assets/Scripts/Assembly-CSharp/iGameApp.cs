@@ -552,45 +552,26 @@ public class iGameApp
 	public bool CheckWeaponMaterialEnough(int nWeaponID = -1)
 	{
 		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return false;
-		}
+		if (dataCenter == null) return false;
 		if (nWeaponID != -1)
 		{
-			CWeaponInfo weaponInfo = m_GameData.GetWeaponInfo(nWeaponID);
-			if (weaponInfo == null)
-			{
+			int nLevel = -1;
+			if (!dataCenter.GetWeaponLevel(nWeaponID, ref nLevel) || nLevel < 1)
 				return false;
-			}
 			CLevelUpWeapon cLevelUpWeapon = new CLevelUpWeapon();
-			if (cLevelUpWeapon == null)
-			{
-				return false;
-			}
+			if (cLevelUpWeapon == null) return false;
 			return cLevelUpWeapon.CheckCanUpgrade(nWeaponID, 1f);
 		}
-		iWeaponCenter weaponCenter = m_GameData.GetWeaponCenter();
-		if (weaponCenter == null)
+		Dictionary<int, int> weaponData = dataCenter.GetWeaponData();
+		if (weaponData == null) return false;
+		CLevelUpWeapon cLevelUpWeaponAll = new CLevelUpWeapon();
+		foreach (KeyValuePair<int, int> kvp in weaponData)
 		{
-			return false;
-		}
-		Dictionary<int, CWeaponInfo> data = weaponCenter.GetData();
-		if (data == null)
-		{
-			return false;
-		}
-		CLevelUpWeapon cLevelUpWeapon2 = new CLevelUpWeapon();
-		if (cLevelUpWeapon2 == null)
-		{
-			return false;
-		}
-		foreach (CWeaponInfo value in data.Values)
-		{
-			if (cLevelUpWeapon2.CheckCanUpgrade(value.nID, 1f))
-			{
+			int weaponID = kvp.Key;
+			int level = kvp.Value;
+			if (level < 1) continue;
+			if (cLevelUpWeaponAll.CheckCanUpgrade(weaponID, 1f))
 				return true;
-			}
 		}
 		return false;
 	}
@@ -598,40 +579,26 @@ public class iGameApp
 	public bool CheckAvatarMaterialEnough(int nAvatarID = -1)
 	{
 		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return false;
-		}
+		if (dataCenter == null) return false;
 		if (nAvatarID != -1)
 		{
-			CAvatarInfo cAvatarInfo = m_GameData.m_AvatarCenter.Get(nAvatarID);
-			if (cAvatarInfo == null)
-			{
+			int nLevel = -1;
+			if (!dataCenter.GetAvatar(nAvatarID, ref nLevel) || nLevel < 1)
 				return false;
-			}
 			CLevelUpAvatar cLevelUpAvatar = new CLevelUpAvatar();
-			if (cLevelUpAvatar == null)
-			{
-				return false;
-			}
+			if (cLevelUpAvatar == null) return false;
 			return cLevelUpAvatar.CheckCanUpgrade(nAvatarID, 1f);
 		}
-		Dictionary<int, CAvatarInfo> data = m_GameData.m_AvatarCenter.GetData();
-		if (data == null)
+		Dictionary<int, int> avatarData = dataCenter.GetAvatarData();
+		if (avatarData == null) return false;
+		CLevelUpAvatar cLevelUpAvatarAll = new CLevelUpAvatar();
+		foreach (KeyValuePair<int, int> kvp in avatarData)
 		{
-			return false;
-		}
-		CLevelUpAvatar cLevelUpAvatar2 = new CLevelUpAvatar();
-		if (cLevelUpAvatar2 == null)
-		{
-			return false;
-		}
-		foreach (CAvatarInfo value in data.Values)
-		{
-			if (cLevelUpAvatar2.CheckCanUpgrade(value.m_nID, 1f))
-			{
+			int avatarID = kvp.Key;
+			int level = kvp.Value;
+			if (level < 1) continue;
+			if (cLevelUpAvatarAll.CheckCanUpgrade(avatarID, 1f))
 				return true;
-			}
 		}
 		return false;
 	}

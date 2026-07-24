@@ -334,13 +334,31 @@ public class Scene_MainMenu : MonoBehaviour
 				}
 				if (villiage_enter_info.forge_sign == NewMarkType.New)
 				{
-					go_forge_new.gameObject.SetActiveRecursive(true);
-					go_forge_mark.gameObject.SetActiveRecursive(false);
+					bool hasActualNew = iGameApp.GetInstance().CheckWeaponSignState(1) || iGameApp.GetInstance().CheckAvatarSignState(1);
+					if (hasActualNew)
+					{
+						go_forge_new.gameObject.SetActiveRecursive(true);
+						go_forge_mark.gameObject.SetActiveRecursive(false);
+					}
+					else
+					{
+						go_forge_new.gameObject.SetActiveRecursive(false);
+						go_forge_mark.gameObject.SetActiveRecursive(false);
+					}
 				}
 				else if (villiage_enter_info.forge_sign == NewMarkType.Mark)
 				{
-					go_forge_new.gameObject.SetActiveRecursive(false);
-					go_forge_mark.gameObject.SetActiveRecursive(true);
+					bool hasActualMark = CheckForgeMarkConditions();
+					if (hasActualMark)
+					{
+						go_forge_new.gameObject.SetActiveRecursive(false);
+						go_forge_mark.gameObject.SetActiveRecursive(true);
+					}
+					else
+					{
+						go_forge_new.gameObject.SetActiveRecursive(false);
+						go_forge_mark.gameObject.SetActiveRecursive(false);
+					}
 				}
 				else
 				{
@@ -717,6 +735,83 @@ public class Scene_MainMenu : MonoBehaviour
 			do_fade_in = false;
 			m_fade.FadeIn();
 		}
+	}
+
+	private bool CheckForgeMarkConditions()
+	{
+		iGameApp app = iGameApp.GetInstance();
+		if (app == null || app.m_GameData == null)
+			return false;
+
+		iDataCenter dataCenter = app.m_GameData.GetDataCenter();
+		if (dataCenter == null)
+			return false;
+
+		// Check weapons
+		iWeaponCenter weaponCenter = app.m_GameData.GetWeaponCenter();
+		if (weaponCenter != null)
+		{
+			Dictionary<int, CWeaponInfo> weaponData = weaponCenter.GetData();
+			if (weaponData != null)
+			{
+				CLevelUpWeapon levelUpWeapon = new CLevelUpWeapon();
+				foreach (CWeaponInfo weaponInfo in weaponData.Values)
+				{
+					// Skip if not unlockable
+					bool isUnlockable = (weaponInfo.m_nUnlockStageID == 0 && weaponInfo.m_nUnlockHunterLvl == 0) ||
+					(weaponInfo.m_nUnlockStageID > 0 && dataCenter.IsLevelPassed(weaponInfo.m_nUnlockStageID)) ||
+					(weaponInfo.m_nUnlockHunterLvl > 0 && dataCenter.HunterLvl >= weaponInfo.m_nUnlockHunterLvl);
+
+					if (!isUnlockable)
+						continue;
+
+					int nSignState = 0;
+					dataCenter.GetWeaponSign(weaponInfo.nID, ref nSignState);
+
+					// Skip if new (already handled separately)
+					if (nSignState == 1)
+						continue;
+
+					int nLevel = -1;
+					bool isOwned = dataCenter.GetWeaponLevel(weaponInfo.nID, ref nLevel) && nLevel >= 0;
+					bool canPurchase = !isOwned && levelUpWeapon.CheckCanUpgrade(weaponInfo.nID, 1f);
+					bool canUpgrade = isOwned && levelUpWeapon.CheckCanUpgrade(weaponInfo.nID, 1f);
+
+					if (canPurchase || canUpgrade)
+						return true;
+				}
+			}
+		}
+
+		// Check avatars
+		if (app.m_GameData.m_AvatarCenter != null)
+		{
+			Dictionary<int, CAvatarInfo> avatarData = app.m_GameData.m_AvatarCenter.GetData();
+			if (avatarData != null)
+			{
+				CLevelUpAvatar levelUpAvatar = new CLevelUpAvatar();
+				foreach (CAvatarInfo avatarInfo in avatarData.Values)
+				{
+					bool isUnlockable = (avatarInfo.m_nUnlockStageID == 0 && avatarInfo.m_nUnlockHunterLvl == 0) ||
+					(avatarInfo.m_nUnlockStageID > 0 && dataCenter.IsLevelPassed(avatarInfo.m_nUnlockStageID)) ||
+					(avatarInfo.m_nUnlockHunterLvl > 0 && dataCenter.HunterLvl >= avatarInfo.m_nUnlockHunterLvl);
+					if (!isUnlockable)
+						continue;
+					int nSignState = 0;
+					dataCenter.GetAvatarSign(avatarInfo.m_nID, ref nSignState);
+					if (nSignState == 1)
+						continue;
+					int nLevel = -1;
+					bool isOwned = dataCenter.GetAvatar(avatarInfo.m_nID, ref nLevel) && nLevel >= 0;
+					bool canPurchase = !isOwned && levelUpAvatar.CheckCanUpgrade(avatarInfo.m_nID, 1f);
+					bool canUpgrade = isOwned && levelUpAvatar.CheckCanUpgrade(avatarInfo.m_nID, 1f);
+					if (canPurchase || canUpgrade)
+						return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public void TUIEvent_CameraMove(TUIControl control, int event_type, float wparam, float lparam, object data)

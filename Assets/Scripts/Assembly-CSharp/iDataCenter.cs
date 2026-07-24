@@ -966,7 +966,6 @@ public class iDataCenter
 			Save();
 			return false;
 		}
-		
 		if (chosenData == null)
 		{
 			Clear();
@@ -979,7 +978,6 @@ public class iDataCenter
 			Save();
 			return false;
 		}
-		
 		LoadFromData(chosenData);
 		return true;
 	}

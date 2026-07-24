@@ -52,6 +52,303 @@ public class iAvatarCenter : iBaseCenter
 		return list[Random.Range(0, list.Count)];
 	}
 
+	public static class AvatarDescriptionBuilder
+	{
+		public static string BuildDesc(CAvatarInfoLevel curLevel)
+		{
+			if (curLevel == null) return string.Empty;
+
+			List<string> descLines = new();
+			List<string> hpParts = new();
+
+			for (int j = 0; j < curLevel.arrValueX.Length; j++)
+			{
+				int statEnum = curLevel.arrValueX[j];
+				float statValue = curLevel.arrValueY[j];
+				if (statEnum == 0) continue;
+				if ((kProEnum)statEnum == kProEnum.Protect) continue;
+				bool isPercent = IsPercentStat((kProEnum)statEnum);
+				string sign = statValue >= 0 ? "Increases By " : "Decreases By ";
+				string colorCode = statValue >= 0 ? "1EFF0000" : "FF0000FF";
+				string coloredValue = string.Format("{{color:{0}}}{1}{2}{{color}}", colorCode, statValue, isPercent ? "%" : "");
+				if ((kProEnum)statEnum == kProEnum.Char_RecoverLife)
+				{
+					descLines.Add("Slowly regenerates " + coloredValue + " of your Max HP every 20 seconds.");
+				}
+				else if ((kProEnum)statEnum == kProEnum.Char_RecoverBullet)
+				{
+					descLines.Add("Slowly regenerates " + coloredValue + " of your Max Ammo every 20 seconds.");
+				}
+				else if ((kProEnum)statEnum == kProEnum.AntiStun)
+				{
+					descLines.Add("You have a " + coloredValue + " chance to avoid stuns.");
+				}
+				else if ((kProEnum)statEnum == kProEnum.HPMax)
+				{
+					hpParts.Add(coloredValue);
+				}
+				else if ((kProEnum)statEnum == kProEnum.HPMaxUp)
+				{
+					hpParts.Add(coloredValue);
+				}
+				else
+				{
+					descLines.Add(GetStatName((kProEnum)statEnum) + " " + sign + coloredValue);
+				}
+			}
+			if (hpParts.Count > 0)
+			{
+				string hpLine = "HP " + (hpParts.Count == 2 ? "increases by " + hpParts[0] + " & " + hpParts[1] : "increases by " + hpParts[0]);
+				descLines.Insert(0, hpLine);
+			}
+
+			return descLines.Count > 0 ? string.Join("\n", descLines) : "nothing...";
+		}
+
+		public static string BuildLevelUpDesc(CAvatarInfoLevel curLevel, CAvatarInfoLevel prevLevel)
+		{
+			if (curLevel == null) return string.Empty;
+			List<string> upLines = new()
+			{
+				prevLevel != null ? "Next Upgrade:" : "Initial Stats:"
+			};
+			string hpStat = null;
+			string hpUpStat = null;
+			for (int j = 0; j < curLevel.arrValueX.Length; j++)
+			{
+				if (curLevel.arrValueX[j] == 0) continue;
+
+				int statEnum = curLevel.arrValueX[j];
+				if (statEnum == 0) continue;
+
+				float prevVal = 0f;
+				if (prevLevel != null)
+				{
+					for (int i = 0; i < prevLevel.arrValueX.Length; i++)
+					{
+						if (prevLevel.arrValueX[i] == statEnum)
+						{
+							prevVal = prevLevel.arrValueY[i];
+							break;
+						}
+					}
+				}
+				float curVal = curLevel.arrValueY[j];
+				if (curVal <= 0 && prevLevel != null) continue;
+				float delta = curVal - prevVal;
+				bool isPercent = IsPercentStat((kProEnum)statEnum);
+				string percentStr = isPercent ? "%" : "";
+				string colorCode = curVal >= 0 ? "1EFF0000" : "FF0000FF";
+				string coloredCurVal = string.Format("{{color:{0}}}{1}{2}{{color}}", colorCode, curVal, percentStr);
+				if ((kProEnum)statEnum == kProEnum.HPMax)
+				{
+					if (prevLevel != null && prevVal > 0 && delta != 0)
+					{
+						hpStat = coloredCurVal + string.Format(" {{color:1eff0000}}(+{0}){{color}}", delta);
+					}
+					else if (prevLevel != null && prevVal > 0 && delta == 0)
+					{
+						hpStat = null;
+					}
+					else
+					{
+						hpStat = coloredCurVal;
+					}
+				}
+				else if ((kProEnum)statEnum == kProEnum.HPMaxUp)
+				{
+					if (prevLevel != null && prevVal > 0 && delta != 0)
+					{
+						hpUpStat = coloredCurVal + string.Format(" {{color:1eff0000}}(+{0}%){{color}}", delta);
+					}
+					else if (prevLevel != null && prevVal > 0 && delta == 0)
+					{
+						hpUpStat = null;
+					}
+					else
+					{
+						hpUpStat = coloredCurVal;
+					}
+				}
+				else
+				{
+					string statName = GetStatName((kProEnum)statEnum);
+					string line;
+					if (prevLevel != null && prevVal > 0)
+					{
+						if (delta != 0)
+						{
+							line = statName + " Increases By " + prevVal + percentStr + string.Format(" {{color:1eff0000}}(+{0}{1}){{color}}", delta, percentStr);
+						}
+						else
+						{
+							continue;
+						}
+					}
+					else
+					{
+						line = statName + " Increases By " + coloredCurVal;
+					}
+					upLines.Add(line);
+				}
+			}
+			if (hpStat != null || hpUpStat != null)
+			{
+				string hpLine = "HP ";
+				if (hpStat != null && hpUpStat != null)
+				{
+					hpLine += "increases by " + hpStat + " & " + hpUpStat;
+				}
+				else if (hpStat != null)
+				{
+					hpLine += "increases by " + hpStat;
+				}
+				else if (hpUpStat != null)
+				{
+					hpLine += "increases by " + hpUpStat;
+				}
+				if (upLines.Count > 1)
+					upLines.Insert(1, hpLine);
+				else
+					upLines.Add(hpLine);
+			}
+			return upLines.Count > 1 ? string.Join("\n", upLines) : "";
+		}
+
+		private static bool IsPercentStat(kProEnum stat)
+		{
+			switch (stat)
+			{
+				case kProEnum.HPMaxUp:
+				case kProEnum.All_Dmg:
+				case kProEnum.All_Dmg_Rate:
+				case kProEnum.MoveSpeed:
+				case kProEnum.Critical:
+				case kProEnum.CriticalDmg:
+				case kProEnum.All_Critical:
+				case kProEnum.All_CriticalDmg:
+				case kProEnum.All_Speed:
+				case kProEnum.Melee_Speed:
+				case kProEnum.Melee_Critical:
+				case kProEnum.Melee_CriticalDmg:
+				case kProEnum.Range_Speed:
+				case kProEnum.Range_Critical:
+				case kProEnum.Range_CriticalDmg:
+				case kProEnum.Crossbow_Speed:
+				case kProEnum.Crossbow_Critical:
+				case kProEnum.Crossbow_CriticalDmg:
+				case kProEnum.AutoRifle_Speed:
+				case kProEnum.AutoRifle_Critical:
+				case kProEnum.AutoRifle_CriticalDmg:
+				case kProEnum.ShotGun_Speed:
+				case kProEnum.ShotGun_Critical:
+				case kProEnum.ShotGun_CriticalDmg:
+				case kProEnum.HoldGun_Speed:
+				case kProEnum.HoldGun_Critical:
+				case kProEnum.HoldGun_CriticalDmg:
+				case kProEnum.Rocket_Speed:
+				case kProEnum.Rocket_Critical:
+				case kProEnum.Rocket_CriticalDmg:
+				case kProEnum.AntiStun:
+				case kProEnum.Char_IncreaseExp:
+				case kProEnum.Char_IncreaseGold:
+				case kProEnum.Char_RecoverLife:
+				case kProEnum.Char_RecoverBullet:
+				case kProEnum.Skill_CD_Faster_Rate:
+					return true;
+				default:
+					return false;
+			}
+		}
+
+		private static string GetStatName(kProEnum stat)
+		{
+			switch (stat)
+			{
+				case kProEnum.HPMax: return "HP";
+				case kProEnum.HPMaxUp: return "Max HP";
+				case kProEnum.MoveSpeed: return "Movement Speed";
+				case kProEnum.Protect: return "Defense";
+				case kProEnum.All_Dmg: return "DMG";
+				case kProEnum.All_Dmg_Rate: return "DMG";
+				case kProEnum.All_Speed: return "Fire Rate";
+				case kProEnum.All_Critical: return "Crit Chance";
+				case kProEnum.All_CriticalDmg: return "Crit DMG";
+				case kProEnum.All_Protect: return "Defense";
+				case kProEnum.All_Capacity: return "Ammo";
+				case kProEnum.Char_MoveSpeedUp: return "Movement Speed";
+				case kProEnum.Char_RecoverLife: return "HP Regeneration";
+				case kProEnum.Char_RecoverBullet: return "Ammo Recovery";
+				case kProEnum.Char_IncreaseGold: return "Gold";
+				case kProEnum.Char_IncreaseExp: return "Experience";
+				case kProEnum.Rocket_AOE_Range: return "Rocket AOE Range";
+				case kProEnum.Melee_Dmg: return "Melee DMG";
+				case kProEnum.Melee_Dmg_Rate: return "Melee DMG";
+				case kProEnum.Melee_Speed: return "Melee Fire Rate";
+				case kProEnum.Melee_Critical: return "Melee Crit Chance";
+				case kProEnum.Melee_CriticalDmg: return "Melee Crit DMG";
+				case kProEnum.Range_Dmg: return "Range DMG";
+				case kProEnum.Range_Speed: return "Range Fire Rate";
+				case kProEnum.Range_Critical: return "Range Crit Chance";
+				case kProEnum.Range_CriticalDmg: return "Range Crit DMG";
+				case kProEnum.Crossbow_Dmg: return "Crossbow DMG";
+				case kProEnum.Crossbow_Dmg_Rate: return "Crossbow DMG";
+				case kProEnum.Crossbow_Speed: return "Crossbow Fire Rate";
+				case kProEnum.Crossbow_Critical: return "Crossbow Crit Chance";
+				case kProEnum.Crossbow_CriticalDmg: return "Crossbow Crit DMG";
+				case kProEnum.AutoRifle_Dmg: return "Rifle DMG";
+				case kProEnum.AutoRifle_Dmg_Rate: return "Rifle DMG";
+				case kProEnum.AutoRifle_Speed: return "Rifle Fire Rate";
+				case kProEnum.AutoRifle_Critical: return "Rifle Crit Chance";
+				case kProEnum.AutoRifle_CriticalDmg: return "Rifle Crit DMG";
+				case kProEnum.ShotGun_Dmg: return "Shotgun DMG";
+				case kProEnum.ShotGun_Dmg_Rate: return "Shotgun DMG";
+				case kProEnum.ShotGun_Speed: return "Shotgun Fire Rate";
+				case kProEnum.ShotGun_Critical: return "Shotgun Crit Chance";
+				case kProEnum.ShotGun_CriticalDmg: return "Shotgun Crit DMG";
+				case kProEnum.HoldGun_Dmg: return "Flamethrower DMG";
+				case kProEnum.HoldGun_Dmg_Rate: return "Flamethrower DMG";
+				case kProEnum.HoldGun_Speed: return "Flamethrower Fire Rate";
+				case kProEnum.HoldGun_Critical: return "Flamethrower Crit Chance";
+				case kProEnum.HoldGun_CriticalDmg: return "Flamethrower Crit DMG";
+				case kProEnum.Rocket_Dmg: return "RPG DMG";
+				case kProEnum.Rocket_Dmg_Rate: return "RPG DMG";
+				case kProEnum.Rocket_Speed: return "RPG Fire Rate";
+				case kProEnum.Rocket_Critical: return "RPG Crit Chance";
+				case kProEnum.Rocket_CriticalDmg: return "RPG Crit DMG";
+				case kProEnum.AntiStun: return "Stun Immunity";
+				default:
+					return stat.ToString().Replace('_', ' ');
+			}
+		}
+	}
+
+	public string GetDesc(int avatarID, int level)
+	{
+		CAvatarInfoLevel lvl = Get(avatarID, level);
+		return AvatarDescriptionBuilder.BuildDesc(lvl);
+	}
+
+	public string GetLevelUpDesc(int avatarID, int level)
+	{
+		CAvatarInfo info = Get(avatarID);
+		if (info == null) return string.Empty;
+		CAvatarInfoLevel cur = info.Get(level);
+		CAvatarInfoLevel prev = null;
+
+		int bestPrev = int.MinValue;
+		foreach (var kvp in info.m_dictAvatarInfoLevel)
+		{
+			if (kvp.Key < level && kvp.Key > bestPrev)
+			{
+				bestPrev = kvp.Key;
+				prev = kvp.Value;
+			}
+		}
+
+		return AvatarDescriptionBuilder.BuildLevelUpDesc(cur, prev);
+	}
+
 	protected override void LoadData(string content)
 	{
 		m_dictAvatar.Clear();

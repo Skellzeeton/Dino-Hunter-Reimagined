@@ -65,9 +65,23 @@ public class Scene_Main : MonoBehaviour
 	{
 		if (Input2.touchCount > 0 && !didTheThing)
 		{
+				iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
+			bool isNewPlayer = (dataCenter != null &&
+			dataCenter.nTutorialVillageState == (int)NewHelpState.None &&
+			!dataCenter.IsLevelPassed(1001));
+			if (isNewPlayer)
+			{
+				iGameApp.GetInstance().m_GameState.GameLevel = 1001;
+				is_enter_level_scene = true;
+				next_scene_id = 2;
+			}
+			else
+			{
+				is_enter_level_scene = false;
+				next_scene = "Scene_MainMenu";
+			}
 			is_fade_out = true;
 			m_fade.FadeOut();
-			next_scene = "Scene_MainMenu";
 			CUISound.GetInstance().Play("UI_Entergame");
 			CUISound.GetInstance().Play("UI_Button");
 			CUISound.GetInstance().Play("BGM_theme");
