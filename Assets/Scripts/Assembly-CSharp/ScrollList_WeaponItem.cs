@@ -3,41 +3,24 @@ using UnityEngine;
 public class ScrollList_WeaponItem : MonoBehaviour
 {
 	public TUIMeshSprite img_bg;
-
 	public TUIMeshSprite img_frame;
-
 	public TUIMeshSprite img_frame_choose;
-
 	public TUIMeshSprite img_new;
-
 	public TUIMeshSprite img_lock;
-
 	public TUIMeshSprite img_sale;
-
 	public TUILabel label_sale;
 
 	private string img_sale_sign_texture01 = "sale_onsalebiaoqian";
-
 	private string img_sale_sign_texture02 = "sale_onsalebiaoqian2";
-
 	private bool be_choose;
-
 	private TUIWeaponAttributeInfo attribute_info;
-
 	private string NGUI_weapon_texture_path = "Artist/Textrues/Weapon/";
-
 	private string NGUI_weapon_altas_path = "Artist/Atlas/Weapon/";
-
 	private string texture_mark = "new";
-
 	private string texture_new = "new2";
-
 	private string texture_frame_normal = "wuqikuang2";
-
 	private string texture_frame_normal_choose = "wuqikuang";
-
 	private string texture_frame_crystal = "wuqikuang2_2";
-
 	private string texture_frame_crystal_choose = "wuqikuang_1";
 
 	public NewMarkType m_MarkType { get; private set; }
@@ -77,10 +60,18 @@ public class ScrollList_WeaponItem : MonoBehaviour
 		if (!attribute_info.m_bUnlock)
 		{
 			img_lock.gameObject.SetActiveRecursive(true);
+			// Hide new/mark indicators for locked items
+			if (img_new != null)
+			{
+				img_new.texture = string.Empty;
+				img_new.gameObject.SetActiveRecursive(false);
+			}
 		}
 		else
 		{
 			img_lock.gameObject.SetActiveRecursive(false);
+			// Only show new/mark if unlocked
+			SetMark(attribute_info.m_Mark, true);
 		}
 		if (!attribute_info.m_bCrystalWeapon)
 		{
@@ -192,31 +183,39 @@ public class ScrollList_WeaponItem : MonoBehaviour
 		return attribute_info;
 	}
 
-	public void SetMark(NewMarkType mark)
+	public void SetMark(NewMarkType mark, bool isUnlocked = true)
 	{
-		if (!(img_new == null))
+		if (img_new == null) return;
+		if (!isUnlocked || (attribute_info != null && !attribute_info.m_bUnlock))
 		{
-			switch (mark)
-			{
+			img_new.texture = string.Empty;
+			img_new.gameObject.SetActiveRecursive(false);
+			m_MarkType = NewMarkType.None;
+			return;
+		}
+		switch (mark)
+		{
 			case NewMarkType.Mark:
 				img_new.texture = texture_mark;
+				img_new.gameObject.SetActiveRecursive(true);
 				break;
 			case NewMarkType.New:
 				img_new.texture = texture_new;
+				img_new.gameObject.SetActiveRecursive(true);
 				break;
 			default:
 				img_new.texture = string.Empty;
+				img_new.gameObject.SetActiveRecursive(false);
 				break;
-			}
-			m_MarkType = mark;
 		}
+		m_MarkType = mark;
 	}
 
 	public void RefreshMark()
 	{
 		if (attribute_info != null)
 		{
-			SetMark(attribute_info.m_Mark);
+			SetMark(attribute_info.m_Mark, attribute_info.m_bUnlock);
 		}
 	}
 
@@ -229,6 +228,27 @@ public class ScrollList_WeaponItem : MonoBehaviour
 		if (label_sale != null)
 		{
 			label_sale.gameObject.SetActiveRecursive(m_show);
+		}
+	}
+
+	public void PlayPurchaseAnimation()
+	{
+		if (img_bg != null && img_bg.gameObject != null)
+		{
+			Animation anim = img_bg.gameObject.GetComponent<Animation>();
+			if (anim != null && anim.gameObject.activeInHierarchy)
+			{
+				anim.Play();
+				Debug.Log("Playing purchase animation on Img_bg");
+			}
+			else
+			{
+				Debug.LogWarning("No Animation component found on Img_bg or its parent");
+			}
+		}
+		else
+		{
+			Debug.LogWarning("img_bg is null or inactive");
 		}
 	}
 }

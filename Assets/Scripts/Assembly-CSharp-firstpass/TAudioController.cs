@@ -72,7 +72,6 @@ public class TAudioController : MonoBehaviour
 		{
 			return;
 		}
-
 		string shortName = GetShortName(audioName);
 		GameObject obj;
 		if (m_loadedAudio.TryGetValue(shortName, out obj))
@@ -82,6 +81,34 @@ public class TAudioController : MonoBehaviour
 			{
 				evt.Stop();
 			}
+		}
+	}
+
+	public void PlayAudio(string objName, float volumeScale)
+	{
+		if (string.IsNullOrEmpty(objName) || !useAuidoEvent)
+		{
+			return;
+		}
+		if (onAudioEventPlay != null)
+		{
+			onAudioEventPlay(ref objName);
+		}
+		string shortName = GetShortName(objName);
+		GameObject audioObj = GetOrCreateAudio(objName, shortName);
+		if (audioObj == null)
+		{
+			return;
+		}
+		ITAudioEvent evt = audioObj.GetComponent<ITAudioEvent>();
+		if (evt != null)
+		{
+			TAudioEffectRandom randomEffect = evt as TAudioEffectRandom;
+			if (randomEffect != null)
+			{
+				randomEffect.SetVolumeScale(volumeScale);
+			}
+			evt.Trigger();
 		}
 	}
 

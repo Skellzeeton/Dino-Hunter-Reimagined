@@ -54,6 +54,13 @@ public class CUISound
 		}
 	}
 
+	public void Play(string sName, float volumeScale)
+	{
+		if (AudioController == null)
+			return;
+		AudioController.PlayAudio(sName, volumeScale);
+	}
+
 	public void Stop(string sName)
 	{
 		if (!(AudioController == null))

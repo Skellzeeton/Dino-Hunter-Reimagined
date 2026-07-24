@@ -40,6 +40,8 @@ public class TAudioEffectRandom : ITAudioEvent
 
 	public int intervalRangeMax;
 
+	private float m_volumeScale = 1f;
+
 	private static Dictionary<string, int> s_random_index = new Dictionary<string, int>();
 
 	private static Dictionary<string, float> s_play_interval = new Dictionary<string, float>();
@@ -163,6 +165,11 @@ public class TAudioEffectRandom : ITAudioEvent
 		{
 			Object.Destroy(base.gameObject);
 		}
+	}
+
+	public void SetVolumeScale(float scale)
+	{
+		m_volumeScale = Mathf.Clamp(scale, 0f, 1f);
 	}
 
 	private void SendTriggerEvent(AudioClip clip)
@@ -336,7 +343,7 @@ public class TAudioEffectRandom : ITAudioEvent
 			Debug.Log("Trigger null");
 			return;
 		}
-		base.GetComponent<AudioSource>().volume = Mathf.Clamp01(Random.Range(m_volumBase - volumOffset, m_volumBase + volumOffset));
+		base.GetComponent<AudioSource>().volume = Mathf.Clamp01(Random.Range(m_volumBase - volumOffset, m_volumBase + volumOffset)) * m_volumeScale;
 		base.GetComponent<AudioSource>().pitch = Mathf.Clamp(Random.Range(m_pitchBase / (1f + pitchOffset), m_pitchBase * (1f + pitchOffset)), 0.01f, 3f);
 		if (loopMode == LoopMode.Default)
 		{

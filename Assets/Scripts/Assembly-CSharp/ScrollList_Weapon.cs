@@ -158,4 +158,17 @@ public class ScrollList_Weapon : MonoBehaviour
 		grid.repositionStart = false;
 		scroll_list_ex.SetNowItem(m_nCurIndex);
 	}
+
+	public void PlayPurchaseAnimationForItem(int itemId)
+	{
+		foreach (ScrollList_WeaponItem item in ltScrollList_WeaponItem)
+		{
+			if (item != null && item.GetWeaponAttributeInfo() != null &&
+			item.GetWeaponAttributeInfo().m_nID == itemId)
+			{
+				item.PlayPurchaseAnimation();
+				break;
+			}
+		}
+	}
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class Role_Control : MonoBehaviour
@@ -234,8 +235,16 @@ public class Role_Control : MonoBehaviour
 	private bool stop_event;
 
 	private bool exit_event;
+
+	private Coroutine m_stopSoundCoroutine = null;
+
+	private string m_currentPlayingSound = string.Empty;
+
+	private string m_currentWeaponAudioFire = string.Empty;
 	
 	private int m_nCurrentCharacterID = -1;
+
+	public static bool IsInForgeScene { get; set; }
 	
 	protected bool m_bActive = true;
 
@@ -256,7 +265,80 @@ public class Role_Control : MonoBehaviour
 			UpdatePosMove();
 		}
 	}
-	
+
+	private string GetWeaponSoundName(WeaponType weapontype, bool isAttack = false)
+	{
+		if (!isAttack)
+			return string.Empty;
+		if (!string.IsNullOrEmpty(m_currentWeaponAudioFire))
+		{
+			if (weapontype == WeaponType.CloseWeapons)
+			{
+				return m_currentWeaponAudioFire + "_s";
+			}
+			return m_currentWeaponAudioFire;
+		}
+		switch (weapontype)
+		{
+			case WeaponType.CloseWeapons:
+				return "Weapon002_s";
+			case WeaponType.Crossbow:
+				return "Weapon001";
+			case WeaponType.LiquidFireGun:
+				return "Weapon014";
+			case WeaponType.MachineGun:
+				return "Weapon004";
+			case WeaponType.RPG:
+				return "Weapon020";
+			case WeaponType.ViolenceGun:
+				return "Weapon003";
+			default:
+				return string.Empty;
+		}
+	}
+
+	private IEnumerator StopSoundAfterDelay(string soundName, float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		CUISound.GetInstance().Stop(soundName);
+		if (m_currentPlayingSound == soundName)
+		{
+			m_currentPlayingSound = string.Empty;
+		}
+		m_stopSoundCoroutine = null;
+	}
+
+	private void StopCurrentWeaponSound() {
+		if (!string.IsNullOrEmpty(m_currentPlayingSound))
+		{
+			CUISound.GetInstance().Stop(m_currentPlayingSound);
+			m_currentPlayingSound = string.Empty;
+		}
+		if (m_stopSoundCoroutine != null)
+		{
+			StopCoroutine(m_stopSoundCoroutine);
+			m_stopSoundCoroutine = null;
+		}
+	}
+
+	private void PlayWeaponSound(string soundName, bool isMelee = false)
+	{
+		if (!IsInForgeScene)
+			return;
+		if (string.IsNullOrEmpty(soundName))
+			return;
+		StopCurrentWeaponSound();
+		float volumeScale = 0.13f;
+		CUISound.GetInstance().Play(soundName, volumeScale);
+		m_currentPlayingSound = soundName;
+		if (m_stopSoundCoroutine != null)
+		{
+			StopCoroutine(m_stopSoundCoroutine);
+		}
+		float stopDelay = (weapon_type == WeaponType.RPG) ? 2.0f : 1.0f;
+		m_stopSoundCoroutine = StartCoroutine(StopSoundAfterDelay(soundName, stopDelay));
+	}
+
 	private bool HasArmorEquipped()
 	{
 		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
@@ -654,6 +736,22 @@ public class Role_Control : MonoBehaviour
 		}
 		if (weapon_now != null)
 		{
+			iGameData gameData = iGameApp.GetInstance().m_GameData;
+			if (gameData != null)
+			{
+				CWeaponInfoLevel weaponInfo = gameData.GetWeaponInfo(m_id, 1);
+				if (weaponInfo != null && !string.IsNullOrEmpty(weaponInfo.sAudioFire))
+				{
+					m_currentWeaponAudioFire = weaponInfo.sAudioFire;
+				}
+				else
+				{
+					m_currentWeaponAudioFire = GetWeaponSoundName(weapon_type);
+				}
+			}
+		}
+		if (weapon_now != null)
+		{
 			weapon_now.parent = base.gameObject.transform;
 			weapon_now.gameObject.SetActiveRecursive(false);
 		}
@@ -707,8 +805,6 @@ public class Role_Control : MonoBehaviour
 		{
 			return;
 		}
-    
-		// Get the current character's level 1 info directly
 		CCharacterInfoLevel charLevelInfo = gameData.GetCharacterInfo(m_nCurrentCharacterID, 1);
 		if (charLevelInfo == null)
 		{
@@ -731,8 +827,6 @@ public class Role_Control : MonoBehaviour
 			Debug.LogWarning("Role_Control: Equip prefab not found: " + equipPath);
 			return;
 		}
-    
-		// Destroy existing equip and create new one
 		foreach (Transform child in spineBone)
 		{
 			if (child.name.Contains("Equip") || child.name.Contains("equip"))
@@ -740,7 +834,6 @@ public class Role_Control : MonoBehaviour
 				Destroy(child.gameObject);
 			}
 		}
-    
 		GameObject equipInstance = Instantiate(equipPrefab);
 		equipInstance.transform.parent = spineBone;
 		equipInstance.transform.localPosition = equipPrefab.transform.position;
@@ -925,6 +1018,12 @@ public class Role_Control : MonoBehaviour
 					role_now.GetComponent<Animation>()[animName].time = 0f;
 					role_now.GetComponent<Animation>().Sample();
 					PlayFireEffect();
+					string soundName = GetWeaponSoundName(weapon_type, true);
+					if (!string.IsNullOrEmpty(soundName))
+					{
+						bool isMelee = (weapon_type == WeaponType.CloseWeapons);
+						PlayWeaponSound(soundName, isMelee);
+					}
 					role_now.GetComponent<Animation>().Play(animName);
 				}
 			}
@@ -1168,5 +1267,15 @@ public class Role_Control : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	private void OnDestroy()
+	{
+		StopCurrentWeaponSound();
+	}
+
+	private void OnDisable()
+	{
+		StopCurrentWeaponSound();
 	}
 }

@@ -27,6 +27,7 @@ public class Scene_Forge : MonoBehaviour
 
 	private void Awake()
 	{
+		Role_Control.IsInForgeScene = true;
 		TUIDataServer.Instance().Initialize();
 		global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneForge>(TUIEvent_SetUIInfo);
 	}
@@ -64,6 +65,7 @@ public class Scene_Forge : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		Role_Control.IsInForgeScene = false;
 		global::EventCenter.EventCenter.Instance.Unregister<TUIEvent.BackEvent_SceneForge>(TUIEvent_SetUIInfo);
 	}
 
@@ -560,6 +562,7 @@ public class Scene_Forge : MonoBehaviour
 			popup_weapon.StarsBlink();
 			popup_weapon.OpenValueAnimation();
 			popup_weapon.ShowGoEquipAfterBuy(sfx_open_now);
+			popup_weapon.PlayPurchaseAnimationOnCurrentItem();
 			NewHelpState newHelpState = TUIMappingInfo.Instance().GetNewHelpState();
 			if (newHelpState == NewHelpState.Help03_ClickWeaponMake || newHelpState == NewHelpState.Help24_ClickWeaponUpgrade)
 			{

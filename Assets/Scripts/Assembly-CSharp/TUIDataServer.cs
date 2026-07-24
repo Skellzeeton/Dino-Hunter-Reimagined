@@ -1445,7 +1445,7 @@ public class TUIDataServer
 							break;
 						}
 					}
-					TUIPopupInfo tUIPopupInfo3 = new TUIPopupInfo(cWeaponInfo.nID, cWeaponInfoLevel.sName, string.Empty, tUIWeaponAttribute);
+					TUIPopupInfo tUIPopupInfo3 = new TUIPopupInfo(cWeaponInfo.nID, cWeaponInfoLevel.sName, cWeaponInfoLevel.sDesc, tUIWeaponAttribute, value);
 					if (iGameApp.GetInstance().CheckWeaponSignState(3, cWeaponInfo.nID))
 					{
 						tUIPopupInfo3.m_MarkType = NewMarkType.New;
@@ -1496,7 +1496,8 @@ public class TUIDataServer
 							}
 						}
 					}
-					TUIPopupInfo tUIPopupInfo4 = new TUIPopupInfo(key2, cAvatarInfo.m_sName, cAvatarInfoLevel.sDesc, tUIArmorAttribute);
+					string autoDesc = m_GameData.m_AvatarCenter.GetDesc(key2, value2);
+					TUIPopupInfo tUIPopupInfo4 = new TUIPopupInfo(key2, cAvatarInfo.m_sName, autoDesc, tUIArmorAttribute, value2);
 					if (iGameApp.GetInstance().CheckAvatarSignState(3, cAvatarInfo.m_nID))
 					{
 						tUIPopupInfo4.m_MarkType = NewMarkType.New;
@@ -3368,10 +3369,7 @@ public class TUIDataServer
 				cLevelUpWeapon.Levelup();
 				if (cLevelUpWeapon.m_nCost >= 0)
 				{
-					if (!m_DataCenter.HasSelectWeapon(cLevelUpWeapon.m_nWeaponID))
-					{
-						m_DataCenter.SetWeaponSign(cLevelUpWeapon.m_nWeaponID, 3);
-					}
+					m_DataCenter.SetWeaponSign(cLevelUpWeapon.m_nWeaponID, 3);
 					iGameApp.GetInstance().SaveData();
 					if (cLevelUpWeapon.m_nWeaponLevelNext == 1)
 					{
@@ -5812,7 +5810,7 @@ public class TUIDataServer
 					}
 					tUIBlackMarketItem.m_sName = cAvatarInfo.m_sName;
 					tUIBlackMarketItem.m_sIcon = cAvatarInfo.m_sIcon;
-					tUIBlackMarketItem.m_sDesc = cAvatarInfoLevel.sDesc;
+					tUIBlackMarketItem.m_sDesc = m_GameData.m_AvatarCenter.GetDesc(nItemID, 1);
 					for (int i = 0; i < 3; i++)
 					{
 						if (cAvatarInfoLevel.arrFunc[i] == 1)
@@ -6650,30 +6648,30 @@ public class TUIDataServer
 			}
 			switch (cAvatarInfo.m_nType)
 			{
-			case 1:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Head;
-				break;
-			case 3:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Body;
-				break;
-			case 5:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Leg;
-				break;
-			case 4:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Bracelet;
-				break;
-			case 0:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Halo;
-				break;
-			case 2:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Necklace;
-				break;
-			case 6:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Badge;
-				break;
-			case 7:
-				tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Stoneskin;
-				break;
+				case 1:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Head;
+					break;
+				case 3:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Body;
+					break;
+				case 5:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Leg;
+					break;
+				case 4:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Armor_Bracelet;
+					break;
+				case 0:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Halo;
+					break;
+				case 2:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Necklace;
+					break;
+				case 6:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Badge;
+					break;
+				case 7:
+					tUIWeaponAttributeInfo.m_WeaponType = WeaponType.Accessory_Stoneskin;
+					break;
 			}
 			tUIWeaponAttributeInfo.m_sName = cAvatarInfo.m_sName;
 			tUIWeaponAttributeInfo.m_sIcon = cAvatarInfo.m_sIcon;
@@ -6697,8 +6695,11 @@ public class TUIDataServer
 				TUIWeaponLevelInfo tUIWeaponLevelInfo = new TUIWeaponLevelInfo();
 				tUIWeaponAttributeInfo.AddWeaponInfo(nLevel, tUIWeaponLevelInfo);
 				tUIWeaponLevelInfo.m_Price = new TUIPriceInfo(cAvatarInfoLevel2.nPurchasePrice, cAvatarInfoLevel2.isCrystalPurchase ? UnitType.Crystal : UnitType.Gold);
-				tUIWeaponLevelInfo.m_sLevelupDesc = cAvatarInfoLevel2.sLevelUpDesc;
-				tUIWeaponLevelInfo.m_sDesc = cAvatarInfoLevel2.sDesc;
+
+				// Generate description using the new builder
+				tUIWeaponLevelInfo.m_sLevelupDesc = m_GameData.m_AvatarCenter.GetLevelUpDesc(cAvatarInfo.m_nID, nLevel);
+				tUIWeaponLevelInfo.m_sDesc = m_GameData.m_AvatarCenter.GetDesc(cAvatarInfo.m_nID, nLevel);
+
 				for (int j = 0; j < 3; j++)
 				{
 					if (cAvatarInfoLevel2.arrFunc[j] == 1)
@@ -6753,10 +6754,24 @@ public class TUIDataServer
 			}
 			else if (num != 1)
 			{
-				CWeaponInfoLevel cWeaponInfoLevel = cWeaponInfo.Get(1);
-				if (cLevelUpWeapon.CheckCanUpgrade(cWeaponInfo.nID, 1f) && (cWeaponInfoLevel == null || !cWeaponInfoLevel.isCrystalPurchase))
+				bool isUnlockable = (cWeaponInfo.m_nUnlockStageID == 0 && cWeaponInfo.m_nUnlockHunterLvl == 0) ||
+				(cWeaponInfo.m_nUnlockStageID > 0 && m_DataCenter.IsLevelPassed(cWeaponInfo.m_nUnlockStageID)) ||
+				(cWeaponInfo.m_nUnlockHunterLvl > 0 && m_DataCenter.HunterLvl >= cWeaponInfo.m_nUnlockHunterLvl);
+				if (isUnlockable)
 				{
-					dictMarkData.Add(cWeaponInfo.nID, NewMarkType.Mark);
+					int nLevel = -1;
+					bool isOwned = m_DataCenter.GetWeaponLevel(cWeaponInfo.nID, ref nLevel) && nLevel >= 0;
+					bool canPurchase = !isOwned && cLevelUpWeapon.CheckCanUpgrade(cWeaponInfo.nID, 1f);
+					bool canUpgrade = isOwned && cLevelUpWeapon.CheckCanUpgrade(cWeaponInfo.nID, 1f);
+
+					if (canPurchase || canUpgrade)
+					{
+						dictMarkData.Add(cWeaponInfo.nID, NewMarkType.Mark);
+					}
+					else
+					{
+						dictMarkData.Add(cWeaponInfo.nID, NewMarkType.None);
+					}
 				}
 				else
 				{
@@ -6783,10 +6798,25 @@ public class TUIDataServer
 			}
 			else if (num != 1)
 			{
-				CAvatarInfoLevel cAvatarInfoLevel = cAvatarInfo.Get(1);
-				if (cLevelUpAvatar.CheckCanUpgrade(cAvatarInfo.m_nID, 1f) && (cAvatarInfoLevel == null || !cAvatarInfoLevel.isCrystalPurchase))
+				bool isUnlockable = (cAvatarInfo.m_nUnlockStageID == 0 && cAvatarInfo.m_nUnlockHunterLvl == 0) ||
+				(cAvatarInfo.m_nUnlockStageID > 0 && m_DataCenter.IsLevelPassed(cAvatarInfo.m_nUnlockStageID)) ||
+				(cAvatarInfo.m_nUnlockHunterLvl > 0 && m_DataCenter.HunterLvl >= cAvatarInfo.m_nUnlockHunterLvl);
+
+				if (isUnlockable)
 				{
-					dictMarkData.Add(cAvatarInfo.m_nID, NewMarkType.Mark);
+					int nLevel = -1;
+					bool isOwned = m_DataCenter.GetAvatar(cAvatarInfo.m_nID, ref nLevel) && nLevel >= 0;
+					bool canPurchase = !isOwned && cLevelUpAvatar.CheckCanUpgrade(cAvatarInfo.m_nID, 1f);
+					bool canUpgrade = isOwned && cLevelUpAvatar.CheckCanUpgrade(cAvatarInfo.m_nID, 1f);
+
+					if (canPurchase || canUpgrade)
+					{
+						dictMarkData.Add(cAvatarInfo.m_nID, NewMarkType.Mark);
+					}
+					else
+					{
+						dictMarkData.Add(cAvatarInfo.m_nID, NewMarkType.None);
+					}
 				}
 				else
 				{
