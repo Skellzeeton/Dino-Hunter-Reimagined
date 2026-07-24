@@ -6,8 +6,8 @@ public class CMobInfo
     private int m_nMaxLevel = -1;
     private string m_sScaleType = "exponential";
     public Dictionary<int, CMobInfoLevel> m_dictMobInfoLevel;
-    private int m_nMinBoost = 0;
-    private int m_nMaxBoost = 0;
+    private int m_nMinBoost = 1;
+    private int m_nMaxBoost = 45;
 
     public CMobInfo()
     {

@@ -1032,7 +1032,7 @@ public class iGameSceneBase
 				}
 				if (cWeaponBase.CurWeaponLvlInfo.nBullet != -1)
 				{
-					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nBullet, 10);
+					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nBullet, 25);
 				}
 			}
 		}
@@ -1813,7 +1813,8 @@ public class iGameSceneBase
 						if (cCharMob != null)
 						{
 							cCharMob.m_bShowTime = false;
-							AddEffect(cCharMob.GetBone(0).position, Vector3.forward, 2f, 1950);
+							int prefabId = (item3.nMobID == 20) ? 1954 : 1950;
+							AddEffect(cCharMob.GetBone(0).position, Vector3.forward, 2f, prefabId);
 							if (CGameNetManager.GetInstance().IsConnected())
 							{
 								CGameNetSender.GetInstance()

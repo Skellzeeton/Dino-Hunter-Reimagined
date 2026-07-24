@@ -607,6 +607,26 @@ public class PopupWeapon : MonoBehaviour
 		SetInfo(m_curWeaponAttributeInfo);
 	}
 
+	public void PlayPurchaseAnimationForItem(int itemId)
+	{
+		foreach (var kvp in m_dictScrollListWeapon)
+		{
+			ScrollList_Weapon sl = kvp.Value;
+			if (sl != null)
+			{
+				sl.PlayPurchaseAnimationForItem(itemId);
+			}
+		}
+	}
+
+	public void PlayPurchaseAnimationOnCurrentItem()
+	{
+		if (m_curWeaponAttributeInfo != null)
+		{
+			PlayPurchaseAnimationForItem(m_curWeaponAttributeInfo.m_nID);
+		}
+	}
+
 	public TUISupplementInfo GetSupplementInfo()
 	{
 		return m_SupplementInfo;

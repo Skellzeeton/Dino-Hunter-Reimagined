@@ -106,18 +106,18 @@ public class CWeaponShotgun : CWeaponBase
 			{
 				switch (m_pWeaponLvlInfo.nHit)
 				{
-				case 1103:
-					base.m_GameScene.AddHitEffect(bloodPos, vector3, 1100);
-					break;
-				case 1104:
-					base.m_GameScene.AddHitEffect(bloodPos, vector3, 1101);
-					break;
-				case 1105:
-					base.m_GameScene.AddHitEffect(bloodPos, vector3, 1102);
-					break;
-				default:
-					base.m_GameScene.AddHitEffect(bloodPos, vector3, 1110);
-					break;
+					case 1103:
+						base.m_GameScene.AddHitEffect(bloodPos, vector3, 1100);
+						break;
+					case 1104:
+						base.m_GameScene.AddHitEffect(bloodPos, vector3, 1101);
+						break;
+					case 1105:
+						base.m_GameScene.AddHitEffect(bloodPos, vector3, 1102);
+						break;
+					default:
+						base.m_GameScene.AddHitEffect(bloodPos, vector3, 1110);
+						break;
 				}
 			}
 			base.m_GameScene.ShakeCamera(0.2f, 0.15f);
@@ -128,15 +128,15 @@ public class CWeaponShotgun : CWeaponBase
 			value.PlayAudio(kAudioEnum.HitBody);
 			switch (m_pWeaponLvlInfo.nElementType)
 			{
-			case 1:
-				value.PlayAudio("Fx_Impact_fire");
-				break;
-			case 3:
-				value.PlayAudio("Fx_Impact_freeze");
-				break;
-			case 2:
-				value.PlayAudio("Fx_Impact_electric");
-				break;
+				case 1:
+					value.PlayAudio("Fx_Impact_fire");
+					break;
+				case 3:
+					value.PlayAudio("Fx_Impact_freeze");
+					break;
+				case 2:
+					value.PlayAudio("Fx_Impact_electric");
+					break;
 			}
 		}
 	}

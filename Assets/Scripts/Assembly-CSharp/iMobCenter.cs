@@ -67,7 +67,7 @@ public class iMobCenter : iBaseCenter
 		{
 			return baseValue;
 		}
-		float boostAmount = 2f;
+		float boostAmount = 0.24f;
 		float boostFactor = 1f;
 		if (currentLevel <= minBoost)
 		{
@@ -76,7 +76,7 @@ public class iMobCenter : iBaseCenter
 		else if (currentLevel <= maxBoost)
 		{
 			float fadeT = (float)(currentLevel - minBoost) / (maxBoost - minBoost);
-			fadeT = 1f - Mathf.Pow(1f - fadeT, 3f);
+			fadeT = 1f - Mathf.Pow(1f - fadeT, 1.24f);
 			boostFactor = 1f + boostAmount * (1f - fadeT);
 		}
 		else

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 114304812539794296}
   - component: {fileID: 114961528470182250}
   - component: {fileID: 114336543858240704}
+  - component: {fileID: 7850803449038836508}
   - component: {fileID: 114861468515652334}
   m_Layer: 0
   m_Name: Main Camera
@@ -163,6 +164,15 @@ MonoBehaviour:
   fPitch: 0
   fDistance: 0
   fRotateSpeed: 0
+--- !u!1542919678 &7850803449038836508
+StreamingController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169045864523484}
+  m_Enabled: 1
+  m_StreamingMipmapBias: 0
 --- !u!114 &114861468515652334
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -444,6 +444,8 @@ public class PrefabPath
 
 	public const int attention = 1950;
 
+	public const int attention_blue = 1954;
+
 	public const int black_begin = 1951;
 
 	public const int black_end = 1952;

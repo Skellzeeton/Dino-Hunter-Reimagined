@@ -58,7 +58,7 @@ protected override void OnFire(CCharPlayer player)
     {
         targetPoint = camRay.origin + camRay.direction * maxDist;
     }
-    
+
     Ray camToMuzzle = new Ray(camRay.origin, (muzzlePos - camRay.origin).normalized);
     RaycastHit obstruction;
     float muzzleDistance = Vector3.Distance(camRay.origin, muzzlePos);

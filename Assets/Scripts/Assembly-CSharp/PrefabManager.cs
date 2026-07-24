@@ -287,6 +287,7 @@ public class PrefabManager
 		m_dictData.Add(1948, "Artist/Effect/Skill/recover/recover_02_pfb");
 		m_dictData.Add(1949, "Artist/Effect/Skill/recover/recover_03_pfb");
 		m_dictData.Add(1950, "Artist/EffectCustom/Attention");
+		m_dictData.Add(1954, "Artist/EffectCustom/Attention_Blue");
 		m_dictData.Add(1951, "Artist/Effect/Skill/wild/wild_pfb");
 		m_dictData.Add(1952, "Artist/Effect/Skill/sunder/sunder_pfb");
 		m_dictData.Add(1953, "Artist/Effect/Skill/wild/wild_hit_pfb");
