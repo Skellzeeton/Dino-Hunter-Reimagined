@@ -811,19 +811,16 @@ public class iDataCenter
 		
 		int currentSections = 0;
 		int backupSections = 0;
-		
 		if (current.character != null && current.character.nodes != null) currentSections++;
 		if (current.weapon != null && current.weapon.nodes != null) currentSections++;
 		if (current.skill != null) currentSections++;
 		if (current.equipstone != null && current.equipstone.nodes != null) currentSections++;
 		if (current.materials != null) currentSections++;
-		
 		if (backup.character != null && backup.character.nodes != null) backupSections++;
 		if (backup.weapon != null && backup.weapon.nodes != null) backupSections++;
 		if (backup.skill != null) backupSections++;
 		if (backup.equipstone != null && backup.equipstone.nodes != null) backupSections++;
 		if (backup.materials != null) backupSections++;
-		
 		int diff = Math.Abs(currentSections - backupSections);
 		if (diff >= 3)
 		{
@@ -866,7 +863,6 @@ public class iDataCenter
 		string backupPath = GetBackupPath();
 		string tempPath = GetTempPath();
 		string encrypted = XXTEAUtils.Encrypt(jsonText, iServerConfigData.GetInstance().m_sServerInfoKey);
-		
 		try
 		{
 			File.WriteAllText(tempPath, encrypted);
@@ -876,17 +872,14 @@ public class iDataCenter
 			Debug.LogError("[iDataCenter] Failed to write temp file: " + ex.Message);
 			return;
 		}
-		
 		SaveData tempData;
 		if (!TryLoadFromJson(tempPath, out tempData) || !IsValidSaveData(tempData))
 		{
 			Debug.LogError("[iDataCenter] Temp file validation failed, aborting save");
 			return;
 		}
-		
 		SaveData currentData;
 		bool currentValid = TryLoadFromJson(currentPath, out currentData) && IsValidSaveData(currentData);
-		
 		try
 		{
 			if (currentValid && File.Exists(currentPath))
@@ -905,6 +898,8 @@ public class iDataCenter
 		catch (Exception ex)
 		{
 			Debug.LogError("[iDataCenter] Atomic save failed: " + ex.Message);
+			iGameApp.PendingPopupMessage = "Save failed. Your data should be safe, though you may have lost any very recently saved data.";
+			iGameApp.GetInstance().RequestReload();
 			try
 			{
 				if (File.Exists(currentPath))
@@ -927,9 +922,7 @@ public class iDataCenter
 		SaveData backupData;
 		bool currentOk = TryLoadFromJson(GetCurrentPath(), out currentData) && IsValidSaveData(currentData);
 		bool backupOk = TryLoadFromJson(GetBackupPath(), out backupData) && IsValidSaveData(backupData);
-		
 		SaveData chosenData = null;
-		
 		if (currentOk && backupOk)
 		{
 			if (IsSeverelyDifferent(currentData, backupData))
@@ -937,6 +930,7 @@ public class iDataCenter
 				Debug.LogWarning("[iDataCenter] Current and backup are severely different, using backup");
 				chosenData = backupData;
 				RestoreBackupToCurrent();
+				iGameApp.PendingPopupMessage = "Your save seems to have corrupted, so it was rolled back automatically. You should be safe to continue playing.";
 			}
 			else
 			{
@@ -952,6 +946,7 @@ public class iDataCenter
 			Debug.LogWarning("[iDataCenter] Current save corrupted, using backup");
 			chosenData = backupData;
 			RestoreBackupToCurrent();
+			iGameApp.PendingPopupMessage = "Your save seems to have corrupted, so it was rolled back automatically. You should be safe to continue playing.";
 		}
 		else
 		{
@@ -964,6 +959,7 @@ public class iDataCenter
 			SetWeaponLevel(1, 1);
 			SetWeaponLevel(2, 1);
 			Save();
+			iGameApp.PendingPopupMessage = "No save was detected, the game has created a fresh save for you.";
 			return false;
 		}
 		if (chosenData == null)
@@ -1560,6 +1556,8 @@ public class iDataCenter
 		catch (Exception ex)
 		{
 			Debug.LogError("[iDataCenter] Failed to save: " + ex.Message);
+			iGameApp.PendingPopupMessage = "Save failed. Your data should be safe, though you may have lost any very recently saved data.";
+			iGameApp.GetInstance().RequestReload();
 		}
 	}
 

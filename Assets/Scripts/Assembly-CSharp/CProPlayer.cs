@@ -127,8 +127,8 @@ public class CProPlayer : CProBase
 		if (characterInfo != null)
 		{
 			SetValueBase(kProEnum.HPMax, characterInfo.fLifeBase);
-			SetValueBase(kProEnum.MoveSpeed, 6f);
-			SetValueBase(kProEnum.MoveSpeedAcc, 6f);
+			SetValueBase(kProEnum.MoveSpeed, 6.3f);
+			SetValueBase(kProEnum.MoveSpeedAcc, 6.3f);
 			SetValueBase(kProEnum.Critical, 5f);
 			SetValueBase(kProEnum.CriticalDmg, 100f);
 		}

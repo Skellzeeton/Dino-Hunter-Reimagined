@@ -17,6 +17,8 @@ public class iGameApp
 
 	public iClearMemory m_ClearMemory;
 
+	public static string PendingPopupMessage = "";
+
 	public static iGameApp GetInstance()
 	{
 		if (m_Instance == null)
@@ -180,6 +182,12 @@ public class iGameApp
 
 	public void ResetScene()
 	{
+	}
+
+	public void RequestReload()
+	{
+		if (string.IsNullOrEmpty(PendingPopupMessage)) return;
+		SceneManager.LoadScene("Scene_Main");
 	}
 
 	public void Update(float deltaTime)

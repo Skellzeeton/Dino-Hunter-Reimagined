@@ -24,9 +24,9 @@ public class CAvatarInfoLevel
 
 	public CAvatarInfoLevel()
 	{
-		arrFunc = new int[3];
-		arrValueX = new int[3];
-		arrValueY = new int[3];
+		arrFunc = new int[10];
+		arrValueX = new int[10];
+		arrValueY = new int[10];
 		ltMaterials = new List<int>();
 		ltMaterialsCount = new List<int>();
 	}

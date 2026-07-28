@@ -1060,6 +1060,21 @@ public class iGameSceneBase
 		PrefabManager.AddPool(1115, 15);
 	}
 
+	private void EnforceTimeScale()
+	{
+		//if (Application.isEditor)
+			//return;
+		if (m_Status == kGameStatus.Gameing)
+		{
+			if (Mathf.Abs(Time.timeScale - 1f) > 0.001f)
+				Time.timeScale = 1f;
+		}
+		else
+		{
+			return;
+		}
+	}
+
 	public virtual void FinishGame(bool bSuccess, int nLastKillBoss = -1)
 	{
 		m_Status = kGameStatus.GameOver_Process;
@@ -1398,6 +1413,7 @@ public class iGameSceneBase
 
 	public virtual void Update(float deltaTime)
 	{
+		EnforceTimeScale();
 		if (m_Input != null)
 		{
 			m_Input.Update(deltaTime);
@@ -1764,7 +1780,7 @@ public class iGameSceneBase
 					CTaskInfo taskInfo = m_GameData.GetTaskInfo(m_nCurTaskID);
 					string currentSceneName = SceneManager.GetActiveScene().name;
 					bool isIgnoredMap = false;
-					if (taskInfo != null && taskInfo.nType == 3 && worldMonsterInfo.m_ltIgnoreMap != null &&
+					if (taskInfo != null && taskInfo.nType == 3 || taskInfo.nType == 7 && worldMonsterInfo.m_ltIgnoreMap != null &&
 					    worldMonsterInfo.m_ltIgnoreMap.Count > 0)
 					{
 						foreach (string ignoreMapName in worldMonsterInfo.m_ltIgnoreMap)
@@ -1993,61 +2009,58 @@ public class iGameSceneBase
 	{
 		CMobInfoLevel mobInfo = m_GameData.GetMobInfo(nMobID, nMobLevel);
 		if (mobInfo == null)
-		{
 			return null;
-		}
-		int num = -1;
-		CAIManagerInfo aIManagerInfo = m_GameData.GetAIManagerInfo(mobInfo.nAIManagerID);
-		if (aIManagerInfo != null)
+		int taskType = -1;
+		CTaskBase task = m_TaskManager?.GetTask();
+		if (task != null)
 		{
-			CAIInfo aIInfo = m_GameData.GetAIInfo(aIManagerInfo.nAI);
-			if (aIInfo != null)
-			{
-				num = aIInfo.nBehavior;
-			}
+			CTaskInfo taskInfo = task.GetTaskInfo();
+			if (taskInfo != null)
+				taskType = taskInfo.nType;
 		}
-		if (mobInfo.nRareType != 2 && IsMonsterNumFull(nMobID, mobInfo.nType, num))
+		bool bypass = mobInfo.nBypassAutoAI;
+		int aimanagerID = mobInfo.nAIManagerID;
+		if (taskType == 3 && !bypass)
 		{
+			aimanagerID = (aimanagerID / 10) * 10 + 2;
+		}
+		int behaviourID = -1;
+		CAIManagerInfo aiManagerInfo = m_GameData.GetAIManagerInfo(aimanagerID);
+		if (aiManagerInfo != null)
+		{
+			CAIInfo aiInfo = m_GameData.GetAIInfo(aiManagerInfo.nAI);
+			if (aiInfo != null)
+				behaviourID = aiInfo.nBehavior;
+		}
+		if (mobInfo.nRareType != 2 && IsMonsterNumFull(nMobID, mobInfo.nType, behaviourID))
 			return null;
-		}
-		GameObject gameObject = PrefabManager.Get(mobInfo.nModel);
-		if (gameObject == null)
-		{
-			return null;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
-		if (gameObject2 == null)
-		{
-			return null;
-		}
-		CCharMob component = gameObject2.GetComponent<CCharMob>();
-		if (component == null)
-		{
-			return null;
-		}
+		GameObject prefab = PrefabManager.Get(mobInfo.nModel);
+		if (prefab == null) return null;
+		GameObject go = (GameObject)Object.Instantiate(prefab);
+		if (go == null) return null;
+		CCharMob component = go.GetComponent<CCharMob>();
+		if (component == null) return null;
 		component.UID = nMobUID;
 		component.gameObject.name = "mob_" + component.UID;
-		component.InitAI(mobInfo.nAIManagerID);
 		component.InitMob(nMobID, nMobLevel);
+		component.InitAI(aimanagerID);
+		if (taskType == 3 && !bypass)
+		{
+			component.ApplyMissionModifications();
+		}
 		component.MobType = mobInfo.nType;
-		component.MobBehavior = num;
+		component.MobBehavior = behaviourID;
 		component.name = "mob_" + component.UID;
 		RaycastHit hitInfo;
 		if (Physics.Raycast(new Ray(v3Pos + new Vector3(0f, 10f, 0f), Vector3.down), out hitInfo, 20f, 536870912))
-		{
 			v3Pos = hitInfo.point;
-		}
 		component.Pos = v3Pos;
 		if (m_User != null)
-		{
 			component.Dir2D = m_User.Pos - component.Pos;
-		}
 		else
-		{
 			component.Dir2D = v3Dir;
-		}
 		m_MobMap.Add(component.UID, component);
-		AddMonsterNumLimit(nMobID, mobInfo.nType, num);
+		AddMonsterNumLimit(nMobID, mobInfo.nType, behaviourID);
 		if (component.IsBoss() && m_GameUI != null && m_GameUI.UIManager != null && m_GameUI.UIManager.mTaskPlane != null)
 		{
 			List<iGameTaskUIBase> data = m_GameUI.UIManager.mTaskPlane.GetData();
@@ -2055,10 +2068,10 @@ public class iGameSceneBase
 			{
 				foreach (iGameTaskUIBase item in data)
 				{
-					iGameTaskUIHunterList iGameTaskUIHunterList2 = item as iGameTaskUIHunterList;
-					if (iGameTaskUIHunterList2 != null)
+					iGameTaskUIHunterList hunterList = item as iGameTaskUIHunterList;
+					if (hunterList != null)
 					{
-						iGameTaskUIHunterList2.SetLevel(component.ID, component.Level);
+						hunterList.SetLevel(component.ID, component.Level);
 						bossHP = component.MaxHP;
 						bossLvl = component.Level;
 					}

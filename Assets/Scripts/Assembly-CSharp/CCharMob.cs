@@ -109,6 +109,10 @@ public class CCharMob : CCharBase
 
 	public kAnimEnum m_NetAnim;
 
+	private int m_effectiveDropGroup;
+
+	private int m_effectiveDropCount;
+
 	protected CDropGroupInfo m_tmpDropGroupInfo;
 
 	protected int m_nCarryGoldCur;
@@ -325,7 +329,6 @@ public class CCharMob : CCharBase
 				SetMoribund(true, m_fHPMax / 2f, value);
 				return;
 			}
-
 			nDeathMode = kDeadMode.MoribundDead;
 		}
 		base.isDead = true;
@@ -696,22 +699,21 @@ public class CCharMob : CCharBase
 				}
 			}
 		}
+		ComputeEffectiveDrops();
 		if (m_tmpDropGroupInfo == null)
-		{
 			m_tmpDropGroupInfo = new CDropGroupInfo();
-		}
 		if (m_tmpDropGroupInfo != null)
 		{
 			m_tmpDropGroupInfo.Clear();
 			if (m_curMobInfoLevel != null)
 			{
-				CDropGroupInfo dropGrouInfo = m_GameData.GetDropGrouInfo(m_curMobInfoLevel.nDropGroup);
+				CDropGroupInfo dropGrouInfo = m_GameData.GetDropGrouInfo(m_effectiveDropGroup);
 				if (dropGrouInfo != null && dropGrouInfo.ltItem != null)
 				{
 					for (int k = 0; k < dropGrouInfo.ltItem.Count; k++)
 					{
 						m_tmpDropGroupInfo.Add(new CDropItem(dropGrouInfo.ltItem[k].nItemID,
-							dropGrouInfo.ltItem[k].fRate));
+								dropGrouInfo.ltItem[k].fRate));
 					}
 				}
 			}
@@ -842,7 +844,6 @@ public class CCharMob : CCharBase
 			{
 				m_Behavior.Uninstall();
 			}
-
 			m_Behavior.Install(behavior);
 		}
 	}
@@ -889,7 +890,6 @@ public class CCharMob : CCharBase
 			//fTime = Mathf.Min(fTime, 3.25f);
 			return;
 		}
-
 		m_bFreeze = bFreeze;
 		m_fFreezeTime = fTime;
 		ResetAI();
@@ -925,7 +925,6 @@ public class CCharMob : CCharBase
 		{
 			num = 0f;
 		}
-
 		num = MyUtils.formula_armor2protect(num);
 		if (m_bMoribund)
 		{
@@ -935,7 +934,6 @@ public class CCharMob : CCharBase
 				return num + value;
 			}
 		}
-
 		return num;
 	}
 
@@ -980,14 +978,12 @@ public class CCharMob : CCharBase
 		{
 			sourcePosition = m_ltPath[m_ltPath.Count - 1];
 		}
-
 		UnityEngine.AI.NavMeshPath navMeshPath = new UnityEngine.AI.NavMeshPath();
 		if (!UnityEngine.AI.NavMesh.CalculatePath(sourcePosition, v3Dst, -1, navMeshPath))
 		{
 			m_ltPath.Add(v3Dst);
 			return;
 		}
-
 		m_ltPath.Clear();
 		for (int i = 0; i < navMeshPath.corners.Length; i++)
 		{
@@ -1001,14 +997,12 @@ public class CCharMob : CCharBase
 		{
 			return true;
 		}
-
 		if (UnityEngine.AI.NavMesh.SamplePosition(base.Pos, out m_CachedNavMeshHit, 1.0f,
 			    UnityEngine.AI.NavMesh.AllAreas))
 		{
 			float distance = Vector3.Distance(base.Pos, m_CachedNavMeshHit.position);
 			return distance < 0.05f;
 		}
-
 		return false;
 	}
 
@@ -1019,14 +1013,12 @@ public class CCharMob : CCharBase
 			nearestPoint = m_CachedNavMeshHit.position;
 			return true;
 		}
-
 		if (UnityEngine.AI.NavMesh.SamplePosition(base.Pos, out m_CachedNavMeshHit, NavMeshMaxDistance,
 			    UnityEngine.AI.NavMesh.AllAreas))
 		{
 			nearestPoint = m_CachedNavMeshHit.position;
 			return true;
 		}
-
 		nearestPoint = Vector3.zero;
 		return false;
 	}
@@ -1056,17 +1048,114 @@ public class CCharMob : CCharBase
 		ResetAI();
 		return true;
 	}
-	
+
 	public void CheckRecoveryComplete()
     {
         if (!m_bRecoveryActive)
             return;
-            
+
         if (m_ltPath.Count == 0 || Vector3.Distance(base.Pos, m_v3PurposePoint) < 0.06f)
         {
             m_bRecoveryActive = false;
             m_bIsOffNavMesh = false;
             m_bHasPurposePoint = false;
         }
+	}
+
+	private void ComputeEffectiveDrops()
+	{
+		if (m_curMobInfoLevel == null)
+			return;
+		CMobInfo mobInfo = m_GameData.m_MobCenter.Get(base.ID);
+		if (mobInfo == null)
+			return;
+		int maxLevel = mobInfo.GetMaxLevel();
+		if (maxLevel <= 1)
+		{
+			m_effectiveDropGroup = m_curMobInfoLevel.nDropGroup;
+			m_effectiveDropCount = (m_curMobInfoLevel.arrDropCount != null && m_curMobInfoLevel.arrDropCount.Length > 0)
+			? m_curMobInfoLevel.arrDropCount[0]
+			: 1;
+			return;
+		}
+		CMobInfoLevel baseMobInfo = m_GameData.GetMobInfo(base.ID, 1);
+		if (baseMobInfo == null)
+			baseMobInfo = m_curMobInfoLevel; // fallback
+		int baseDropGroup = baseMobInfo.nDropGroup;
+		int baseDropCount = (baseMobInfo.arrDropCount != null && baseMobInfo.arrDropCount.Length > 0)
+		? baseMobInfo.arrDropCount[0]
+		: 1;
+		float normalized = (float)(base.Level - 1) / (maxLevel - 1);
+		int quarter = Mathf.Clamp((int)(normalized * 4), 0, 3);
+		bool isBoss = IsBoss();
+		int newDropGroup = baseDropGroup;
+		int newDropCount = baseDropCount;
+		if (isBoss)
+		{
+			if (quarter >= 2)
+			{
+				int candidate = (baseDropGroup / 10) * 10 + 2;
+				if (m_GameData.GetDropGrouInfo(candidate) != null)
+					newDropGroup = candidate;
+			}
+			newDropCount = baseDropCount;
+		}
+		else
+		{
+			switch (quarter)
+			{
+				case 0:
+					newDropGroup = baseDropGroup;
+					newDropCount = baseDropCount;
+					break;
+				case 1:
+					newDropGroup = baseDropGroup;
+					newDropCount = baseDropCount * 2;
+					break;
+				case 2:
+				{
+					int candidate = (baseDropGroup / 10) * 10 + 2;
+					if (m_GameData.GetDropGrouInfo(candidate) != null)
+					{
+						newDropGroup = candidate;
+						newDropCount = baseDropCount;
+					}
+					else
+					{
+						newDropGroup = baseDropGroup;
+						newDropCount = baseDropCount * 3;
+					}
+					break;
+				}
+				case 3:
+				{
+					int candidate = (baseDropGroup / 10) * 10 + 2;
+					if (m_GameData.GetDropGrouInfo(candidate) != null)
+					{
+						newDropGroup = candidate;
+						newDropCount = baseDropCount * 2;
+					}
+					else
+					{
+						newDropGroup = baseDropGroup;
+						newDropCount = baseDropCount * 4;
+					}
+					break;
+				}
+			}
+		}
+		m_effectiveDropGroup = newDropGroup;
+		m_effectiveDropCount = newDropCount;
+	}
+
+	public void ApplyMissionModifications()
+	{
+		float speed = m_Property.GetValue(kProEnum.MoveSpeed);
+		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.15f);
+		m_fHPMax *= 0.85f;
+		if (m_fHP > m_fHPMax) m_fHP = m_fHPMax;
+		m_fHardinessMax *= 0.85f;
+		if (m_fHardinessCur > m_fHardinessMax)
+			m_fHardinessCur = m_fHardinessMax;
 	}
 }

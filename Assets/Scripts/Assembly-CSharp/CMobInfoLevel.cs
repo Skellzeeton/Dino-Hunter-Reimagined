@@ -43,6 +43,8 @@ public class CMobInfoLevel
     
     public int nMaxBoost = 45;
 
+    public bool nBypassAutoAI = false;
+
     public List<SkillComboRateInfo> ltSkill;
 
     public List<int> ltSkillPassive;
@@ -75,8 +77,6 @@ public class CMobInfoLevel
 
     public int[] arrDropCount;
 
-    public int[] arrDropCountRate;
-
     public List<CHardinessInfo> ltHardinessInfo;
 
     public CMobInfoLevel()
@@ -84,32 +84,13 @@ public class CMobInfoLevel
         ltSkill = new List<SkillComboRateInfo>();
         ltSkillPassive = new List<int>();
         ltHardinessInfo = new List<CHardinessInfo>();
-        arrDropCount = new int[3] { -1, -1, -1 };
-        arrDropCountRate = new int[3];
+        arrDropCount = new int[1] { -1 };
     }
 
     public int GetDropItemCount()
     {
-        float[] array = new float[arrDropCount.Length];
-        for (int i = 0; i < arrDropCount.Length && i < arrDropCountRate.Length; i++)
-        {
-            if (i == 0)
-            {
-                array[i] = arrDropCountRate[i];
-            }
-            else
-            {
-                array[i] = array[i - 1] + (float)arrDropCountRate[i];
-            }
-        }
-        float num = UnityEngine.Random.Range(0f, array[arrDropCountRate.Length - 1]);
-        for (int j = 0; j < arrDropCount.Length; j++)
-        {
-            if (num <= array[j])
-            {
-                return arrDropCount[j];
-            }
-        }
+        if (arrDropCount != null && arrDropCount.Length > 0)
+            return arrDropCount[0];
         return -1;
     }
 }

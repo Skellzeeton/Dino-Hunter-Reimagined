@@ -26,6 +26,10 @@ public class Scene_Main : MonoBehaviour
 	private bool music_open_now = true;
 
 	public TUILabel label_text;
+
+	public PopupGlobal popup_warning;
+
+	private bool m_bShowingSaveError = false;
 	
 	private bool connect_success;
 
@@ -58,14 +62,19 @@ public class Scene_Main : MonoBehaviour
 				CUISound.GetInstance().Stop("BGM_theme");
 			}
 		}
+		if (!string.IsNullOrEmpty(iGameApp.PendingPopupMessage))
+		{
+			m_bShowingSaveError = true;
+			if (popup_warning != null)
+				popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
+		}
 	}
-
 
 	private void Update()
 	{
-		if (Input2.touchCount > 0 && !didTheThing)
+		if (Input2.touchCount > 0 && !didTheThing && !m_bShowingSaveError)
 		{
-				iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
+			iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
 			bool isNewPlayer = (dataCenter != null &&
 			dataCenter.nTutorialVillageState == (int)NewHelpState.None &&
 			!dataCenter.IsLevelPassed(1001));
@@ -187,6 +196,20 @@ public class Scene_Main : MonoBehaviour
 			if (sfx_open_now)
 			{
 				CUISound.GetInstance().Play("UI_Button");
+			}
+			if (m_bShowingSaveError)
+			{
+				m_bShowingSaveError = false;
+				string msg = iGameApp.PendingPopupMessage;
+				iGameApp.PendingPopupMessage = "";
+				if (popup_warning != null)
+					popup_warning.Hide();
+				iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
+				if (dataCenter != null)
+				{
+					dataCenter.Load();
+				}
+				return;
 			}
 			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseWarnning);
 			if (server_connect_fail == ServerConnectFailType.NeedNet)

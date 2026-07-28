@@ -110,20 +110,20 @@ public class iMobCenter : iBaseCenter
 		newLevel.nRareType = baseLevel.nRareType;
 		newLevel.nType = baseLevel.nType;
 		newLevel.nModel = baseLevel.nModel;
-		newLevel.sName = baseLevel.sName;
-		newLevel.sDesc = baseLevel.sDesc;
 		newLevel.sIcon = baseLevel.sIcon;
 		newLevel.fMeleeRange = baseLevel.fMeleeRange;
 		newLevel.ltSkill = baseLevel.ltSkill;
 		newLevel.ltSkillPassive = baseLevel.ltSkillPassive;
 		newLevel.nAIManagerID = baseLevel.nAIManagerID;
+		newLevel.nBypassAutoAI = baseLevel.nBypassAutoAI;
 		newLevel.fMoveSpeedRate = baseLevel.fMoveSpeedRate;
 		newLevel.fRushSpeedRate = baseLevel.fRushSpeedRate;
 		newLevel.isWaitRot = baseLevel.isWaitRot;
 		newLevel.nGoldRate = baseLevel.nGoldRate;
+		newLevel.nCrystal = baseLevel.nCrystal;
+		newLevel.nCrystalRate = baseLevel.nCrystalRate;
 		newLevel.nDropGroup = baseLevel.nDropGroup;
 		newLevel.arrDropCount = baseLevel.arrDropCount;
-		newLevel.arrDropCountRate = baseLevel.arrDropCountRate;
 		newLevel.ltHardinessInfo = baseLevel.ltHardinessInfo;
 		newLevel.bIgnoreKnock = baseLevel.bIgnoreKnock;
 		newLevel.nMinBoost = mobInfo.GetMinBoost();
@@ -251,16 +251,16 @@ public class iMobCenter : iBaseCenter
 				mobInfo.SetMaxBoost(int.Parse(value));
 				mobInfoLevel.nMaxBoost = int.Parse(value);
 			}
+			if (MyUtils.GetAttribute(childNode, "bypassautoai", ref value))
+			{
+				mobInfoLevel.nBypassAutoAI = bool.Parse(value);
+			}
 			if (MyUtils.GetAttribute(childNode, "rare", ref value))
 				mobInfoLevel.nRareType = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "type", ref value))
 				mobInfoLevel.nType = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "model", ref value))
 				mobInfoLevel.nModel = int.Parse(value);
-			if (MyUtils.GetAttribute(childNode, "name", ref value))
-				mobInfoLevel.sName = value;
-			if (MyUtils.GetAttribute(childNode, "desc", ref value))
-				mobInfoLevel.sDesc = value;
 			if (MyUtils.GetAttribute(childNode, "icon", ref value))
 				mobInfoLevel.sIcon = value;
 			if (MyUtils.GetAttribute(childNode, "life", ref value))
@@ -342,14 +342,6 @@ public class iMobCenter : iBaseCenter
 				for (int l = 0; l < array.Length && l < mobInfoLevel.arrDropCount.Length; l++)
 				{
 					mobInfoLevel.arrDropCount[l] = int.Parse(array[l]);
-				}
-			}
-			if (MyUtils.GetAttribute(childNode, "dropcountrate", ref value))
-			{
-				string[] array = value.Split(',');
-				for (int m = 0; m < array.Length && m < mobInfoLevel.arrDropCountRate.Length; m++)
-				{
-					mobInfoLevel.arrDropCountRate[m] = int.Parse(array[m]);
 				}
 			}
 			mobInfoLevel.ltHardinessInfo.Clear();
