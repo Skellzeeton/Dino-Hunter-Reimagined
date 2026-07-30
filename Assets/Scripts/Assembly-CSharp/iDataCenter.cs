@@ -503,7 +503,7 @@ public class iDataCenter
 		m_bFirstTimePlay = false;
 		m_fSceneProccess = 0f;
 		m_bTutorial = false;
-		m_nTutorialVillageState = 25;
+		m_nTutorialVillageState = 27;
 		m_bEvaluate = false;
 		m_nEnterAppCount = 0;
 		m_ltUnlockSign.Clear();

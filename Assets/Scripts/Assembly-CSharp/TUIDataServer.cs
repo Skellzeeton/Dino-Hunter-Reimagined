@@ -196,11 +196,15 @@ public class TUIDataServer
 				{
 					newHelpState = NewHelpState.Help18_ClickMap;
 				}
-				else if (newHelpState >= NewHelpState.Help22_ClickOpenWeaponUpgrade && newHelpState <= NewHelpState.Help24_ClickWeaponUpgrade)
+				else if (newHelpState >= NewHelpState.Help22_ClickOpenWeaponUpgrade && newHelpState <= NewHelpState.Help23_ClickWeaponUpgrade)
 				{
 					newHelpState = NewHelpState.Help21_ClickEnterForge;
 				}
-				else if (newHelpState == NewHelpState.Help25_ClickBackToVillage)
+				else if (newHelpState == NewHelpState.Help24_ClickBackToVillage)
+				{
+					newHelpState = NewHelpState.Help25_ClickMap;
+				}
+				else if (newHelpState == NewHelpState.Help27_ClickPlayLevel04)
 				{
 					newHelpState = NewHelpState.Help_Over;
 				}
@@ -503,7 +507,7 @@ public class TUIDataServer
 				TNetManager.GetInstance().DisConnect();
 			}
 			m_GameState.CurScene = kGameSceneEnum.Home;
-			if (!dataCenter7.isEvaluate && dataCenter7.nTutorialVillageState == 25)
+			if (!dataCenter7.isEvaluate && dataCenter7.nTutorialVillageState == 27)
 			{
 				dataCenter7.EnterAppCount++;
 				if (dataCenter7.EnterAppCount >= 3)
@@ -1158,7 +1162,7 @@ public class TUIDataServer
 				iDataCenter dataCenter13 = gameData15.GetDataCenter();
 				if (dataCenter13 != null)
 				{
-					dataCenter13.nTutorialVillageState = 25;
+					dataCenter13.nTutorialVillageState = 27;
 					iGameApp.GetInstance().SaveData(true);
 					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMainMenu(m_event.GetEventName(), true));
 				}
@@ -2183,7 +2187,7 @@ public class TUIDataServer
 				iDataCenter dataCenter15 = gameData15.GetDataCenter();
 				if (dataCenter15 != null)
 				{
-					dataCenter15.nTutorialVillageState = 25;
+					dataCenter15.nTutorialVillageState = 27;
 					iGameApp.GetInstance().SaveData(true);
 					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneEquip(m_event.GetEventName(), true));
 				}
@@ -3083,7 +3087,7 @@ public class TUIDataServer
 				iDataCenter dataCenter8 = gameData8.GetDataCenter();
 				if (dataCenter8 != null)
 				{
-					dataCenter8.nTutorialVillageState = 25;
+					dataCenter8.nTutorialVillageState = 27;
 					iGameApp.GetInstance().SaveData(true);
 					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneSkill(m_event.GetEventName(), true));
 				}
@@ -3677,7 +3681,7 @@ public class TUIDataServer
 				iDataCenter dataCenter4 = gameData4.GetDataCenter();
 				if (dataCenter4 != null)
 				{
-					dataCenter4.nTutorialVillageState = 25;
+					dataCenter4.nTutorialVillageState = 27;
 					iGameApp.GetInstance().SaveData(true);
 					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneForge(m_event.GetEventName(), true));
 				}
@@ -4420,6 +4424,9 @@ public class TUIDataServer
 				case NewHelpState.Help19_ClickLevel03:
 					num4 = 1003;
 					break;
+				case NewHelpState.Help26_ClickLevel04:
+					num4 = 1004;
+					break;
 				default:
 					if (gameState3.m_nMaterialIDFromEquipTemp > 0)
 					{
@@ -4752,7 +4759,7 @@ public class TUIDataServer
 				iDataCenter dataCenter4 = gameData4.GetDataCenter();
 				if (dataCenter4 != null)
 				{
-					dataCenter4.nTutorialVillageState = 25;
+					dataCenter4.nTutorialVillageState = 26;
 					iGameApp.GetInstance().SaveData(true);
 					global::EventCenter.EventCenter.Instance.Publish(this,
 						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));

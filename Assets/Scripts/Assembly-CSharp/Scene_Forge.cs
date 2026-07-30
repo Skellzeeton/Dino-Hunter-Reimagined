@@ -564,7 +564,7 @@ public class Scene_Forge : MonoBehaviour
 			popup_weapon.ShowGoEquipAfterBuy(sfx_open_now);
 			popup_weapon.PlayPurchaseAnimationOnCurrentItem();
 			NewHelpState newHelpState = TUIMappingInfo.Instance().GetNewHelpState();
-			if (newHelpState == NewHelpState.Help03_ClickWeaponMake || newHelpState == NewHelpState.Help24_ClickWeaponUpgrade)
+			if (newHelpState == NewHelpState.Help03_ClickWeaponMake || newHelpState == NewHelpState.Help23_ClickWeaponUpgrade)
 			{
 				TUIMappingInfo.Instance().NextNewHelpState();
 				NewHelpState newHelpState2 = TUIMappingInfo.Instance().GetNewHelpState();
@@ -827,34 +827,7 @@ public class Scene_Forge : MonoBehaviour
 			popup_new_help.SetHelpState(newHelpState, 0f);
 			break;
 		}
-		case NewHelpState.Help23_ClickGoodsSupplement:
-		{
-			if (popup_weapon.m_curWeaponAttributeInfo != null)
-			{
-				TUIWeaponLevelInfo next = popup_weapon.m_curWeaponAttributeInfo.GetNext();
-				if (next != null && next.m_ltGoodsNeed[0] != null)
-				{
-					int nID2 = next.m_ltGoodsNeed[0].m_nID;
-					TUIMappingInfo.CTUIMaterialInfo material = TUIMappingInfo.Instance().GetMaterial(nID2);
-					int lparam2 = 0;
-					if (material != null)
-					{
-						lparam2 = (int)material.m_nQuality;
-					}
-					int num = next.m_ltGoodsNeed[0].m_nNeedCount - TUIMappingInfo.Instance().GetMaterialCount(nID2);
-					if (num < 0)
-					{
-						num = 0;
-					}
-					global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_WeaponGoodsBuy, nID2, lparam2, num));
-				}
-			}
-			TUIMappingInfo.Instance().NextNewHelpState();
-			NewHelpState newHelpState2 = TUIMappingInfo.Instance().GetNewHelpState();
-			popup_new_help.SetHelpState(newHelpState2, 0f);
-			break;
-		}
-		case NewHelpState.Help24_ClickWeaponUpgrade:
+		case NewHelpState.Help23_ClickWeaponUpgrade:
 			if (popup_weapon.m_curWeaponAttributeInfo != null)
 			{
 				int nID = popup_weapon.m_curWeaponAttributeInfo.m_nID;
@@ -864,7 +837,7 @@ public class Scene_Forge : MonoBehaviour
 			popup_weapon.CloseWeaponUpdate();
 			popup_new_help.Hide();
 			break;
-		case NewHelpState.Help25_ClickBackToVillage:
+		case NewHelpState.Help24_ClickBackToVillage:
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_Back));
 			popup_weapon.HideGoEquip();
 			TUIMappingInfo.Instance().NextNewHelpState();

@@ -239,7 +239,6 @@ public class ScrollList_WeaponItem : MonoBehaviour
 			if (anim != null && anim.gameObject.activeInHierarchy)
 			{
 				anim.Play();
-				Debug.Log("Playing purchase animation on Img_bg");
 			}
 			else
 			{

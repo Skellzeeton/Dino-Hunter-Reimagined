@@ -1,22 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1747463653725619}
-  m_IsPrefabParent: 1
 --- !u!1 &1747463653725619
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4616701212313256}
   - component: {fileID: 114871976505846263}
@@ -29,22 +19,25 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4616701212313256
 Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747463653725619}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!114 &114871976505846263
 MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747463653725619}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -396,16 +389,16 @@ MonoBehaviour:
   - name: level-complete
     outer:
       serializedVersion: 2
-      x: 0
-      y: 677
-      width: 586
-      height: 90
+      x: 188
+      y: 590
+      width: 310
+      height: 91
     inner:
       serializedVersion: 2
-      x: 0
-      y: 677
-      width: 586
-      height: 90
+      x: 188
+      y: 590
+      width: 310
+      height: 91
     paddingLeft: 0
     paddingRight: 0
     paddingTop: 0
@@ -651,16 +644,16 @@ MonoBehaviour:
   - name: renwushibai
     outer:
       serializedVersion: 2
-      x: 0
-      y: 688
-      width: 522
-      height: 72
+      x: 73
+      y: 685
+      width: 510
+      height: 76
     inner:
       serializedVersion: 2
-      x: 0
-      y: 588
-      width: 522
-      height: 72
+      x: 73
+      y: 685
+      width: 510
+      height: 76
     paddingLeft: 0
     paddingRight: 0
     paddingTop: 0
@@ -1447,34 +1440,17 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
-  - name: level-complete-01
-    outer:
-      serializedVersion: 2
-      x: 681
-      y: 0
-      width: 343
-      height: 102
-    inner:
-      serializedVersion: 2
-      x: 681
-      y: 0
-      width: 343
-      height: 102
-    paddingLeft: 0
-    paddingRight: 0
-    paddingTop: 0
-    paddingBottom: 0
   - name: anniu
     outer:
       serializedVersion: 2
       x: 616
-      y: 111
+      y: 12
       width: 204
       height: 76
     inner:
       serializedVersion: 2
       x: 616
-      y: 111
+      y: 12
       width: 204
       height: 76
     paddingLeft: 0
@@ -1484,14 +1460,14 @@ MonoBehaviour:
   - name: anniuguagn
     outer:
       serializedVersion: 2
-      x: 616
-      y: 111
+      x: 820
+      y: 12
       width: 204
       height: 76
     inner:
       serializedVersion: 2
-      x: 616
-      y: 111
+      x: 820
+      y: 12
       width: 204
       height: 76
     paddingLeft: 0

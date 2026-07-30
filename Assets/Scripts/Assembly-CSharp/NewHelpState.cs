@@ -23,8 +23,10 @@ public enum NewHelpState
 	Help20_ClickPlayLevel03,
 	Help21_ClickEnterForge,
 	Help22_ClickOpenWeaponUpgrade,
-	Help23_ClickGoodsSupplement,
-	Help24_ClickWeaponUpgrade,
-	Help25_ClickBackToVillage,
+	Help23_ClickWeaponUpgrade,
+	Help24_ClickBackToVillage,
+	Help25_ClickMap,
+	Help26_ClickLevel04,
+	Help27_ClickPlayLevel04,
 	Help_Over
 }

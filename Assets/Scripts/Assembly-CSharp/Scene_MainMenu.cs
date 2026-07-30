@@ -1454,6 +1454,10 @@ public class Scene_MainMenu : MonoBehaviour
 			TUIMappingInfo.Instance().NextNewHelpState();
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_EnterForge));
 			break;
+			case NewHelpState.Help25_ClickMap:
+				TUIMappingInfo.Instance().NextNewHelpState();
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_EnterMap));
+				break;
 		}
 	}
 

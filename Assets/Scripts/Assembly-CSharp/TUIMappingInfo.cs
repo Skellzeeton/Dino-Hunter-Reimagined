@@ -791,9 +791,8 @@ public class TUIMappingInfo
 		case NewHelpState.Help06_ClickWeaponEquip:
 		case NewHelpState.Help13_ClickSkillBuy:
 		case NewHelpState.Help16_ClickSkillEquip:
-		case NewHelpState.Help23_ClickGoodsSupplement:
-		case NewHelpState.Help24_ClickWeaponUpgrade:
-		case NewHelpState.Help25_ClickBackToVillage:
+		case NewHelpState.Help23_ClickWeaponUpgrade:
+		case NewHelpState.Help24_ClickBackToVillage:
 			if (iDataCenter2 != null)
 			{
 				iDataCenter2.nTutorialVillageState = (int)(++m_state);

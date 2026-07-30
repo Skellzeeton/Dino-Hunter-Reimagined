@@ -42,6 +42,8 @@ public class Scene_Map : MonoBehaviour
 
 	public Transform level03_point;
 
+	public Transform level04_point;
+
 	private void Awake()
 	{
 		CGameNetManager.GetInstance().connected = false;
@@ -65,6 +67,10 @@ public class Scene_Map : MonoBehaviour
 		else if (TUIMappingInfo.Instance().GetNewHelpState() == NewHelpState.Help19_ClickLevel03)
 		{
 			DoNewHelp(level03_point);
+		}
+		else if (TUIMappingInfo.Instance().GetNewHelpState() == NewHelpState.Help26_ClickLevel04)
+		{
+			DoNewHelp(level04_point);
 		}
 	}
 
@@ -522,8 +528,7 @@ public class Scene_Map : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickNewHelp(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickNewHelp(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != 3)
 		{
 			return;
@@ -532,56 +537,79 @@ public class Scene_Map : MonoBehaviour
 		{
 			CUISound.GetInstance().Play("UI_Button");
 		}
-		switch (TUIMappingInfo.Instance().GetNewHelpState())
-		{
-		case NewHelpState.Help09_ClickLevel02:
-		{
-			int wparam2 = level_map.FindSecondaryLevelInMainLevel(1002);
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, wparam2));
-			TUIMappingInfo.Instance().NextNewHelpState();
-			NewHelpState newHelpState = TUIMappingInfo.Instance().GetNewHelpState();
-			popup_new_help.SetHelpState(newHelpState, 0f);
-			break;
-		}
-		case NewHelpState.Help10_ClickPlayLevel02:
-		{
-			PopupLevel_Item choose2 = popup_level_map.GetChoose();
-			if (choose2 == null)
+		switch (TUIMappingInfo.Instance().GetNewHelpState()) {
+			case NewHelpState.Help09_ClickLevel02:
 			{
-				Debug.LogWarning("error!");
+				int wparam2 = level_map.FindSecondaryLevelInMainLevel(1002);
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, wparam2));
+				TUIMappingInfo.Instance().NextNewHelpState();
+				NewHelpState newHelpState = TUIMappingInfo.Instance().GetNewHelpState();
+				popup_new_help.SetHelpState(newHelpState, 0f);
 				break;
 			}
-			int iD2 = choose2.GetID();
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD2));
-			TUIMappingInfo.Instance().NextNewHelpState();
-			popup_new_help.Hide();
-			popup_level_map.Hide();
-			break;
-		}
-		case NewHelpState.Help19_ClickLevel03:
-		{
-			int wparam3 = level_map.FindSecondaryLevelInMainLevel(1003);
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, wparam3));
-			TUIMappingInfo.Instance().NextNewHelpState();
-			NewHelpState newHelpState2 = TUIMappingInfo.Instance().GetNewHelpState();
-			popup_new_help.SetHelpState(newHelpState2, 0f);
-			break;
-		}
-		case NewHelpState.Help20_ClickPlayLevel03:
-		{
-			PopupLevel_Item choose = popup_level_map.GetChoose();
-			if (choose == null)
+			case NewHelpState.Help10_ClickPlayLevel02:
 			{
-				Debug.LogWarning("error!");
+				PopupLevel_Item choose2 = popup_level_map.GetChoose();
+				if (choose2 == null)
+				{
+					Debug.LogWarning("error!");
+					break;
+				}
+				int iD2 = choose2.GetID();
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD2));
+				TUIMappingInfo.Instance().NextNewHelpState();
+				popup_new_help.Hide();
+				popup_level_map.Hide();
 				break;
 			}
-			int iD = choose.GetID();
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD));
-			TUIMappingInfo.Instance().NextNewHelpState();
-			popup_new_help.Hide();
-			popup_level_map.Hide();
-			break;
-		}
+			case NewHelpState.Help19_ClickLevel03:
+			{
+				int wparam3 = level_map.FindSecondaryLevelInMainLevel(1003);
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, wparam3));
+				TUIMappingInfo.Instance().NextNewHelpState();
+				NewHelpState newHelpState2 = TUIMappingInfo.Instance().GetNewHelpState();
+				popup_new_help.SetHelpState(newHelpState2, 0f);
+				break;
+			}
+			case NewHelpState.Help20_ClickPlayLevel03:
+			{
+				PopupLevel_Item choose = popup_level_map.GetChoose();
+				if (choose == null)
+				{
+					Debug.LogWarning("error!");
+					break;
+				}
+				int iD = choose.GetID();
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD));
+				TUIMappingInfo.Instance().NextNewHelpState();
+				popup_new_help.Hide();
+				popup_level_map.Hide();
+				break;
+			}
+			case NewHelpState.Help26_ClickLevel04:
+			{
+				int wparam3 = level_map.FindSecondaryLevelInMainLevel(1004);
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, wparam3));
+				TUIMappingInfo.Instance().NextNewHelpState();
+				NewHelpState newHelpState2 = TUIMappingInfo.Instance().GetNewHelpState();
+				popup_new_help.SetHelpState(newHelpState2, 0f);
+				break;
+			}
+			case NewHelpState.Help27_ClickPlayLevel04:
+			{
+				PopupLevel_Item choose = popup_level_map.GetChoose();
+				if (choose == null)
+				{
+					Debug.LogWarning("error!");
+					break;
+				}
+				int iD = choose.GetID();
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD));
+				TUIMappingInfo.Instance().NextNewHelpState();
+				popup_new_help.Hide();
+				popup_level_map.Hide();
+				break;
+			}
 		}
 	}
 
