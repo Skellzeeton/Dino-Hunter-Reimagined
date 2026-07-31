@@ -20,6 +20,10 @@ public class TUIWeaponLevelInfo
 
 	public int m_nCapcity;
 
+	public float m_fCritChance;
+
+	public float m_fCritDamage;
+
 	public int m_nDefence;
 
 	public TUIWeaponLevelInfo()

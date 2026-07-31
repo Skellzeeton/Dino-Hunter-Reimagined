@@ -34,6 +34,10 @@ public class TUIBlackMarketItem
 
 	public int m_nCapcity;
 
+	public float m_fCritChance;
+
+	public float m_fCritDamage;
+
 	public bool IsArmor()
 	{
 		return m_WeaponType == WeaponType.Armor_Body || m_WeaponType == WeaponType.Armor_Bracelet || m_WeaponType == WeaponType.Armor_Head || m_WeaponType == WeaponType.Armor_Leg;

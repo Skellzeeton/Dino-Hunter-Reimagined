@@ -329,7 +329,7 @@ public class PopupWeapon : MonoBehaviour
 			{
 				damage_max = tUIWeaponLevelInfo3.m_nDamage;
 			}
-			label_info_weapon.SetWeaponInfo(tUIWeaponLevelInfo.m_nDamage, tUIWeaponLevelInfo.m_fShootRate, tUIWeaponLevelInfo.m_fBlastRadius, tUIWeaponLevelInfo.m_nKnockBack, tUIWeaponLevelInfo.m_nCapcity, damage_max, weaponattributeinfo.m_bUnlock, weaponattributeinfo.m_sUnlockStr);
+			label_info_weapon.SetWeaponInfo(tUIWeaponLevelInfo.m_nDamage, tUIWeaponLevelInfo.m_fShootRate, tUIWeaponLevelInfo.m_fBlastRadius, tUIWeaponLevelInfo.m_nKnockBack, tUIWeaponLevelInfo.m_nCapcity,  damage_max, tUIWeaponLevelInfo.m_fCritChance, tUIWeaponLevelInfo.m_fCritDamage, weaponattributeinfo.m_bUnlock, weaponattributeinfo.m_sUnlockStr);
 		}
 		if (!weaponattributeinfo.m_bUnlock)
 		{

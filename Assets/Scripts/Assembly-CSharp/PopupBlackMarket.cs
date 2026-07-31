@@ -206,7 +206,7 @@ public class PopupBlackMarket : MonoBehaviour
 		{
 			if (blackmarkitem.IsWeapon())
 			{
-				labelinfo.SetWeaponInfo((int)blackmarkitem.m_fDamage, blackmarkitem.m_fShootSpeed, blackmarkitem.m_nBlastRadius, blackmarkitem.m_nKnockBack, blackmarkitem.m_nCapcity, (int)blackmarkitem.m_fDamageMax, true, string.Empty);
+				labelinfo.SetWeaponInfo((float)blackmarkitem.m_fDamage, blackmarkitem.m_fShootSpeed, blackmarkitem.m_nBlastRadius, blackmarkitem.m_nKnockBack, blackmarkitem.m_nCapcity, (float)blackmarkitem.m_fDamageMax, blackmarkitem.m_fCritChance, blackmarkitem.m_fCritDamage, true, string.Empty);
 			}
 			else if (blackmarkitem.IsArmor() || blackmarkitem.IsAccessory())
 			{
