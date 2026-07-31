@@ -10,7 +10,7 @@ public class TUIWeaponLevelInfo
 
 	public string m_sDesc = string.Empty;
 
-	public int m_nDamage;
+	public float m_nDamage;
 
 	public float m_fShootRate;
 

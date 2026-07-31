@@ -323,7 +323,7 @@ public class PopupWeapon : MonoBehaviour
 		}
 		else if (weaponattributeinfo.IsWeapon())
 		{
-			int damage_max = 0;
+			float damage_max = 0;
 			TUIWeaponLevelInfo tUIWeaponLevelInfo3 = weaponattributeinfo.Get(weaponattributeinfo.m_nLevelMax);
 			if (tUIWeaponLevelInfo3 != null)
 			{

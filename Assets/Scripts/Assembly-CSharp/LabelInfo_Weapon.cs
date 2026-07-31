@@ -3,38 +3,23 @@ using UnityEngine;
 public class LabelInfo_Weapon : MonoBehaviour
 {
 	public TUILabel label_damage;
-
 	public TUILabel label_damage_value;
-
 	public TUILabel label_fire_rate;
-
 	public TUILabel label_fire_rate_value;
-
 	public TUILabel label_blast_radius;
-
 	public TUILabel label_blast_radius_value;
-
 	public TUILabel label_knockback;
-
 	public TUILabel label_knockback_value;
-
 	public TUILabel label_ammo;
-
 	public TUILabel label_ammo_value;
-
 	public TUILabel label_introduce;
-
 	public TUILabel label_introduce_unlock;
-
 	public TUILabel label_max_value;
-
 	public TUILabel label_unlock_text;
-
 	public TUILabel label_def;
-
 	public TUILabel label_def_value;
 
-	public void SetWeaponInfo(int m_damage, float m_fire_rate, int m_blast_radius, int m_knockback, int m_ammo, int m_damage_max, bool m_unlock, string m_unlock_text)
+	public void SetWeaponInfo(float m_damage, float m_fire_rate, int m_blast_radius, int m_knockback, int m_ammo, float m_damage_max, bool m_unlock, string m_unlock_text)
 	{
 		SetNull();
 		if (!m_unlock)
@@ -56,21 +41,21 @@ public class LabelInfo_Weapon : MonoBehaviour
 			label_ammo_value.gameObject.SetActiveRecursive(true);
 			label_max_value.gameObject.SetActiveRecursive(true);
 		}
-		if (m_damage == 0)
+		if (m_damage == 0f)
 		{
 			label_damage_value.Text = "--";
 		}
 		else
 		{
-			label_damage_value.Text = m_damage.ToString();
+			label_damage_value.Text = m_damage.ToString("0.##");  // two decimals, trim trailing zeros
 		}
-		if (m_damage_max == 0)
+		if (m_damage_max == 0f)
 		{
 			label_max_value.Text = "--";
 		}
 		else
 		{
-			label_max_value.Text = "(Max " + m_damage_max + ")";
+			label_max_value.Text = "(Max " + m_damage_max.ToString("0.##") + ")";
 		}
 		if (m_fire_rate == 0f)
 		{
@@ -106,7 +91,7 @@ public class LabelInfo_Weapon : MonoBehaviour
 		}
 	}
 
-	public void SetWeaponInfo(float m_fire_rate, int m_blast_radius, int m_knockback, int m_ammo, int m_damage_max, bool m_unlock, string m_unlock_text)
+	public void SetWeaponInfo(float m_fire_rate, int m_blast_radius, int m_knockback, int m_ammo, float m_damage_max, bool m_unlock, string m_unlock_text)
 	{
 		SetNull();
 		if (!m_unlock)
@@ -126,13 +111,13 @@ public class LabelInfo_Weapon : MonoBehaviour
 			label_ammo_value.gameObject.SetActiveRecursive(true);
 			label_max_value.gameObject.SetActiveRecursive(true);
 		}
-		if (m_damage_max == 0)
+		if (m_damage_max == 0f)
 		{
 			label_max_value.Text = "--";
 		}
 		else
 		{
-			label_max_value.Text = "(Max " + m_damage_max + ")";
+			label_max_value.Text = "(Max " + m_damage_max.ToString("0.##") + ")";
 		}
 		if (m_fire_rate == 0f)
 		{
@@ -202,7 +187,7 @@ public class LabelInfo_Weapon : MonoBehaviour
 		label_introduce.Text = m_introduce;
 	}
 
-	public void SetDamage(int m_damage)
+	public void SetDamage(float m_damage)
 	{
 		if (label_damage != null)
 		{
@@ -211,7 +196,7 @@ public class LabelInfo_Weapon : MonoBehaviour
 		if (label_damage_value != null)
 		{
 			label_damage_value.gameObject.SetActiveRecursive(true);
-			label_damage_value.Text = m_damage.ToString();
+			label_damage_value.Text = m_damage.ToString("0.##");
 		}
 	}
 

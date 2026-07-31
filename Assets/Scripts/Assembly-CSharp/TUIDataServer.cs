@@ -1435,7 +1435,7 @@ public class TUIDataServer
 					}
 					TUIWeaponAttribute tUIWeaponAttribute = new TUIWeaponAttribute();
 					tUIWeaponAttribute.ammo = cWeaponInfoLevel.nCapacity;
-					tUIWeaponAttribute.damage = (int)cWeaponInfoLevel.fDamage;
+					tUIWeaponAttribute.damage = (float)cWeaponInfoLevel.fDamage;
 					tUIWeaponAttribute.fire_rate = cWeaponInfoLevel.fShootSpeed;
 					if (cWeaponInfoLevel.nType == 5)
 					{
@@ -6567,7 +6567,7 @@ public class TUIDataServer
 				tUIWeaponLevelInfo.m_Price = new TUIPriceInfo(cWeaponInfoLevel2.nPurchasePrice, cWeaponInfoLevel2.isCrystalPurchase ? UnitType.Crystal : UnitType.Gold);
 				tUIWeaponLevelInfo.m_sLevelupDesc = cWeaponInfoLevel2.sLevelUpDesc;
 				tUIWeaponLevelInfo.m_sDesc = cWeaponInfoLevel2.sDesc;
-				tUIWeaponLevelInfo.m_nDamage = Mathf.FloorToInt(cWeaponInfoLevel2.fDamage);
+				tUIWeaponLevelInfo.m_nDamage = cWeaponInfoLevel2.fDamage;
 				tUIWeaponLevelInfo.m_fShootRate = cWeaponInfoLevel2.fShootSpeed;
 				tUIWeaponLevelInfo.m_fBlastRadius = ((cWeaponInfoLevel2.nType == 5) ? 20 : 0);
 				tUIWeaponLevelInfo.m_nCapcity = cWeaponInfoLevel2.nCapacity;

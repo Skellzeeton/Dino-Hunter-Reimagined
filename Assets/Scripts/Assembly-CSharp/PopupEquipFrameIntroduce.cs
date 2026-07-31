@@ -3,29 +3,17 @@ using UnityEngine;
 public class PopupEquipFrameIntroduce : MonoBehaviour
 {
 	public TUILabel label_introduce;
-
 	public TUILabel label_damage_value;
-
 	public TUILabel label_fire_rate_value;
-
 	public TUILabel label_blast_radius_value;
-
 	public TUILabel label_knockback_value;
-
 	public TUILabel label_ammo_value;
-
 	public TUILabel label_def_value;
-
 	public TUILabel label_damage;
-
 	public TUILabel label_fire_rate;
-
 	public TUILabel label_blast_radius;
-
 	public TUILabel label_knockback;
-
 	public TUILabel label_ammo;
-
 	public TUILabel label_def;
 
 	public void SetWeaponInfo(TUIPopupInfo m_popup_info)
@@ -57,7 +45,7 @@ public class PopupEquipFrameIntroduce : MonoBehaviour
 			}
 			else
 			{
-				label_damage_value.Text = weapon_attribute.damage.ToString();
+				label_damage_value.Text = weapon_attribute.damage.ToString("0.##"); // two decimals, trim trailing zeros
 			}
 		}
 		if (label_fire_rate_value != null)
