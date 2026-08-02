@@ -342,6 +342,7 @@ public class CCharBoss : CCharMob
 			if (m_BlackGear != null)
 			{
 				m_BlackGear.gameObject.active = true;
+				CUISound.GetInstance().Play("UI_Armor_activate");
 			}
 			if (m_GameScene.m_nBlackMonsterCount == 0)
 			{
@@ -358,6 +359,8 @@ public class CCharBoss : CCharMob
 		if (m_BlackGear != null)
 		{
 			m_BlackGear.gameObject.active = false;
+			CUISound.GetInstance().Play("UI_Armor_deactivate");
+			CUISound.GetInstance().Play("UI_Armor_destruction");
 		}
 		Transform bone = GetBone(2);
 		if (bone != null)

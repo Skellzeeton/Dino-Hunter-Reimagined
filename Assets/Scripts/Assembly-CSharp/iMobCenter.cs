@@ -255,6 +255,10 @@ public class iMobCenter : iBaseCenter
 			{
 				mobInfoLevel.nBypassAutoAI = bool.Parse(value);
 			}
+			if (MyUtils.GetAttribute(childNode, "hasarmor", ref value))
+			{
+				mobInfoLevel.nHasArmor = bool.Parse(value);
+			}
 			if (MyUtils.GetAttribute(childNode, "rare", ref value))
 				mobInfoLevel.nRareType = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "type", ref value))

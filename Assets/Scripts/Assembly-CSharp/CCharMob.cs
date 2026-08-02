@@ -1152,9 +1152,9 @@ public class CCharMob : CCharBase
 	{
 		float speed = m_Property.GetValue(kProEnum.MoveSpeed);
 		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.15f);
-		m_fHPMax *= 0.85f;
+		m_fHPMax *= 0.8f;
 		if (m_fHP > m_fHPMax) m_fHP = m_fHPMax;
-		m_fHardinessMax *= 0.85f;
+		m_fHardinessMax *= 0.8f;
 		if (m_fHardinessCur > m_fHardinessMax)
 			m_fHardinessCur = m_fHardinessMax;
 	}

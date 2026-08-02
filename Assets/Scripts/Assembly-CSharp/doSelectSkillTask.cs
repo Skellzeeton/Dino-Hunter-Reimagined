@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using BehaviorTree;
 using UnityEngine;
 
-public class doSelectSkillTask : Task
-{
+public class doSelectSkillTask : Task {
 	protected iGameSceneBase m_GameScene;
 
 	protected iGameLogic m_GameLogic;
@@ -12,14 +11,12 @@ public class doSelectSkillTask : Task
 
 	protected List<SkillComboUserInfo> m_ltTemp;
 
-	public doSelectSkillTask(Node node)
-		: base(node)
+	public doSelectSkillTask(Node node) : base(node)
 	{
 		m_ltTemp = new List<SkillComboUserInfo>();
 	}
 
-	public override void OnEnter(Object inputParam)
-	{
+	public override void OnEnter(Object inputParam) {
 		m_GameScene = iGameApp.GetInstance().m_GameScene;
 		if (m_GameScene != null)
 		{
@@ -33,12 +30,10 @@ public class doSelectSkillTask : Task
 		}
 	}
 
-	public override void OnExit(Object inputParam)
-	{
+	public override void OnExit(Object inputParam) {
 	}
 
-	public override kTreeRunStatus OnUpdate(Object inputParam, float deltaTime)
-	{
+	public override kTreeRunStatus OnUpdate(Object inputParam, float deltaTime) {
 		if (m_GameData == null || m_GameLogic == null)
 		{
 			return kTreeRunStatus.Failture;
@@ -64,8 +59,7 @@ public class doSelectSkillTask : Task
 			return kTreeRunStatus.Success;
 		}
 		float[] array = new float[m_ltTemp.Count];
-		for (int i = 0; i < m_ltTemp.Count; i++)
-		{
+		for (int i = 0; i < m_ltTemp.Count; i++) {
 			if (i == 0)
 			{
 				array[i] = m_ltTemp[i].m_fRate;
@@ -76,8 +70,7 @@ public class doSelectSkillTask : Task
 			}
 		}
 		float num = Random.Range(0f, array[m_ltTemp.Count - 1]);
-		for (int j = 0; j < m_ltTemp.Count; j++)
-		{
+		for (int j = 0; j < m_ltTemp.Count; j++) {
 			if (num <= array[j])
 			{
 				CSkillComboInfo skillComboInfo = m_GameData.GetSkillComboInfo(m_ltTemp[j].m_nID);
@@ -92,8 +85,7 @@ public class doSelectSkillTask : Task
 		return kTreeRunStatus.Failture;
 	}
 
-	protected void SelectValidSkill(CCharMob mob, CCharBase target, ref List<SkillComboUserInfo> ltSkill)
-	{
+	protected void SelectValidSkill(CCharMob mob, CCharBase target, ref List<SkillComboUserInfo> ltSkill) {
 		if (mob == null)
 		{
 			return;
@@ -104,8 +96,7 @@ public class doSelectSkillTask : Task
 			return;
 		}
 		List<SkillComboUserInfo> list = new List<SkillComboUserInfo>();
-		foreach (SkillComboUserInfo item in mob.GetSkillEnumerator())
-		{
+		foreach (SkillComboUserInfo item in mob.GetSkillEnumerator()) {
 			if (item.IsCoolDown())
 			{
 				CSkillComboInfo skillComboInfo = m_GameData.GetSkillComboInfo(item.m_nID);
@@ -115,8 +106,7 @@ public class doSelectSkillTask : Task
 				}
 			}
 		}
-		foreach (SkillComboUserInfo item2 in mob.GetAISkillEnumerator())
-		{
+		foreach (SkillComboUserInfo item2 in mob.GetAISkillEnumerator()) {
 			if (item2.IsCoolDown())
 			{
 				CSkillComboInfo skillComboInfo2 = m_GameData.GetSkillComboInfo(item2.m_nID);
@@ -127,9 +117,27 @@ public class doSelectSkillTask : Task
 			}
 		}
 		ltSkill.Clear();
-		foreach (SkillComboUserInfo item3 in list)
-		{
-			if (m_GameLogic.IsComboCanUse(mob, target, item3.m_nID) && m_GameData.m_SkillCenter != null && (!m_GameData.m_SkillCenter.IsContainBlackComboSkill(item3.m_nID) || (m_GameScene.m_bMutiplyGame && !(mob.CurHP / mob.MaxHP > 0.5f))))
+		foreach (SkillComboUserInfo item3 in list) {
+			if (!m_GameLogic.IsComboCanUse(mob, target, item3.m_nID) || m_GameData.m_SkillCenter == null)
+				continue;
+			bool isBlackArmorSkill = m_GameData.m_SkillCenter.IsContainBlackComboSkill(item3.m_nID);
+			if (isBlackArmorSkill)
+			{
+				bool shouldUse = false;
+				if (mobInfo.nHasArmor)
+				{
+					shouldUse = !(mob.CurHP / mob.MaxHP > 0.5f);
+				}
+				else
+				{
+					shouldUse = m_GameScene.m_bMutiplyGame && !(mob.CurHP / mob.MaxHP > 0.5f);
+				}
+				if (shouldUse)
+				{
+					ltSkill.Add(item3);
+				}
+			}
+			else
 			{
 				ltSkill.Add(item3);
 			}

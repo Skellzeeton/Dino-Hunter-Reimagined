@@ -161,17 +161,6 @@ public class CWeaponShotgun : CWeaponBase
 	protected override void OnHitMob(CCharPlayer player, CCharMob mob, Vector3 hitpos, Vector3 hitdir, string sBodyPart = "")
 	{
 		mob.SetLifeBarParam(1f);
-		CCharBoss cCharBoss = mob as CCharBoss;
-		if (cCharBoss != null && cCharBoss.isInBlack)
-		{
-			cCharBoss.AddBlackDmg(-1f);
-			base.m_GameScene.AddDamageText(1f, hitpos);
-			if (CGameNetManager.GetInstance().IsConnected() && base.m_GameScene.IsMyself(player))
-			{
-				CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(mob.UID, 1f, true);
-			}
-			return;
-		}
 		float num = player.CalcWeaponDamage(m_pWeaponLvlInfo);
 		float num2 = player.CalcCritical(m_pWeaponLvlInfo);
 		float num3 = player.CalcCriticalDmg(m_pWeaponLvlInfo);
@@ -181,11 +170,19 @@ public class CWeaponShotgun : CWeaponBase
 			num *= 1f + num3 / 100f;
 			bCritical = true;
 		}
-		float num4 = mob.CalcProtect();
-		num *= 1f - num4 / 100f;
-		if (num < 1f)
+		num *= 1f - mob.CalcProtect() / 100f;
+		if (num < 1f) num = 1f;
+		CCharBoss cCharBoss = mob as CCharBoss;
+		if (cCharBoss != null && cCharBoss.isInBlack)
 		{
-			num = 1f;
+			float blackDamage = num * 0.2f;
+			cCharBoss.AddBlackDmg(-blackDamage);
+			base.m_GameScene.AddDamageText(blackDamage, hitpos);
+			if (CGameNetManager.GetInstance().IsConnected() && base.m_GameScene.IsMyself(player))
+			{
+				CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(mob.UID, blackDamage, true);
+			}
+			return;
 		}
 		base.m_GameScene.AddMyDamage(num, mob.CurHP);
 		mob.OnHit(0f - num, m_pWeaponLvlInfo, string.Empty);
@@ -205,20 +202,13 @@ public class CWeaponShotgun : CWeaponBase
 		{
 			CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(mob.UID, m_GameLogic.m_fTotalDmg);
 		}
-		if (!mob.isDead)
-		{
-			return;
-		}
+		if (!mob.isDead) return;
 		CMobInfoLevel mobInfo = mob.GetMobInfo();
 		if (mobInfo != null)
 		{
-			int num5 = 0;
-			num5 = ((!base.m_GameScene.m_bMutiplyGame) ? mobInfo.nExp : MyUtils.formula_monsterexp(mobInfo.nExp, mob.Level));
+			int num5 = base.m_GameScene.m_bMutiplyGame ? MyUtils.formula_monsterexp(mobInfo.nExp, mob.Level) : mobInfo.nExp;
 			float value = player.Property.GetValue(kProEnum.Char_IncreaseExp);
-			if (value > 0f)
-			{
-				num5 = (int)((float)num5 * (1f + value / 100f));
-			}
+			if (value > 0f) num5 = (int)(num5 * (1f + value / 100f));
 			player.AddExp(num5);
 			base.m_GameScene.AddExpText(num5, hitinfo.v3HitPos);
 		}

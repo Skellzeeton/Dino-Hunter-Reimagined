@@ -45,6 +45,8 @@ public class CMobInfoLevel
 
     public bool nBypassAutoAI = false;
 
+    public bool nHasArmor = false;
+
     public List<SkillComboRateInfo> ltSkill;
 
     public List<int> ltSkillPassive;

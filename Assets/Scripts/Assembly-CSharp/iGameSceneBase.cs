@@ -1024,11 +1024,11 @@ public class iGameSceneBase
 			{
 				if (cWeaponBase.CurWeaponLvlInfo.nFire != -1)
 				{
-					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nFire, 10);
+					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nFire, 25);
 				}
 				if (cWeaponBase.CurWeaponLvlInfo.nHit != -1)
 				{
-					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nHit, 10);
+					PrefabManager.AddPool(cWeaponBase.CurWeaponLvlInfo.nHit, 25);
 				}
 				if (cWeaponBase.CurWeaponLvlInfo.nBullet != -1)
 				{
@@ -1062,8 +1062,10 @@ public class iGameSceneBase
 
 	private void EnforceTimeScale()
 	{
-		//if (Application.isEditor)
-			//return;
+		#if UNITY_EDITOR
+		if (Application.isEditor)
+			return;
+		#endif
 		if (m_Status == kGameStatus.Gameing)
 		{
 			if (Mathf.Abs(Time.timeScale - 1f) > 0.001f)

@@ -129,147 +129,105 @@ public class iSpawnBullet : MonoBehaviour
 
 	protected void OnHit(CCharBase actor, CCharBase target, Vector3 v3HitPos, Vector3 v3HitDir)
 	{
-        if (target == null || target.isDead || m_HitTargets.Contains(target.UID))
-        {
-            return;
-        }
-        if (actor == target)
-            return;
-        m_HitTargets.Add(target.UID);
-        CCharBoss cCharBoss = target as CCharBoss;
-		if (cCharBoss != null && cCharBoss.isInBlack)
-		{
-			cCharBoss.AddBlackDmg(-1f);
-			m_GameScene.AddDamageText(1f, v3HitPos);
-			if (CGameNetManager.GetInstance().IsConnected() && m_GameScene.IsMyself(actor))
-			{
-				CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(cCharBoss.UID, 1f, true);
-			}
+		if (target == null || target.isDead || m_HitTargets.Contains(target.UID))
 			return;
-		}
-		int[] array = new int[3];
-		int[] array2 = new int[3];
-		int[] array3 = new int[3];
-		float num = 0f;
-		if (m_SpawnFrom == kSpawnFrom.FromSkill)
+		if (actor == target)
+			return;
+		m_HitTargets.Add(target.UID);
+		float damage = 0f;
+		bool isWeaponLocal = false;
+		bool bCritical = false;
+		if (m_SpawnFrom == kSpawnFrom.FromWeapon)
 		{
-			if (m_pSkillLvlInfo == null)
+			CCharPlayer player = actor as CCharPlayer;
+			if (player != null && m_GameScene.IsMyself(actor))
 			{
-				return;
-			}
-			for (int i = 0; i < 3; i++)
-			{
-				array[i] = m_pSkillLvlInfo.arrFunc[i];
-				array2[i] = m_pSkillLvlInfo.arrValueX[i];
-				array3[i] = m_pSkillLvlInfo.arrValueY[i];
-			}
-			switch (m_pSkillLvlInfo.nTargetLimit)
-			{
-			case 2:
-				if (actor.IsAlly(target))
+				damage = player.CalcWeaponDamage(m_pWeaponLvlInfo);
+				float critChance = player.CalcCritical(m_pWeaponLvlInfo);
+				float critBonus = player.CalcCriticalDmg(m_pWeaponLvlInfo);
+				if (critChance > Random.Range(1f, 100f))
 				{
-					return;
-				}
-				break;
-			case 1:
-				if (!actor.IsAlly(target))
-				{
-					return;
-				}
-				break;
-			case 3:
-				if (actor != target)
-				{
-					return;
-				}
-				break;
-			}
-		}
-		else if (m_SpawnFrom == kSpawnFrom.FromWeapon)
-		{
-			if (m_pWeaponLvlInfo == null)
-			{
-				return;
-			}
-			for (int j = 0; j < 3; j++)
-			{
-				array[j] = m_pWeaponLvlInfo.arrFunc[j];
-				array2[j] = m_pWeaponLvlInfo.arrValueX[j];
-				array3[j] = m_pWeaponLvlInfo.arrValueY[j];
-			}
-			if (actor == target)
-			{
-				return;
-			}
-			CCharPlayer cCharPlayer = actor as CCharPlayer;
-			if (cCharPlayer != null && m_GameScene.IsMyself(actor))
-			{
-				num = cCharPlayer.CalcWeaponDamage(m_pWeaponLvlInfo);
-				float num2 = cCharPlayer.CalcCritical(m_pWeaponLvlInfo);
-				float num3 = cCharPlayer.CalcCriticalDmg(m_pWeaponLvlInfo);
-				bool bCritical = false;
-				if (num2 > Random.Range(1f, 100f))
-				{
-					num *= 1f + num3 / 100f;
+					damage *= 1f + critBonus / 100f;
 					bCritical = true;
 				}
 				float elementValue = m_pWeaponLvlInfo.GetElementValue(target.ID);
 				if (elementValue != 0f)
-				{
-					num *= 1f + elementValue / 100f;
-				}
-				float num4 = target.CalcProtect();
-				num *= 1f - num4 / 100f;
-				if (num < 1f)
-				{
-					num = 1f;
-				}
-				m_GameScene.AddMyDamage(num, target.CurHP);
-				target.OnHit(0f - num, m_pWeaponLvlInfo, string.Empty);
-				if (target.IsMonster())
-				{
-					((CCharMob)target).SetLifeBarParam(1f);
-				}
-				if (m_GameScene.IsMyself(target))
-				{
-					m_GameScene.AddDamageText(num, target.GetBone(1).position, Color.red, bCritical);
-				}
-				else
-				{
-					m_GameScene.AddDamageText(num, target.GetBone(1).position, bCritical);
-				}
-				m_GameScene.AddHitEffect(target.GetBone(1).position, Vector3.forward, 1116);
+					damage *= 1f + elementValue / 100f;
+				damage *= 1f - target.CalcProtect() / 100f;
+				if (damage < 1f) damage = 1f;
+				isWeaponLocal = true;
 			}
 		}
-		if (!actor.IsMonster() && !m_GameScene.IsMyself(actor))
+		CCharBoss boss = target as CCharBoss;
+		if (boss != null && boss.isInBlack)
 		{
+			if (isWeaponLocal)
+			{
+				float blackDamage = damage * 0.2f;
+				boss.AddBlackDmg(-blackDamage);
+				m_GameScene.AddDamageText(blackDamage, v3HitPos);
+				if (CGameNetManager.GetInstance().IsConnected() && m_GameScene.IsMyself(actor))
+					CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(boss.UID, blackDamage, true);
+			}
+			else
+			{
+				boss.AddBlackDmg(-1f);
+				m_GameScene.AddDamageText(1f, v3HitPos);
+				if (CGameNetManager.GetInstance().IsConnected() && m_GameScene.IsMyself(actor))
+					CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(boss.UID, 1f, true);
+			}
 			return;
 		}
+		if (isWeaponLocal)
+		{
+			m_GameScene.AddMyDamage(damage, target.CurHP);
+			target.OnHit(0f - damage, m_pWeaponLvlInfo, string.Empty);
+			if (target.IsMonster())
+				((CCharMob)target).SetLifeBarParam(1f);
+
+			if (m_GameScene.IsMyself(target))
+				m_GameScene.AddDamageText(damage, target.GetBone(1).position, Color.red, bCritical);
+			else
+				m_GameScene.AddDamageText(damage, target.GetBone(1).position, bCritical);
+			m_GameScene.AddHitEffect(target.GetBone(1).position, Vector3.forward, 1116);
+		}
+		if (!actor.IsMonster() && !m_GameScene.IsMyself(actor))
+			return;
 		iGameLogic.HitInfo hitinfo = new iGameLogic.HitInfo();
 		hitinfo.v3HitDir = v3HitDir;
 		hitinfo.v3HitPos = v3HitPos;
-		m_GameLogic.CaculateFunc(actor, target, array, array2, array3, ref hitinfo);
-		m_GameLogic.m_fTotalDmg += num;
-		if (CGameNetManager.GetInstance().IsConnected() && m_GameScene.IsMyself(actor))
+		int[] funcs = null, valsX = null, valsY = null;
+		if (m_SpawnFrom == kSpawnFrom.FromSkill && m_pSkillLvlInfo != null)
 		{
-			CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(target.UID, m_GameLogic.m_fTotalDmg);
+			funcs = m_pSkillLvlInfo.arrFunc;
+			valsX = m_pSkillLvlInfo.arrValueX;
+			valsY = m_pSkillLvlInfo.arrValueY;
 		}
+		else if (m_SpawnFrom == kSpawnFrom.FromWeapon && m_pWeaponLvlInfo != null)
+		{
+			funcs = m_pWeaponLvlInfo.arrFunc;
+			valsX = m_pWeaponLvlInfo.arrValueX;
+			valsY = m_pWeaponLvlInfo.arrValueY;
+		}
+		if (m_GameLogic != null && funcs != null)
+		{
+			m_GameLogic.CaculateFunc(actor, target, funcs, valsX, valsY, ref hitinfo);
+			m_GameLogic.m_fTotalDmg += damage; // damage is 0 for skills
+		}
+		if (CGameNetManager.GetInstance().IsConnected() && m_GameScene.IsMyself(actor))
+			CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(target.UID, m_GameLogic.m_fTotalDmg);
 		if (target.isDead && actor.IsUser() && target.IsMonster())
 		{
-			CCharUser cCharUser = actor as CCharUser;
-			CCharMob cCharMob = target as CCharMob;
-			CMobInfoLevel mobInfo = cCharMob.GetMobInfo();
+			CCharUser user = actor as CCharUser;
+			CCharMob mob = target as CCharMob;
+			CMobInfoLevel mobInfo = mob.GetMobInfo();
 			if (mobInfo != null)
 			{
-				int num5 = 0;
-				num5 = ((!m_GameScene.m_bMutiplyGame) ? mobInfo.nExp : MyUtils.formula_monsterexp(mobInfo.nExp, cCharMob.Level));
-				float value = cCharUser.Property.GetValue(kProEnum.Char_IncreaseExp);
-				if (value > 0f)
-				{
-					num5 = (int)((float)num5 * (1f + value / 100f));
-				}
-				cCharUser.AddExp(num5);
-				m_GameScene.AddExpText(num5, hitinfo.v3HitPos);
+				int exp = m_GameScene.m_bMutiplyGame ? MyUtils.formula_monsterexp(mobInfo.nExp, mob.Level) : mobInfo.nExp;
+				float bonus = user.Property.GetValue(kProEnum.Char_IncreaseExp);
+				if (bonus > 0f) exp = (int)(exp * (1f + bonus / 100f));
+				user.AddExp(exp);
+				m_GameScene.AddExpText(exp, hitinfo.v3HitPos);
 			}
 		}
 		target.PlayAudio(kAudioEnum.HitBody);

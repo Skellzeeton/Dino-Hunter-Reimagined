@@ -202,61 +202,52 @@ public class CWeaponHoldy : CWeaponBase
     protected override void OnHitMob(CCharPlayer player, CCharMob mob, Vector3 hitpos, Vector3 hitdir, string sBodyPart = "")
     {
         mob.SetLifeBarParam(1f);
-        CCharBoss boss = mob as CCharBoss;
-
-        if (boss != null && boss.isInBlack)
-        {
-            boss.AddBlackDmg(-1f);
-            base.m_GameScene.AddDamageText(1f, hitpos);
-            if (CGameNetManager.GetInstance().IsConnected() && base.m_GameScene.IsMyself(player))
-                CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(mob.UID, 1f, true);
-            return;
-        }
-
         float dmg = player.CalcWeaponDamage(m_pWeaponLvlInfo);
         float critChance = player.CalcCritical(m_pWeaponLvlInfo);
         float critBonus = player.CalcCriticalDmg(m_pWeaponLvlInfo);
         bool isCrit = false;
-
         if (critChance > UnityEngine.Random.Range(1f, 100f))
         {
             dmg *= 1f + critBonus / 100f;
             isCrit = true;
         }
-
         dmg *= 1f - mob.CalcProtect() / 100f;
         if (dmg < 1f) dmg = 1f;
-
+        CCharBoss boss = mob as CCharBoss;
+        if (boss != null && boss.isInBlack)
+        {
+            float blackDamage = dmg * 0.2f;
+            boss.AddBlackDmg(-blackDamage);
+            base.m_GameScene.AddDamageText(blackDamage, hitpos);
+            if (CGameNetManager.GetInstance().IsConnected() && base.m_GameScene.IsMyself(player))
+                CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(mob.UID, blackDamage, true);
+            return;
+        }
         base.m_GameScene.AddMyDamage(dmg, mob.CurHP);
         mob.OnHit(-dmg, m_pWeaponLvlInfo, string.Empty);
         base.m_GameScene.AddDamageText(dmg, hitpos, isCrit);
         base.m_GameScene.AddHitEffect(hitpos, Vector3.forward, 1115);
-
         iGameLogic.HitInfo hitinfo = new iGameLogic.HitInfo { v3HitDir = hitdir, v3HitPos = hitpos };
         m_GameLogic = base.m_GameScene.GetGameLogic();
-
         if (m_GameLogic != null)
         {
             m_GameLogic.CaculateFunc(player, mob, m_pWeaponLvlInfo.arrFunc, m_pWeaponLvlInfo.arrValueX, m_pWeaponLvlInfo.arrValueY, ref hitinfo);
             m_GameLogic.ltDamageInfo.Add(dmg);
             m_GameLogic.m_fTotalDmg += dmg;
         }
-
         if (CGameNetManager.GetInstance().IsConnected() && base.m_GameScene.IsMyself(player))
             CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(mob.UID, m_GameLogic.m_fTotalDmg);
-
-        if (!mob.isDead)
-            return;
-
-        CMobInfoLevel mobInfo = mob.GetMobInfo();
-        if (mobInfo != null)
+        if (mob.isDead)
         {
-            int exp = base.m_GameScene.m_bMutiplyGame ? MyUtils.formula_monsterexp(mobInfo.nExp, mob.Level) : mobInfo.nExp;
-            float bonus = player.Property.GetValue(kProEnum.Char_IncreaseExp);
-            if (bonus > 0f)
-                exp = (int)(exp * (1f + bonus / 100f));
-            player.AddExp(exp);
-            base.m_GameScene.AddExpText(exp, hitinfo.v3HitPos);
+            CMobInfoLevel mobInfo = mob.GetMobInfo();
+            if (mobInfo != null)
+            {
+                int exp = base.m_GameScene.m_bMutiplyGame ? MyUtils.formula_monsterexp(mobInfo.nExp, mob.Level) : mobInfo.nExp;
+                float bonus = player.Property.GetValue(kProEnum.Char_IncreaseExp);
+                if (bonus > 0f) exp = (int)(exp * (1f + bonus / 100f));
+                player.AddExp(exp);
+                base.m_GameScene.AddExpText(exp, hitinfo.v3HitPos);
+            }
         }
     }
 
