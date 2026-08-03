@@ -48,6 +48,29 @@ public class doSelectSkillTask : Task {
 		{
 			return kTreeRunStatus.Failture;
 		}
+		if (m_GameData.m_SkillCenter != null)
+		{
+			for (int k = 0; k < m_ltTemp.Count; k++)
+			{
+				if (m_GameData.m_SkillCenter.IsContainBlackComboSkill(m_ltTemp[k].m_nID))
+				{
+					CSkillComboInfo forcedSkillInfo = m_GameData.GetSkillComboInfo(m_ltTemp[k].m_nID);
+					if (forcedSkillInfo != null)
+					{
+						m_ltTemp[k].ResetCoolDown();
+						cCharMob.m_pSkillComboInfo = forcedSkillInfo;
+						CCharBoss cCharBoss = cCharMob as CCharBoss;
+						if (cCharBoss != null)
+						{
+							float fBlackLife = ComputeBlackLife(forcedSkillInfo, cCharBoss.MaxHP);
+							cCharBoss.SetReadyToBlack(true, fBlackLife);
+						}
+
+						return kTreeRunStatus.Success;
+					}
+				}
+			}
+		}
 		if (m_ltTemp.Count == 1)
 		{
 			cCharMob.m_pSkillComboInfo = m_GameData.GetSkillComboInfo(m_ltTemp[0].m_nID);
@@ -123,14 +146,14 @@ public class doSelectSkillTask : Task {
 			bool isBlackArmorSkill = m_GameData.m_SkillCenter.IsContainBlackComboSkill(item3.m_nID);
 			if (isBlackArmorSkill)
 			{
-				bool shouldUse = false;
+				bool shouldUse;
 				if (mobInfo.nHasArmor)
 				{
-					shouldUse = !(mob.CurHP / mob.MaxHP > 0.5f);
+					shouldUse = !(mob.CurHP / mob.MaxHP > CCharBoss.kBlackTriggerHPRatio);
 				}
 				else
 				{
-					shouldUse = m_GameScene.m_bMutiplyGame && !(mob.CurHP / mob.MaxHP > 0.5f);
+					shouldUse = m_GameScene.m_bMutiplyGame && !(mob.CurHP / mob.MaxHP > CCharBoss.kBlackTriggerHPRatio);
 				}
 				if (shouldUse)
 				{
@@ -142,5 +165,34 @@ public class doSelectSkillTask : Task {
 				ltSkill.Add(item3);
 			}
 		}
+	}
+
+	protected float ComputeBlackLife(CSkillComboInfo comboInfo, float fBossMaxHP)
+	{
+		if (comboInfo == null)
+		{
+			return 0f;
+		}
+		for (int index = 0; ; index++)
+		{
+			int skillID = comboInfo.GetSkill(index);
+			if (skillID == -1)
+			{
+				break;
+			}
+			CSkillInfoLevel skillInfo = m_GameData.GetSkillInfo(skillID, 1);
+			if (skillInfo == null || skillInfo.arrFunc == null || skillInfo.arrValueX == null)
+			{
+				continue;
+			}
+			for (int i = 0; i < skillInfo.arrFunc.Length && i < skillInfo.arrValueX.Length; i++)
+			{
+				if (skillInfo.arrFunc[i] == 13)
+				{
+					return (float)skillInfo.arrValueX[i] * fBossMaxHP / 100f;
+				}
+			}
+		}
+		return 0f;
 	}
 }

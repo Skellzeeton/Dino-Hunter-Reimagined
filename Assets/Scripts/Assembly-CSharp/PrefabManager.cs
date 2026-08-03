@@ -165,8 +165,11 @@ public class PrefabManager
 		m_dictData.Add(170, "Artist/Model/Spawn/spawn_rock_large");
 		m_dictData.Add(175, "Artist/Model/Spawn/spawn_rock_normal");
 		m_dictData.Add(176, "Artist/Model/Spawn/spawn_wind_large");
+		m_dictData.Add(177, "Artist/Model/Spawn/spawn_rock_small");
 		m_dictData.Add(171, "Artist/Model/Spawn/spawn_venom_green");
+		m_dictData.Add(178, "Artist/Model/Spawn/spawn_venom_purple");
 		m_dictData.Add(172, "Artist/Model/Spawn/spawn_venom_ground_green");
+		m_dictData.Add(179, "Artist/Model/Spawn/spawn_venom_ground_purple");
 		m_dictData.Add(173, "Artist/Model/Spawn/spawn_venom_yellow");
 		m_dictData.Add(174, "Artist/Model/Spawn/spawn_venom_ground_yellow");
 		m_dictData.Add(250, "Artist/Model/Items/Egg");
@@ -266,6 +269,9 @@ public class PrefabManager
 		m_dictData.Add(1910, "Artist/Effect/Skill/venom_green/venom01_green_fire_pfb");
 		m_dictData.Add(1911, "Artist/Effect/Skill/venom_green/venom04_green_hitbody_pfb");
 		m_dictData.Add(1912, "Artist/Effect/Skill/venom_green/venom03_green_hit_pfb");
+		m_dictData.Add(1916, "Artist/Effect/Skill/venom_purple/venom01_purple_fire_pfb");
+		m_dictData.Add(1917, "Artist/Effect/Skill/venom_purple/venom04_purple_hitbody_pfb");
+		m_dictData.Add(1918, "Artist/Effect/Skill/venom_purple/venom03_purple_hit_pfb");
 		m_dictData.Add(1913, "Artist/EffectCustom/snow_walker_step");
 		m_dictData.Add(1914, "Artist/EffectCustom/snow_monster_step");
 		m_dictData.Add(1915, "Artist/Effect/Skill/fart/fart_pfb");

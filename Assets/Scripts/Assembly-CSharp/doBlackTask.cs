@@ -14,7 +14,7 @@ public class doBlackTask : Task
 	protected float m_fBlackGearAppearTimeCount;
 
 	public doBlackTask(Node node)
-		: base(node)
+	: base(node)
 	{
 	}
 
@@ -27,6 +27,7 @@ public class doBlackTask : Task
 		}
 		m_fTime = cCharBoss.CrossAnim(kAnimEnum.Mob_Roar, WrapMode.ClampForever, 0.3f, 1f, 0f);
 		m_fTimeCount = 0f;
+		m_BlackGearRenderer = null;
 		if (cCharBoss.m_BlackGear != null)
 		{
 			cCharBoss.m_BlackGear.gameObject.active = true;
@@ -46,6 +47,7 @@ public class doBlackTask : Task
 				gameObject.transform.forward = cCharBoss.Dir2D;
 			}
 		}
+		cCharBoss.m_bReadyToBlack = false;
 	}
 
 	public override kTreeRunStatus OnUpdate(Object inputParam, float deltaTime)
@@ -56,25 +58,26 @@ public class doBlackTask : Task
 			return kTreeRunStatus.Failture;
 		}
 		m_fTimeCount += deltaTime;
-		if (m_fTimeCount >= m_fTime)
-		{
-			Color color = m_BlackGearRenderer.material.GetColor("_FlashColor");
-			color.a = 0f;
-			m_BlackGearRenderer.material.SetColor("_FlashColor", color);
-			cCharBoss.SetBlack(true, cCharBoss.m_fReadyToBlackLife);
-			cCharBoss.m_bReadyToBlack = false;
-			return kTreeRunStatus.Success;
-		}
-		m_fBlackGearAppearTimeCount += Time.deltaTime;
-		if (m_fBlackGearAppearTimeCount > m_fBlackGearAppearTime)
-		{
-			m_fBlackGearAppearTimeCount = 0f;
-		}
 		if (m_BlackGearRenderer != null && m_BlackGearRenderer.material != null)
 		{
-			Color color2 = m_BlackGearRenderer.material.GetColor("_FlashColor");
-			color2.a = 1f - m_fBlackGearAppearTimeCount / m_fBlackGearAppearTime;
-			m_BlackGearRenderer.material.SetColor("_FlashColor", color2);
+			m_fBlackGearAppearTimeCount += deltaTime;
+			if (m_fBlackGearAppearTimeCount > m_fBlackGearAppearTime)
+			{
+				m_fBlackGearAppearTimeCount = m_fBlackGearAppearTime;
+			}
+			Color color = m_BlackGearRenderer.material.GetColor("_FlashColor");
+			color.a = 1f - m_fBlackGearAppearTimeCount / m_fBlackGearAppearTime;
+			m_BlackGearRenderer.material.SetColor("_FlashColor", color);
+		}
+		if (m_fTimeCount >= m_fTime)
+		{
+			if (m_BlackGearRenderer != null && m_BlackGearRenderer.material != null)
+			{
+				Color color = m_BlackGearRenderer.material.GetColor("_FlashColor");
+				color.a = 0f;
+				m_BlackGearRenderer.material.SetColor("_FlashColor", color);
+			}
+			return kTreeRunStatus.Success;
 		}
 		return kTreeRunStatus.Executing;
 	}

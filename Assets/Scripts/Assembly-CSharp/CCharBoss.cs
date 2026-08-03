@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CCharBoss : CCharMob
 {
+	public const float kBlackTriggerHPRatio = 0.1f;
+
 	public class CBodyPart
 	{
 		public float m_fHardinessCur;
@@ -48,6 +50,8 @@ public class CCharBoss : CCharMob
 
 	protected Renderer m_BlackGearRenderer;
 
+	protected bool m_bBlackThresholdHit;
+
 	public int ChangeAI
 	{
 		get
@@ -86,6 +90,7 @@ public class CCharBoss : CCharMob
 		m_bShowTime = false;
 		m_ltBodyEffect = new List<GameObject>();
 		m_nChangeAI = -1;
+		m_bBlackThresholdHit = false;
 	}
 
 	public new void Start()
@@ -208,18 +213,18 @@ public class CCharBoss : CCharMob
 			}
 			switch (curTrigger.nType)
 			{
-			case 1:
-				if (MyUtils.Compare(curTrigger.nValue, curTrigger.nOprate, m_fLifeTime, 0f) && (m_curTrigger == null || m_curTrigger.nPriority < curTrigger.nPriority))
-				{
-					m_tmpTriggerList.Add(curTrigger);
-				}
-				break;
-			case 2:
-				if (MyUtils.Compare(curTrigger.nValue, curTrigger.nOprate, m_fHP, m_fHPMax) && (m_curTrigger == null || m_curTrigger.nPriority < curTrigger.nPriority))
-				{
-					m_tmpTriggerList.Add(curTrigger);
-				}
-				break;
+				case 1:
+					if (MyUtils.Compare(curTrigger.nValue, curTrigger.nOprate, m_fLifeTime, 0f) && (m_curTrigger == null || m_curTrigger.nPriority < curTrigger.nPriority))
+					{
+						m_tmpTriggerList.Add(curTrigger);
+					}
+					break;
+				case 2:
+					if (MyUtils.Compare(curTrigger.nValue, curTrigger.nOprate, m_fHP, m_fHPMax) && (m_curTrigger == null || m_curTrigger.nPriority < curTrigger.nPriority))
+					{
+						m_tmpTriggerList.Add(curTrigger);
+					}
+					break;
 			}
 		}
 		if (m_tmpTriggerList.Count == 0)
@@ -277,13 +282,13 @@ public class CCharBoss : CCharMob
 		{
 			switch (aIInfo.ltEffect[i])
 			{
-			case 1500:
-				AddBodyEffect(1500, GetBone(8));
-				AddBodyEffect(1500, GetBone(9));
-				break;
-			case 1501:
-				AddBodyEffect(1501, GetBone(2));
-				break;
+				case 1500:
+					AddBodyEffect(1500, GetBone(8));
+					AddBodyEffect(1500, GetBone(9));
+					break;
+				case 1501:
+					AddBodyEffect(1501, GetBone(2));
+					break;
 			}
 		}
 	}
@@ -323,10 +328,38 @@ public class CCharBoss : CCharMob
 		m_fReadyToBlackLife = fBlackLife;
 		if (bReadyToBlack)
 		{
-			ResetAI();
+			SetBlack(true, fBlackLife);
 		}
 	}
 
+	public override void AddHP(float fHP)
+	{
+		base.AddHP(fHP);
+		TryTriggerBlack();
+	}
+
+	protected void TryTriggerBlack()
+	{
+		if (m_bBlackThresholdHit || isInBlack || m_bReadyToBlack || MaxHP <= 0f)
+		{
+			return;
+		}
+		if (CurHP / MaxHP > kBlackTriggerHPRatio)
+		{
+			return;
+		}
+		CMobInfoLevel curMobInfo = GetMobInfo();
+		if (curMobInfo == null)
+		{
+			return;
+		}
+		if (!curMobInfo.nHasArmor && !m_GameScene.m_bMutiplyGame)
+		{
+			return;
+		}
+		m_bBlackThresholdHit = true;
+		ResetAI();
+	}
 	public void SetBlack(bool bBlack, float fBlackLife = 0f)
 	{
 		if (m_bInBlack == bBlack)
@@ -355,6 +388,7 @@ public class CCharBoss : CCharMob
 			m_GameScene.m_nBlackMonsterCount++;
 			return;
 		}
+		m_bBlackThresholdHit = false;
 		SetLifeBarStyle(0, CurHP / MaxHP);
 		if (m_BlackGear != null)
 		{

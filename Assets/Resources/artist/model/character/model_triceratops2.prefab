@@ -639,6 +639,7 @@ GameObject:
   - component: {fileID: 111909121638182194}
   - component: {fileID: 114727548341436300}
   - component: {fileID: 114992088698248394}
+  - component: {fileID: 1517818225482378388}
   - component: {fileID: 114050397075821124}
   - component: {fileID: 114364241267576142}
   m_Layer: 26
@@ -690,6 +691,7 @@ Animation:
   - {fileID: 7400000, guid: 6d31c3843531c2346aad608ea88aa18c, type: 2}
   - {fileID: 7400000, guid: 2bfd884cecb9cd84db3acff541ee0118, type: 2}
   - {fileID: 7400000, guid: 85fa2a2c3a51db14986e4976128a51cb, type: 2}
+  - {fileID: 7400000, guid: 43056460d8a23494da322be84239c8a2, type: 2}
   - {fileID: 7400000, guid: 8cdd6628c90dc1f40853b3533587f476, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
@@ -727,6 +729,21 @@ MonoBehaviour:
   m_fTime: 2
   m_Effect: {fileID: 0}
   fDisappearTime: 2
+--- !u!114 &1517818225482378388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563323225227806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535343f87843f4144821f894247f9770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Node: {fileID: 4929973653749608}
+  m_fTime: 2
+  m_Effect: {fileID: 0}
 --- !u!114 &114050397075821124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,6 +920,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -924,9 +943,11 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 1
   m_UpdateWhenOffscreen: 0

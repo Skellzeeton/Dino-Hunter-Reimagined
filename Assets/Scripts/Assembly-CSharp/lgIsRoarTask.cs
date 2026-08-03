@@ -6,7 +6,7 @@ public class lgIsRoarTask : Task
 	protected float m_fRoarRate;
 
 	public lgIsRoarTask(Node node, float fRoarRate)
-		: base(node)
+	: base(node)
 	{
 		m_fRoarRate = fRoarRate;
 	}
@@ -15,6 +15,10 @@ public class lgIsRoarTask : Task
 	{
 		CCharMob cCharMob = inputParam as CCharMob;
 		if (cCharMob == null || cCharMob.GetActionLen(kAnimEnum.Mob_Roar) == 0f)
+		{
+			return kTreeRunStatus.Failture;
+		}
+		if (cCharMob.m_bReadyToBlack)
 		{
 			return kTreeRunStatus.Failture;
 		}

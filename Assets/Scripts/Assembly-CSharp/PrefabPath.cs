@@ -190,7 +190,11 @@ public class PrefabPath
 
 	public const int spawn_venom_green = 171;
 
+	public const int spawn_venom_purple = 178;
+
 	public const int spawn_venom_ground_green = 172;
+
+	public const int spawn_venom_ground_purple = 179;
 
 	public const int spawn_venom_yellow = 173;
 
@@ -199,6 +203,8 @@ public class PrefabPath
 	public const int spawn_rock_normal = 175;
 
 	public const int spawn_wind_normal = 176;
+
+	public const int spawn_rock_small = 177;
 
 	public const int item_egg = 250;
 
@@ -401,6 +407,12 @@ public class PrefabPath
 	public const int venom_green_hit = 1911;
 
 	public const int venom_green_hit_ground = 1912;
+
+	public const int venom_purple_fire = 1916;
+
+	public const int venom_purple_hit = 1917;
+
+	public const int venom_purple_hit_ground = 1918;
 
 	public const int snow_walker_step = 1913;
 

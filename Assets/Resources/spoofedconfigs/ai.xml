@@ -42,9 +42,9 @@
 		<ai id="40201" skill="40000" skillrate="300" behavior="3" />	
 		
 				<!-- ����˫���� -->
-		<ai id="50101" skill="40000" skillrate="300" behavior="1" />	
+		<ai id="50101" skill="40008" skillrate="300" behavior="1" />
 	<!-- ��������˫���� -->
-		<ai id="50201" skill="40000" skillrate="300" behavior="3" />	
+		<ai id="50201" skill="40000" skillrate="300" behavior="3" />
 		
 	<!-- ˫����BOSS -->
 		<ai id="60101" skill="40000,40001,40002,40007" skillrate="80,80,80,80" behavior="1" />	
@@ -63,14 +63,12 @@
 		<!-- ***********************************������************************************************************************* -->
 		
 			<!-- ������ -->
-		<ai id="70101" skill="50006" skillrate="100" behavior="1" />	
+		<ai id="70101" skill="50006,50008" skillrate="50,50" behavior="1" />
 	<!-- ���������� -->
 		<ai id="70201" skill="" skillrate="" behavior="3" />
 
-		<ai id="70301" skill="50007" skillrate="100" behavior="1" />
-
 		<!-- ���������� -->
-		<ai id="80101" skill="50007" skillrate="100" behavior="1" />	
+		<ai id="80101" skill="50007,50008,50009" skillrate="40,40,20" behavior="1" />
 	<!-- �������������� -->
 		<ai id="80201" skill="" skillrate="" behavior="3" />	
 	
@@ -256,7 +254,7 @@
 			<aimanager id="702" ai="70201" />	
 			
 			<!-- ���������� -->
-			<aimanager id="801" ai="70301" />		
+			<aimanager id="801" ai="80101" />
 				<!-- �������������� -->
 			<aimanager id="802" ai="70201" />				
 	

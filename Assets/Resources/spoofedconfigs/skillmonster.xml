@@ -227,9 +227,9 @@
 		
 		
 		<!-- ǰ���� ����Ŀ��0.1s[����5-20] -->
-		<skill id="40000" lvl="1" type="0" action="10001" rangetype="0" rangetypevalue="3,12" skillmode="3" skillmodevalue="0.1" />	
-		<!-- ��ͨ���� 100%�˺�-->
-		<skill id="40001" lvl="1" type="0" action="10002" rangetype="0" rangetypevalue="5,16" skillmode="5" skillmodevalue="0.5,171,6,30,0,0,1" func="5" valuex="100" valuey="0"/>
+		<skill id="40000" lvl="1" type="0" action="10001" rangetype="0" rangetypevalue="3,12" skillmode="3" skillmodevalue="0.1" />
+		<!--  100%-->
+		<skill id="40001" lvl="1" type="0" action="10002" rangetype="0" rangetypevalue="5,16" skillmode="5" skillmodevalue="0.5,171,6,30,0,0,1" func="5" valuex="50" valuey="0"/>
 		
 		<!-- ������ ����Ŀ��0.1s[����5-40] -->
 		<skill id="40002" lvl="1" type="0" action="10001" rangetype="0" rangetypevalue="0,15" skillmode="3" skillmodevalue="0.5" />	
@@ -250,8 +250,8 @@
 		<skill id="40009" lvl="1" type="0" action="10001" rangetype="0" rangetypevalue="0,8" skillmode="3" skillmodevalue="0.1" />	
 		<!-- ��ƨ���� 50%�˺� ����5�� ��ѣ4��-->
 		<skill id="40010" lvl="1" type="0" action="10006" rangetype="1" rangetypevalue="0,8,0,0" skillmode="1" skillmodevalue="0.8" func="5,4,11" valuex="50,5,2" valuey="0"/>
-		<!-- ��ƨ���� ����Ŀ��0.1s[����0-40] -->
-		<skill id="40011" lvl="1" type="0" action="10001" rangetype="0" rangetypevalue="0,8" skillmode="3" skillmodevalue="0.1" />
+		<!--  100%-->
+		<skill id="40011" lvl="1" type="0" action="10002" rangetype="0" rangetypevalue="5,16" skillmode="5" skillmodevalue="0.5,178,3,30,0,0,1" func="5" valuex="75" valuey="0"/>
 
 
 
@@ -267,7 +267,7 @@
 		<!-- ����Ŀ��0.1s[����0-3] -->
 		<skill id="50000" lvl="1" type="0" action="1" rangetype="0" rangetypevalue="0,4.5" skillmode="3" skillmodevalue="0.1" />	
 		<!-- ��ͨ˺ҧ 100�˺�-->
-		<skill id="50001" lvl="1" type="0" action="1000" rangetype="0" rangetypevalue="0,4" skillmode="1" skillmodevalue="0.5" func="5" valuex="100" valuey="0"/>
+		<skill id="50001" lvl="1" type="0" action="1000" rangetype="0" rangetypevalue="0,4.5" skillmode="1" skillmodevalue="0.5" func="5,4" valuex="100,2" valuey="0"/>
 		
 		<!-- ����Ŀ��0.1s[����10-30] -->
 		<skill id="50002" lvl="1" type="0" action="1" rangetype="0" rangetypevalue="10,35" skillmode="3" skillmodevalue="0.1" />	
@@ -292,6 +292,12 @@
 		<skill id="50010" lvl="1" type="0" action="10002" actionloop="0" rangetype="0" rangetypevalue="3,15" skillmode="3" skillmodevalue="1" />
 		<!-- С�ֳ�ײ 30%�˺�-->
 		<skill id="50011" lvl="1" type="0" action="10003" rangetype="0" rangetypevalue="0,2.25" skillmode="6" skillmodevalue="15,1.5,0.25,1405" func="5,4" valuex="30,3" valuey="0,0"/>
+		<!--  Normal melee hit-->
+		<skill id="50012" lvl="1" type="0" action="1000" rangetype="0" rangetypevalue="0,3" skillmode="1" skillmodevalue="0.5" func="5,4" valuex="25,2" valuey="0"/>
+		<!--  Alt melee hit -->
+		<skill id="50013" lvl="1" type="0" action="1000" rangetype="0" rangetypevalue="0,3" skillmode="1" skillmodevalue="0.5,177" func="5,4" valuex="25,0" valuey="0,0"/>
+		<!-- Chuck small rock -->
+		<skill id="50014" lvl="1" type="0" action="10001" rangetype="0" rangetypevalue="10,18" skillmode="5" skillmodevalue="0.6,177,1,40,0,45,1" func="5,4" valuex="55,1" valuey="0"/>
 
 
 		<!-- ***********************************���������� start by 60000************************************************************************* -->
@@ -628,9 +634,11 @@
 		<!-- �������� �ķ� -->
 		<combo id="40005" skilllist="40002,40008" coldown="8" freezetime="2.5" usecount='0'/> 
 		<!-- BOSS��ͨ���� -->
-		<combo id="40006" skilllist="40000,40003" coldown="4" freezetime="2" usecount='0'/> 		
+		<combo id="40006" skilllist="40000,40003" coldown="4" freezetime="2" usecount='0'/>
 			<!-- ��ƨ -->
-		<combo id="40007" skilllist="40009,40010" coldown="8" freezetime="2.5" usecount='0'/> 		
+		<combo id="40007" skilllist="40009,40010" coldown="8" freezetime="2.5" usecount='0'/>
+		<!-- Purple spit -->
+		<combo id="40008" skilllist="40000,40011" coldown="4" freezetime="4" usecount='0'/>
 		
 		
 		<!-- ***********************************�������������� start by 50000************************************************************************* -->
@@ -649,7 +657,11 @@
 		<!-- С�ֳ�ײ -->
 		<combo id="50006" skilllist="50008,50009" coldown="8" freezetime="2.5" usecount='0'/>
 		<!-- С�ֳ�ײ -->
-		<combo id="50007" skilllist="50010,50011" coldown="8" freezetime="2.5" usecount='0'/>
+		<combo id="50007" skilllist="50010,50011,50013" coldown="8" freezetime="1.25" usecount='0'/>
+		<!-- normal triceratops melee -->
+		<combo id="50008" skilllist="50000,50012" coldown="5" freezetime="2.5" usecount='0'/>
+		<!-- elite triceratops rock yeet -->
+		<combo id="50009" skilllist="50014" coldown="44" freezetime="2.5" usecount='0'/>
 		 
 		<!-- ��ײ���ν����ذ� 
 		<combo id="50003" skilllist="50004,50005,50007" /> 
