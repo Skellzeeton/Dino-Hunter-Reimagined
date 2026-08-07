@@ -149,7 +149,6 @@ public class PrefabManager
 		m_dictData.Add(134, "Artist/Model/Weapon/weapon_034");
 		m_dictData.Add(135, "Artist/Model/Weapon/weapon_035");
 		m_dictData.Add(136, "Artist/Model/Weapon/weapon_036");
-		m_dictData.Add(137, "Artist/Model/Weapon/weapon_037");
 		m_dictData.Add(140, "Artist/Model/Bullet/bullet_003");
 		m_dictData.Add(141, "Artist/Model/Bullet/bullet_005");
 		m_dictData.Add(142, "Artist/Model/Bullet/bullet_004");

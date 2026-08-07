@@ -14,21 +14,21 @@
 		<RewardMaterial material="100015" mincount="1" maxcount="1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="1003" iconoverride="8" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_toudan01" bp_cfg="150101" gamewave="1003001,1003002,1003003" task="1003" sp_cfg_ground="150111" cutscene="toudan01_jiaoxue" cutscene_ambience="Amb_Rainforest_Show" tpbegin_cfg="150301" tpend_cfg="150401" exp="66" gold="14" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 35">
+	<gamelevel id="1003" iconoverride="8" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_toudan01" bp_cfg="150101" gamewave="1003001,1003002,1003003" task="1003" sp_cfg_ground="150111" cutscene="toudan01_jiaoxue" cutscene_ambience="Amb_Rainforest_Show" tpbegin_cfg="150301" tpend_cfg="150401" exp="99" gold="21" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 35">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100025,100016,700006" mincount="1,5,1" maxcount="1,5,1"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="1004" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" bp_cfg="20101" gamewave="1004001,1004002,1004003" task="1004" sp_cfg_ground="20111" exp="69" gold="14" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true">
+	<gamelevel id="1004" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" bp_cfg="20101" gamewave="1004001,1004002,1004003" task="1004" sp_cfg_ground="20111" exp="103" gold="21" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005,100016" mincount="1,4" maxcount="1,4,1"/>
 		<recommend recommendtype="1" recommandid="2" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="1005" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Boss" bp_cfg="20101" gamewave="1005001,1005002" task="1005" sp_cfg_ground="20111" exp="69" gold="42" desc="Hunt Tyrant King x 1">
+	<gamelevel id="1005" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Boss" bp_cfg="20101" gamewave="1005001,1005002" task="1005" sp_cfg_ground="20111" exp="138" gold="42" desc="Hunt Tyrant King x 1">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="22"/>
 		</MonsterNumLimit>
@@ -42,98 +42,98 @@
 		<RewardMaterial material="100005" mincount="4" maxcount="6"/>
 		<recommend recommendtype="3" recommandid="701" recommandlevel="1" islimit="true"/>
 	</gamelevel>
-	<gamelevel id="1007" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest_Dusk" bp_cfg="20101" gamewave="1007001,1007002,1007003" task="1007" sp_cfg_ground="20111" exp="72" gold="14" desc="Survive a Horde of Dinosaurs for 1:30">
+	<gamelevel id="1007" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest_Dusk" bp_cfg="20101" gamewave="1007001,1007002,1007003" task="1007" sp_cfg_ground="20111" exp="90" gold="21" desc="Survive a Horde of Dinosaurs for 1:30">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100011" mincount="2" maxcount="4"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="1008" iconoverride="7" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="75" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 200">
+	<gamelevel id="1008" iconoverride="7" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei01_dusk" bp_cfg="90101" gamewave="1008001,1008002,1008003" task="1008" sp_cfg_ground="90111" tpend_cfg="90401" exp="100" gold="28" desc="The dinos are attacking our eggs!&#xA;Fend off 3 Waves of Dinosaurs&#xA;Barricade Health: 200">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="48"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100010" mincount="1" maxcount="5"/>
+		<RewardMaterial material="100010" mincount="5" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="2"/>
 	</gamelevel>
 	<gamelevel id="1009" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest_night" scenename="Yulin_ultimate02_night" bp_cfg="250101" gamewave="1009001,1009002,1009003,1009004" task="1009" sp_cfg_ground="250111" exp="78" gold="28" desc="Kill all dinos in under 4:15 minutes">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="18"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100010" mincount="2" maxcount="4"/>
+		<RewardMaterial material="100010" mincount="5" maxcount="7"/>
 		<recommend recommendtype="1" recommandid="3" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="1010" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="136" gold="56" desc="Hunt Triterrortops x 1"  hp_cfg_def="40501">
+	<gamelevel id="1010" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="170" gold="56" desc="Hunt Triterrortops x 1"  hp_cfg_def="40501">
 		<MonsterNumLimit> 
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100012,100013" mincount="1,1" maxcount="1,1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="2"/>
 	</gamelevel>
-	<gamelevel id="2001" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2001001,2001002" task="2001" sp_cfg_ground="40111" cutscene="yanjiang01_open" exp="56" gold="14" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true"  hp_cfg_def="40501">
+	<gamelevel id="2001" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2001001,2001002" task="2001" sp_cfg_ground="40111" cutscene="yanjiang01_open" exp="84" gold="14" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100025" mincount="4" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="2" recommandlevel="2"/>
 	</gamelevel>
-	<gamelevel id="2002" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2002001,2002002,2002003" task="2002" sp_cfg_ground="40111" exp="56" gold="20" desc="Survive a Horde of Dinosaurs for 1:40"  hp_cfg_def="40501">
+	<gamelevel id="2002" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2002001,2002002,2002003" task="2002" sp_cfg_ground="40111" exp="84" gold="20" desc="Survive a Horde of Dinosaurs for 1:40"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100025,100017" mincount="4,2" maxcount="6,3"/>
 		<recommend recommendtype="1" recommandid="3" recommandlevel="2"/>
 	</gamelevel>
-	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="58" gold="28" desc="Snatch and defend a Dino Egg&#xA;EGG HP: 45"  hp_cfg_def="40501">
+	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="108" gold="21" desc="Snatch and defend a Dino Egg&#xA;EGG HP: 45"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100004,100017,700006" mincount="4,3,1" maxcount="4,3,2"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="3"/>
 	</gamelevel>
-	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2004001" task="2004" sp_cfg_ground="40111" exp="60" gold="15" desc="Kill all dinos"  hp_cfg_def="40501">
+	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2004001,2004002" task="2004" sp_cfg_ground="40111" exp="90" gold="15" desc="Kill all dinos"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="12"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006" mincount="4" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="2"/>
 	</gamelevel>
-	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004,2005005,2005006,2005007" task="2005" sp_cfg_ground="40111" exp="90" gold="45" desc="Hunt Gloomwretch Killosaurus x 8"  hp_cfg_def="40501">
+	<gamelevel id="2005" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2005001,2005002,2005003,2005004,2005005,2005006,2005007" task="2005" sp_cfg_ground="40111" exp="120" gold="30" desc="Hunt Gloomwretch Killosaurus x 8"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="800"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100003" mincount="1" maxcount="1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="3"/>
 	</gamelevel>
-	<gamelevel id="2006" iconoverride="3" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="31" gold="30" desc="Fend off 3 waves of Dinosaurs&#xA;Barricade Health: 125">
+	<gamelevel id="2006" iconoverride="3" cutscene_ambience="Amb_Volcano_Show" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30102" gamewave="2006001,2006002,2006003" task="2006" sp_cfg_ground="30112" tpend_cfg="30401" cutscene="yanjiang_cave_open" exp="124" gold="30" desc="Fend off 3 waves of Dinosaurs&#xA;Barricade Health: 125">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="28"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005" mincount="4" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="2"/>
 	</gamelevel>
-	<gamelevel id="2007" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2007001,2007002,2007003" task="2007" sp_cfg_ground="30111" exp="32" gold="30" desc="Survive a Horde of Dinosaurs for 2:00"  hp_cfg_def="40501">
+	<gamelevel id="2007" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2007001,2007002,2007003" task="2007" sp_cfg_ground="30111" exp="96" gold="30" desc="Survive a Horde of Dinosaurs for 2:00"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100005" mincount="4" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="3"/>
 	</gamelevel>
-	<gamelevel id="2008" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30102" gamewave="2008001,2008002" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="32" gold="15" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 25">
+	<gamelevel id="2008" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30102" gamewave="2008001,2008002" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="96" gold="21" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 25">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100025,700006" mincount="4,1" maxcount="6,1"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="3"/>
 	</gamelevel>
-	<gamelevel id="2009" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="30111" exp="33" gold="30" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true"  hp_cfg_def="40501">
+	<gamelevel id="2009" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="30111" exp="99" gold="25" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true" hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100006" mincount="4" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="2" recommandlevel="3"/>
 	</gamelevel>
-	<gamelevel id="2010" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="34" gold="75" desc="Hunt Old Killosaurus Rex x 2"  hp_cfg_def="40501">
+	<gamelevel id="2010" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="204" gold="75" desc="Hunt Old Killosaurus Rex x 2"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>

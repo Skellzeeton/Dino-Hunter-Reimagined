@@ -159,8 +159,6 @@ public class PrefabPath
 	public const int weapon_035 = 135;
 	
 	public const int weapon_036 = 136;
-	
-	public const int weapon_037 = 137;
 
 	public const int rocket_sharp_model = 140;
 

@@ -107,8 +107,6 @@ public class Role_Control : MonoBehaviour
 	public Transform prefab_weapon_035;
 	
 	public Transform prefab_weapon_036;
-	
-	public Transform prefab_weapon_037;
 
 	public Transform plane_bottom;
 
@@ -197,8 +195,6 @@ public class Role_Control : MonoBehaviour
 	private Transform weapon_035;
 	
 	private Transform weapon_036;
-
-	private Transform weapon_037;
 
 	private Transform weapon_now;
 
@@ -357,378 +353,367 @@ public class Role_Control : MonoBehaviour
 	{
 		Transform transform = null;
 		bool flag = true;
-		switch (m_id)
-		{
-		case 1:
-			if (weapon_001 == null)
-			{
-				weapon_001 = (Transform)Object.Instantiate(prefab_weapon_001);
-				weapon_001.parent = base.transform;
-				weapon_001.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_001;
-			weapon_type = WeaponType.Crossbow;
-			break;
-		case 2:
-			if (weapon_002 == null)
-			{
-				weapon_002 = (Transform)Object.Instantiate(prefab_weapon_002);
-				weapon_002.parent = base.transform;
-				weapon_002.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_002;
-			weapon_type = WeaponType.CloseWeapons;
-			break;
-		case 3:
-			if (weapon_003 == null)
-			{
-				weapon_003 = (Transform)Object.Instantiate(prefab_weapon_003);
-				weapon_003.parent = base.transform;
-				weapon_003.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_003;
-			weapon_type = WeaponType.ViolenceGun;
-			break;
-		case 4:
-			if (weapon_004 == null)
-			{
-				weapon_004 = (Transform)Object.Instantiate(prefab_weapon_004);
-				weapon_004.parent = base.transform;
-				weapon_004.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_004;
-			weapon_type = WeaponType.MachineGun;
-			break;
-		case 5:
-			if (weapon_005 == null)
-			{
-				weapon_005 = (Transform)Object.Instantiate(prefab_weapon_005);
-				weapon_005.parent = base.transform;
-				weapon_005.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_005;
-			weapon_type = WeaponType.RPG;
-			break;
-		case 6:
-			if (weapon_006 == null)
-			{
-				weapon_006 = (Transform)Object.Instantiate(prefab_weapon_006);
-				weapon_006.parent = base.transform;
-				weapon_006.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_006;
-			weapon_type = WeaponType.CloseWeapons;
-			break;
-		case 7:
-			if (weapon_007 == null)
-			{
-				weapon_007 = (Transform)Object.Instantiate(prefab_weapon_007);
-				weapon_007.parent = base.transform;
-				weapon_007.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_007;
-			weapon_type = WeaponType.CloseWeapons;
-			break;
-		case 8:
-			if (weapon_008 == null)
-			{
-				weapon_008 = (Transform)Object.Instantiate(prefab_weapon_008);
-				weapon_008.parent = base.transform;
-				weapon_008.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_008;
-			weapon_type = WeaponType.CloseWeapons;
-			break;
-		case 9:
-			if (weapon_009 == null)
-			{
-				weapon_009 = (Transform)Object.Instantiate(prefab_weapon_009);
-				weapon_009.parent = base.transform;
-				weapon_009.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_009;
-			weapon_type = WeaponType.Crossbow;
-			break;
-		case 10:
-			if (weapon_010 == null)
-			{
-				weapon_010 = (Transform)Object.Instantiate(prefab_weapon_010);
-				weapon_010.parent = base.transform;
-				weapon_010.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_010;
-			weapon_type = WeaponType.Crossbow;
-			break;
-		case 11:
-			if (weapon_011 == null)
-			{
-				weapon_011 = (Transform)Object.Instantiate(prefab_weapon_011);
-				weapon_011.parent = base.transform;
-				weapon_011.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_011;
-			weapon_type = WeaponType.ViolenceGun;
-			break;
-		case 12:
-			if (weapon_012 == null)
-			{
-				weapon_012 = (Transform)Object.Instantiate(prefab_weapon_012);
-				weapon_012.parent = base.transform;
-				weapon_012.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_012;
-			weapon_type = WeaponType.ViolenceGun;
-			break;
-		case 13:
-			if (weapon_013 == null)
-			{
-				weapon_013 = (Transform)Object.Instantiate(prefab_weapon_013);
-				weapon_013.parent = base.transform;
-				weapon_013.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_013;
-			weapon_type = WeaponType.RPG;
-			break;
-		case 14:
-			if (weapon_014 == null)
-			{
-				weapon_014 = (Transform)Object.Instantiate(prefab_weapon_014);
-				weapon_014.parent = base.transform;
-				weapon_014.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_014;
-			weapon_type = WeaponType.LiquidFireGun;
-			break;
-		case 15:
-			if (weapon_015 == null)
-			{
-				weapon_015 = (Transform)Object.Instantiate(prefab_weapon_015);
-				weapon_015.parent = base.transform;
-				weapon_015.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_015;
-			weapon_type = WeaponType.MachineGun;
-			break;
-		case 16:
-			if (weapon_016 == null)
-			{
-				weapon_016 = (Transform)Object.Instantiate(prefab_weapon_016);
-				weapon_016.parent = base.transform;
-				weapon_016.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_016;
-			weapon_type = WeaponType.MachineGun;
-			break;
-		case 17:
-			if (weapon_017 == null)
-			{
-				weapon_017 = (Transform)Object.Instantiate(prefab_weapon_017);
-				weapon_017.parent = base.transform;
-				weapon_017.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_017;
-			weapon_type = WeaponType.ViolenceGun;
-			break;
-		case 18:
-			if (weapon_018 == null)
-			{
-				weapon_018 = (Transform)Object.Instantiate(prefab_weapon_018);
-				weapon_018.parent = base.transform;
-				weapon_018.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_018;
-			weapon_type = WeaponType.MachineGun;
-			break;
-		case 19:
-			if (weapon_019 == null)
-			{
-				weapon_019 = (Transform)Object.Instantiate(prefab_weapon_019);
-				weapon_019.parent = base.transform;
-				weapon_019.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_019;
-			weapon_type = WeaponType.RPG;
-			break;
-		case 20:
-			if (weapon_020 == null)
-			{
-				weapon_020 = (Transform)Object.Instantiate(prefab_weapon_020);
-				weapon_020.parent = base.transform;
-				weapon_020.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_020;
-			weapon_type = WeaponType.RPG;
-			break;
-		case 21:
-			if (weapon_021 == null)
-			{
-				weapon_021 = (Transform)Object.Instantiate(prefab_weapon_021);
-				weapon_021.parent = base.transform;
-				weapon_021.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_021;
-			weapon_type = WeaponType.Crossbow;
-			break;
-		case 22:
-			if (weapon_022 == null)
-			{
-				weapon_022 = (Transform)Object.Instantiate(prefab_weapon_022);
-				weapon_022.parent = base.transform;
-				weapon_022.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_022;
-			weapon_type = WeaponType.LiquidFireGun;
-			break;
-		case 23:
-			if (weapon_023 == null)
-			{
-				weapon_023 = (Transform)Object.Instantiate(prefab_weapon_023);
-				weapon_023.parent = base.transform;
-				weapon_023.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_023;
-			weapon_type = WeaponType.LiquidFireGun;
-			break;
-		case 24:
-			if (weapon_024 == null)
-			{
-				weapon_024 = (Transform)Object.Instantiate(prefab_weapon_024);
-				weapon_024.parent = base.transform;
-				weapon_024.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_024;
-			weapon_type = WeaponType.CloseWeapons;
-			break;
-		case 25:
-			if (weapon_025 == null)
-			{
-				weapon_025 = (Transform)Object.Instantiate(prefab_weapon_025);
-				weapon_025.parent = base.transform;
-				weapon_025.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_025;
-			weapon_type = WeaponType.LiquidFireGun;
-			break;
-		case 26:
-			if (weapon_026 == null)
-			{
-				weapon_026 = (Transform)Object.Instantiate(prefab_weapon_026);
-				weapon_026.parent = base.transform;
-				weapon_026.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_026;
-			weapon_type = WeaponType.CloseWeapons;
-			break;
-		case 27:
-			if (weapon_027 == null)
-			{
-				weapon_027 = (Transform)Object.Instantiate(prefab_weapon_027);
-				weapon_027.parent = base.transform;
-				weapon_027.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_027;
-			weapon_type = WeaponType.MachineGun;
-			break;
-		case 28:
-			if (weapon_028 == null)
-			{
-				weapon_028 = (Transform)Object.Instantiate(prefab_weapon_028);
-				weapon_028.parent = base.transform;
-				weapon_028.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_028;
-			weapon_type = WeaponType.MachineGun;
-			break;
-		case 29:
-			if (weapon_029 == null)
-			{
-				weapon_029 = (Transform)Object.Instantiate(prefab_weapon_029);
-				weapon_029.parent = base.transform;
-				weapon_029.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_029;
-			weapon_type = WeaponType.RPG;
-			break;
-		case 30:
-			if (weapon_030 == null)
-			{
-				weapon_030 = (Transform)Object.Instantiate(prefab_weapon_030);
-				weapon_030.parent = base.transform;
-				weapon_030.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_030;
-			weapon_type = WeaponType.RPG;
-			break;
-		case 31:
-			if (weapon_031 == null)
-			{
-				weapon_031 = (Transform)Object.Instantiate(prefab_weapon_031);
-				weapon_031.parent = base.transform;
-				weapon_031.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_031;
-			weapon_type = WeaponType.Crossbow;
-			break;
-		case 32:
-			if (weapon_032 == null)
-			{
-				weapon_032 = (Transform)Object.Instantiate(prefab_weapon_032);
-				weapon_032.parent = base.transform;
-				weapon_032.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_032;
-			weapon_type = WeaponType.Crossbow;
-			break;
-		case 33:
-			if (weapon_033 == null)
-			{
-				weapon_033 = (Transform)Object.Instantiate(prefab_weapon_033);
-				weapon_033.parent = base.transform;
-				weapon_033.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_033;
-			weapon_type = WeaponType.ViolenceGun;
-			break;
-		case 34:
-			if (weapon_034 == null)
-			{
-				weapon_034 = (Transform)Object.Instantiate(prefab_weapon_034);
-				weapon_034.parent = base.transform;
-				weapon_034.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_034;
-			weapon_type = WeaponType.ViolenceGun;
-			break;
-		case 35:
-			if (weapon_035 == null)
-			{
-				weapon_035 = (Transform)Object.Instantiate(prefab_weapon_035);
-				weapon_035.parent = base.transform;
-				weapon_035.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_035;
-			weapon_type = WeaponType.LiquidFireGun;
-			break;
-		case 36:
-			if (weapon_036 == null)
-			{
-				weapon_036 = (Transform)Object.Instantiate(prefab_weapon_036);
-				weapon_036.parent = base.transform;
-				weapon_036.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_036;
-			weapon_type = WeaponType.LiquidFireGun;
-			break;
-		case 37:
-			if (weapon_037 == null)
-			{
-				weapon_037 = (Transform)Object.Instantiate(prefab_weapon_037);
-				weapon_037.parent = base.transform;
-				weapon_037.localPosition = new Vector3(0f, 0f, 0f);
-			}
-			transform = weapon_037;
-			weapon_type = WeaponType.MachineGun;
-			break;
+		switch (m_id) {
+			case 1:
+				if (weapon_001 == null)
+				{
+					weapon_001 = (Transform)Object.Instantiate(prefab_weapon_001);
+					weapon_001.parent = base.transform;
+					weapon_001.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_001;
+				weapon_type = WeaponType.Crossbow;
+				break;
+			case 2:
+				if (weapon_002 == null)
+				{
+					weapon_002 = (Transform)Object.Instantiate(prefab_weapon_002);
+					weapon_002.parent = base.transform;
+					weapon_002.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_002;
+				weapon_type = WeaponType.CloseWeapons;
+				break;
+			case 3:
+				if (weapon_003 == null)
+				{
+					weapon_003 = (Transform)Object.Instantiate(prefab_weapon_003);
+					weapon_003.parent = base.transform;
+					weapon_003.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_003;
+				weapon_type = WeaponType.ViolenceGun;
+				break;
+			case 4:
+				if (weapon_004 == null)
+				{
+					weapon_004 = (Transform)Object.Instantiate(prefab_weapon_004);
+					weapon_004.parent = base.transform;
+					weapon_004.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_004;
+				weapon_type = WeaponType.MachineGun;
+				break;
+			case 5:
+				if (weapon_005 == null)
+				{
+					weapon_005 = (Transform)Object.Instantiate(prefab_weapon_005);
+					weapon_005.parent = base.transform;
+					weapon_005.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_005;
+				weapon_type = WeaponType.RPG;
+				break;
+			case 6:
+				if (weapon_006 == null)
+				{
+					weapon_006 = (Transform)Object.Instantiate(prefab_weapon_006);
+					weapon_006.parent = base.transform;
+					weapon_006.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_006;
+				weapon_type = WeaponType.CloseWeapons;
+				break;
+			case 7:
+				if (weapon_007 == null)
+				{
+					weapon_007 = (Transform)Object.Instantiate(prefab_weapon_007);
+					weapon_007.parent = base.transform;
+					weapon_007.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_007;
+				weapon_type = WeaponType.CloseWeapons;
+				break;
+			case 8:
+				if (weapon_008 == null)
+				{
+					weapon_008 = (Transform)Object.Instantiate(prefab_weapon_008);
+					weapon_008.parent = base.transform;
+					weapon_008.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_008;
+				weapon_type = WeaponType.CloseWeapons;
+				break;
+			case 9:
+				if (weapon_009 == null)
+				{
+					weapon_009 = (Transform)Object.Instantiate(prefab_weapon_009);
+					weapon_009.parent = base.transform;
+					weapon_009.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_009;
+				weapon_type = WeaponType.Crossbow;
+				break;
+			case 10:
+				if (weapon_010 == null)
+				{
+					weapon_010 = (Transform)Object.Instantiate(prefab_weapon_010);
+					weapon_010.parent = base.transform;
+					weapon_010.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_010;
+				weapon_type = WeaponType.Crossbow;
+				break;
+			case 11:
+				if (weapon_011 == null)
+				{
+					weapon_011 = (Transform)Object.Instantiate(prefab_weapon_011);
+					weapon_011.parent = base.transform;
+					weapon_011.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_011;
+				weapon_type = WeaponType.ViolenceGun;
+				break;
+			case 12:
+				if (weapon_012 == null)
+				{
+					weapon_012 = (Transform)Object.Instantiate(prefab_weapon_012);
+					weapon_012.parent = base.transform;
+					weapon_012.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_012;
+				weapon_type = WeaponType.ViolenceGun;
+				break;
+			case 13:
+				if (weapon_013 == null)
+				{
+					weapon_013 = (Transform)Object.Instantiate(prefab_weapon_013);
+					weapon_013.parent = base.transform;
+					weapon_013.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_013;
+				weapon_type = WeaponType.RPG;
+				break;
+			case 14:
+				if (weapon_014 == null)
+				{
+					weapon_014 = (Transform)Object.Instantiate(prefab_weapon_014);
+					weapon_014.parent = base.transform;
+					weapon_014.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_014;
+				weapon_type = WeaponType.LiquidFireGun;
+				break;
+			case 15:
+				if (weapon_015 == null)
+				{
+					weapon_015 = (Transform)Object.Instantiate(prefab_weapon_015);
+					weapon_015.parent = base.transform;
+					weapon_015.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_015;
+				weapon_type = WeaponType.MachineGun;
+				break;
+			case 16:
+				if (weapon_016 == null)
+				{
+					weapon_016 = (Transform)Object.Instantiate(prefab_weapon_016);
+					weapon_016.parent = base.transform;
+					weapon_016.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_016;
+				weapon_type = WeaponType.MachineGun;
+				break;
+			case 17:
+				if (weapon_017 == null)
+				{
+					weapon_017 = (Transform)Object.Instantiate(prefab_weapon_017);
+					weapon_017.parent = base.transform;
+					weapon_017.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_017;
+				weapon_type = WeaponType.ViolenceGun;
+				break;
+			case 18:
+				if (weapon_018 == null)
+				{
+					weapon_018 = (Transform)Object.Instantiate(prefab_weapon_018);
+					weapon_018.parent = base.transform;
+					weapon_018.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_018;
+				weapon_type = WeaponType.MachineGun;
+				break;
+			case 19:
+				if (weapon_019 == null)
+				{
+					weapon_019 = (Transform)Object.Instantiate(prefab_weapon_019);
+					weapon_019.parent = base.transform;
+					weapon_019.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_019;
+				weapon_type = WeaponType.RPG;
+				break;
+			case 20:
+				if (weapon_020 == null)
+				{
+					weapon_020 = (Transform)Object.Instantiate(prefab_weapon_020);
+					weapon_020.parent = base.transform;
+					weapon_020.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_020;
+				weapon_type = WeaponType.RPG;
+				break;
+			case 21:
+				if (weapon_021 == null)
+				{
+					weapon_021 = (Transform)Object.Instantiate(prefab_weapon_021);
+					weapon_021.parent = base.transform;
+					weapon_021.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_021;
+				weapon_type = WeaponType.Crossbow;
+				break;
+			case 22:
+				if (weapon_022 == null)
+				{
+					weapon_022 = (Transform)Object.Instantiate(prefab_weapon_022);
+					weapon_022.parent = base.transform;
+					weapon_022.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_022;
+				weapon_type = WeaponType.LiquidFireGun;
+				break;
+			case 23:
+				if (weapon_023 == null)
+				{
+					weapon_023 = (Transform)Object.Instantiate(prefab_weapon_023);
+					weapon_023.parent = base.transform;
+					weapon_023.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_023;
+				weapon_type = WeaponType.LiquidFireGun;
+				break;
+			case 24:
+				if (weapon_024 == null)
+				{
+					weapon_024 = (Transform)Object.Instantiate(prefab_weapon_024);
+					weapon_024.parent = base.transform;
+					weapon_024.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_024;
+				weapon_type = WeaponType.CloseWeapons;
+				break;
+			case 25:
+				if (weapon_025 == null)
+				{
+					weapon_025 = (Transform)Object.Instantiate(prefab_weapon_025);
+					weapon_025.parent = base.transform;
+					weapon_025.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_025;
+				weapon_type = WeaponType.LiquidFireGun;
+				break;
+			case 26:
+				if (weapon_026 == null)
+				{
+					weapon_026 = (Transform)Object.Instantiate(prefab_weapon_026);
+					weapon_026.parent = base.transform;
+					weapon_026.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_026;
+				weapon_type = WeaponType.CloseWeapons;
+				break;
+			case 27:
+				if (weapon_027 == null)
+				{
+					weapon_027 = (Transform)Object.Instantiate(prefab_weapon_027);
+					weapon_027.parent = base.transform;
+					weapon_027.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_027;
+				weapon_type = WeaponType.MachineGun;
+				break;
+			case 28:
+				if (weapon_028 == null)
+				{
+					weapon_028 = (Transform)Object.Instantiate(prefab_weapon_028);
+					weapon_028.parent = base.transform;
+					weapon_028.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_028;
+				weapon_type = WeaponType.MachineGun;
+				break;
+			case 29:
+				if (weapon_029 == null)
+				{
+					weapon_029 = (Transform)Object.Instantiate(prefab_weapon_029);
+					weapon_029.parent = base.transform;
+					weapon_029.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_029;
+				weapon_type = WeaponType.RPG;
+				break;
+			case 30:
+				if (weapon_030 == null)
+				{
+					weapon_030 = (Transform)Object.Instantiate(prefab_weapon_030);
+					weapon_030.parent = base.transform;
+					weapon_030.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_030;
+				weapon_type = WeaponType.RPG;
+				break;
+			case 31:
+				if (weapon_031 == null)
+				{
+					weapon_031 = (Transform)Object.Instantiate(prefab_weapon_031);
+					weapon_031.parent = base.transform;
+					weapon_031.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_031;
+				weapon_type = WeaponType.Crossbow;
+				break;
+			case 32:
+				if (weapon_032 == null)
+				{
+					weapon_032 = (Transform)Object.Instantiate(prefab_weapon_032);
+					weapon_032.parent = base.transform;
+					weapon_032.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_032;
+				weapon_type = WeaponType.Crossbow;
+				break;
+			case 33:
+				if (weapon_033 == null)
+				{
+					weapon_033 = (Transform)Object.Instantiate(prefab_weapon_033);
+					weapon_033.parent = base.transform;
+					weapon_033.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_033;
+				weapon_type = WeaponType.ViolenceGun;
+				break;
+			case 34:
+				if (weapon_034 == null)
+				{
+					weapon_034 = (Transform)Object.Instantiate(prefab_weapon_034);
+					weapon_034.parent = base.transform;
+					weapon_034.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_034;
+				weapon_type = WeaponType.ViolenceGun;
+				break;
+			case 35:
+				if (weapon_035 == null)
+				{
+					weapon_035 = (Transform)Object.Instantiate(prefab_weapon_035);
+					weapon_035.parent = base.transform;
+					weapon_035.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_035;
+				weapon_type = WeaponType.LiquidFireGun;
+				break;
+			case 36:
+				if (weapon_036 == null)
+				{
+					weapon_036 = (Transform)Object.Instantiate(prefab_weapon_036);
+					weapon_036.parent = base.transform;
+					weapon_036.localPosition = new Vector3(0f, 0f, 0f);
+				}
+				transform = weapon_036;
+				weapon_type = WeaponType.LiquidFireGun;
+				break;
 		}
 		if (!flag)
 		{
