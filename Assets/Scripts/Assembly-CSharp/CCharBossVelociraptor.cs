@@ -25,25 +25,25 @@ public class CCharBossVelociraptor : CCharBoss
 
 	public override void InitAnimData()
 	{
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "run"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "left"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "right"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "death01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "death01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "damage"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "damage"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "damage"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Roar"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Roar"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "run"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "attack03_1"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "attack03_2"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "attack03_3"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_4, "Ready"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "left jump"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "right jump"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Velo_idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Velo_run"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "Velo_left"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "Velo_right"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Velo_attack01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Velo_death01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Velo_death01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Velo_damage"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Velo_damage"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Velo_damage"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Velo_Roar"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Velo_Roar"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Velo_run"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "Velo_attack03_1"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "Velo_attack03_2"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "Velo_attack03_3"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_4, "Velo_Ready"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "Velo_left jump"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "Velo_right jump"));
 	}
 
 	public override void InitAudioData()

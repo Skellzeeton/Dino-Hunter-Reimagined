@@ -27,27 +27,27 @@ public class CCharBossStegosaurus : CCharBoss
 
 	public override void InitAnimData()
 	{
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Idle01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Forward01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "TurnLeft01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "TurnRight01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Rush01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Death01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Death01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Damage_body01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Damage_body01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Damage_body01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Roar01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Roar01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "Attack02"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "Attack01_01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "Attack01_02"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_4, "Attack01_03"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "Attack03_01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "Attack03_02"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_7, "Attack03_03"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_8, "Backward01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Stego_Idle01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Stego_Forward01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "Stego_TurnLeft01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "Stego_TurnRight01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Stego_Rush01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Stego_Attack01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Stego_Death01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Stego_Death01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Stego_Damage_body01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Stego_Damage_body01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Stego_Damage_body01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Stego_Roar01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Stego_Roar01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "Stego_Attack02"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "Stego_Attack01_01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "Stego_Attack01_02"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_4, "Stego_Attack01_03"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "Stego_Attack03_01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "Stego_Attack03_02"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_7, "Stego_Attack03_03"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_8, "Stego_Backward01"));
 	}
 
 	public override void InitAudioData()

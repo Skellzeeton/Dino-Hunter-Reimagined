@@ -2055,10 +2055,10 @@ public class CCharPlayer : CCharBase
 			}
 		}
 		m_BackPackAnimData.Cleanup();
-		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Idle, "attack"));
-		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Forward, "front"));
-		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Left, "left"));
-		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Right, "right"));
+		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Idle, "jet_attack"));
+		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Forward, "jet_front"));
+		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Left, "jet_left"));
+		m_BackPackAnimData.Add(new CAnimInfo(kAnimEnum.BackPack_Right, "jet_right"));
 		m_BackPackAnimManager.Initialize(m_BackPack, m_BackPackAnimData);
 		m_BackPackAnimManager.CrossFade(kAnimEnum.BackPack_Idle, WrapMode.Loop, 0.3f, 1f, 0f);
 	}

@@ -25,26 +25,26 @@ public class CCharBossTyrannosaurus : CCharBoss
 
 	public override void InitAnimData()
 	{
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "run"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "left"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "right"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadFly, "death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "damage"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Head, "damage_head"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Leg, "damage_leg"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "damage"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "damage"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "roar"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "roar"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_MoveRoar, "roar"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "tyran_rush"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "attack02"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "attack03"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Tyran_idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Tyran_run"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "Tyran_left"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "Tyran_right"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Tyran_attack01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Tyran_death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadFly, "Tyran_death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Tyran_death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Tyran_damage"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Head, "Tyran_damage_head"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Leg, "Tyran_damage_leg"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Tyran_damage"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Tyran_damage"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Tyran_roar"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Tyran_roar"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_MoveRoar, "Tyran_roar"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Tyran_rush"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "Tyran_attack01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "Tyran_attack02"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "Tyran_attack03"));
 	}
 
 	public override void InitAudioData()

@@ -2,18 +2,18 @@ public class CCharMobBombworm : CCharMob
 {
 	public override void InitAnimData()
 	{
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Fly"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Attack"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadFly, "Death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHitFly, "Death"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Idle"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Fly"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Bombworm_Idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Bombworm_Fly"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Bombworm_Attack"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Bombworm_Death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadFly, "Bombworm_Death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Bombworm_Death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHitFly, "Bombworm_Death"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Bombworm_Idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Bombworm_Idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Bombworm_Idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Bombworm_Idle"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Bombworm_Fly"));
 	}
 
 	public override void InitAudioData()

@@ -511,6 +511,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -532,9 +534,11 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 1
   m_UpdateWhenOffscreen: 0
@@ -849,7 +853,6 @@ Animation:
   - {fileID: 7400000, guid: 8cdd6628c90dc1f40853b3533587f476, type: 2}
   - {fileID: 7400000, guid: 24aa269147221eb48b258cfba4b907fa, type: 2}
   - {fileID: 7400000, guid: 10bb47cac65272e43bb8d909935f05b3, type: 2}
-  - {fileID: 0}
   - {fileID: 7400000, guid: 6d31c3843531c2346aad608ea88aa18c, type: 2}
   - {fileID: 7400000, guid: 9f99f75d3fa9e7541845b5a451d875bc, type: 2}
   - {fileID: 7400000, guid: ba0d93c4f35d5544b9de82a2bd14ee79, type: 2}
@@ -874,7 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_v3Offset: {x: 0, y: 0.01, z: 0}
   m_Material: {fileID: 2100000, guid: 225290e9b9b2ef946baa0609b2d2a457, type: 2}
-  m_v2Size: {x: 2, y: 3}
+  m_v2Size: {x: 3, y: 3}
 --- !u!114 &114571478139744190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1524,6 +1527,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1545,9 +1550,11 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 1
   m_UpdateWhenOffscreen: 0

@@ -25,26 +25,26 @@ public class CCharBossDilphosaurus : CCharBoss
 
 	public override void InitAnimData()
 	{
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Idle01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Run01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "Left_Rotation01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "Right_Rotation01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Attack00_1"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Death01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Death01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Dagame_body01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Head, "Head_Damage01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Leg, "Dagame_foot01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Head_Damage01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Dagame_foot01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Roar01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Roar01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "Attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "Attack00_1"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "Attack01_left"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_4, "Attack01_right"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "Attack01"));
-		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "Attack_Pee"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "Dilo_Idle01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "Dilo_Run01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnLeft, "Dilo_Left_Rotation01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.TurnRight, "Dilo_Right_Rotation01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Dilo_Attack00_1"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Dilo_Death01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Dilo_Death01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Dilo_Damage_body01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Head, "Dilo_Head_Damage01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Leg, "Dilo_Damage_foot01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Dilo_Head_Damage01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Dilo_Damage_foot01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Dilo_Roar01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_ShowTime, "Dilo_Roar01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_1, "Dilo_Attack01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_2, "Dilo_Attack00_1"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_3, "Dilo_Attack01_left"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_4, "Dilo_Attack01_right"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "Dilo_Attack01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "Dilo_Attack_Pee"));
 	}
 
 	public override void InitAudioData()

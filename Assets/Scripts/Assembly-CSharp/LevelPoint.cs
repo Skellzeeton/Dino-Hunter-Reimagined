@@ -179,6 +179,7 @@ public class LevelPoint : MonoBehaviour
 			way_points_index = 0;
 			open_way_points_show = false;
 			OpenLevelAnimation(false);
+			CUISound.GetInstance().Play("UI_Game_status");
 			if (next_level != null)
 			{
 				next_level.SetLevelPointState(LevelPointState.Open, false);
