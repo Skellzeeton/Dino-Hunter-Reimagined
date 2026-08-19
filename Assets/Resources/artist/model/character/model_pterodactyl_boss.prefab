@@ -1041,6 +1041,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1062,14 +1064,16 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 1
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 0
-  m_Mesh: {fileID: 4300000, guid: 28f10b6e7a0f18948aaa7a999447f2d1, type: 2}
+  m_Mesh: {fileID: 4004681115446232462, guid: dcc8fb12af5f973cd877cc9a37c7d4bb, type: 3}
   m_Bones:
   - {fileID: 4133687334818056}
   - {fileID: 4414951417925444}
@@ -1174,6 +1178,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1195,14 +1201,16 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 1
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 0
-  m_Mesh: {fileID: 4300000, guid: 9a1574015b55a26458f930691437839f, type: 2}
+  m_Mesh: {fileID: -5516469175917862976, guid: dcc8fb12af5f973cd877cc9a37c7d4bb, type: 3}
   m_Bones:
   - {fileID: 4877569340455010}
   - {fileID: 4108786098052602}
