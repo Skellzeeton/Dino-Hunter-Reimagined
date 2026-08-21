@@ -4,6 +4,8 @@ public class iEntityDrop : MonoBehaviour
 {
 	protected bool m_bActive;
 
+	private const float kDefaultYOffset = 0.8f;
+
 	private void Update()
 	{
 		if (m_bActive && base.transform.parent != null)
@@ -22,5 +24,11 @@ public class iEntityDrop : MonoBehaviour
 	public void iEntityDrop_Go()
 	{
 		m_bActive = true;
+	}
+
+	public void ResetEntityDrop()
+	{
+		m_bActive = false;
+		transform.localPosition = new Vector3(0f, kDefaultYOffset, 0f);
 	}
 }

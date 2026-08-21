@@ -848,6 +848,69 @@ public class CCharMob : CCharBase
 		}
 	}
 
+	public virtual void ResetMob()
+	{
+		if (m_LifeBar != null && base.m_GameScene != null)
+		{
+			iGameUIBase gameUI = base.m_GameScene.GetGameUI();
+			if (gameUI != null)
+				gameUI.RemoveLifeBar(base.UID);
+			m_LifeBar = null;
+		}
+		m_AudioData.Clear();
+		m_AnimData.Cleanup();
+		isDead = false;
+		m_bDestroy = false;
+		m_bActive = true;
+		m_bHurting = false;
+		m_bBeatBack = false;
+		m_bBumping = false;
+		m_bMoribund = false;
+		m_bStun = false;
+		m_bFreeze = false;
+		m_bReadyToBlack = false;
+		m_bIsOffNavMesh = false;
+		m_bRecoveryActive = false;
+		m_bHasPurposePoint = false;
+		m_ltPath.Clear();
+		m_ltPathHover.Clear();
+		m_LockedAttackPoints.Clear();
+		m_ltSkillList.Clear();
+		m_ltSkillListAI.Clear();
+		m_ltSkillPassive.Clear();
+		m_ltSkillPassiveAI.Clear();
+		m_dictAssistAim.Clear();
+		if (m_Property != null)
+		{
+			m_Property.Initialize(ID, Level, m_GameScene.m_bMutiplyGame);
+			m_Property.UpdateSkill(this);
+		}
+		m_fHPMax = (m_Property != null) ? m_Property.GetValue(kProEnum.HPMax) : 100f;
+		m_fHP = m_fHPMax;
+		m_fHardinessCur = m_fHardinessMax;
+		ResetAI();
+		ClearPropertyBlock();
+		if (m_Behavior != null)
+			m_Behavior.Reset();
+		RemoveAllBuff();
+		CrossAnim(kAnimEnum.Idle, WrapMode.Loop, 0.1f, 1f, 0f);
+		m_AnimManager.StopAll();
+		m_nCarryGoldCur = m_nCarryGoldMax;
+		m_nCarryCrystalCur = m_nCarryCrystalMax;
+		foreach (SkillComboUserInfo skill in m_ltSkillList)
+			skill.ResetCoolDown();
+		foreach (SkillComboUserInfo skill in m_ltSkillListAI)
+			skill.ResetCoolDown();
+		m_dictUseSkill.Clear();
+		m_ltMeleeAttaker.Clear();
+		m_ltCom.Clear();
+		m_fUpdateMoveTime = 0f;
+		m_fNavMeshCheckTime = 0f;
+		m_NetAnim = kAnimEnum.None;
+		if (m_EntityDrop != null)
+			m_EntityDrop.ResetEntityDrop();
+		if (m_ModelBody != null) m_ModelBody.localScale = Vector3.one;
+	}
 	protected virtual void OnEnterAI(int nLastAI, int nAI)
 	{
 	}

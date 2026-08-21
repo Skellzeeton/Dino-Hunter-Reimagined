@@ -30,7 +30,7 @@
 	</gamelevel>
 	<gamelevel id="1005" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Boss" bp_cfg="20101" gamewave="1005001,1005002" task="1005" sp_cfg_ground="20111" exp="138" gold="42" desc="Hunt Tyrant King x 1">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="22"/>
+			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100001" mincount="1" maxcount="1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="1"/>
@@ -144,20 +144,20 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100020" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
 		<recommend recommendtype="1" recommandid="6" recommandlevel="1" islimit="true"/>
 	</gamelevel>
 	<gamelevel id="3002" BGM="BGM_Map01_0" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge_Dusk" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3002001,3002002,3002003" task="3002" sp_cfg_ground="10111" exp="35" gold="30" desc="Kill all dinos" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100020" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
 	</gamelevel>
 	<gamelevel id="3003" BGM="BGM_Map01_0" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3003001,3003002,3003003" task="3003" sp_cfg_ground="10111" exp="36" gold="30" desc="Survive a Horde of Dinosaurs for 3:00" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="32"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100020" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
 	</gamelevel>
 	<gamelevel id="3004" BGM="BGM_Timed" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3004001,3004002,3004003,3004004" task="3004" sp_cfg_ground="10111" exp="74" gold="45" desc="Kill all dinos in under 2:15" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>

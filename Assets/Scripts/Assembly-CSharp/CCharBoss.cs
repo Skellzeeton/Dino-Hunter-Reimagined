@@ -332,10 +332,33 @@ public class CCharBoss : CCharMob
 		}
 	}
 
+	public override void ResetMob()
+	{
+		base.ResetMob();
+		m_bInBlack = false;
+		m_bBlackThresholdHit = false;
+		m_bReadyToBlack = false;
+		m_fCurBlackLife = 0f;
+		m_fMaxBlackLife = 0f;
+		m_nChangeAI = -1;
+		m_fLifeTime = 0f;
+		ClearBodyEffect();
+		m_curTriggerList.Clear();
+		m_tmpTriggerList.Clear();
+		m_curTrigger = null;
+		DisableBlackGear();
+	}
+
 	public override void AddHP(float fHP)
 	{
 		base.AddHP(fHP);
 		TryTriggerBlack();
+	}
+
+	public void DisableBlackGear()
+	{
+		if (m_BlackGear != null)
+			m_BlackGear.gameObject.SetActive(false);
 	}
 
 	protected void TryTriggerBlack()
@@ -360,6 +383,7 @@ public class CCharBoss : CCharMob
 		m_bBlackThresholdHit = true;
 		ResetAI();
 	}
+
 	public void SetBlack(bool bBlack, float fBlackLife = 0f)
 	{
 		if (m_bInBlack == bBlack)

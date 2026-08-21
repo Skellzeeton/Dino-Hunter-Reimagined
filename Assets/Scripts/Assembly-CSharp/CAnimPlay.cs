@@ -78,6 +78,17 @@ public class CAnimPlay
 		}
 	}
 
+	public void StopAll()
+	{
+		if (m_Model == null) return;
+		Animation anim = m_Model.GetComponent<Animation>();
+		if (anim != null)
+		{
+			anim.Stop();
+		}
+		m_curFadeOutAnim = null;
+	}
+
 	public float GetAnimSpeed(kAnimEnum nType)
 	{
 		string name = m_AnimData.GetName(nType);

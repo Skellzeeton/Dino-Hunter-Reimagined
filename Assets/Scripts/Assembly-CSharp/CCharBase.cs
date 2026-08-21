@@ -188,6 +188,8 @@ public class CCharBase : MonoBehaviour
 
 	protected List<ComInfo> m_ltCom = new List<ComInfo>();
 
+	protected MaterialPropertyBlock m_PropBlock;
+
 	protected iGameSceneBase m_GameScene
 	{
 		get
@@ -481,6 +483,7 @@ public class CCharBase : MonoBehaviour
 			m_AudioController = m_ModelEntity.AddComponent<TAudioController>();
 		}
 		m_AnimManager.Initialize(m_ModelEntity, m_AnimData);
+		m_PropBlock = new MaterialPropertyBlock();
 		m_ltSkillPassive = new List<int>();
 		m_FixPos = new CFixPos();
 		m_bBeatBack = false;
@@ -500,11 +503,10 @@ public class CCharBase : MonoBehaviour
 			}
 		}
 	}
-	
+
 	public void Start()
 	{
 	}
-
 
 	public void Update()
 	{
@@ -583,35 +585,43 @@ public class CCharBase : MonoBehaviour
 	{
 	}
 
-	public void SetColor(Color color)
+	public virtual void SetColor(Color color)
 	{
-		if (m_ModelRenderer == null)
+		if (m_PropBlock == null)
+			m_PropBlock = new MaterialPropertyBlock();
+		m_PropBlock.SetColor("_Color", color);
+		ApplyPropertyBlock();
+	}
+
+	public virtual void SetAlpha(float fAlpha)
+	{
+		if (m_PropBlock == null)
+			m_PropBlock = new MaterialPropertyBlock();
+		Color currentColor = Color.white;
+		if (m_PropBlock.HasProperty("_Color"))
+			currentColor = m_PropBlock.GetColor("_Color");
+		currentColor.a = Mathf.Clamp01(fAlpha);
+		m_PropBlock.SetColor("_Color", currentColor);
+		ApplyPropertyBlock();
+	}
+
+	public virtual void ClearPropertyBlock()
+	{
+		if (m_PropBlock != null)
 		{
-			return;
-		}
-		for (int i = 0; i < m_ModelRenderer.Length; i++)
-		{
-			if (!(m_ModelRenderer[i] == null) && !(m_ModelRenderer[i] is ParticleSystemRenderer))
-			{
-				m_ModelRenderer[i].material.SetColor("_Color", color);
-			}
+			m_PropBlock.Clear();
+			ApplyPropertyBlock();
 		}
 	}
 
-	public void SetAlpha(float fAlpha)
+	protected void ApplyPropertyBlock()
 	{
-		if (m_ModelRenderer == null)
-		{
+		if (m_PropBlock == null || m_ModelRenderer == null)
 			return;
-		}
-		for (int i = 0; i < m_ModelRenderer.Length; i++)
+		foreach (Renderer rend in m_ModelRenderer)
 		{
-			if (!(m_ModelRenderer[i] == null) && !(m_ModelRenderer[i] is ParticleSystemRenderer))
-			{
-				Color color = m_ModelRenderer[i].material.GetColor("_Color");
-				color.a = Mathf.Clamp01(fAlpha);
-				m_ModelRenderer[i].material.SetColor("_Color", color);
-			}
+			if (rend != null && !(rend is ParticleSystemRenderer))
+				rend.SetPropertyBlock(m_PropBlock);
 		}
 	}
 

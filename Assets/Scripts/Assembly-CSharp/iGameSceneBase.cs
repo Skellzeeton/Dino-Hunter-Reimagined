@@ -507,6 +507,7 @@ public class iGameSceneBase
 				m_ltMonsterNumInfo.Add(monsterNumInfo);
 			}
 		}
+		PrePoolMobs();
 		MyUtils.UIDCount = 0;
 		m_TaskManager.AddTask(m_curGameLevelInfo.nTaskID);
 		m_nCurTaskID = m_curGameLevelInfo.nTaskID;
@@ -1057,7 +1058,7 @@ public class iGameSceneBase
 				}
 			}
 		}
-		PrefabManager.AddPool(1115, 15);
+		PrefabManager.AddPool(1115, 50);
 	}
 
 	private void EnforceTimeScale()
@@ -1925,6 +1926,110 @@ public class iGameSceneBase
 		}
 	}
 
+	protected void PrePoolMobs()
+	{
+		if (m_curGameLevelInfo == null || m_curGameLevelInfo.ltGameWave.Count == 0)
+			return;
+		Dictionary<int, int> mobTotalCounts = new Dictionary<int, int>();
+		HashSet<int> infiniteLoopMobs = new HashSet<int>();
+		foreach (int waveID in m_curGameLevelInfo.ltGameWave)
+		{
+			WaveInfo wave = m_GameData.GetWaveInfo(waveID);
+			if (wave == null) continue;
+			HashSet<int> distinctMobIDs = new HashSet<int>();
+			foreach (WaveMobInfo wmi in wave.m_ltWaveMobInfo)
+				distinctMobIDs.Add(wmi.nID);
+			int contributionPerMob = 0;
+			if (wave.m_bRandom)
+			{
+				contributionPerMob = wave.m_nMobCount;
+			}
+			else
+			{
+				contributionPerMob = 1;
+			}
+			if (wave.m_nLoop > 0)
+			{
+				contributionPerMob *= wave.m_nLoop;
+			}
+			else if (wave.m_nLoop == 0)
+			{
+				foreach (int mobID in distinctMobIDs)
+					infiniteLoopMobs.Add(mobID);
+				continue;
+			}
+			foreach (int mobID in distinctMobIDs)
+			{
+				if (mobTotalCounts.ContainsKey(mobID))
+					mobTotalCounts[mobID] += contributionPerMob;
+				else
+					mobTotalCounts[mobID] = contributionPerMob;
+			}
+		}
+		foreach (int mobID in new List<int>(mobTotalCounts.Keys))
+		{
+			CMobInfoLevel mobInfo = m_GameData.GetMobInfo(mobID, 1);
+			if (mobInfo == null) continue;
+			int behavior = -1;
+			CAIManagerInfo aiMgr = m_GameData.GetAIManagerInfo(mobInfo.nAIManagerID);
+			if (aiMgr != null)
+			{
+				CAIInfo ai = m_GameData.GetAIInfo(aiMgr.nAI);
+				if (ai != null) behavior = ai.nBehavior;
+			}
+			int effectiveMax = int.MaxValue;
+			foreach (MonsterNumInfo limit in m_ltMonsterNumInfo)
+			{
+				bool applies = false;
+				switch (limit.nLimitType)
+				{
+					case 0:
+						if (behavior == limit.nLimitValue) applies = true;
+						break;
+					case 1:
+						applies = true;
+						break;
+					case 2:
+						if (mobID == limit.nLimitValue) applies = true;
+						break;
+					case 3:
+						if (mobInfo.nType == limit.nLimitValue) applies = true;
+						break;
+				}
+				if (applies && limit.nMax < effectiveMax)
+					effectiveMax = limit.nMax;
+			}
+			if (infiniteLoopMobs.Contains(mobID))
+			{
+				if (effectiveMax == int.MaxValue)
+					effectiveMax = mobTotalCounts[mobID];
+				mobTotalCounts[mobID] = effectiveMax;
+			}
+			else
+			{
+				if (effectiveMax < mobTotalCounts[mobID])
+					mobTotalCounts[mobID] = effectiveMax;
+			}
+			mobTotalCounts[mobID] = Math.Max(0, mobTotalCounts[mobID]);
+		}
+		Dictionary<int, int> modelCounts = new Dictionary<int, int>();
+		foreach (var kvp in mobTotalCounts)
+		{
+			if (kvp.Value <= 0) continue;
+			CMobInfoLevel mobInfo = m_GameData.GetMobInfo(kvp.Key, 1);
+			if (mobInfo == null) continue;
+			int modelID = mobInfo.nModel;
+			if (modelCounts.ContainsKey(modelID))
+				modelCounts[modelID] += kvp.Value;
+			else
+				modelCounts[modelID] = kvp.Value;
+		}
+		foreach (var kvp in modelCounts)
+		{
+			PrefabManager.AddPool(kvp.Key, kvp.Value);
+		}
+	}
+
 	public void StartMobCG()
 	{
 		foreach (CCharMob value in m_MobMap.Values)
@@ -2038,14 +2143,17 @@ public class iGameSceneBase
 			return null;
 		GameObject prefab = PrefabManager.Get(mobInfo.nModel);
 		if (prefab == null) return null;
-		GameObject go = (GameObject)Object.Instantiate(prefab);
+		GameObject go = PrefabManager.GetPoolObject(mobInfo.nModel);
 		if (go == null) return null;
 		CCharMob component = go.GetComponent<CCharMob>();
 		if (component == null) return null;
+		component.ResetMob();
 		component.UID = nMobUID;
 		component.gameObject.name = "mob_" + component.UID;
 		component.InitMob(nMobID, nMobLevel);
 		component.InitAI(aimanagerID);
+		if (taskType == 3 && !bypass)
+			component.ApplyMissionModifications();
 		if (taskType == 3 && !bypass)
 		{
 			component.ApplyMissionModifications();
@@ -2061,6 +2169,13 @@ public class iGameSceneBase
 			component.Dir2D = m_User.Pos - component.Pos;
 		else
 			component.Dir2D = v3Dir;
+		component.gameObject.SetActiveRecursive(true);
+		if (component.IsBoss())
+		{
+			CCharBoss boss = component as CCharBoss;
+			if (boss != null)
+				boss.DisableBlackGear();
+		}
 		m_MobMap.Add(component.UID, component);
 		AddMonsterNumLimit(nMobID, mobInfo.nType, behaviourID);
 		if (component.IsBoss() && m_GameUI != null && m_GameUI.UIManager != null && m_GameUI.UIManager.mTaskPlane != null)
@@ -2147,10 +2262,17 @@ public class iGameSceneBase
 
 	public void RemoveMob(CCharMob charmob)
 	{
-		if (!(charmob == null))
+		if (charmob == null) return;
+		m_MobMap.Remove(charmob.UID);
+		charmob.ResetMob();
+		gyUIPoolObject poolObj = charmob.GetComponent<gyUIPoolObject>();
+		if (poolObj != null)
 		{
-			m_MobMap.Remove(charmob.UID);
-			charmob.Destroy();
+			poolObj.TakeBack(0f);
+		}
+		else
+		{
+			charmob.gameObject.SetActiveRecursive(false);
 		}
 	}
 

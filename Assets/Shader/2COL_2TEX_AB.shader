@@ -6,6 +6,7 @@ Shader "GGYY/Model/2COL_2TEX_AB"
         _MainTex ("MainTex(RGB)", 2D) = "" {}
         _SkinColor ("Skin Color", Color) = (1,1,1,1)
         _SkinTex ("SkinTex(RGB)", 2D) = "" {}
+        _Color ("Tint", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -20,7 +21,8 @@ Shader "GGYY/Model/2COL_2TEX_AB"
             #pragma multi_compile_fog
             #include "UnityCG.cginc"
             sampler2D _MainTex, _SkinTex;
-            fixed4 _MainColor, _SkinColor;
+            fixed4 _MainColor, _SkinColor, _Color;
+
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -46,6 +48,7 @@ Shader "GGYY/Model/2COL_2TEX_AB"
                 fixed4 color2 = tex2D(_SkinTex, i.texcoord0) * _SkinColor;
                 fixed4 combined = (color1 * color2 * 4.0 * color1.a * color2.a) + color1;
                 combined = saturate(combined);
+                combined *= _Color;
                 UNITY_APPLY_FOG(i.fogCoord, combined.rgb);
                 return combined;
             }
