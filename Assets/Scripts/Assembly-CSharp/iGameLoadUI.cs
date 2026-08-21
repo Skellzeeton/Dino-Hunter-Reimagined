@@ -36,6 +36,7 @@ public class iGameLoadUI : MonoBehaviour
 
 	private void Start()
 	{
+		iGameApp.SetGCMode(true);
 		iGameApp.GetInstance().ClearMemory();
 		iGameState gameState = iGameApp.GetInstance().m_GameState;
 		if (gameState != null && gameState.m_sLoadScene.Length > 0)
@@ -67,6 +68,7 @@ public class iGameLoadUI : MonoBehaviour
 	{
 		m_Async = SceneManager.LoadSceneAsync(sSceneName);
 		yield return m_Async;
+		iGameApp.SetGCMode(false);
 	}
 
 	public void SetIcon(string str)

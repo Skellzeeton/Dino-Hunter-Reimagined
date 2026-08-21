@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using gyAchievementSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Scripting;
 
 public class iGameApp
 {
@@ -289,6 +290,13 @@ public class iGameApp
 		{
 			m_ClearMemory.ClearMemory();
 		}
+	}
+
+	public static void SetGCMode(bool manual)
+	{
+		#if !UNITY_EDITOR
+		GarbageCollector.GCMode = manual ? GarbageCollector.Mode.Manual : GarbageCollector.Mode.Enabled;
+		#endif
 	}
 
 	public void CheckUnLock(bool bFirst = false)

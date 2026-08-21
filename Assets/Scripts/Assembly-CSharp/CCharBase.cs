@@ -214,6 +214,29 @@ public class CCharBase : MonoBehaviour
 		}
 	}
 
+	protected List<TransformState> m_InitialTransformStates = new List<TransformState>();
+
+	protected struct TransformState
+	{
+		public Transform transform;
+		public Vector3 localPosition;
+		public Quaternion localRotation;
+		public Vector3 localScale;
+	}
+
+	protected void RestoreInitialTransformStates()
+	{
+		foreach (var state in m_InitialTransformStates)
+		{
+			if (state.transform != null)
+			{
+				state.transform.localPosition = state.localPosition;
+				state.transform.localRotation = state.localRotation;
+				state.transform.localScale = state.localScale;
+			}
+		}
+	}
+
 	public int UID
 	{
 		get
@@ -470,6 +493,20 @@ public class CCharBase : MonoBehaviour
 		m_ltMeleeAttaker = new List<int>();
 		m_ModelEntity = base.transform.Find("Entity").gameObject;
 		m_ModelEntityTransform = m_ModelEntity.transform;
+		if (m_ModelEntityTransform != null)
+		{
+			foreach (Transform child in m_ModelEntityTransform.GetComponentsInChildren<Transform>())
+			{
+				if (child == m_ModelEntityTransform) continue;
+				m_InitialTransformStates.Add(new TransformState
+				{
+					transform = child,
+					localPosition = child.localPosition,
+					localRotation = child.localRotation,
+					localScale = child.localScale
+				});
+			}
+		}
 		m_Model = base.gameObject;
 		m_Model.name = "object_" + m_nUID;
 		m_ModelTransform = m_Model.transform;

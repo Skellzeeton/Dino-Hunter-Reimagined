@@ -923,27 +923,6 @@ public class iGameSceneBase
 		AndroidReturnPlugin.instance.SetIngamePause(false);
 	}
 
-	private string GetBGM()
-	{
-		switch (Application.loadedLevelName)
-		{
-			case "SceneLava":
-			case "SceneLava2":
-				return "BGM_Map03";
-			
-			case "Yulin_shouwei01":
-			case "Yulin_shouwei02":
-				return "BGM_Map01";
-
-			case "SceneIce":
-			case "SceneSnow":
-				return "BGM_Map02";
-
-			default:
-				return "BGM_Map01";
-		}
-	}
-
 	public void RestartGame()
 	{
 		bool isDead = m_User.isDead;
@@ -1936,27 +1915,23 @@ public class iGameSceneBase
 		{
 			WaveInfo wave = m_GameData.GetWaveInfo(waveID);
 			if (wave == null) continue;
+
 			HashSet<int> distinctMobIDs = new HashSet<int>();
 			foreach (WaveMobInfo wmi in wave.m_ltWaveMobInfo)
 				distinctMobIDs.Add(wmi.nID);
+
 			int contributionPerMob = 0;
 			if (wave.m_bRandom)
-			{
 				contributionPerMob = wave.m_nMobCount;
-			}
 			else
-			{
 				contributionPerMob = 1;
-			}
 			if (wave.m_nLoop > 0)
-			{
 				contributionPerMob *= wave.m_nLoop;
-			}
 			else if (wave.m_nLoop == 0)
 			{
 				foreach (int mobID in distinctMobIDs)
 					infiniteLoopMobs.Add(mobID);
-				continue;
+				contributionPerMob = 1;
 			}
 			foreach (int mobID in distinctMobIDs)
 			{
@@ -1965,6 +1940,56 @@ public class iGameSceneBase
 				else
 					mobTotalCounts[mobID] = contributionPerMob;
 			}
+		}
+		Dictionary<int, int> additionalSplits = new Dictionary<int, int>();
+		foreach (int srcMobID in mobTotalCounts.Keys)
+		{
+			CMobInfoLevel srcMobInfo = m_GameData.GetMobInfo(srcMobID, 1);
+			if (srcMobInfo == null) continue;
+			void ProcessSkill(int skillID, int multiplier)
+			{
+				CSkillInfoLevel skill = m_GameData.GetSkillInfo(skillID, 1);
+				if (skill == null) return;
+				int splitID = -1;
+				int splitCount = 1;
+				for (int i = 0; i < skill.arrValueX.Length && i < skill.arrValueY.Length; i++)
+				{
+					if (skill.arrValueX[i] == 5005)
+						splitID = skill.arrValueY[i];
+					else if (skill.arrValueX[i] == 5006)
+						splitCount = skill.arrValueY[i];
+				}
+				if (splitID > 0 && splitCount > 0)
+				{
+					int totalSplits = multiplier * splitCount;
+					if (additionalSplits.ContainsKey(splitID))
+						additionalSplits[splitID] += totalSplits;
+					else
+						additionalSplits[splitID] = totalSplits;
+				}
+			}
+			if (srcMobInfo.ltSkill != null)
+			{
+				foreach (SkillComboRateInfo comboRate in srcMobInfo.ltSkill)
+				{
+					CSkillComboInfo combo = m_GameData.GetSkillComboInfo(comboRate.m_nID);
+					if (combo == null || combo.ltSkill == null) continue;
+					foreach (int skillID in combo.ltSkill)
+						ProcessSkill(skillID, mobTotalCounts[srcMobID]);
+				}
+			}
+			if (srcMobInfo.ltSkillPassive != null)
+			{
+				foreach (int skillID in srcMobInfo.ltSkillPassive)
+					ProcessSkill(skillID, mobTotalCounts[srcMobID]);
+			}
+		}
+		foreach (var kvp in additionalSplits)
+		{
+			if (mobTotalCounts.ContainsKey(kvp.Key))
+				mobTotalCounts[kvp.Key] += kvp.Value;
+			else
+				mobTotalCounts[kvp.Key] = kvp.Value;
 		}
 		foreach (int mobID in new List<int>(mobTotalCounts.Keys))
 		{
@@ -1983,27 +2008,17 @@ public class iGameSceneBase
 				bool applies = false;
 				switch (limit.nLimitType)
 				{
-					case 0:
-						if (behavior == limit.nLimitValue) applies = true;
-						break;
-					case 1:
-						applies = true;
-						break;
-					case 2:
-						if (mobID == limit.nLimitValue) applies = true;
-						break;
-					case 3:
-						if (mobInfo.nType == limit.nLimitValue) applies = true;
-						break;
+					case 0: if (behavior == limit.nLimitValue) applies = true; break;
+					case 1: applies = true; break;
+					case 2: if (mobID == limit.nLimitValue) applies = true; break;
+					case 3: if (mobInfo.nType == limit.nLimitValue) applies = true; break;
 				}
 				if (applies && limit.nMax < effectiveMax)
 					effectiveMax = limit.nMax;
 			}
 			if (infiniteLoopMobs.Contains(mobID))
 			{
-				if (effectiveMax == int.MaxValue)
-					effectiveMax = mobTotalCounts[mobID];
-				mobTotalCounts[mobID] = effectiveMax;
+				mobTotalCounts[mobID] = (effectiveMax == int.MaxValue) ? 1 : effectiveMax;
 			}
 			else
 			{
@@ -3472,7 +3487,7 @@ public class iGameSceneBase
 		if (!m_bMutiplyGame)
 		{
 			m_GameUI.ShowRevive(false, 0f);
-			CSoundScene.GetInstance().PlayBGM(GetBGM());
+			CSoundScene.GetInstance().PlayBGM(m_curGameLevelInfo.sBGM);
 			CSoundScene.GetInstance().PlayAmbienceBGM(m_curGameLevelInfo.sBGMAmbience);
 		}
 		else

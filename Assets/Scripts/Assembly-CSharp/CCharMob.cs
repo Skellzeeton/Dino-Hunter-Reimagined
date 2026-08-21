@@ -184,14 +184,12 @@ public class CCharMob : CCharBase
 		base.Start();
 	}
 
-
 	public new void Update()
 	{
 		if (!m_bActive)
 		{
 			return;
 		}
-
 		base.Update();
 		float num = Time.deltaTime * m_fTimeScale;
 		if (CGameNetManager.GetInstance().IsRoomMaster() && !base.isDead)
@@ -213,18 +211,15 @@ public class CCharMob : CCharBase
 					m_bRecoveryActive = false;
 				}
 			}
-
 			if (m_bRecoveryActive)
 			{
 				CheckRecoveryComplete();
 			}
 		}
-
 		if (m_Behavior != null)
 		{
 			m_Behavior.Update(this, num);
 		}
-
 		if (base.m_GameState.isNetGame)
 		{
 			m_fUpdateMoveTime -= num;
@@ -910,7 +905,9 @@ public class CCharMob : CCharBase
 		if (m_EntityDrop != null)
 			m_EntityDrop.ResetEntityDrop();
 		if (m_ModelBody != null) m_ModelBody.localScale = Vector3.one;
+		RestoreInitialTransformStates();
 	}
+
 	protected virtual void OnEnterAI(int nLastAI, int nAI)
 	{
 	}
@@ -1030,7 +1027,6 @@ public class CCharMob : CCharBase
 		{
 			return 0;
 		}
-
 		return m_dictUseSkill[nSkillID];
 	}
 
