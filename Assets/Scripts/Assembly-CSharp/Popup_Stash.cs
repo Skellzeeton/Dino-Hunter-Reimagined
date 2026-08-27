@@ -21,9 +21,13 @@ public class Popup_Stash : MonoBehaviour
 
 	public Btn_Search_Sell btn_search;
 
+	public TUIButtonClick btn_add;
+
 	public Btn_Search_Sell btn_sell;
 
-	public TUIButtonClick btn_add;
+	public TUIButtonClick btn_sell_mat;
+
+	public TUIButtonClick btn_select_all;
 
 	private Btn_Select_Stash goods_control;
 
@@ -46,6 +50,7 @@ public class Popup_Stash : MonoBehaviour
 	{
 		SetPriceTextNull();
 		SetSellBtnEnableEx(false);
+		SetSellButtonLayout(false);
 	}
 
 
@@ -90,6 +95,30 @@ public class Popup_Stash : MonoBehaviour
 	public void HideSell()
 	{
 		go_sell.transform.localPosition = new Vector3(0f, -2000f, go_sell.transform.localPosition.z);
+		ResetSellUI();
+	}
+
+	private void SetSellButtonLayout(bool selectAllActive)
+	{
+		if (btn_sell_mat == null) return;
+
+		if (selectAllActive)
+		{
+			btn_sell_mat.transform.localScale = new Vector3(0.8f, 0.8f, 1f);
+			btn_sell_mat.transform.localPosition = new Vector3(-45f, btn_sell_mat.transform.localPosition.y, btn_sell_mat.transform.localPosition.z);
+		}
+		else
+		{
+			btn_sell_mat.transform.localScale = Vector3.one;
+			btn_sell_mat.transform.localPosition = new Vector3(0f, btn_sell_mat.transform.localPosition.y, btn_sell_mat.transform.localPosition.z);
+		}
+	}
+
+	private void ResetSellUI()
+	{
+		if (btn_select_all != null)
+			btn_select_all.gameObject.SetActive(false);
+		SetSellButtonLayout(false);
 	}
 
 	public void SetInfo(TUIStashInfo m_stash_info, GameObject go_invoke)
@@ -250,6 +279,12 @@ public class Popup_Stash : MonoBehaviour
 		return go_sell.GetCountNow();
 	}
 
+	public void SetSellParamMax()
+	{
+		if (go_sell != null)
+			go_sell.SetCountMax();
+	}
+
 	public void SetGoodsControl(Btn_Select_Stash control)
 	{
 		if (control != null)
@@ -263,12 +298,19 @@ public class Popup_Stash : MonoBehaviour
 					SetPriceText(goodsInfo.name, goodsInfo.price_info);
 					SetSellParam(goodsInfo.count, goodsInfo.price_info);
 					SetSellBtnEnableEx(true);
+					bool showSelectAll = goodsInfo.count >= 3;
+					if (btn_select_all != null)
+						btn_select_all.gameObject.SetActive(showSelectAll);
+					SetSellButtonLayout(showSelectAll);
 				}
 				else
 				{
 					SetPriceTextNull();
 					SetSellParamNull();
 					SetSellBtnEnableEx(false);
+					if (btn_select_all != null)
+						btn_select_all.gameObject.SetActive(false);
+					SetSellButtonLayout(false);
 				}
 			}
 		}
@@ -278,9 +320,11 @@ public class Popup_Stash : MonoBehaviour
 			SetPriceTextNull();
 			SetSellParamNull();
 			SetSellBtnEnableEx(false);
+			if (btn_select_all != null)
+				btn_select_all.gameObject.SetActive(false);
+			SetSellButtonLayout(false);
 		}
 	}
-	
 
 	public void UpdateSellGoods(bool m_open_sfx)
 	{

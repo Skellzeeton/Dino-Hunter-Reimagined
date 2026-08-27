@@ -374,6 +374,18 @@ public class Scene_Stash : MonoBehaviour
 		}
 	}
 
+	public void TUIEvent_SelectAll(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Button");
+			}
+			popup_stash.SetSellParamMax();
+		}
+	}
+
 	public void TUIEvent_CloseSell(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
 		if (event_type == 3)

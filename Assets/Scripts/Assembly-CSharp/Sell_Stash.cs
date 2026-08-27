@@ -81,6 +81,14 @@ public class Sell_Stash : MonoBehaviour
 		SetPriceText(count_now * price_info.price);
 	}
 
+	public void SetCountMax()
+	{
+		if (price_info == null) return;
+		count_now = count;
+		SetCountText(count_now);
+		SetPriceText(count_now * price_info.price);
+	}
+
 	public void SetCountText(int m_count)
 	{
 		label_count.Text = m_count.ToString();
