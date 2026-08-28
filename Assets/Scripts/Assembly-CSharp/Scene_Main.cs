@@ -31,6 +31,8 @@ public class Scene_Main : MonoBehaviour
 
 	public PopupSaveManager savePopup;
 
+	public PopupConfirmDelete popupConfirmDelete;
+
 	private bool m_bShowingSaveError = false;
 
 	private bool connect_success;
@@ -46,6 +48,8 @@ public class Scene_Main : MonoBehaviour
 	private bool didTheThing;
 
 	private bool m_bSaveLoaded = false;
+
+	private int pendingDeleteSlot = -1;
 
 	private void Awake()
 	{
@@ -399,14 +403,36 @@ public class Scene_Main : MonoBehaviour
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
-			{
 				CUISound.GetInstance().Play("UI_Button");
-			}
-
 			int slot = ExtractSlotIndex(control);
-			if (savePopup != null)
-				savePopup.OnDeleteSlot(slot);
+			pendingDeleteSlot = slot;
+			if (popupConfirmDelete != null)
+				popupConfirmDelete.Show(slot, null);
 		}
+	}
+
+	public void TUIEvent_ConfirmDelete(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != 3) return;
+		if (sfx_open_now)
+			CUISound.GetInstance().Play("UI_Button");
+		if (pendingDeleteSlot >= 0 && savePopup != null)
+		{
+			savePopup.OnDeleteSlot(pendingDeleteSlot);
+		}
+		pendingDeleteSlot = -1;
+		if (popupConfirmDelete != null)
+			popupConfirmDelete.Hide();
+	}
+
+	public void TUIEvent_CloseConfirm(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != 3) return;
+		if (sfx_open_now)
+			CUISound.GetInstance().Play("UI_Cancle");
+		pendingDeleteSlot = -1;
+		if (popupConfirmDelete != null)
+			popupConfirmDelete.Hide();
 	}
 
 	private int ExtractSlotIndex(TUIControl control)
