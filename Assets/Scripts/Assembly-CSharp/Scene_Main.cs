@@ -29,8 +29,10 @@ public class Scene_Main : MonoBehaviour
 
 	public PopupGlobal popup_warning;
 
+	public PopupSaveManager savePopup;
+
 	private bool m_bShowingSaveError = false;
-	
+
 	private bool connect_success;
 
 	private ServerConnectFailType server_connect_fail;
@@ -43,17 +45,17 @@ public class Scene_Main : MonoBehaviour
 
 	private bool didTheThing;
 
+	private bool m_bSaveLoaded = false;
+
 	private void Awake()
-	{ 
+	{
 		TUIDataServer.Instance().Initialize();
-		//global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMain>(TUIEvent_SetUIInfo);
 		label_text.Text = "touch to play";
 	}
 
 	private void Start()
 	{
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_EnterInfo));
-
 		if (music_open_now)
 		{
 			CUISound.GetInstance().Play("BGM_startscreen");
@@ -68,34 +70,18 @@ public class Scene_Main : MonoBehaviour
 			if (popup_warning != null)
 				popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
 		}
+		else
+		{
+			ShowSavePopup();
+		}
 	}
 
 	private void Update()
 	{
-		if (Input2.touchCount > 0 && !didTheThing && !m_bShowingSaveError)
+		if (Input2.touchCount > 0 && !didTheThing && !m_bShowingSaveError && m_bSaveLoaded &&
+		!(savePopup != null && savePopup.IsShowing()))
 		{
-			iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
-			bool isNewPlayer = (dataCenter != null &&
-			dataCenter.nTutorialVillageState == (int)NewHelpState.None &&
-			!dataCenter.IsLevelPassed(1001));
-			if (isNewPlayer)
-			{
-				iGameApp.GetInstance().m_GameState.GameLevel = 1001;
-				is_enter_level_scene = true;
-				next_scene_id = 2;
-			}
-			else
-			{
-				is_enter_level_scene = false;
-				next_scene = "Scene_MainMenu";
-			}
-			is_fade_out = true;
-			m_fade.FadeOut();
-			CUISound.GetInstance().Play("UI_Entergame");
-			CUISound.GetInstance().Play("UI_Button");
-			CUISound.GetInstance().Play("BGM_theme");
-			CUISound.GetInstance().Stop("BGM_startscreen");
-			didTheThing = true;
+			ProceedToGame();
 		}
 		if (m_fade == null)
 		{
@@ -139,9 +125,102 @@ public class Scene_Main : MonoBehaviour
 		}
 	}
 
+	private void ShowSavePopup()
+	{
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc == null) return;
+		int lastSlot = SettingsManager.Instance.LastSaveSlot;
+		var slots = dc.GetSaveSlotsInfo();
+		bool slotExists = (lastSlot >= 0 && lastSlot < slots.Count && slots[lastSlot].exists);
+		if (slotExists)
+		{
+			dc.SwitchToSlot(lastSlot);
+			if (savePopup != null)
+				savePopup.Show();
+			m_bSaveLoaded = true;
+		}
+		else
+		{
+			int targetSlot = -1;
+			int existingCount = 0;
+			for (int i = 0; i < slots.Count; i++)
+			{
+				if (slots[i].exists) existingCount++;
+				if (!slots[i].exists && targetSlot == -1)
+					targetSlot = i;
+			}
+			if (targetSlot == -1)
+			{
+				targetSlot = 0;
+			}
+			dc.CreateNewSlot(targetSlot);
+			SettingsManager.Instance.LastSaveSlot = targetSlot;
+			if (savePopup != null)
+				savePopup.Show();
+			m_bSaveLoaded = true;
+			if (existingCount == 0)
+			{
+				iGameApp.PendingPopupMessage = "No save was detected, the game has created a fresh save for you.";
+				if (popup_warning != null)
+					popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
+			}
+		}
+		if (!string.IsNullOrEmpty(iGameApp.PendingPopupMessage) && popup_warning != null)
+		{
+			popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
+		}
+	}
+
 	private void OnDestroy()
 	{
+		if (savePopup != null)
+			savePopup.Hide();
 		global::EventCenter.EventCenter.Instance.Unregister<TUIEvent.BackEvent_SceneMain>(TUIEvent_SetUIInfo);
+	}
+
+	public void OnSaveLoaded()
+	{
+		m_bSaveLoaded = true;
+		if (savePopup != null && savePopup.IsShowing())
+			savePopup.Hide();
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc != null)
+		{
+			SettingsManager.Instance.LastSaveSlot = dc.CurrentSlot;
+		}
+	}
+
+	private void ProceedToGame()
+	{
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc != null)
+		{
+			bool isNewPlayer = (dc.nTutorialVillageState == (int)NewHelpState.None &&
+			!dc.IsLevelPassed(1001));
+			if (isNewPlayer)
+			{
+				iGameApp.GetInstance().m_GameState.GameLevel = 1001;
+				is_enter_level_scene = true;
+				next_scene_id = 2;
+			}
+			else
+			{
+				is_enter_level_scene = false;
+				next_scene = "Scene_MainMenu";
+			}
+		}
+		else
+		{
+			is_enter_level_scene = false;
+			next_scene = "Scene_MainMenu";
+		}
+		is_fade_out = true;
+		m_fade.FadeOut();
+		CUISound.GetInstance().Play("UI_Entergame");
+		CUISound.GetInstance().Play("UI_Button");
+		CUISound.GetInstance().Play("BGM_theme");
+		CUISound.GetInstance().Stop("BGM_startscreen");
+		didTheThing = true;
 	}
 
 	public void TUIEvent_SetUIInfo(object sender, TUIEvent.BackEvent_SceneMain m_event)
@@ -163,12 +242,11 @@ public class Scene_Main : MonoBehaviour
 		if (sceneName != string.Empty)
 		{
 			next_scene = sceneName;
-			CUISound.GetInstance().Stop("Amb_Map01_Rainforest_night");
 		}
 		else
 		{
 			next_scene = "Scene_MainMenu";
-			CUISound.GetInstance().Play("Amb_Map01_Rainforest_night");
+
 		}
 		if (!is_fade_out)
 		{
@@ -197,11 +275,16 @@ public class Scene_Main : MonoBehaviour
 			{
 				CUISound.GetInstance().Play("UI_Button");
 			}
+			if (!string.IsNullOrEmpty(iGameApp.PendingPopupMessage))
+			{
+				iGameApp.PendingPopupMessage = "";
+				if (popup_warning != null)
+					popup_warning.Hide();
+				return;
+			}
 			if (m_bShowingSaveError)
 			{
 				m_bShowingSaveError = false;
-				string msg = iGameApp.PendingPopupMessage;
-				iGameApp.PendingPopupMessage = "";
 				if (popup_warning != null)
 					popup_warning.Hide();
 				iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
@@ -234,7 +317,28 @@ public class Scene_Main : MonoBehaviour
 			}
 			else
 			{
-				Debug.LogWarning("error!");
+				Debug.LogWarning("Unhandled server connect fail type: " + server_connect_fail);
+			}
+		}
+	}
+
+	public void TUIEvent_CloseSavePopup(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Cancle");
+			}
+			if (savePopup != null)
+			{
+				iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+				if (dc == null || !dc.m_bSlotLoaded)
+				{
+					Debug.LogWarning("No save loaded! Please select or create a save before closing.");
+					return;
+				}
+				savePopup.OnBack();
 			}
 		}
 	}
@@ -261,5 +365,65 @@ public class Scene_Main : MonoBehaviour
 			}
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_PopupServerCancle));
 		}
+	}
+
+	public void TUIEvent_LoadSlot(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Button");
+			}
+			int slot = ExtractSlotIndex(control);
+			if (savePopup != null)
+			{
+				iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+				if (dc != null)
+				{
+					var slots = dc.GetSaveSlotsInfo();
+					if (slot >= 0 && slot < slots.Count)
+					{
+						if (slots[slot].exists)
+							savePopup.OnLoadSlot(slot);
+						else
+							savePopup.OnCreateSlot(slot);
+					}
+				}
+			}
+		}
+	}
+
+	public void TUIEvent_DeleteSlot(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Button");
+			}
+
+			int slot = ExtractSlotIndex(control);
+			if (savePopup != null)
+				savePopup.OnDeleteSlot(slot);
+		}
+	}
+
+	private int ExtractSlotIndex(TUIControl control)
+	{
+		string name = control.name;
+		int underscore = name.LastIndexOf('_');
+		if (underscore >= 0 && int.TryParse(name.Substring(underscore + 1), out int slot))
+			return slot;
+		Transform parent = control.transform.parent;
+		if (parent != null)
+		{
+			string parentName = parent.name;
+			underscore = parentName.LastIndexOf('_');
+			if (underscore >= 0 && int.TryParse(parentName.Substring(underscore + 1), out slot))
+				return slot;
+		}
+		Debug.LogWarning("ExtractSlotIndex: Could not find slot index for control: " + control.name);
+		return 0;
 	}
 }

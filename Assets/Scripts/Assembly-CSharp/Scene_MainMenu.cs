@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using EventCenter;
 using UnityEngine;
+using System;
 
 public class Scene_MainMenu : MonoBehaviour
 {
@@ -174,32 +175,21 @@ public class Scene_MainMenu : MonoBehaviour
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_SaleInfo));
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_DailyLoginBonusInfo));
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_DailyMissionsInfo));
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc != null)
+		{
+			List<int> dailyTasks = dc.GetDailyTask();
+			if (dailyTasks == null || dailyTasks.Count == 0)
+			{
+				dc.RefreshServerDateTime(DateTime.Now);
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_DailyMissionsInfo));
+			}
+		}
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_EnterInfo));
 		DoNewHelp();
 		{
-			if (PlayerPrefs.HasKey("MusicVolume"))
-			{
-				float currentMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
-				TAudioManager.instance.musicVolume = currentMusicVolume;
-			}
-			else
-			{
-				float defaultMusicVolume = 1f;
-				TAudioManager.instance.musicVolume = defaultMusicVolume;
-				PlayerPrefs.SetFloat("MusicVolume", defaultMusicVolume);
-				PlayerPrefs.Save();
-			}
-			
-			if (PlayerPrefs.HasKey("SFXVolume"))
-			{
-				currentSFXVolume = PlayerPrefs.GetFloat("SFXVolume");
-			}
-			else
-			{
-				currentSFXVolume = 1f;
-				PlayerPrefs.SetFloat("SFXVolume", currentSFXVolume);
-				PlayerPrefs.Save();
-			}
+			TAudioManager.instance.musicVolume = SettingsManager.Instance.MusicVolume;
+			currentSFXVolume = SettingsManager.Instance.SoundVolume;
 			TAudioManager.instance.soundVolume = currentSFXVolume;
 			CUISound.GetInstance().Play("Amb_Village");
 		}
@@ -746,8 +736,6 @@ public class Scene_MainMenu : MonoBehaviour
 		iDataCenter dataCenter = app.m_GameData.GetDataCenter();
 		if (dataCenter == null)
 			return false;
-
-		// Check weapons
 		iWeaponCenter weaponCenter = app.m_GameData.GetWeaponCenter();
 		if (weaponCenter != null)
 		{
@@ -757,21 +745,16 @@ public class Scene_MainMenu : MonoBehaviour
 				CLevelUpWeapon levelUpWeapon = new CLevelUpWeapon();
 				foreach (CWeaponInfo weaponInfo in weaponData.Values)
 				{
-					// Skip if not unlockable
 					bool isUnlockable = (weaponInfo.m_nUnlockStageID == 0 && weaponInfo.m_nUnlockHunterLvl == 0) ||
 					(weaponInfo.m_nUnlockStageID > 0 && dataCenter.IsLevelPassed(weaponInfo.m_nUnlockStageID)) ||
 					(weaponInfo.m_nUnlockHunterLvl > 0 && dataCenter.HunterLvl >= weaponInfo.m_nUnlockHunterLvl);
 
 					if (!isUnlockable)
 						continue;
-
 					int nSignState = 0;
 					dataCenter.GetWeaponSign(weaponInfo.nID, ref nSignState);
-
-					// Skip if new (already handled separately)
 					if (nSignState == 1)
 						continue;
-
 					int nLevel = -1;
 					bool isOwned = dataCenter.GetWeaponLevel(weaponInfo.nID, ref nLevel) && nLevel >= 0;
 					bool canPurchase = !isOwned && levelUpWeapon.CheckCanUpgrade(weaponInfo.nID, 1f);
@@ -782,8 +765,6 @@ public class Scene_MainMenu : MonoBehaviour
 				}
 			}
 		}
-
-		// Check avatars
 		if (app.m_GameData.m_AvatarCenter != null)
 		{
 			Dictionary<int, CAvatarInfo> avatarData = app.m_GameData.m_AvatarCenter.GetData();

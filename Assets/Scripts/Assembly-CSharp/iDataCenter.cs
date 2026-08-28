@@ -31,10 +31,12 @@ public class iDataCenter
 			m_nID = id;
 		}
 	}
-
-	private const string SAVE_FILE = "gamedata.json";
-	private const string BACKUP_FILE = "gamedata.json.bak";
-	private const string TEMP_FILE = "gamedata.json.tmp";
+	private int m_nCurrentSlot = 0;
+	public bool m_bSlotLoaded = false;
+	private const int MAX_SLOTS = 5;
+	private const string SAVE_FILE_FORMAT = "gamedata_slot{0}.json";
+	private const string BACKUP_FILE_FORMAT = "gamedata_slot{0}.json.bak";
+	private const string TEMP_FILE_FORMAT = "gamedata_slot{0}.json.tmp";
 
 	public bool isFirstTimePlay
 	{
@@ -405,6 +407,23 @@ public class iDataCenter
 		set { m_DeadInCoopCount.Set(value); }
 	}
 
+	public int CurrentSlot
+	{
+		get { return m_nCurrentSlot; }
+		set
+		{
+			if (value < 0 || value >= MAX_SLOTS)
+				throw new ArgumentOutOfRangeException("Slot must be between 0 and 4");
+			if (value != m_nCurrentSlot)
+			{
+				if (m_bSlotLoaded)
+					SaveCurrentSlot();
+				m_nCurrentSlot = value;
+				m_bSlotLoaded = false;
+			}
+		}
+	}
+
 	public iDataCenter()
 	{
 		m_nGold = new SafeInteger();
@@ -542,17 +561,69 @@ public class iDataCenter
 
 	private string GetCurrentPath()
 	{
-		return GetSavePath(SAVE_FILE);
+		return GetSavePath(string.Format(SAVE_FILE_FORMAT, m_nCurrentSlot));
 	}
 
 	private string GetBackupPath()
 	{
-		return GetSavePath(BACKUP_FILE);
+		return GetSavePath(string.Format(BACKUP_FILE_FORMAT, m_nCurrentSlot));
 	}
 
 	private string GetTempPath()
 	{
-		return GetSavePath(TEMP_FILE);
+		return GetSavePath(string.Format(TEMP_FILE_FORMAT, m_nCurrentSlot));
+	}
+
+	public bool SlotExists(int slot)
+	{
+		if (slot < 0 || slot >= MAX_SLOTS) return false;
+		string path = GetSavePath(string.Format(SAVE_FILE_FORMAT, slot));
+		return File.Exists(path);
+	}
+
+	public void DeleteSlot(int slot)
+	{
+		if (slot < 0 || slot >= MAX_SLOTS) return;
+		string basePath = GetSavePath(string.Format("gamedata_slot{0}", slot));
+		string[] files = { basePath + ".json", basePath + ".json.bak", basePath + ".json.tmp" };
+		foreach (string f in files)
+		{
+			if (File.Exists(f)) File.Delete(f);
+		}
+		if (slot == m_nCurrentSlot)
+		{
+			Clear();
+			m_bSlotLoaded = false;
+		}
+	}
+
+	public void CreateNewSlot(int slot)
+	{
+		if (slot < 0 || slot >= MAX_SLOTS) return;
+		CurrentSlot = slot;
+		Clear();
+		m_bFirstTimePlay = true;
+		m_nTutorialVillageState = -1;
+		SetCharacter(1, 1, 0);
+		SetCharacter(6, 1, 0);
+		SetWeaponLevel(1, 1);
+		SetWeaponLevel(2, 1);
+		m_bSlotLoaded = true;
+		Save();
+	}
+
+	public void SwitchToSlot(int slot)
+	{
+		if (slot < 0 || slot >= MAX_SLOTS) return;
+		if (slot == m_nCurrentSlot && m_bSlotLoaded) return;
+		CurrentSlot = slot;
+		Load();
+	}
+
+	public void SaveCurrentSlot()
+	{
+		if (!m_bSlotLoaded) return;
+		Save();
 	}
 
 	[Serializable]
@@ -596,7 +667,6 @@ public class iDataCenter
 		public string worldmonsterkill;
 		public string lastlogintime;
 		public string dailytask;
-		
 		public List<LevelSaveInfoData> passedlevel;
 		public CharacterData character;
 		public WeaponData weapon;
@@ -610,6 +680,76 @@ public class iDataCenter
 		public List<int> freeweapon;
 		public List<string> friends;
 		public List<int> titles;
+	}
+
+	public List<SaveSlotInfo> GetSaveSlotsInfo()
+	{
+		List<SaveSlotInfo> list = new List<SaveSlotInfo>();
+		for (int i = 0; i < MAX_SLOTS; i++)
+		{
+			SaveSlotInfo info = new SaveSlotInfo();
+			info.slotIndex = i;
+			info.exists = SlotExists(i);
+			if (info.exists)
+			{
+				SaveData data = null;
+				string path = GetSavePath(string.Format(SAVE_FILE_FORMAT, i));
+				string decrypted = string.Empty;
+				if (TryReadEncryptedFile(path, ref decrypted))
+				{
+					try { data = JsonUtility.FromJson<SaveData>(decrypted); }
+					catch { data = null; }
+				}
+				if (data != null && IsValidSaveData(data))
+				{
+					info.hunterLevel = data.hunterlvl;
+					info.latestLevel = data.latestlevel;
+					info.lastPlayed = GetLastModifiedTime(i);
+					info.gold = data.gold;
+					info.crystals = data.crystal;
+					info.mapProgress = data.proccess;
+					int charID = data.character.select;
+					iCharacterCenter charCenter = iGameApp.GetInstance().m_GameData.GetCharacterCenter();
+					CCharacterInfo charInfo = charCenter?.Get(charID);
+					if (charInfo != null)
+					{
+						CCharacterInfoLevel levelInfo = charInfo.Get(1);
+						info.characterName = levelInfo != null ? levelInfo.sName : "Hunter";
+					}
+					else
+					{
+						info.characterName = data.nickname ?? "Hunter";
+					}
+				}
+				else
+				{
+					info.exists = false;
+				}
+			}
+			list.Add(info);
+		}
+		return list;
+	}
+
+	private DateTime GetLastModifiedTime(int slot)
+	{
+		string path = GetSavePath(string.Format(SAVE_FILE_FORMAT, slot));
+		if (File.Exists(path))
+			return File.GetLastWriteTime(path);
+		return DateTime.MinValue;
+	}
+
+	public struct SaveSlotInfo
+	{
+		public int slotIndex;
+		public bool exists;
+		public string characterName;
+		public int hunterLevel;
+		public int latestLevel;
+		public DateTime lastPlayed;
+		public float mapProgress;
+		public int gold;
+		public int crystals;
 	}
 
 	[Serializable]
@@ -927,10 +1067,10 @@ public class iDataCenter
 		{
 			if (IsSeverelyDifferent(currentData, backupData))
 			{
-				Debug.LogWarning("[iDataCenter] Current and backup are severely different, using backup");
+				Debug.LogWarning("[iDataCenter] Current and backup differ, using backup");
 				chosenData = backupData;
 				RestoreBackupToCurrent();
-				iGameApp.PendingPopupMessage = "Your save seems to have corrupted, so it was rolled back automatically. You should be safe to continue playing.";
+				iGameApp.PendingPopupMessage = "Your save seems to have corrupted, so it was rolled back.";
 			}
 			else
 			{
@@ -946,36 +1086,20 @@ public class iDataCenter
 			Debug.LogWarning("[iDataCenter] Current save corrupted, using backup");
 			chosenData = backupData;
 			RestoreBackupToCurrent();
-			iGameApp.PendingPopupMessage = "Your save seems to have corrupted, so it was rolled back automatically. You should be safe to continue playing.";
+			iGameApp.PendingPopupMessage = "Your save seems to have corrupted, so it was rolled back.";
 		}
 		else
 		{
-			Debug.Log("[iDataCenter] No valid save found, creating default");
-			Clear();
-			m_bFirstTimePlay = true;
-			m_nTutorialVillageState = -1;
-			SetCharacter(1, 1, 0);
-			SetCharacter(6, 1, 0);
-			SetWeaponLevel(1, 1);
-			SetWeaponLevel(2, 1);
-			Save();
-			iGameApp.PendingPopupMessage = "No save was detected, the game has created a fresh save for you.";
+			Debug.Log("[iDataCenter] No valid save found in slot " + m_nCurrentSlot);
 			return false;
 		}
-		if (chosenData == null)
+		if (chosenData != null)
 		{
-			Clear();
-			m_bFirstTimePlay = true;
-			m_nTutorialVillageState = -1;
-			SetCharacter(1, 1, 0);
-			SetCharacter(6, 1, 0);
-			SetWeaponLevel(1, 1);
-			SetWeaponLevel(2, 1);
-			Save();
-			return false;
+			LoadFromData(chosenData);
+			m_bSlotLoaded = true;
+			return true;
 		}
-		LoadFromData(chosenData);
-		return true;
+		return false;
 	}
 	
 	public void LoadData(string content)
@@ -1281,6 +1405,31 @@ public class iDataCenter
 
 	private void LoadFromData(SaveData data)
 	{
+		if (data == null) return;
+		m_dictMaterials.Clear();
+		m_dictWeapon.Clear();
+		m_dictEquipStone.Clear();
+		m_dictPassiveSkill.Clear();
+		m_dictCharSaveInfo.Clear();
+		m_dictSkill.Clear();
+		m_dictAvatar.Clear();
+		m_dictWeaponSign.Clear();
+		m_dictEquipStoneSign.Clear();
+		m_dictSkillSign.Clear();
+		m_dictCharacterSign.Clear();
+		m_dictAvatarSign.Clear();
+		m_dictSelectPassiveSkill.Clear();
+		m_ltLevelSaveInfo.Clear();
+		m_ltFreeWeapon.Clear();
+		m_dictAchievementData.Clear();
+		m_ltUnlockSign.Clear();
+		m_ltCrystalInBackground.Clear();
+		m_dictKillMonster.Clear();
+		m_dictWorldMonsterKill.Clear();
+		m_ltTitle.Clear();
+		m_ltFriends.Clear();
+		m_ltDailyTask.Clear();
+		m_ltLevelList.Clear();
 		if (!string.IsNullOrEmpty(data.gameversion))
 		{
 			m_sGameVersion = data.gameversion;

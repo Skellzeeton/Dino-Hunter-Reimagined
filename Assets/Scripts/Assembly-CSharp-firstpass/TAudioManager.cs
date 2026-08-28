@@ -48,7 +48,7 @@ public class TAudioManager : MonoBehaviour
         {
             if (m_isMusicOn == value) return;
             m_isMusicOn = value;
-
+            SettingsManager.Instance.MusicOn = value;
             Dictionary<AudioSource, AudioInfo>.Enumerator enumerator = m_playAudios.GetEnumerator();
             while (enumerator.MoveNext())
             {
@@ -61,8 +61,6 @@ public class TAudioManager : MonoBehaviour
                         playAudio.Key.Pause();
                 }
             }
-
-            PlayerPrefs.SetInt("MusicOff", (!m_isMusicOn) ? 1 : 0);
         }
     }
 
@@ -73,7 +71,7 @@ public class TAudioManager : MonoBehaviour
         {
             if (m_isSoundOn == value) return;
             m_isSoundOn = value;
-
+            SettingsManager.Instance.SoundOn = value;
             Dictionary<AudioSource, AudioInfo>.Enumerator enumerator = m_playAudios.GetEnumerator();
             while (enumerator.MoveNext())
             {
@@ -92,8 +90,6 @@ public class TAudioManager : MonoBehaviour
                     }
                 }
             }
-
-            PlayerPrefs.SetInt("SoundOff", (!m_isSoundOn) ? 1 : 0);
         }
     }
 
@@ -103,13 +99,12 @@ public class TAudioManager : MonoBehaviour
         set
         {
             m_musicVolume = Mathf.Clamp01(value);
+            SettingsManager.Instance.MusicVolume = m_musicVolume;
             foreach (var pair in m_playAudios)
             {
                 if (!pair.Value.sfx)
                     pair.Key.volume = pair.Value.volume * m_musicVolume;
             }
-            PlayerPrefs.SetFloat("MusicVolume", m_musicVolume);
-            PlayerPrefs.Save();
         }
     }
 
@@ -119,27 +114,23 @@ public class TAudioManager : MonoBehaviour
         set
         {
             m_soundVolume = Mathf.Clamp01(value);
+            SettingsManager.Instance.SoundVolume = m_soundVolume;
             foreach (var pair in m_playAudios)
             {
                 if (pair.Value.sfx)
                     pair.Key.volume = pair.Value.volume * m_soundVolume;
             }
-            PlayerPrefs.SetFloat("SFXVolume", m_soundVolume);
-            PlayerPrefs.Save();
         }
     }
 
     private void Awake()
     {
-        m_isMusicOn = PlayerPrefs.GetInt("MusicOff", 0) == 0;
-        m_isSoundOn = PlayerPrefs.GetInt("SoundOff", 0) == 0;
-
-        m_musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        m_soundVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
-
+        m_isMusicOn = SettingsManager.Instance.MusicOn;
+        m_isSoundOn = SettingsManager.Instance.SoundOn;
+        m_musicVolume = SettingsManager.Instance.MusicVolume;
+        m_soundVolume = SettingsManager.Instance.SoundVolume;
         if (s_instance != null)
             Destroy(s_instance.gameObject);
-
         AudioListener listener = FindObjectOfType<AudioListener>();
         if (listener == null)
         {
@@ -147,7 +138,6 @@ public class TAudioManager : MonoBehaviour
             DontDestroyOnLoad(go);
             listener = go.GetComponent<AudioListener>();
         }
-
         audioListener = listener;
         s_instance = this;
     }
@@ -246,11 +236,9 @@ public class TAudioManager : MonoBehaviour
         {
             info.volume = audio.volume;
         }
-
         audio.volume *= m_musicVolume;
         audio.loop = loop;
         audio.clip = clip;
-
         if (m_isMusicOn)
         {
             if (loop || cutoff)

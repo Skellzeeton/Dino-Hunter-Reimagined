@@ -12,11 +12,10 @@ public class CControlWindows : CControlBase
 	public override void Initialize()
 	{
 		base.Initialize();
-		mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", 0.5f);
 		if (mouseSensitivity < minSensitivity)
 		{
 			mouseSensitivity = 0.5f;
-			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
+			mouseSensitivity = SettingsManager.Instance.MouseSensitivity;
 		}
 	}
 
@@ -80,8 +79,7 @@ public class CControlWindows : CControlBase
 		if (Input.GetKeyDown(KeyCode.O))
 		{
 			mouseSensitivity = Mathf.Clamp(mouseSensitivity + 0.25f, minSensitivity, maxSensitivity);
-			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
-			PlayerPrefs.Save();
+			SettingsManager.Instance.MouseSensitivity = mouseSensitivity;
 #if UNITY_EDITOR
 			Debug.Log("Sensitivity increased: " + mouseSensitivity);
 #endif
@@ -89,8 +87,7 @@ public class CControlWindows : CControlBase
 		else if (Input.GetKeyDown(KeyCode.I))
 		{
 			mouseSensitivity = Mathf.Clamp(mouseSensitivity - 0.25f, minSensitivity, maxSensitivity);
-			PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
-			PlayerPrefs.Save();
+			SettingsManager.Instance.MouseSensitivity = mouseSensitivity;
 #if UNITY_EDITOR
 			Debug.Log("Sensitivity decreased: " + mouseSensitivity);
 #endif
