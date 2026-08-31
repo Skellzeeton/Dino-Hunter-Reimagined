@@ -88,7 +88,7 @@ public class PopupLevel : MonoBehaviour
 	{
 		if (popup_tips != null) popup_tips.Hide();
 	}
-	
+
 	public void SetChoose(int m_index)
 	{
 		if (m_index < 0)
@@ -117,7 +117,7 @@ public class PopupLevel : MonoBehaviour
 		TUIButtonSelect btnSel = level_item_now.GetBtnSelect();
 		if (btnSel != null) btnSel.SetSelected(true);
 	}
-	
+
 	public void SetChoose(PopupLevel_Item m_control)
 	{
 		if (popup_level_item_list == null) return;
@@ -178,9 +178,9 @@ public class PopupLevel : MonoBehaviour
 		}
 		img_title_bg.texture = iconTex;
 	}
-	
+
 	public PopupLevel_Item GetChoose() { return level_item_now; }
-	
+
 	private void ClearFrames()
 	{
 		if (popuplevel_frame01 != null) popuplevel_frame01.SetInfo(string.Empty);

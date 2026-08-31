@@ -84,17 +84,14 @@ public class LevelPoint : MonoBehaviour
 			btn_level.gameObject.SetActiveRecursive(true);
 			btn_level.Reset();
 			img_bottom.OpenChoose(false);
-			if (img_btn_normal != null)
+			if (img_btn_normal != null) img_btn_normal.texture = texture_btn_normal;
+			if (img_btn_press != null) img_btn_press.texture = texture_btn_normal;
+			if (finished_sign != null) finished_sign.SetActiveRecursive(true);
+
+			if (level_ex_list != null && change_level_point_ex)
 			{
-				img_btn_normal.texture = texture_btn_normal;
-			}
-			if (img_btn_press != null)
-			{
-				img_btn_press.texture = texture_btn_normal;
-			}
-			if (finished_sign != null)
-			{
-				finished_sign.SetActiveRecursive(true);
+				foreach (var ex in level_ex_list)
+					ex.SetLevelPointState(LevelPointEx.LevelPointExState.Passed);
 			}
 		}
 		else if (level_point_state == LevelPointState.Open)
@@ -102,17 +99,14 @@ public class LevelPoint : MonoBehaviour
 			btn_level.gameObject.SetActiveRecursive(true);
 			btn_level.Reset();
 			img_bottom.OpenChoose(false);
-			if (img_btn_normal != null)
+			if (img_btn_normal != null) img_btn_normal.texture = texture_btn_normal;
+			if (img_btn_press != null) img_btn_press.texture = texture_btn_normal;
+			if (finished_sign != null) finished_sign.SetActiveRecursive(false);
+
+			if (level_ex_list != null && change_level_point_ex)
 			{
-				img_btn_normal.texture = texture_btn_normal;
-			}
-			if (img_btn_press != null)
-			{
-				img_btn_press.texture = texture_btn_normal;
-			}
-			if (finished_sign != null)
-			{
-				finished_sign.SetActiveRecursive(false);
+				foreach (var ex in level_ex_list)
+					ex.SetLevelPointState(LevelPointEx.LevelPointExState.Open);
 			}
 		}
 		else if (level_point_state == LevelPointState.Disable)
@@ -120,17 +114,14 @@ public class LevelPoint : MonoBehaviour
 			btn_level.gameObject.SetActiveRecursive(true);
 			btn_level.Disable(true);
 			img_bottom.OpenChoose(false);
-			if (img_btn_normal != null)
+			if (img_btn_normal != null) img_btn_normal.texture = texture_btn_hui;
+			if (img_btn_press != null) img_btn_press.texture = texture_btn_hui;
+			if (finished_sign != null) finished_sign.SetActiveRecursive(false);
+
+			if (level_ex_list != null && change_level_point_ex)
 			{
-				img_btn_normal.texture = texture_btn_hui;
-			}
-			if (img_btn_press != null)
-			{
-				img_btn_press.texture = texture_btn_hui;
-			}
-			if (finished_sign != null)
-			{
-				finished_sign.SetActiveRecursive(false);
+				foreach (var ex in level_ex_list)
+					ex.SetLevelPointState(LevelPointEx.LevelPointExState.Disable);
 			}
 		}
 		else if (level_point_state == LevelPointState.Hide)
@@ -139,6 +130,16 @@ public class LevelPoint : MonoBehaviour
 			{
 				btn_level.Disable(true);
 				btn_level.gameObject.SetActiveRecursive(false);
+			}
+			if (img_bottom != null) img_bottom.Hide();
+			if (img_btn_normal != null) img_btn_normal.texture = texture_btn_hui;
+			if (img_btn_press != null) img_btn_press.texture = texture_btn_hui;
+			if (finished_sign != null) finished_sign.SetActiveRecursive(false);
+
+			if (level_ex_list != null && change_level_point_ex)
+			{
+				foreach (var ex in level_ex_list)
+					ex.SetLevelPointState(LevelPointEx.LevelPointExState.Hide);
 			}
 			if (img_bottom != null)
 			{
@@ -155,8 +156,48 @@ public class LevelPoint : MonoBehaviour
 			if (finished_sign != null)
 			{
 				finished_sign.SetActiveRecursive(false);
+				if (level_ex_list != null && change_level_point_ex)
+				{
+					foreach (var ex in level_ex_list) {
+						switch (m_level_point_state) {
+							case LevelPointState.Passed:
+								ex.SetLevelPointState(LevelPointEx.LevelPointExState.Passed);
+								break;
+							case LevelPointState.Open:
+								ex.SetLevelPointState(LevelPointEx.LevelPointExState.Open);
+								break;
+							case LevelPointState.Disable:
+								ex.SetLevelPointState(LevelPointEx.LevelPointExState.Disable);
+								break;
+							case LevelPointState.Hide:
+								ex.SetLevelPointState(LevelPointEx.LevelPointExState.Hide);
+								break;
+						}
+					}
+				}
 			}
 		}
+	}
+
+	public void HideWayEx()
+	{
+		if (level_ex_list == null) return;
+		foreach (var ex in level_ex_list)
+			ex.HideWay();
+	}
+
+	public void ShowWayEx()
+	{
+		if (level_ex_list == null) return;
+		foreach (var ex in level_ex_list)
+			ex.ShowWay();
+	}
+
+	public void ShowWayExAffterTime(float m_time_gap)
+	{
+		if (level_ex_list == null) return;
+		foreach (var ex in level_ex_list)
+			ex.ShowWayAffterTime(m_time_gap);
 	}
 
 	public void UpdateWayPointAni(float delta_time)
@@ -270,6 +311,25 @@ public class LevelPoint : MonoBehaviour
 		{
 			drop_sign.SetActiveRecursive(m_show);
 		}
+	}
+
+	public LevelPointEx FindLevelEx(int m_id)
+	{
+		if (level_ex_list == null) return null;
+		foreach (var ex in level_ex_list)
+			if (ex.GetLevelID() == m_id) return ex;
+		return null;
+	}
+
+	public bool FindGoodsDropLevelEx(int m_id)
+	{
+		var ex = FindLevelEx(m_id);
+		if (ex != null)
+		{
+			ex.OpenLevelAnimation();
+			return true;
+		}
+		return false;
 	}
 
 	public void PlayPassSignAnimation(GameObject m_prefab_effect)

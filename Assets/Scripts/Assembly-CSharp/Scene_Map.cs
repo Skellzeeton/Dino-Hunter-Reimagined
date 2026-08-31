@@ -338,8 +338,6 @@ public class Scene_Map : MonoBehaviour
 			}
 		}
 	}
-		
-	
 
 	public void TUIEvent_MoveScreen(TUIControl control, int event_type, float wparam, float lparam, object obj)
 	{
@@ -348,58 +346,72 @@ public class Scene_Map : MonoBehaviour
 
 	public void TUIEvent_ShowPopup(TUIControl control, int event_type, float wparam, float lparam, object obj)
 	{
-		if (event_type != 3)
-		{
-			return;
-		}
-		if (sfx_open_now)
-		{
-			CUISound.GetInstance().Play("UI_Button");
-		}
+		if (event_type != 3) return;
+		if (sfx_open_now) CUISound.GetInstance().Play("UI_Button");
 		level_point = control.transform.parent.transform;
-		LevelPoint component = level_point.GetComponent<LevelPoint>();
-		if (component != null)
+		LevelPoint lp = level_point.GetComponent<LevelPoint>();
+		if (lp != null)
 		{
-			TUIMainLevelInfo levelInfo = component.GetLevelInfo();
-			if (levelInfo == null)
+			if (lp.GetLevelInfo() == null)
 			{
-				int levelID = component.GetLevelID();
+				int levelID = lp.GetLevelID();
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, levelID));
 			}
 			else
 			{
-				popup_level_map.SetInfo(component.GetLevelInfo());
+				popup_level_map.SetInfo(lp.GetLevelInfo());
 				popup_level_map.Show();
 				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_ClosePopup);
 			}
+			return;
 		}
+		LevelPointEx lpex = level_point.GetComponent<LevelPointEx>();
+		if (lpex != null)
+		{
+			if (lpex.GetLevelInfo() == null)
+			{
+				int levelID = lpex.GetLevelID();
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, levelID));
+			}
+			else
+			{
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, lpex.GetLevelID()));
+			}
+			return;
+		}
+		Debug.Log("error! no LevelPoint or LevelPointEx found");
 	}
 
 	public void TUIEvent_EnterLevel(TUIControl control, int event_type, float wparam, float lparam, object obj)
 	{
-		if (event_type != 3)
-		{
-			return;
-		}
-		if (sfx_open_now)
-		{
-			CUISound.GetInstance().Play("UI_Button");
-		}
+		if (event_type != 3) return;
+		if (sfx_open_now) CUISound.GetInstance().Play("UI_Button");
 		popup_level_map.Hide();
 		AndroidReturnPlugin.instance.ClearFunc(TUIEvent_ClosePopup);
 		if (level_point == null)
 		{
-			Debug.LogWarning("error!");
+			Debug.LogWarning("error! no level point");
 			return;
 		}
-		PopupLevel_Item choose = popup_level_map.GetChoose();
-		if (!(choose == null))
+		int levelID = -1;
+		LevelPoint lp = level_point.GetComponent<LevelPoint>();
+		if (lp != null)
 		{
-			int iD = choose.GetID();
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, iD));
+			levelID = lp.GetLevelID();
 		}
+		else
+		{
+			LevelPointEx lpex = level_point.GetComponent<LevelPointEx>();
+			if (lpex != null)
+			{
+				levelID = lpex.GetLevelID();
+			}
+		}
+		if (levelID != -1)
+			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, levelID));
+		else
+			Debug.LogWarning("error! cannot get level ID");
 	}
-
 	public void TUIEvent_ClickRecommend(TUIControl control, int event_type, float wparam, float lparam, object obj)
 	{
 		if (event_type != 3)

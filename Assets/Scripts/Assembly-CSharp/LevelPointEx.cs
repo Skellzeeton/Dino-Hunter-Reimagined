@@ -56,7 +56,7 @@ public class LevelPointEx : MonoBehaviour
 	private string texture_survival01 = "furenwu_2";
 
 	private string texture_timed01 = "furenwu_7";
-	
+
 	private string texture_defended01 = "furenwu_3";
 
 	private string texture_steal01 = "furenwu_4";
@@ -249,11 +249,11 @@ public class LevelPointEx : MonoBehaviour
 			img_icon_press.texture = texture_survival01;
 			img_icon_disable.texture = texture_survival01;
 		}
-		else if (level_point_ex_type == LevelPointExType.Timed) 
-		{ 
-			img_icon_normal.texture = texture_timed01; 
-			img_icon_press.texture = texture_timed01; 
-			img_icon_disable.texture = texture_timed01; 
+		else if (level_point_ex_type == LevelPointExType.Timed)
+		{
+			img_icon_normal.texture = texture_timed01;
+			img_icon_press.texture = texture_timed01;
+			img_icon_disable.texture = texture_timed01;
 		}
 		else
 		{
