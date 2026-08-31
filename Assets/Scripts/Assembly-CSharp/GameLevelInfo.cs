@@ -76,6 +76,10 @@ public class GameLevelInfo
 	
 	public bool m_bLimitRifle;
 
+	public List<int> forceItemTypes  = new List<int>();
+	public List<int> forceItemIds    = new List<int>();
+	public List<int> forceItemLevels = new List<int>();
+
 	public GameLevelInfo()
 	{
 		ltGameWave = new List<int>();

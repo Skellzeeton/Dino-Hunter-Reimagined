@@ -419,6 +419,11 @@ public new void FixedUpdate()
 		{
 			return;
 		}
+		iGameSceneBase scene = iGameApp.GetInstance().m_GameScene as iGameSceneBase;
+		if (scene != null && !scene.IsWeaponForced(weapon.ID))
+		{
+			return;
+		}
 		m_nCurWeaponIndex = nIndex;
 		SetFire(false);
 		UnEquipWeapon();

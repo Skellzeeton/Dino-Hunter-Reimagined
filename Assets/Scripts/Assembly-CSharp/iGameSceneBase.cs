@@ -210,6 +210,30 @@ public class iGameSceneBase
 	
 	protected Dictionary<kAudioEnum, string> m_AudioData;
 
+	protected int m_backupAvatarHead;
+
+	protected int m_backupAvatarUpper;
+
+	protected int m_backupAvatarLower;
+
+	protected int m_backupAvatarWrist;
+
+	protected int m_backupAvatarHeadup;
+
+	protected int m_backupAvatarNeck;
+
+	protected int m_backupAvatarBadge;
+
+	protected int m_backupAvatarStone;
+
+	protected int[] m_backupSelectWeapon = new int[3];
+
+	protected Dictionary<int, int> m_backupWeaponLevels = new Dictionary<int, int>();
+
+	protected Dictionary<int, int> m_backupAvatarLevels = new Dictionary<int, int>();
+
+	protected bool m_bForcedLoadoutActive = false;
+
 	protected iDataCenter m_DataCenter
 	{
 		get
@@ -724,6 +748,12 @@ public class iGameSceneBase
 		{
 			m_v3BirthDir = -m_v3BirthPos;
 		}
+		ApplyForcedLoadout();
+		for (int i = 0; i < 3; i++)
+		{
+			int weaponID = dataCenter.GetSelectWeapon(i);
+			iGameApp.GetInstance().CarryWeapon(i, weaponID);
+		}
 		if (m_User == null)
 		{
 			m_User = AddUser(characterInfo.nModel, nUID, m_v3BirthPos, m_v3BirthDir);
@@ -969,6 +999,149 @@ public class iGameSceneBase
 			dataCenter.isTutorial = true;
 			dataCenter.Save();
 		}
+	}
+
+	public bool IsWeaponForced(int weaponID)
+	{
+		if (!m_bForcedLoadoutActive) return true;
+		if (m_curGameLevelInfo == null) return true;
+		return m_curGameLevelInfo.forceItemIds.Contains(weaponID);
+	}
+
+	private void ApplyForcedLoadout()
+	{
+		if (m_curGameLevelInfo == null) return;
+		var forceIds = m_curGameLevelInfo.forceItemIds;
+		if (forceIds.Count == 0) return;
+		iDataCenter dataCenter = m_GameData.GetDataCenter();
+		if (dataCenter == null) return;
+		m_backupAvatarHead    = dataCenter.AvatarHead;
+		m_backupAvatarUpper   = dataCenter.AvatarUpper;
+		m_backupAvatarLower   = dataCenter.AvatarLower;
+		m_backupAvatarWrist   = dataCenter.AvatarWrist;
+		m_backupAvatarHeadup  = dataCenter.AvatarHeadup;
+		m_backupAvatarNeck    = dataCenter.AvatarNeck;
+		m_backupAvatarBadge   = dataCenter.AvatarBadge;
+		m_backupAvatarStone   = dataCenter.AvatarStone;
+		for (int i = 0; i < 3; i++)
+			m_backupSelectWeapon[i] = dataCenter.GetSelectWeapon(i);
+		m_backupWeaponLevels.Clear();
+		m_backupAvatarLevels.Clear();
+		for (int i = 0; i < 3; i++)
+			dataCenter.SetSelectWeapon(i, -1);
+		dataCenter.AvatarHead    = -1;
+		dataCenter.AvatarUpper   = -1;
+		dataCenter.AvatarLower   = -1;
+		dataCenter.AvatarWrist   = -1;
+		dataCenter.AvatarHeadup  = -1;
+		dataCenter.AvatarNeck    = -1;
+		dataCenter.AvatarBadge   = -1;
+		dataCenter.AvatarStone   = -1;
+		int count = Math.Min(Math.Min(forceIds.Count, m_curGameLevelInfo.forceItemTypes.Count),
+				m_curGameLevelInfo.forceItemLevels.Count);
+		int weaponSlot = 0;
+		for (int i = 0; i < count; i++)
+		{
+			int type = m_curGameLevelInfo.forceItemTypes[i];
+			int id   = forceIds[i];
+			int level = m_curGameLevelInfo.forceItemLevels[i];
+			if (type == 1)
+			{
+				CWeaponInfo weaponInfo = m_GameData.GetWeaponInfo(id);
+				if (weaponInfo == null)
+				{
+					Debug.LogWarning($"Forced weapon ID {id} not found.");
+					continue;
+				}
+				int curLvl = -1;
+				if (dataCenter.GetWeaponLevel(id, ref curLvl))
+					m_backupWeaponLevels[id] = curLvl;
+				else
+					m_backupWeaponLevels[id] = -1;
+				dataCenter.SetWeaponLevel(id, level);
+				if (weaponSlot < 3)
+				{
+					dataCenter.SetSelectWeapon(weaponSlot, id);
+					weaponSlot++;
+				}
+				else
+				{
+					Debug.LogWarning("Too many forced weapons – slot ignored.");
+				}
+			}
+			else if (type == 2 || type == 3)
+			{
+				CAvatarInfo avatarInfo = m_GameData.m_AvatarCenter?.Get(id);
+				if (avatarInfo == null)
+				{
+					Debug.LogWarning($"Forced avatar ID {id} not found.");
+					continue;
+				}
+				int curLvl = -1;
+				if (dataCenter.GetAvatar(id, ref curLvl))
+					m_backupAvatarLevels[id] = curLvl;
+				else
+					m_backupAvatarLevels[id] = -1;
+				dataCenter.SetAvatar(id, level);
+				int nType = avatarInfo.m_nType;
+				switch (nType)
+				{
+					case 1: dataCenter.AvatarHead = id; break;
+					case 3: dataCenter.AvatarUpper = id; break;
+					case 5: dataCenter.AvatarLower = id; break;
+					case 4: dataCenter.AvatarWrist = id; break;
+					case 0: dataCenter.AvatarHeadup = id; break;
+					case 2: dataCenter.AvatarNeck = id; break;
+					case 6: dataCenter.AvatarBadge = id; break;
+					case 7: dataCenter.AvatarStone = id; break;
+					default:
+						Debug.LogWarning($"Unknown avatar type {nType} for ID {id}.");
+						break;
+				}
+			}
+			else
+			{
+				Debug.LogWarning($"Unknown forcetype {type} for ID {id}.");
+			}
+		}
+		m_bForcedLoadoutActive = true;
+		Debug.Log($"Applying forced loadout: {forceIds.Count} items");
+	}
+
+	private void RestoreOriginalLoadout()
+	{
+		if (!m_bForcedLoadoutActive) return;
+		iDataCenter dataCenter = m_GameData.GetDataCenter();
+		if (dataCenter == null) return;
+		dataCenter.AvatarHead    = m_backupAvatarHead;
+		dataCenter.AvatarUpper   = m_backupAvatarUpper;
+		dataCenter.AvatarLower   = m_backupAvatarLower;
+		dataCenter.AvatarWrist   = m_backupAvatarWrist;
+		dataCenter.AvatarHeadup  = m_backupAvatarHeadup;
+		dataCenter.AvatarNeck    = m_backupAvatarNeck;
+		dataCenter.AvatarBadge   = m_backupAvatarBadge;
+		dataCenter.AvatarStone   = m_backupAvatarStone;
+		for (int i = 0; i < 3; i++)
+			dataCenter.SetSelectWeapon(i, m_backupSelectWeapon[i]);
+		foreach (var kvp in m_backupWeaponLevels)
+		{
+			int id = kvp.Key;
+			int originalLevel = kvp.Value;
+			if (originalLevel >= 0)
+				dataCenter.SetWeaponLevel(id, originalLevel);
+			else
+				dataCenter.SetWeaponLevel(id, 0);
+		}
+		foreach (var kvp in m_backupAvatarLevels)
+		{
+			int id = kvp.Key;
+			int originalLevel = kvp.Value;
+			if (originalLevel >= 0)
+				dataCenter.SetAvatar(id, originalLevel);
+			else
+				dataCenter.SetAvatar(id, 0);
+		}
+		m_bForcedLoadoutActive = false;
 	}
 
 	public void PrefabLoadResource()
@@ -1343,6 +1516,7 @@ public class iGameSceneBase
 
 	public virtual void LeaveGame(float fDelayTime = 0f, kGameSceneEnum leavegamescene = kGameSceneEnum.None)
 	{
+		RestoreOriginalLoadout();
 		m_Status = kGameStatus.GameLeave;
 		m_StatusTime = fDelayTime;
 		m_StatusTimeCount = 0f;

@@ -217,46 +217,31 @@ public class iGameApp
 
 	public void CarryWeapon(int nIndex, int nWeaponID)
 	{
+		if (nWeaponID <= 0)
+		{
+			m_GameState.CarryWeapon(nIndex, null);
+			return;
+		}
 		iDataCenter dataCenter = m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
+		if (dataCenter == null) return;
 		int nLevel = 0;
-		if (!dataCenter.GetWeaponLevel(nWeaponID, ref nLevel) || nLevel == -1)
-		{
-			return;
-		}
+		if (!dataCenter.GetWeaponLevel(nWeaponID, ref nLevel) || nLevel == -1) return;
 		CWeaponInfoLevel weaponInfo = m_GameData.GetWeaponInfo(nWeaponID, nLevel);
-		if (weaponInfo != null)
+		if (weaponInfo == null) return;
+		CWeaponBase cWeaponBase = null;
+		switch (weaponInfo.nAttackMode)
 		{
-			CWeaponBase cWeaponBase = null;
-			switch (weaponInfo.nAttackMode)
-			{
-			case 1:
-				cWeaponBase = new CWeaponMelee();
-				break;
-			case 2:
-				cWeaponBase = new CWeaponShoot();
-				break;
-			case 3:
-				cWeaponBase = new CWeaponSpawn();
-				break;
-			case 4:
-				cWeaponBase = new CWeaponSpawnWithHead();
-				break;
-			case 5:
-				cWeaponBase = new CWeaponHoldy();
-				break;
-			case 6:
-				cWeaponBase = new CWeaponShotgun();
-				break;
-			}
-			if (cWeaponBase != null)
-			{
-				cWeaponBase.Initialize(nWeaponID, nLevel);
-				m_GameState.CarryWeapon(nIndex, cWeaponBase);
-			}
+			case 1: cWeaponBase = new CWeaponMelee(); break;
+			case 2: cWeaponBase = new CWeaponShoot(); break;
+			case 3: cWeaponBase = new CWeaponSpawn(); break;
+			case 4: cWeaponBase = new CWeaponSpawnWithHead(); break;
+			case 5: cWeaponBase = new CWeaponHoldy(); break;
+			case 6: cWeaponBase = new CWeaponShotgun(); break;
+		}
+		if (cWeaponBase != null)
+		{
+			cWeaponBase.Initialize(nWeaponID, nLevel);
+			m_GameState.CarryWeapon(nIndex, cWeaponBase);
 		}
 	}
 

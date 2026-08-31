@@ -148,6 +148,37 @@ public class iGameLevelCenter : iBaseCenter
 				{
 					gameLevelInfo.m_bLimitRifle = bool.Parse(value);
 				}
+				string forceTypeStr = "", forceItemStr = "", forceLevelStr = "";
+				if (MyUtils.GetAttribute(childNode, "forceitem", ref forceItemStr))
+				{
+					string[] items = forceItemStr.Split(',');
+					foreach (string s in items)
+					{
+						int val;
+						if (int.TryParse(s.Trim(), out val))
+							gameLevelInfo.forceItemIds.Add(val);
+					}
+				}
+				if (MyUtils.GetAttribute(childNode, "forcetype", ref forceTypeStr))
+				{
+					string[] types = forceTypeStr.Split(',');
+					foreach (string s in types)
+					{
+						int val;
+						if (int.TryParse(s.Trim(), out val))
+							gameLevelInfo.forceItemTypes.Add(val);
+					}
+				}
+				if (MyUtils.GetAttribute(childNode, "forcelevel", ref forceLevelStr))
+				{
+					string[] levels = forceLevelStr.Split(',');
+					foreach (string s in levels)
+					{
+						int val;
+						if (int.TryParse(s.Trim(), out val))
+							gameLevelInfo.forceItemLevels.Add(val);
+					}
+				}
 				foreach (XmlNode childNode2 in childNode.ChildNodes)
 				{
 					if (childNode2.Name == "MonsterNumLimit")
