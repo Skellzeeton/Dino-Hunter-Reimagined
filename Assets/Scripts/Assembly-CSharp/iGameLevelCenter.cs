@@ -304,6 +304,10 @@ public class iGameLevelCenter : iBaseCenter
 				{
 					gameLevelGroupInfo.nIcon = int.Parse(value);
 				}
+				if (MyUtils.GetAttribute(childNode, "issidelevel", ref value))
+				{
+					gameLevelGroupInfo.m_bIsSideLevel = bool.Parse(value);
+				}
 				if (!MyUtils.GetAttribute(childNode, "levellist", ref value))
 				{
 					continue;

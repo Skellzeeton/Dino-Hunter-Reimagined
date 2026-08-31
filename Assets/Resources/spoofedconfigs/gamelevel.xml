@@ -14,7 +14,7 @@
 		<RewardMaterial material="100015" mincount="1" maxcount="1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="100" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" bp_cfg="20101" gamewave="1002001,1002002" task="1002" sp_cfg_ground="20111" exp="63" gold="14" desc="Survive a Horde of Dinosaurs for 1:00">
+	<gamelevel id="100" iconoverride="8" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" bp_cfg="20101" gamewave="1002001,1002002" task="1002" sp_cfg_ground="20111" exp="63" gold="14" desc="Kill all dinos" name="test" issidelevel="true">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="12"/>
 		</MonsterNumLimit>
@@ -1276,6 +1276,4 @@
 	<gamelevelgroup id="23" icon="9" name="23.Killing Spree!" levellist="20001,20002,20003,20004,20005,20006,20007,20008,20009,20010"/>
 	<gamelevelgroup id="24" icon="1" name="24.I'm On A Rush." levellist="20001,20002,20003,20004,20005,20006,20007,20008,20009,20010"/>
 	<gamelevelgroup id="25" icon="9" name="25.Boss Rush!" levellist="20001,20002,20003,20004,20005,20006,20007,20008,20009,20010"/>
-	<gamelevelgroup id="100" icon="1" name="1.Set Out On Your Journey" levellist="100"/>
-	
 </root>

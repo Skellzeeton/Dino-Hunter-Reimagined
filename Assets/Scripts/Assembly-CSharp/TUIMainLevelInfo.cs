@@ -9,12 +9,11 @@ public class TUIMainLevelInfo
     public List<TUISecondaryLevelInfo> secondary_level_info;
     public int secondary_level_id;
     public int[] level_goods_drop_list;
-    
+    public bool is_ex_level;
     public TUIRecommendRoleInfo recommend_role_info;
-    
     public TUIRecommendWeaponInfo recommend_weapon_info;
 
-    public TUIMainLevelInfo(int m_id, string m_title, MainLevelType m_type, int m_secondary_level_id, int[] m_level_goods_drop_list = null)
+    public TUIMainLevelInfo(int m_id, string m_title, MainLevelType m_type, int m_secondary_level_id, int[] m_level_goods_drop_list = null, bool m_is_ex_level = false)
     {
         id = m_id;
         title = m_title;
@@ -25,6 +24,7 @@ public class TUIMainLevelInfo
         secondary_level_id = m_secondary_level_id;
         level_type = m_type;
         level_goods_drop_list = m_level_goods_drop_list;
+        is_ex_level = m_is_ex_level;
     }
 
     public void AddSecondaryLevelInfo(TUISecondaryLevelInfo m_info)

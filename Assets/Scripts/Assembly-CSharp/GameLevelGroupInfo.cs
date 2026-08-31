@@ -8,6 +8,8 @@ public class GameLevelGroupInfo
 
 	public int nIcon;
 
+	public bool m_bIsSideLevel;
+
 	public List<int> ltLevelList;
 
 	public GameLevelGroupInfo()

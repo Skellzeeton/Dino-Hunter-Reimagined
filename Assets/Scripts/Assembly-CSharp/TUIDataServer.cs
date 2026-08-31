@@ -4203,7 +4203,7 @@
 					}
 
 					global::EventCenter.EventCenter.Instance.Publish(this,
-						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo));
+							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo));
 				}
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_MapEnterInfo)
@@ -4294,7 +4294,7 @@
 					else
 					{
 						tUIGameInfo2.map_info =
-							new TUIMapInfo(MapEnterType.Normal, num, dictionary, main_level_camera_stop);
+						new TUIMapInfo(MapEnterType.Normal, num, dictionary, main_level_camera_stop);
 					}
 				}
 				else
@@ -4339,7 +4339,6 @@
 							break;
 						}
 					}
-
 					bool flag2 = false;
 					if (m_GameData.m_HunterLevelCenter != null)
 					{
@@ -4369,7 +4368,7 @@
 									foreach (CRewardMaterial item3 in gameLevelInfo2.ltRewardMaterial)
 									{
 										if (gameLevelInfo2.ltRewardMaterial == null ||
-											nMaterialIDFromEquipTemp != item3.nID)
+										nMaterialIDFromEquipTemp != item3.nID)
 										{
 											continue;
 										}
@@ -4381,13 +4380,12 @@
 							}
 						}
 					}
-
 					tUIGameInfo2.map_info =
-						new TUIMapInfo(MapEnterType.SearchGoods, num, dictionary, list.ToArray(), flag2);
+					new TUIMapInfo(MapEnterType.SearchGoods, num, dictionary, list.ToArray(), flag2);
 				}
 
 				global::EventCenter.EventCenter.Instance.Publish(this,
-					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo2));
+						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo2));
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_LevelInfo)
 			{
@@ -4396,20 +4394,45 @@
 				{
 					return;
 				}
-
 				iGameData gameData3 = iGameApp.GetInstance().m_GameData;
 				if (gameData3 == null)
 				{
 					return;
 				}
-
 				iDataCenter dataCenter3 = gameData3.GetDataCenter();
 				if (dataCenter3 == null)
 				{
 					return;
 				}
-
 				int wParam = m_event.GetWParam();
+				if (wParam < 0)
+				{
+					int exLevelId = -wParam;
+					GameLevelInfo exGameLevelInfo = gameData3.GetGameLevelInfo(exLevelId);
+					if (exGameLevelInfo == null)
+					{
+						return;
+					}
+					LevelPassState exLevelPassState = dataCenter3.IsLevelPassed(exLevelId)
+					? LevelPassState.Pass
+					: LevelPassState.Normal;
+					TUISecondaryLevelInfo exSecondaryLevel = BuildSecondaryLevelInfo(gameData3, dataCenter3, exLevelId, exLevelPassState);
+					if (exSecondaryLevel == null)
+					{
+						return;
+					}
+					string exTitle = !string.IsNullOrEmpty(exGameLevelInfo.sLevelName)
+					? exGameLevelInfo.sLevelName
+					: exGameLevelInfo.sLevelDesc;
+					TUIMainLevelInfo exMainLevelInfo = new TUIMainLevelInfo(exLevelId, exTitle, default(MainLevelType), exLevelId, null, true);
+					exMainLevelInfo.AddSecondaryLevelInfo(exSecondaryLevel);
+					TUIGameInfo exTUIGameInfo = new TUIGameInfo();
+					exTUIGameInfo.map_info = new TUIMapInfo(exMainLevelInfo);
+					global::EventCenter.EventCenter.Instance.Publish(this,
+							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), exTUIGameInfo));
+					return;
+				}
+
 				GameLevelGroupInfo gameLevelGroupInfo = gameData3.GetGameLevelGroupInfo(wParam);
 				if (gameLevelGroupInfo == null || gameLevelGroupInfo.ltLevelList == null)
 				{
@@ -4490,8 +4513,7 @@
 				}
 
 				TUIMainLevelInfo tUIMainLevelInfo = new TUIMainLevelInfo(wParam, gameLevelGroupInfo.sName, (MainLevelType)gameLevelGroupInfo.nIcon, num4, list2.ToArray());
-				foreach (int ltLevel5 in gameLevelGroupInfo.ltLevelList)
-				{
+				foreach (int ltLevel5 in gameLevelGroupInfo.ltLevelList) {
 					TUIRecommendRoleInfo tUIRecommendRoleInfo = null;
 					TUIRecommendWeaponInfo tUIRecommendWeaponInfo = null;
 					GameLevelInfo gameLevelInfo4 = gameData3.GetGameLevelInfo(ltLevel5);
@@ -4502,7 +4524,7 @@
 					if (gameLevelInfo4.m_nRecommandType == 1)
 					{
 						CWeaponInfoLevel weaponInfo = gameData3.GetWeaponInfo(gameLevelInfo4.m_nRecommandID,
-							gameLevelInfo4.m_nRecommandLevel);
+								gameLevelInfo4.m_nRecommandLevel);
 						if (weaponInfo != null)
 						{
 							bool have_equip = false;
@@ -4514,8 +4536,7 @@
 							}
 							else
 							{
-								for (int j = 0; j < 3; j++)
-								{
+								for (int j = 0; j < 3; j++) {
 									if (dataCenter3.GetSelectWeapon(j) == gameLevelInfo4.m_nRecommandID)
 									{
 										have_equip = true;
@@ -4525,13 +4546,13 @@
 							}
 
 							tUIRecommendWeaponInfo = new TUIRecommendWeaponInfo(gameLevelInfo4.m_nRecommandID, nLevel,
-								gameLevelInfo4.m_nRecommandLevel, have_equip, gameLevelInfo4.m_bRecommandLimit);
+									gameLevelInfo4.m_nRecommandLevel, have_equip, gameLevelInfo4.m_bRecommandLimit);
 						}
 					}
 					else if (gameLevelInfo4.m_nRecommandType == 2)
 					{
 						CCharacterInfoLevel characterInfo2 = gameData3.GetCharacterInfo(gameLevelInfo4.m_nRecommandID,
-							gameLevelInfo4.m_nRecommandLevel);
+								gameLevelInfo4.m_nRecommandLevel);
 						if (characterInfo2 != null)
 						{
 							bool have_equip2 = false;
@@ -4551,14 +4572,14 @@
 							}
 
 							tUIRecommendRoleInfo = new TUIRecommendRoleInfo(gameLevelInfo4.m_nRecommandID, have_buy,
-								have_equip2, gameLevelInfo4.m_bRecommandLimit);
+									have_equip2, gameLevelInfo4.m_bRecommandLimit);
 						}
 					}
 					else if (gameLevelInfo4.m_nRecommandType == 3)
 					{
 						CAvatarInfo avatarItemInfo = gameData3.m_AvatarCenter != null
-							? gameData3.m_AvatarCenter.Get(gameLevelInfo4.m_nRecommandID)
-							: null;
+						? gameData3.m_AvatarCenter.Get(gameLevelInfo4.m_nRecommandID)
+						: null;
 						if (avatarItemInfo != null)
 						{
 							bool have_equip3 = false;
@@ -4570,21 +4591,20 @@
 							}
 							else
 							{
-								switch (avatarItemInfo.m_nType)
-								{
-									case 1: have_equip3 = (dataCenter3.AvatarHead  == gameLevelInfo4.m_nRecommandID); break;
+								switch (avatarItemInfo.m_nType) {
+									case 1: have_equip3 = (dataCenter3.AvatarHead == gameLevelInfo4.m_nRecommandID); break;
 									case 3: have_equip3 = (dataCenter3.AvatarUpper == gameLevelInfo4.m_nRecommandID); break;
 									case 5: have_equip3 = (dataCenter3.AvatarLower == gameLevelInfo4.m_nRecommandID); break;
 									case 4: have_equip3 = (dataCenter3.AvatarWrist == gameLevelInfo4.m_nRecommandID); break;
 									case 0: have_equip3 = (dataCenter3.AvatarHeadup == gameLevelInfo4.m_nRecommandID); break;
-									case 2: have_equip3 = (dataCenter3.AvatarNeck  == gameLevelInfo4.m_nRecommandID); break;
+									case 2: have_equip3 = (dataCenter3.AvatarNeck == gameLevelInfo4.m_nRecommandID); break;
 									case 6: have_equip3 = (dataCenter3.AvatarBadge == gameLevelInfo4.m_nRecommandID); break;
 									case 7: have_equip3 = (dataCenter3.AvatarStone == gameLevelInfo4.m_nRecommandID); break;
 									default: have_equip3 = false; break;
 								}
 							}
 							tUIRecommendWeaponInfo = new TUIRecommendWeaponInfo(gameLevelInfo4.m_nRecommandID, nItemLevel,
-								gameLevelInfo4.m_nRecommandLevel, have_equip3, gameLevelInfo4.m_bRecommandLimit);
+									gameLevelInfo4.m_nRecommandLevel, have_equip3, gameLevelInfo4.m_bRecommandLimit);
 						}
 					}
 
@@ -4593,8 +4613,7 @@
 					List<TUIGoodsInfo> list3 = new List<TUIGoodsInfo>();
 					if (gameLevelInfo4.ltRewardMaterial != null)
 					{
-						foreach (CRewardMaterial item5 in gameLevelInfo4.ltRewardMaterial)
-						{
+						foreach (CRewardMaterial item5 in gameLevelInfo4.ltRewardMaterial) {
 							if (item5.nID == 0)
 							{
 								continue;
@@ -4604,8 +4623,7 @@
 							if (itemInfo2 != null)
 							{
 								GoodsQualityType quality = GoodsQualityType.Quality01;
-								switch (itemInfo2.nRare)
-								{
+								switch (itemInfo2.nRare) {
 									case 1:
 										quality = GoodsQualityType.Quality01;
 										break;
@@ -4635,8 +4653,7 @@
 					CTaskInfo taskInfo = gameData3.GetTaskInfo(gameLevelInfo4.nTaskID);
 					if (taskInfo != null)
 					{
-						switch (taskInfo.nType)
-						{
+						switch (taskInfo.nType) {
 							case 1:
 								secondaryLevelType = SecondaryLevelType.Steal;
 								break;
@@ -4657,7 +4674,6 @@
 								break;
 						}
 					}
-
 					LevelPassState levelPassState = LevelPassState.Disable;
 					if (dataCenter3.IsLevelPassed(ltLevel5))
 					{
@@ -4667,19 +4683,19 @@
 					{
 						levelPassState = LevelPassState.Normal;
 					}
-					var secondaryLevel = new TUISecondaryLevelInfo(ltLevel5, gameLevelInfo4.sLevelDesc,
-						list3, secondaryLevelType, levelPassState);
-					secondaryLevel.introduce01 = gameLevelInfo4.sLevelDesc;
-					secondaryLevel.introduce02 = "Exp: " + gameLevelInfo4.nRewardExp + "\nGold: " + gameLevelInfo4.nRewardGold;
-					secondaryLevel.recommend_role_info   = tUIRecommendRoleInfo;
-					secondaryLevel.recommend_weapon_info = tUIRecommendWeaponInfo;
+					TUISecondaryLevelInfo secondaryLevel = BuildSecondaryLevelInfo(gameData3, dataCenter3, ltLevel5, levelPassState);
+					if (secondaryLevel == null)
+					{
+						return;
+					}
+
 					tUIMainLevelInfo.AddSecondaryLevelInfo(secondaryLevel);
 				}
 
 				TUIGameInfo tUIGameInfo3 = new TUIGameInfo();
 				tUIGameInfo3.map_info = new TUIMapInfo(tUIMainLevelInfo);
 				global::EventCenter.EventCenter.Instance.Publish(this,
-					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo3));
+						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), tUIGameInfo3));
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_EnterLevel)
 			{
@@ -4699,14 +4715,14 @@
 					if (gameState5.m_curScene4SearchMaterial != 0)
 					{
 						global::EventCenter.EventCenter.Instance.Publish(this,
-							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true,
-								(int)gameState5.m_curScene4SearchMaterial));
+								new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true,
+										(int)gameState5.m_curScene4SearchMaterial));
 						gameState5.m_curScene4SearchMaterial = TUISceneType.None;
 					}
 					else
 					{
 						global::EventCenter.EventCenter.Instance.Publish(this,
-							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+								new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 					}
 				}
 			}
@@ -4721,7 +4737,7 @@
 				}
 
 				global::EventCenter.EventCenter.Instance.Publish(this,
-					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_EnterRoleBuy)
 			{
@@ -4734,7 +4750,7 @@
 				}
 
 				global::EventCenter.EventCenter.Instance.Publish(this,
-					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_EnterEquip)
 			{
@@ -4745,13 +4761,13 @@
 				}
 
 				global::EventCenter.EventCenter.Instance.Publish(this,
-					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 			}
 
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_EnterVilliage)
 			{
 				global::EventCenter.EventCenter.Instance.Publish(this,
-					new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneMapEventType.TUIEvent_SkipTutorial)
 			{
@@ -4764,7 +4780,7 @@
 						dataCenter4.nTutorialVillageState = 26;
 						iGameApp.GetInstance().SaveData(true);
 						global::EventCenter.EventCenter.Instance.Publish(this,
-							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+								new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 					}
 				}
 			}
@@ -4773,14 +4789,152 @@
 				if (m_DataCenter.NickName != null && m_DataCenter.NickName.Length > 0)
 				{
 					global::EventCenter.EventCenter.Instance.Publish(this,
-						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true, 12));
+							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true, 12));
 				}
 				else
 				{
 					global::EventCenter.EventCenter.Instance.Publish(this,
-						new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
+							new TUIEvent.BackEvent_SceneMap(m_event.GetEventName(), true));
 				}
 			}
+		}
+
+		private TUISecondaryLevelInfo BuildSecondaryLevelInfo(iGameData gameData, iDataCenter dataCenter, int levelId, LevelPassState levelPassState)
+		{
+			GameLevelInfo gameLevelInfo = gameData.GetGameLevelInfo(levelId);
+			if (gameLevelInfo == null)
+			{
+				return null;
+			}
+			TUIRecommendRoleInfo tUIRecommendRoleInfo = null;
+			TUIRecommendWeaponInfo tUIRecommendWeaponInfo = null;
+			if (gameLevelInfo.m_nRecommandType == 1)
+			{
+				CWeaponInfoLevel weaponInfo = gameData.GetWeaponInfo(gameLevelInfo.m_nRecommandID, gameLevelInfo.m_nRecommandLevel);
+				if (weaponInfo != null)
+				{
+					bool have_equip = false;
+					int nLevel = 0;
+					dataCenter.GetWeaponLevel(gameLevelInfo.m_nRecommandID, ref nLevel);
+					if (nLevel <= 0)
+					{
+						nLevel = 0;
+					}
+					else
+					{
+						for (int j = 0; j < 3; j++)
+						{
+							if (dataCenter.GetSelectWeapon(j) == gameLevelInfo.m_nRecommandID)
+							{
+								have_equip = true;
+								break;
+							}
+						}
+					}
+					tUIRecommendWeaponInfo = new TUIRecommendWeaponInfo(gameLevelInfo.m_nRecommandID, nLevel, gameLevelInfo.m_nRecommandLevel, have_equip, gameLevelInfo.m_bRecommandLimit);
+				}
+			}
+			else if (gameLevelInfo.m_nRecommandType == 2)
+			{
+				CCharacterInfoLevel characterInfo2 = gameData.GetCharacterInfo(gameLevelInfo.m_nRecommandID, gameLevelInfo.m_nRecommandLevel);
+				if (characterInfo2 != null)
+				{
+					bool have_equip2 = false;
+					bool have_buy = false;
+					CCharSaveInfo character2 = dataCenter.GetCharacter(gameLevelInfo.m_nRecommandID);
+					if (character2 != null)
+					{
+						if (character2.nLevel > 0)
+						{
+							have_buy = true;
+						}
+
+						if (dataCenter.CurCharID == gameLevelInfo.m_nRecommandID)
+						{
+							have_equip2 = true;
+						}
+					}
+					tUIRecommendRoleInfo = new TUIRecommendRoleInfo(gameLevelInfo.m_nRecommandID, have_buy, have_equip2, gameLevelInfo.m_bRecommandLimit);
+				}
+			}
+			else if (gameLevelInfo.m_nRecommandType == 3)
+			{
+				CAvatarInfo avatarItemInfo = gameData.m_AvatarCenter != null
+				? gameData.m_AvatarCenter.Get(gameLevelInfo.m_nRecommandID)
+				: null;
+				if (avatarItemInfo != null)
+				{
+					bool have_equip3 = false;
+					int nItemLevel = 0;
+					dataCenter.GetAvatar(gameLevelInfo.m_nRecommandID, ref nItemLevel);
+					if (nItemLevel <= 0)
+					{
+						nItemLevel = 0;
+					}
+					else
+					{
+						switch (avatarItemInfo.m_nType)
+						{
+							case 1: have_equip3 = (dataCenter.AvatarHead == gameLevelInfo.m_nRecommandID); break;
+							case 3: have_equip3 = (dataCenter.AvatarUpper == gameLevelInfo.m_nRecommandID); break;
+							case 5: have_equip3 = (dataCenter.AvatarLower == gameLevelInfo.m_nRecommandID); break;
+							case 4: have_equip3 = (dataCenter.AvatarWrist == gameLevelInfo.m_nRecommandID); break;
+							case 0: have_equip3 = (dataCenter.AvatarHeadup == gameLevelInfo.m_nRecommandID); break;
+							case 2: have_equip3 = (dataCenter.AvatarNeck == gameLevelInfo.m_nRecommandID); break;
+							case 6: have_equip3 = (dataCenter.AvatarBadge == gameLevelInfo.m_nRecommandID); break;
+							case 7: have_equip3 = (dataCenter.AvatarStone == gameLevelInfo.m_nRecommandID); break;
+							default: have_equip3 = false; break;
+						}
+					}
+					tUIRecommendWeaponInfo = new TUIRecommendWeaponInfo(gameLevelInfo.m_nRecommandID, nItemLevel, gameLevelInfo.m_nRecommandLevel, have_equip3, gameLevelInfo.m_bRecommandLimit);
+				}
+			}
+			List<TUIGoodsInfo> list3 = new List<TUIGoodsInfo>();
+			if (gameLevelInfo.ltRewardMaterial != null)
+			{
+				foreach (CRewardMaterial item5 in gameLevelInfo.ltRewardMaterial)
+				{
+					if (item5.nID == 0)
+					{
+						continue;
+					}
+					CItemInfoLevel itemInfo2 = gameData.GetItemInfo(item5.nID, 1);
+					if (itemInfo2 != null)
+					{
+						GoodsQualityType quality = GoodsQualityType.Quality01;
+						switch (itemInfo2.nRare)
+						{
+							case 1: quality = GoodsQualityType.Quality01; break;
+							case 2: quality = GoodsQualityType.Quality02; break;
+							case 3: quality = GoodsQualityType.Quality03; break;
+							case 4: quality = GoodsQualityType.Quality04; break;
+							case 5: quality = GoodsQualityType.Quality05; break;
+							case 6: quality = GoodsQualityType.Quality06; break;
+						}
+						list3.Add(new TUIGoodsInfo(item5.nID, quality, itemInfo2.sName));
+					}
+				}
+			}
+			SecondaryLevelType secondaryLevelType = SecondaryLevelType.None;
+			CTaskInfo taskInfo = gameData.GetTaskInfo(gameLevelInfo.nTaskID);
+			if (taskInfo != null)
+			{
+				switch (taskInfo.nType)
+				{
+					case 1: secondaryLevelType = SecondaryLevelType.Steal; break;
+					case 2: secondaryLevelType = SecondaryLevelType.BOSS; break;
+					case 3: secondaryLevelType = SecondaryLevelType.Defended; break;
+					case 5: secondaryLevelType = SecondaryLevelType.Killing; break;
+					case 4: secondaryLevelType = SecondaryLevelType.Survival; break;
+					case 7: secondaryLevelType = SecondaryLevelType.Timed; break;
+				}
+			}
+			var secondaryLevel = new TUISecondaryLevelInfo(levelId, gameLevelInfo.sLevelDesc, list3, secondaryLevelType, levelPassState);
+			secondaryLevel.introduce01 = gameLevelInfo.sLevelDesc;
+			secondaryLevel.introduce02 = "Exp: " + gameLevelInfo.nRewardExp + "\nGold: " + gameLevelInfo.nRewardGold;
+			secondaryLevel.recommend_role_info = tUIRecommendRoleInfo;
+			secondaryLevel.recommend_weapon_info = tUIRecommendWeaponInfo;
+			return secondaryLevel;
 		}
 
 		public void ShowDialogInMain(string message, OnDialogEvent onok, OnDialogEvent oncancel)

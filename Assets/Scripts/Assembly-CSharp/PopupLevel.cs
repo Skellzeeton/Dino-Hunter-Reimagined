@@ -26,18 +26,47 @@ public class PopupLevel : MonoBehaviour
 		level_info = m_info;
 		if (level_info == null) { Debug.LogWarning("[PopupLevel] SetInfo: null"); return; }
 		if (popup_level_item_list == null) { Debug.LogWarning("[PopupLevel] SetInfo: no items list"); return; }
-
 		List<TUISecondaryLevelInfo> secondary_level_info = m_info.secondary_level_info;
 		int secondary_level_id   = m_info.secondary_level_id;
 		int[] level_goods_drop_list = m_info.level_goods_drop_list;
 		int count = popup_level_item_list.Count;
 		if (label_title != null)    label_title.Text = m_info.title;
 		if (img_title_bg != null)   img_title_bg.texture = TUIMappingInfo.Instance().GetMapTexture((int)m_info.level_type);
+		if (m_info.is_ex_level)
+		{
+			if (secondary_level_info == null || secondary_level_info.Count < 1 || secondary_level_info[0] == null)
+			{
+				Debug.LogWarning("[PopupLevel] SetInfo: ex level has no info");
+				return;
+			}
+			TUISecondaryLevelInfo exInfo = secondary_level_info[0];
+			for (int i = 0; i < count; i++)
+			{
+				PopupLevel_Item item = popup_level_item_list[i];
+				if (item == null) continue;
+				if (i == 0)
+				{
+					item.gameObject.SetActive(true);
+					item.SetInfo(exInfo, exInfo.pass_state);
+					item.ShowDropSign(false);
+					if (level_goods_drop_list != null)
+						foreach (int gid in level_goods_drop_list)
+							if (exInfo.id == gid) item.ShowDropSign(true);
+				}
+				else
+				{
+					item.ShowDropSign(false);
+					item.gameObject.SetActive(false);
+				}
+			}
+			SetChoose(0);
+			return;
+		}
 		if (secondary_level_info == null || secondary_level_info.Count != count)
 		{
 			Debug.LogWarning("[PopupLevel] SetInfo: count mismatch info=" +
-			          (secondary_level_info == null ? "null" : secondary_level_info.Count.ToString()) +
-			          " items=" + count);
+			(secondary_level_info == null ? "null" : secondary_level_info.Count.ToString()) +
+			" items=" + count);
 			return;
 		}
 		int choose = 0;
@@ -45,6 +74,7 @@ public class PopupLevel : MonoBehaviour
 		{
 			PopupLevel_Item item = popup_level_item_list[i];
 			if (item == null) continue;
+			item.gameObject.SetActive(true);
 			TUISecondaryLevelInfo info = secondary_level_info[i];
 			if (info == null) continue;
 			item.SetInfo(info, info.pass_state);
@@ -73,6 +103,7 @@ public class PopupLevel : MonoBehaviour
 			item.ShowDropSign(false);
 			TUIButtonSelect btn = item.GetBtnSelect();
 			if (btn != null) btn.Reset();
+			item.gameObject.SetActive(true);
 		}
 	}
 
@@ -202,7 +233,7 @@ public class PopupLevel : MonoBehaviour
 	private void RefreshStartButton()
 	{
 		bool canStart = level_item_now != null &&
-		                level_item_now.GetState() != LevelPassState.Disable;
+		level_item_now.GetState() != LevelPassState.Disable;
 		if (canStart && popuplevel_frame03 != null && !popuplevel_frame03.GetOpenStart())
 			canStart = false;
 		SetBtnStartEnable(canStart);

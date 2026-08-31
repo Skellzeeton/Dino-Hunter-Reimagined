@@ -371,11 +371,11 @@ public class Scene_Map : MonoBehaviour
 			if (lpex.GetLevelInfo() == null)
 			{
 				int levelID = lpex.GetLevelID();
-				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, levelID));
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, -levelID));
 			}
 			else
 			{
-				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, lpex.GetLevelID()));
+				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_LevelInfo, -lpex.GetLevelID()));
 			}
 			return;
 		}
@@ -386,32 +386,27 @@ public class Scene_Map : MonoBehaviour
 	{
 		if (event_type != 3) return;
 		if (sfx_open_now) CUISound.GetInstance().Play("UI_Button");
+
 		popup_level_map.Hide();
 		AndroidReturnPlugin.instance.ClearFunc(TUIEvent_ClosePopup);
-		if (level_point == null)
+
+		PopupLevel_Item choose = popup_level_map.GetChoose();
+		if (choose == null)
 		{
-			Debug.LogWarning("error! no level point");
+			Debug.LogWarning("error! no level selected");
 			return;
 		}
-		int levelID = -1;
-		LevelPoint lp = level_point.GetComponent<LevelPoint>();
-		if (lp != null)
+
+		int levelID = choose.GetID();
+		if (levelID == -1)
 		{
-			levelID = lp.GetLevelID();
+			Debug.LogWarning("error! invalid level ID");
+			return;
 		}
-		else
-		{
-			LevelPointEx lpex = level_point.GetComponent<LevelPointEx>();
-			if (lpex != null)
-			{
-				levelID = lpex.GetLevelID();
-			}
-		}
-		if (levelID != -1)
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, levelID));
-		else
-			Debug.LogWarning("error! cannot get level ID");
+
+		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMap(TUIEvent.SceneMapEventType.TUIEvent_EnterLevel, levelID));
 	}
+
 	public void TUIEvent_ClickRecommend(TUIControl control, int event_type, float wparam, float lparam, object obj)
 	{
 		if (event_type != 3)
