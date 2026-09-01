@@ -35,6 +35,10 @@ public class PopupBlackMarket : MonoBehaviour
 
 	private float m_fRefreshTimeInveral;
 
+	private int m_nOriginalCharacterModel = -1;
+
+	private WeaponType m_curWeaponType = WeaponType.None;
+
 	private void Awake()
 	{
 		m_dictBlackMarketItem = new Dictionary<int, TUIBlackMarketItem>();
@@ -135,6 +139,87 @@ public class PopupBlackMarket : MonoBehaviour
 		{
 			role_control.ChangeRole(model);
 			role_control.SetRoleFixedRotation(new Vector3(0f, -40f, 0f));
+		}
+	}
+
+	private void ForceCharacterModelIfNoArmor(WeaponType weaponType)
+	{
+		if (weaponType != WeaponType.Armor_Head && weaponType != WeaponType.Armor_Body && weaponType != WeaponType.Armor_Leg)
+			return;
+
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		bool hasArmorEquipped = (dc.AvatarHead > 0 && dc.AvatarHead != 101) ||
+		(dc.AvatarUpper > 0 && dc.AvatarUpper != 301) ||
+		(dc.AvatarLower > 0 && dc.AvatarLower != 501);
+		if (!hasArmorEquipped)
+		{
+			if (m_nOriginalCharacterModel == -1)
+			{
+				m_nOriginalCharacterModel = top_bar.GetRoleID();
+			}
+			int originalCharacterID = top_bar.GetRoleID();
+			SetRoleModel(7);
+			role_control.SetCurrentCharacterID(originalCharacterID);
+			ReapplyEquippedAccessories();
+		}
+	}
+
+	private void ReapplyEquippedAccessories()
+	{
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		int role_id = top_bar.GetRoleID();
+		if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
+		{
+			GameObject modelprefab = null;
+			Texture modeltexture = null;
+			int headId = (dc.AvatarHead > 0) ? dc.AvatarHead : 101;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel(headId, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatar(0, modelprefab, modeltexture);
+			}
+			int bodyId = (dc.AvatarUpper > 0) ? dc.AvatarUpper : 301;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel(bodyId, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatar(1, modelprefab, modeltexture);
+			}
+			int legId = (dc.AvatarLower > 0) ? dc.AvatarLower : 501;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel(legId, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatar(2, modelprefab, modeltexture);
+			}
+			if (dc.AvatarHeadup > 0 && TUIMappingInfo.Instance().m_GetAvatarModel(dc.AvatarHeadup, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatarEffect(3, modelprefab);
+			}
+			if (dc.AvatarNeck > 0 && TUIMappingInfo.Instance().m_GetAvatarModel(dc.AvatarNeck, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatarEffect(6, modelprefab);
+			}
+			if (dc.AvatarWrist > 0 && TUIMappingInfo.Instance().m_GetAvatarModel(dc.AvatarWrist, role_id, ref modelprefab, ref modeltexture))
+			{
+				SetRoleAvatarEffect(4, modelprefab);
+				SetRoleAvatarEffect(5, modelprefab);
+			}
+		}
+	}
+
+	private void RestoreCharacterModelIfForced(WeaponType oldWeaponType, WeaponType newWeaponType)
+	{
+		if (oldWeaponType != WeaponType.Armor_Head &&
+		oldWeaponType != WeaponType.Armor_Body &&
+		oldWeaponType != WeaponType.Armor_Leg)
+			return;
+
+		if (m_nOriginalCharacterModel != -1)
+		{
+			if (newWeaponType != WeaponType.Armor_Head &&
+			newWeaponType != WeaponType.Armor_Body &&
+			newWeaponType != WeaponType.Armor_Leg)
+			{
+				SetRoleModel(m_nOriginalCharacterModel);
+				m_nOriginalCharacterModel = -1;
+				ReapplyEquippedAccessories();
+			}
 		}
 	}
 
@@ -248,25 +333,24 @@ public class PopupBlackMarket : MonoBehaviour
 	public void ChangeNowItemInfo(int nBlackID)
 	{
 		if (m_nCurBlackID == nBlackID || !m_dictBlackMarketItem.ContainsKey(nBlackID))
-		{
 			return;
-		}
-		if (m_nCurBlackID > 0)
+		TUIBlackMarketItem newItem = m_dictBlackMarketItem[nBlackID];
+		TUIBlackMarketItem oldItem = (m_nCurBlackID > 0 && m_dictBlackMarketItem.ContainsKey(m_nCurBlackID)) ? m_dictBlackMarketItem[m_nCurBlackID] : null;
+		if (oldItem != null)
 		{
-			TUIBlackMarketItem tUIBlackMarketItem = m_dictBlackMarketItem[m_nCurBlackID];
-			if (tUIBlackMarketItem != null)
+			RestoreCharacterModelIfForced(oldItem.m_WeaponType, newItem.m_WeaponType);
+			int avatarid = -1;
+			if (TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar != null &&
+			TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar(top_bar.GetRoleID(), oldItem.m_WeaponType, ref avatarid))
 			{
-				int avatarid = -1;
-				if (TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar != null && TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar(top_bar.GetRoleID(), tUIBlackMarketItem.m_WeaponType, ref avatarid))
+				GameObject modelprefab = null;
+				Texture modeltexture = null;
+				if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
 				{
-					GameObject modelprefab = null;
-					Texture modeltexture = null;
-					if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
-					{
-						TUIMappingInfo.Instance().m_GetAvatarModel(avatarid, top_bar.GetRoleID(), ref modelprefab, ref modeltexture);
-					}
-					switch (tUIBlackMarketItem.m_WeaponType)
-					{
+					TUIMappingInfo.Instance().m_GetAvatarModel(avatarid, top_bar.GetRoleID(), ref modelprefab, ref modeltexture);
+				}
+				switch (oldItem.m_WeaponType)
+				{
 					case WeaponType.Armor_Head:
 						SetRoleAvatar(0, modelprefab, modeltexture);
 						break;
@@ -286,61 +370,62 @@ public class PopupBlackMarket : MonoBehaviour
 						SetRoleAvatarEffect(4, modelprefab);
 						SetRoleAvatarEffect(5, modelprefab);
 						break;
-					}
 				}
 			}
 		}
 		m_nCurBlackID = nBlackID;
-		TUIBlackMarketItem tUIBlackMarketItem2 = m_dictBlackMarketItem[nBlackID];
-		if (tUIBlackMarketItem2 == null)
+		if (newItem == null)
 		{
-			if (label_title != null)
-			{
-				label_title.Text = "--";
-			}
-			if (labelinfo != null)
-			{
-				labelinfo.SetNull();
-			}
+			if (label_title != null) label_title.Text = "--";
+			if (labelinfo != null) labelinfo.SetNull();
 			return;
 		}
-		SetInfo(tUIBlackMarketItem2);
-		if (tUIBlackMarketItem2.IsWeapon())
+		SetInfo(newItem);
+		ForceCharacterModelIfNoArmor(newItem.m_WeaponType);
+		int overrideHeadId = -1;
+		if (newItem.IsWeapon())
 		{
-			SetRoleWeapon(tUIBlackMarketItem2.m_nItemID);
-			return;
+			SetRoleWeapon(newItem.m_nItemID);
 		}
-		GameObject modelprefab2 = null;
-		Texture modeltexture2 = null;
-		if (TUIMappingInfo.Instance().m_GetAvatarModel != null && TUIMappingInfo.Instance().m_GetAvatarModel(tUIBlackMarketItem2.m_nItemID, top_bar.GetRoleID(), ref modelprefab2, ref modeltexture2))
+		else
 		{
-			switch (tUIBlackMarketItem2.m_WeaponType)
+			GameObject modelprefab2 = null;
+			Texture modeltexture2 = null;
+			if (TUIMappingInfo.Instance().m_GetAvatarModel != null &&
+			TUIMappingInfo.Instance().m_GetAvatarModel(newItem.m_nItemID, top_bar.GetRoleID(), ref modelprefab2, ref modeltexture2))
 			{
-			case WeaponType.Armor_Head:
-				SetRoleAvatar(0, modelprefab2, modeltexture2);
-				break;
-			case WeaponType.Armor_Body:
-				SetRoleAvatar(1, modelprefab2, modeltexture2);
-				break;
-			case WeaponType.Armor_Leg:
-				SetRoleAvatar(2, modelprefab2, modeltexture2);
-				break;
-			case WeaponType.Accessory_Halo:
-				SetRoleAvatarEffect(3, modelprefab2);
-				break;
-			case WeaponType.Accessory_Necklace:
-				SetRoleAvatarEffect(6, modelprefab2);
-				break;
-			case WeaponType.Armor_Bracelet:
-				SetRoleAvatarEffect(4, modelprefab2);
-				SetRoleAvatarEffect(5, modelprefab2);
-				break;
-			case WeaponType.Accessory_Badge:
-				break;
+				switch (newItem.m_WeaponType)
+				{
+					case WeaponType.Armor_Head:
+						SetRoleAvatar(0, modelprefab2, modeltexture2);
+						overrideHeadId = newItem.m_nItemID;
+						break;
+					case WeaponType.Armor_Body:
+						SetRoleAvatar(1, modelprefab2, modeltexture2);
+						break;
+					case WeaponType.Armor_Leg:
+						SetRoleAvatar(2, modelprefab2, modeltexture2);
+						break;
+					case WeaponType.Accessory_Halo:
+						SetRoleAvatarEffect(3, modelprefab2);
+						break;
+					case WeaponType.Accessory_Necklace:
+						SetRoleAvatarEffect(6, modelprefab2);
+						break;
+					case WeaponType.Armor_Bracelet:
+						SetRoleAvatarEffect(4, modelprefab2);
+						SetRoleAvatarEffect(5, modelprefab2);
+						break;
+					case WeaponType.Accessory_Badge:
+						break;
+				}
 			}
 		}
+		if (role_control != null)
+			role_control.RefreshHeadEquip(overrideHeadId);
+		m_curWeaponType = newItem.m_WeaponType;
+		CUISound.GetInstance().Play("UI_Drag");
 	}
-
 	public TUIBlackMarketItem GetNowItem()
 	{
 		if (m_nCurBlackID == -1)

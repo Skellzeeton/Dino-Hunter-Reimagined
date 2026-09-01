@@ -160,115 +160,125 @@ public class PopupWeapon : MonoBehaviour
 	}
 
 	public void CheckScrollChoose()
-{
-	if (m_nCurWeaponCategory == kShopWeaponCategory.None)
 	{
-		if (!empty_info)
+		if (m_nCurWeaponCategory == kShopWeaponCategory.None)
 		{
-			empty_info = true;
-			SetInfo(null);
-		}
-		return;
-	}
-	empty_info = false;
-	ScrollList_Weapon scrollList = GetScrollList(m_nCurWeaponCategory);
-	if (scrollList == null)
-	{
-		return;
-	}
-	ScrollList_WeaponItem itemChoose = scrollList.GetItemChoose();
-	if (itemChoose == null)
-	{
-		return;
-	}
-	TUIWeaponAttributeInfo weaponAttributeInfo = itemChoose.GetWeaponAttributeInfo();
-	if (weaponAttributeInfo != null)
-	{
-		if (m_curWeaponAttributeInfo == weaponAttributeInfo)
-		{
+			if (!empty_info)
+			{
+				empty_info = true;
+				SetInfo(null);
+				if (role_control != null)
+					role_control.RefreshHeadEquip();
+			}
 			return;
 		}
-		CUISound.GetInstance().Play("UI_Drag");
-		if (m_curWeaponAttributeInfo != null)
+		empty_info = false;
+		ScrollList_Weapon scrollList = GetScrollList(m_nCurWeaponCategory);
+		if (scrollList == null)
+			return;
+		ScrollList_WeaponItem itemChoose = scrollList.GetItemChoose();
+		if (itemChoose == null)
 		{
-			RestoreCharacterModelIfForced(m_curWeaponAttributeInfo.m_WeaponType, weaponAttributeInfo.m_WeaponType);
-			int avatarid = -1;
-			if (TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar != null && TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar(top_bar.GetRoleID(), m_curWeaponAttributeInfo.m_WeaponType, ref avatarid))
+			if (role_control != null)
+				role_control.RefreshHeadEquip();
+			return;
+		}
+		TUIWeaponAttributeInfo weaponAttributeInfo = itemChoose.GetWeaponAttributeInfo();
+		if (weaponAttributeInfo != null)
+		{
+			if (m_curWeaponAttributeInfo == weaponAttributeInfo)
+				return;
+			CUISound.GetInstance().Play("UI_Drag");
+			if (m_curWeaponAttributeInfo != null)
+			{
+				RestoreCharacterModelIfForced(m_curWeaponAttributeInfo.m_WeaponType, weaponAttributeInfo.m_WeaponType);
+				int avatarid = -1;
+				if (TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar != null &&
+				TUIMappingInfo.Instance().m_GetCharacterDefaultAvatar(top_bar.GetRoleID(), m_curWeaponAttributeInfo.m_WeaponType, ref avatarid))
+				{
+					GameObject modelprefab = null;
+					Texture modeltexture = null;
+					if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
+					{
+						TUIMappingInfo.Instance().m_GetAvatarModel(avatarid, top_bar.GetRoleID(), ref modelprefab, ref modeltexture);
+					}
+					switch (m_curWeaponAttributeInfo.m_WeaponType)
+					{
+						case WeaponType.Armor_Head:
+							SetRoleAvatar(0, modelprefab, modeltexture);
+							break;
+						case WeaponType.Armor_Body:
+							SetRoleAvatar(1, modelprefab, modeltexture);
+							break;
+						case WeaponType.Armor_Leg:
+							SetRoleAvatar(2, modelprefab, modeltexture);
+							break;
+						case WeaponType.Accessory_Halo:
+							SetRoleAvatarEffect(3, modelprefab);
+							break;
+						case WeaponType.Accessory_Necklace:
+							SetRoleAvatarEffect(6, modelprefab);
+							break;
+						case WeaponType.Armor_Bracelet:
+							SetRoleAvatarEffect(4, modelprefab);
+							SetRoleAvatarEffect(5, modelprefab);
+							break;
+					}
+				}
+			}
+			SetInfo(weaponAttributeInfo);
+			ForceCharacterModelIfNoArmor(weaponAttributeInfo.m_WeaponType);
+			int overrideHeadId = -1;
+			if (weaponAttributeInfo.IsWeapon())
+			{
+				SetRoleWeapon(weaponAttributeInfo.m_nID);
+			}
+			else
 			{
 				GameObject modelprefab = null;
 				Texture modeltexture = null;
-				if (TUIMappingInfo.Instance().m_GetAvatarModel != null)
+				if (TUIMappingInfo.Instance().m_GetAvatarModel != null &&
+				TUIMappingInfo.Instance().m_GetAvatarModel(weaponAttributeInfo.m_nID, top_bar.GetRoleID(), ref modelprefab, ref modeltexture))
 				{
-					TUIMappingInfo.Instance().m_GetAvatarModel(avatarid, top_bar.GetRoleID(), ref modelprefab, ref modeltexture);
-				}
-				switch (m_curWeaponAttributeInfo.m_WeaponType)
-				{
-				case WeaponType.Armor_Head:
-					SetRoleAvatar(0, modelprefab, modeltexture);
-					break;
-				case WeaponType.Armor_Body:
-					SetRoleAvatar(1, modelprefab, modeltexture);
-					break;
-				case WeaponType.Armor_Leg:
-					SetRoleAvatar(2, modelprefab, modeltexture);
-					break;
-				case WeaponType.Accessory_Halo:
-					SetRoleAvatarEffect(3, modelprefab);
-					break;
-				case WeaponType.Accessory_Necklace:
-					SetRoleAvatarEffect(6, modelprefab);
-					break;
-				case WeaponType.Armor_Bracelet:
-					SetRoleAvatarEffect(4, modelprefab);
-					SetRoleAvatarEffect(5, modelprefab);
-					break;
+					switch (weaponAttributeInfo.m_WeaponType)
+					{
+						case WeaponType.Armor_Head:
+							SetRoleAvatar(0, modelprefab, modeltexture);
+							overrideHeadId = weaponAttributeInfo.m_nID;
+							break;
+						case WeaponType.Armor_Body:
+							SetRoleAvatar(1, modelprefab, modeltexture);
+							break;
+						case WeaponType.Armor_Leg:
+							SetRoleAvatar(2, modelprefab, modeltexture);
+							break;
+						case WeaponType.Accessory_Halo:
+							SetRoleAvatarEffect(3, modelprefab);
+							break;
+						case WeaponType.Accessory_Necklace:
+							SetRoleAvatarEffect(6, modelprefab);
+							break;
+						case WeaponType.Armor_Bracelet:
+							SetRoleAvatarEffect(4, modelprefab);
+							SetRoleAvatarEffect(5, modelprefab);
+							break;
+					}
 				}
 			}
-		}
-		SetInfo(weaponAttributeInfo);
-		ForceCharacterModelIfNoArmor(weaponAttributeInfo.m_WeaponType);
-		if (weaponAttributeInfo.IsWeapon())
-		{
-			SetRoleWeapon(weaponAttributeInfo.m_nID);
+			if (role_control != null)
+				role_control.RefreshHeadEquip(overrideHeadId);
+			global::EventCenter.EventCenter.Instance.Publish(this,
+					new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_WeaponChoose,
+							weaponAttributeInfo.m_nID, (int)weaponAttributeInfo.m_WeaponType));
 		}
 		else
 		{
-			GameObject modelprefab2 = null;
-			Texture modeltexture2 = null;
-			if (TUIMappingInfo.Instance().m_GetAvatarModel != null && TUIMappingInfo.Instance().m_GetAvatarModel(weaponAttributeInfo.m_nID, top_bar.GetRoleID(), ref modelprefab2, ref modeltexture2))
-			{
-				switch (weaponAttributeInfo.m_WeaponType)
-				{
-				case WeaponType.Armor_Head:
-					SetRoleAvatar(0, modelprefab2, modeltexture2);
-					break;
-				case WeaponType.Armor_Body:
-					SetRoleAvatar(1, modelprefab2, modeltexture2);
-					break;
-				case WeaponType.Armor_Leg:
-					SetRoleAvatar(2, modelprefab2, modeltexture2);
-					break;
-				case WeaponType.Accessory_Halo:
-					SetRoleAvatarEffect(3, modelprefab2);
-					break;
-				case WeaponType.Accessory_Necklace:
-					SetRoleAvatarEffect(6, modelprefab2);
-					break;
-				case WeaponType.Armor_Bracelet:
-					SetRoleAvatarEffect(4, modelprefab2);
-					SetRoleAvatarEffect(5, modelprefab2);
-					break;
-				}
-			}
+			SetInfo(null);
+			if (role_control != null)
+				role_control.RefreshHeadEquip();
 		}
-		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneForge(TUIEvent.SceneForgeEventType.TUIEvent_WeaponChoose, weaponAttributeInfo.m_nID, (int)weaponAttributeInfo.m_WeaponType));
+		m_curWeaponAttributeInfo = weaponAttributeInfo;
 	}
-	else
-	{
-		SetInfo(null);
-	}
-	m_curWeaponAttributeInfo = weaponAttributeInfo;
-}
 
 	public void SetInfo(TUIWeaponAttributeInfo weaponattributeinfo)
 	{

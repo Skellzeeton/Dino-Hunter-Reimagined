@@ -618,48 +618,55 @@ public class CCharPlayer : CCharBase
 	public void LoadCharacterEquip()
 	{
 		iDataCenter dataCenter = iGameApp.GetInstance().m_GameData.GetDataCenter();
-		if (dataCenter == null)
-		{
-			return;
-		}
-		bool hasArmor = (dataCenter.AvatarHead > 0 && dataCenter.AvatarHead != 101) ||
-		                (dataCenter.AvatarUpper > 0 && dataCenter.AvatarUpper != 301) ||
-		                (dataCenter.AvatarLower > 0 && dataCenter.AvatarLower != 501);
-		if (!hasArmor)
-		{
-			return;
-		}
+		if (dataCenter == null) return;
 		CCharacterInfoLevel levelOneInfo = null;
 		if (m_curCharacterInfo != null)
-		{
 			levelOneInfo = m_curCharacterInfo.Get(1);
+		if (levelOneInfo != null &&
+		!string.IsNullOrEmpty(levelOneInfo.sHeadEquipModel) &&
+		m_nAvatarHead == 101)
+		{
+			Transform headBone = m_ModelHead;
+			if (headBone != null)
+			{
+				string headEquipPath = "artist/model/equip/" + levelOneInfo.sHeadEquipModel;
+				GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
+				if (headEquipPrefab != null)
+				{
+					foreach (Transform child in headBone)
+						if (child.name.Contains("Equip") || child.name.Contains("equip"))
+							Destroy(child.gameObject);
+					GameObject headEquipInstance = Object.Instantiate(headEquipPrefab);
+					headEquipInstance.transform.parent = headBone;
+					headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
+					headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;
+					headEquipInstance.transform.localScale = headEquipPrefab.transform.localScale;
+				}
+			}
 		}
+		bool hasArmor = (dataCenter.AvatarHead > 0 && dataCenter.AvatarHead != 101) ||
+		(dataCenter.AvatarUpper > 0 && dataCenter.AvatarUpper != 301) ||
+		(dataCenter.AvatarLower > 0 && dataCenter.AvatarLower != 501);
+		if (!hasArmor) return;
 		if (levelOneInfo == null || string.IsNullOrEmpty(levelOneInfo.sEquipModel))
-		{
 			return;
-		}
-		Transform spineBone = null;
-		if (m_ModelEntityTransform != null)
-		{
-			spineBone = FindBoneRecursive(m_ModelEntityTransform, "Bip01 Spine");
-		}
+		Transform spineBone = FindBoneRecursive(m_ModelEntityTransform, "Bip01 Spine");
 		if (spineBone == null)
 		{
-			Debug.LogWarning("CCharPlayer: Bip01 Spine bone not found on character model");
+			Debug.LogWarning("CCharPlayer: Bip01 Spine not found");
 			return;
 		}
 		string equipPath = "artist/model/equip/" + levelOneInfo.sEquipModel;
 		GameObject equipPrefab = Resources.Load<GameObject>(equipPath);
 		if (equipPrefab == null)
 		{
-			Debug.LogWarning("CCharPlayer: Equip prefab not found at path: " + equipPath);
+			Debug.LogWarning("CCharPlayer: Equip prefab not found: " + equipPath);
 			return;
 		}
+		foreach (Transform child in spineBone)
+			if (child.name.Contains("Equip") || child.name.Contains("equip"))
+				Destroy(child.gameObject);
 		GameObject equipInstance = Object.Instantiate(equipPrefab);
-		if (equipInstance == null)
-		{
-			return;
-		}
 		equipInstance.transform.parent = spineBone;
 		equipInstance.transform.localPosition = equipPrefab.transform.position;
 		equipInstance.transform.localRotation = equipPrefab.transform.rotation;
@@ -667,15 +674,8 @@ public class CCharPlayer : CCharBase
 		iCharacterModel characterModel = GetComponent<iCharacterModel>();
 		if (characterModel != null)
 		{
-			if (characterModel.mPendant != null)
-			{
-				Object.Destroy(characterModel.mPendant);
-			}
+			if (characterModel.mPendant != null) Object.Destroy(characterModel.mPendant);
 			characterModel.mPendant = equipInstance;
-		}
-		else
-		{
-			Debug.Log("CCharPlayer: iCharacterModel not found on character, equip added without pendant assignment");
 		}
 	}
 

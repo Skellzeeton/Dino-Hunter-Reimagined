@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 33018746288937184}
   - component: {fileID: 23925343161048556}
   - component: {fileID: 2583715187290887449}
+  - component: {fileID: 2225680140589244849}
   m_Layer: 29
   m_Name: Monsterhole_dimian01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4406566143909978
 Transform:
@@ -112,6 +113,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50.000828, y: 50.000614, z: 0.000013053586}
   m_Center: {x: 2.728484e-12, y: -2.728484e-12, z: 0.0000010430897}
+--- !u!114 &2225680140589244849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025964517093288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1039332729915574
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +189,7 @@ GameObject:
   - component: {fileID: 33381032699338702}
   - component: {fileID: 23087153657797454}
   - component: {fileID: 64799412881344332}
+  - component: {fileID: 5133735536890417225}
   m_Layer: 31
   m_Name: Monsterhole_dong03
   m_TagString: Untagged
@@ -269,6 +291,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8741876988395598429, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &5133735536890417225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050824306321346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1080271994383682
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,6 +456,7 @@ GameObject:
   - component: {fileID: 33676004967527570}
   - component: {fileID: 23381637248158572}
   - component: {fileID: 64547691115369654}
+  - component: {fileID: 1227461176701383432}
   m_Layer: 31
   m_Name: Bigblock_cao01
   m_TagString: Untagged
@@ -515,6 +558,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2795831936689930350, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1227461176701383432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089007704588708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1102999815441818
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +590,7 @@ GameObject:
   - component: {fileID: 33101605676639882}
   - component: {fileID: 23739091741684120}
   - component: {fileID: 64674816397903904}
+  - component: {fileID: 4503208178982487087}
   m_Layer: 31
   m_Name: Bigblock_cao03
   m_TagString: Untagged
@@ -628,6 +692,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1120626583204069967, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4503208178982487087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102999815441818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1106771581020550
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +725,7 @@ GameObject:
   - component: {fileID: 23034207310286966}
   - component: {fileID: 64350862200466440}
   - component: {fileID: 4472259920566637640}
+  - component: {fileID: 907344458020233391}
   m_Layer: 31
   m_Name: Monsterhole_dong04
   m_TagString: Untagged
@@ -762,6 +847,26 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &907344458020233391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106771581020550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1111493204950276
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +879,7 @@ GameObject:
   - component: {fileID: 33928005726656114}
   - component: {fileID: 23402961239609334}
   - component: {fileID: 64862173352034322}
+  - component: {fileID: 7281098618905970811}
   m_Layer: 31
   m_Name: Monsterhole_dong01
   m_TagString: Untagged
@@ -875,6 +981,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6871515925677874723, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &7281098618905970811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111493204950276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1124243365786678
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,6 +1013,7 @@ GameObject:
   - component: {fileID: 33029913223449994}
   - component: {fileID: 23088935524364966}
   - component: {fileID: 64535633529318132}
+  - component: {fileID: 4794403698087002586}
   m_Layer: 31
   m_Name: Monsterhole_cao02
   m_TagString: Untagged
@@ -988,6 +1115,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4458538104082485688, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4794403698087002586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124243365786678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1125231118834630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,6 +1237,7 @@ GameObject:
   - component: {fileID: 33393238116105066}
   - component: {fileID: 23284625433507780}
   - component: {fileID: 64894117146962992}
+  - component: {fileID: 278505967997218440}
   m_Layer: 31
   m_Name: Monsterhole_cao01
   m_TagString: Untagged
@@ -1191,6 +1339,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4759463950364364030, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &278505967997218440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141986194660552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1145243424643184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,6 +1503,7 @@ GameObject:
   - component: {fileID: 33524999202041006}
   - component: {fileID: 23812057768256544}
   - component: {fileID: 64311370896129616}
+  - component: {fileID: 8153038844572595517}
   m_Layer: 31
   m_Name: Monsterhole_cao01
   m_TagString: Untagged
@@ -1436,6 +1605,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4759463950364364030, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &8153038844572595517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180670995424338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1201566755157924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,12 +1637,13 @@ GameObject:
   - component: {fileID: 33661553660544460}
   - component: {fileID: 23684131864618108}
   - component: {fileID: 6516732213989082828}
+  - component: {fileID: 7946158523784589819}
   m_Layer: 29
   m_Name: Monsterhole_dimian01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4026050588155872
 Transform:
@@ -1548,6 +1738,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50.00083, y: 50.000607, z: 0.000013053562}
   m_Center: {x: -0.0000057220423, y: -1.8189894e-12, z: -0.0000049174587}
+--- !u!114 &7946158523784589819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201566755157924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1209360029443324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,6 +1770,7 @@ GameObject:
   - component: {fileID: 33599030399863490}
   - component: {fileID: 23131818415190556}
   - component: {fileID: 64956284839674054}
+  - component: {fileID: 2896132894886848778}
   m_Layer: 31
   m_Name: Bigblock_cao02
   m_TagString: Untagged
@@ -1661,6 +1872,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2040425303211508560, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &2896132894886848778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209360029443324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1232332600516890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,6 +2037,7 @@ GameObject:
   - component: {fileID: 33038425137870846}
   - component: {fileID: 23912640785401230}
   - component: {fileID: 64027623135844170}
+  - component: {fileID: 2845109779871909132}
   m_Layer: 31
   m_Name: Monsterhole_dong03
   m_TagString: Untagged
@@ -1907,6 +2139,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8741876988395598429, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &2845109779871909132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242112622276644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1253597865357292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,6 +2171,7 @@ GameObject:
   - component: {fileID: 33215980011615284}
   - component: {fileID: 23640902249437750}
   - component: {fileID: 64247996453268428}
+  - component: {fileID: 7400240720512297387}
   m_Layer: 31
   m_Name: Bigblock_shu03
   m_TagString: Untagged
@@ -1935,7 +2188,7 @@ Transform:
   m_GameObject: {fileID: 1253597865357292}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -45.578644, y: 9.609116, z: 0}
+  m_LocalPosition: {x: -45.6, y: 9.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2022,6 +2275,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3678402351451870305, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &7400240720512297387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253597865357292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1260982848256986
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,6 +2307,7 @@ GameObject:
   - component: {fileID: 33505501117978320}
   - component: {fileID: 23407693817706842}
   - component: {fileID: 64535949076454942}
+  - component: {fileID: 310188715852601249}
   m_Layer: 31
   m_Name: Monsterhole_shu02
   m_TagString: Untagged
@@ -2137,6 +2411,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4891218059557487195, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &310188715852601249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260982848256986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1292586874360592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,6 +2589,7 @@ GameObject:
   - component: {fileID: 33609526032776732}
   - component: {fileID: 23091644095169248}
   - component: {fileID: 64809430804419236}
+  - component: {fileID: 6711667643851291503}
   m_Layer: 31
   m_Name: Bigblock_cao02
   m_TagString: Untagged
@@ -2396,6 +2691,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2040425303211508560, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &6711667643851291503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297743515445364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1303665571865540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,6 +2780,7 @@ GameObject:
   - component: {fileID: 23524913954274422}
   - component: {fileID: 64790969318632444}
   - component: {fileID: 8442261131474358463}
+  - component: {fileID: 334364106848148926}
   m_Layer: 31
   m_Name: Monsterhole_dong04
   m_TagString: Untagged
@@ -2586,6 +2902,26 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &334364106848148926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306299810297752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1306581281115220
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,6 +2934,7 @@ GameObject:
   - component: {fileID: 33710837448673700}
   - component: {fileID: 23343078822166112}
   - component: {fileID: 64001448055325212}
+  - component: {fileID: 6880780222449395636}
   m_Layer: 31
   m_Name: Monsterhole_dong02
   m_TagString: Untagged
@@ -2699,6 +3036,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7374923115798627295, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &6880780222449395636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306581281115220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1323442544675320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,12 +3201,13 @@ GameObject:
   - component: {fileID: 33611499754935440}
   - component: {fileID: 23519797174265094}
   - component: {fileID: 3086378245923690893}
+  - component: {fileID: 2516807591548024769}
   m_Layer: 29
   m_Name: end_dimian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4734350836554466
 Transform:
@@ -2944,6 +3302,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50.000053, y: 50.000042, z: 0.000013351459}
   m_Center: {x: -0.000003814701, y: 0.000015258793, z: -0.000005245216}
+--- !u!114 &2516807591548024769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335431289327618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1336507291430488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2957,6 +3335,7 @@ GameObject:
   - component: {fileID: 23540111537590192}
   - component: {fileID: 64251677041139054}
   - component: {fileID: 4025568507234714480}
+  - component: {fileID: 7242221534643527102}
   m_Layer: 31
   m_Name: Monsterhole_dong04
   m_TagString: Untagged
@@ -3078,6 +3457,26 @@ MonoBehaviour:
   m_IgnoreFromBuild: 0
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &7242221534643527102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336507291430488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1377161326509758
 GameObject:
   m_ObjectHideFlags: 0
@@ -3090,6 +3489,7 @@ GameObject:
   - component: {fileID: 33059475691538686}
   - component: {fileID: 23233160124030334}
   - component: {fileID: 64223976698796698}
+  - component: {fileID: 3383901774359724465}
   m_Layer: 31
   m_Name: Monsterhole_shu01
   m_TagString: Untagged
@@ -3193,6 +3593,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3545035212155038320, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &3383901774359724465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377161326509758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1392921720675284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,12 +3625,13 @@ GameObject:
   - component: {fileID: 33452580320170178}
   - component: {fileID: 23921732635097830}
   - component: {fileID: 3971555270761080721}
+  - component: {fileID: 6281163726172103814}
   m_Layer: 29
   m_Name: end_dimian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4014623813838450
 Transform:
@@ -3305,6 +3726,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50.000053, y: 50.00002, z: 0.0000014305155}
   m_Center: {x: -0.000007629398, y: 0.000003814698, z: 0.0000007152532}
+--- !u!114 &6281163726172103814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392921720675284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1396125664616602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3583,6 +4024,7 @@ GameObject:
   - component: {fileID: 33258951725687658}
   - component: {fileID: 23109914647675018}
   - component: {fileID: 64311059664921204}
+  - component: {fileID: 8142141458918559784}
   m_Layer: 31
   m_Name: Bigblock_cao04
   m_TagString: Untagged
@@ -3684,6 +4126,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6555815017804297880, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &8142141458918559784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474993819583810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1475946988753590
 GameObject:
   m_ObjectHideFlags: 0
@@ -3963,6 +4425,7 @@ GameObject:
   - component: {fileID: 33014854246243044}
   - component: {fileID: 23441671006852700}
   - component: {fileID: 64996242050446716}
+  - component: {fileID: 5872483564585327795}
   m_Layer: 31
   m_Name: end_shu01
   m_TagString: Untagged
@@ -4066,6 +4529,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3242993456856672929, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &5872483564585327795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502045542949776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1506090738142554
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,6 +4694,7 @@ GameObject:
   - component: {fileID: 33325427896599816}
   - component: {fileID: 23416050816537736}
   - component: {fileID: 64602987943098612}
+  - component: {fileID: 312215848040258355}
   m_Layer: 31
   m_Name: Monsterhole_dong05
   m_TagString: Untagged
@@ -4312,6 +4796,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6039418032172054960, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &312215848040258355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513859192000742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1514112836228636
 GameObject:
   m_ObjectHideFlags: 0
@@ -4324,6 +4828,7 @@ GameObject:
   - component: {fileID: 33759179554816958}
   - component: {fileID: 23149156234237308}
   - component: {fileID: 64630761893812890}
+  - component: {fileID: 3099356057045708411}
   m_Layer: 31
   m_Name: Bigblock_shu02
   m_TagString: Untagged
@@ -4427,6 +4932,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6926838207542546134, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &3099356057045708411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514112836228636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1515529088770940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4439,6 +4964,7 @@ GameObject:
   - component: {fileID: 33328144244534352}
   - component: {fileID: 23907668063309368}
   - component: {fileID: 64401712026588606}
+  - component: {fileID: 7595615626842827064}
   m_Layer: 31
   m_Name: end_cao01
   m_TagString: Untagged
@@ -4540,6 +5066,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3925201517684298170, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &7595615626842827064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515529088770940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1544585399349866
 GameObject:
   m_ObjectHideFlags: 0
@@ -4596,6 +5142,7 @@ GameObject:
   - component: {fileID: 33448618021464684}
   - component: {fileID: 23084236899632666}
   - component: {fileID: 64466401346408352}
+  - component: {fileID: 2559022091368719217}
   m_Layer: 31
   m_Name: Bigblock_cao01
   m_TagString: Untagged
@@ -4697,6 +5244,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2795831936689930350, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &2559022091368719217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549797709919648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1563473167258770
 GameObject:
   m_ObjectHideFlags: 0
@@ -4709,6 +5276,7 @@ GameObject:
   - component: {fileID: 33072382205105198}
   - component: {fileID: 23337007351711472}
   - component: {fileID: 64788250334080910}
+  - component: {fileID: 740191203689499550}
   m_Layer: 31
   m_Name: Bigblock_cao04
   m_TagString: Untagged
@@ -4810,6 +5378,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6555815017804297880, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &740191203689499550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563473167258770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1573930865022606
 GameObject:
   m_ObjectHideFlags: 0
@@ -5455,6 +6043,7 @@ GameObject:
   - component: {fileID: 33852072301182096}
   - component: {fileID: 23622822080651928}
   - component: {fileID: 64022179230879890}
+  - component: {fileID: 4223397622077402566}
   m_Layer: 31
   m_Name: Monsterhole_dong03
   m_TagString: Untagged
@@ -5556,6 +6145,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8741876988395598429, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4223397622077402566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647975733072428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1668055205488896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5736,6 +6345,7 @@ GameObject:
   - component: {fileID: 33644868746738094}
   - component: {fileID: 23223189379708134}
   - component: {fileID: 64418193438533446}
+  - component: {fileID: 4513167279210157180}
   m_Layer: 31
   m_Name: end_cao01
   m_TagString: Untagged
@@ -5837,6 +6447,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3925201517684298170, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4513167279210157180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678938078645928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1680454996969316
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,6 +6514,7 @@ GameObject:
   - component: {fileID: 33579559178162480}
   - component: {fileID: 23211503064889800}
   - component: {fileID: 64297706813183240}
+  - component: {fileID: 7702306355172963563}
   m_Layer: 31
   m_Name: Bigblock_shu01
   m_TagString: Untagged
@@ -5987,6 +6618,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4901182433830952921, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &7702306355172963563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694947753658994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1697327843373546
 GameObject:
   m_ObjectHideFlags: 0
@@ -5999,6 +6650,7 @@ GameObject:
   - component: {fileID: 33309482248550232}
   - component: {fileID: 23653842484471036}
   - component: {fileID: 64505174075810898}
+  - component: {fileID: 2052793349165785866}
   m_Layer: 31
   m_Name: Monsterhole_dong05
   m_TagString: Untagged
@@ -6100,6 +6752,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6039418032172054960, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &2052793349165785866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697327843373546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1697960552142078
 GameObject:
   m_ObjectHideFlags: 0
@@ -6112,6 +6784,7 @@ GameObject:
   - component: {fileID: 33491676031500520}
   - component: {fileID: 23672573827836706}
   - component: {fileID: 64151291813494758}
+  - component: {fileID: 1921504404170891853}
   m_Layer: 31
   m_Name: Monsterhole_cao02
   m_TagString: Untagged
@@ -6213,6 +6886,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4458538104082485688, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1921504404170891853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697960552142078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1716372410903390
 GameObject:
   m_ObjectHideFlags: 0
@@ -6225,6 +6918,7 @@ GameObject:
   - component: {fileID: 33960391290596702}
   - component: {fileID: 23266364460812738}
   - component: {fileID: 64964204901683668}
+  - component: {fileID: 6988812929810334110}
   m_Layer: 31
   m_Name: Monsterhole_cao01
   m_TagString: Untagged
@@ -6326,6 +7020,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4759463950364364030, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &6988812929810334110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716372410903390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1721272024245220
 GameObject:
   m_ObjectHideFlags: 0
@@ -6470,6 +7184,7 @@ GameObject:
   - component: {fileID: 33407467969192930}
   - component: {fileID: 23953533003720496}
   - component: {fileID: 64698463459525448}
+  - component: {fileID: 3425424926810157425}
   m_Layer: 31
   m_Name: Monsterhole_dong02
   m_TagString: Untagged
@@ -6571,6 +7286,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7374923115798627295, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &3425424926810157425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726718791587674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1746055261443350
 GameObject:
   m_ObjectHideFlags: 0
@@ -6583,6 +7318,7 @@ GameObject:
   - component: {fileID: 33911833511877480}
   - component: {fileID: 23873942340502562}
   - component: {fileID: 64004323250380920}
+  - component: {fileID: 859866939002228016}
   m_Layer: 31
   m_Name: Monsterhole_cao02
   m_TagString: Untagged
@@ -6684,6 +7420,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4458538104082485688, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &859866939002228016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746055261443350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1751469262691076
 GameObject:
   m_ObjectHideFlags: 0
@@ -6696,6 +7452,7 @@ GameObject:
   - component: {fileID: 33581645202866958}
   - component: {fileID: 23299946423241298}
   - component: {fileID: 64305857804309712}
+  - component: {fileID: 1860345540519128457}
   m_Layer: 31
   m_Name: end_cao01
   m_TagString: Untagged
@@ -6797,6 +7554,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3925201517684298170, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1860345540519128457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751469262691076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1753578722725392
 GameObject:
   m_ObjectHideFlags: 0
@@ -6942,12 +7719,13 @@ GameObject:
   - component: {fileID: 33716725436575482}
   - component: {fileID: 23023893731683722}
   - component: {fileID: 7366028890159132638}
+  - component: {fileID: 6314478983219703349}
   m_Layer: 29
   m_Name: Monsterhole_dimian01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4662695137644708
 Transform:
@@ -7042,6 +7820,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50.00081, y: 50.000607, z: 0.0000011324903}
   m_Center: {x: 0.0000076293945, y: -1.8189894e-12, z: 0.0000010430774}
+--- !u!114 &6314478983219703349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757927829954180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1774131959580874
 GameObject:
   m_ObjectHideFlags: 0
@@ -7186,12 +7984,13 @@ GameObject:
   - component: {fileID: 33270990992766656}
   - component: {fileID: 23037615761111484}
   - component: {fileID: 4967614512930136118}
+  - component: {fileID: 3727990603285275590}
   m_Layer: 29
   m_Name: end_dimian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4221447553537600
 Transform:
@@ -7286,6 +8085,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50.00006, y: 50.00004, z: 0.00001335145}
   m_Center: {x: -0.000007629399, y: 0.0000057220486, z: -0.0000052452147}
+--- !u!114 &3727990603285275590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786691357524996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1789652493743838
 GameObject:
   m_ObjectHideFlags: 0
@@ -7298,6 +8117,7 @@ GameObject:
   - component: {fileID: 33534391156991670}
   - component: {fileID: 23913519030966322}
   - component: {fileID: 64910286354311440}
+  - component: {fileID: 8980643723839544309}
   m_Layer: 31
   m_Name: Bigblock_shu03
   m_TagString: Untagged
@@ -7401,6 +8221,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3678402351451870305, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &8980643723839544309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789652493743838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1794181979657018
 GameObject:
   m_ObjectHideFlags: 0
@@ -7413,6 +8253,7 @@ GameObject:
   - component: {fileID: 33576148061453672}
   - component: {fileID: 23178774499317668}
   - component: {fileID: 64341775507249868}
+  - component: {fileID: 9010119463207329910}
   m_Layer: 31
   m_Name: Monsterhole_dong01
   m_TagString: Untagged
@@ -7514,6 +8355,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6871515925677874723, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &9010119463207329910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794181979657018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1802653008676564
 GameObject:
   m_ObjectHideFlags: 0
@@ -7599,6 +8460,7 @@ GameObject:
   - component: {fileID: 33328581816431324}
   - component: {fileID: 23365570410166592}
   - component: {fileID: 64449777375928392}
+  - component: {fileID: 4094383566144483256}
   m_Layer: 31
   m_Name: Monsterhole_dong01
   m_TagString: Untagged
@@ -7700,6 +8562,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6871515925677874723, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4094383566144483256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813246198581402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1822481705584628
 GameObject:
   m_ObjectHideFlags: 0
@@ -7712,6 +8594,7 @@ GameObject:
   - component: {fileID: 33082375911216094}
   - component: {fileID: 23112438797865472}
   - component: {fileID: 64191091501384486}
+  - component: {fileID: 4290454012012838071}
   m_Layer: 31
   m_Name: Monsterhole_shu01
   m_TagString: Untagged
@@ -7815,6 +8698,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3545035212155038320, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4290454012012838071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822481705584628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1835855576605466
 GameObject:
   m_ObjectHideFlags: 0
@@ -7827,6 +8730,7 @@ GameObject:
   - component: {fileID: 33541897096934242}
   - component: {fileID: 23996839478228020}
   - component: {fileID: 64783131260542148}
+  - component: {fileID: 496083735424764664}
   m_Layer: 31
   m_Name: Bigblock_shu02
   m_TagString: Untagged
@@ -7930,6 +8834,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6926838207542546134, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &496083735424764664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835855576605466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1839733832863854
 GameObject:
   m_ObjectHideFlags: 0
@@ -7942,6 +8866,7 @@ GameObject:
   - component: {fileID: 33350109270107384}
   - component: {fileID: 23851418748588448}
   - component: {fileID: 64042196702675408}
+  - component: {fileID: 1547831824964014319}
   m_Layer: 31
   m_Name: Monsterhole_dong02
   m_TagString: Untagged
@@ -8043,6 +8968,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7374923115798627295, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1547831824964014319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839733832863854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1847909238273918
 GameObject:
   m_ObjectHideFlags: 0
@@ -8055,6 +9000,7 @@ GameObject:
   - component: {fileID: 33704017139860236}
   - component: {fileID: 23568730783357248}
   - component: {fileID: 64642428372478586}
+  - component: {fileID: 6190481288580329064}
   m_Layer: 31
   m_Name: Bigblock_cao03
   m_TagString: Untagged
@@ -8156,6 +9102,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1120626583204069967, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &6190481288580329064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847909238273918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1847997083108630
 GameObject:
   m_ObjectHideFlags: 0
@@ -8168,6 +9134,7 @@ GameObject:
   - component: {fileID: 33962820200145772}
   - component: {fileID: 23327129201900900}
   - component: {fileID: 64920214875467484}
+  - component: {fileID: 3510318974995264550}
   m_Layer: 31
   m_Name: Bigblock_shu04
   m_TagString: Untagged
@@ -8272,6 +9239,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1838074784747139856, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &3510318974995264550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847997083108630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1863087355660488
 GameObject:
   m_ObjectHideFlags: 0
@@ -8284,6 +9271,7 @@ GameObject:
   - component: {fileID: 33865715066806036}
   - component: {fileID: 23902224797633492}
   - component: {fileID: 64140022836123352}
+  - component: {fileID: 1534468282616097761}
   m_Layer: 31
   m_Name: Bigblock_shu04
   m_TagString: Untagged
@@ -8388,6 +9376,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1838074784747139856, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1534468282616097761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863087355660488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1874091234838824
 GameObject:
   m_ObjectHideFlags: 0
@@ -8568,6 +9576,7 @@ GameObject:
   - component: {fileID: 33394087267103332}
   - component: {fileID: 23436877156375972}
   - component: {fileID: 64598229197042928}
+  - component: {fileID: 4622002540311276933}
   m_Layer: 31
   m_Name: Monsterhole_shu01
   m_TagString: Untagged
@@ -8584,7 +9593,7 @@ Transform:
   m_GameObject: {fileID: 1883538759372520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.0210495, y: 10.916016, z: 0}
+  m_LocalPosition: {x: -15.0210495, y: 10.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8671,6 +9680,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3545035212155038320, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4622002540311276933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883538759372520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1884861431545428
 GameObject:
   m_ObjectHideFlags: 0
@@ -8683,6 +9712,7 @@ GameObject:
   - component: {fileID: 33297684301674126}
   - component: {fileID: 23902539335014596}
   - component: {fileID: 64649035384079814}
+  - component: {fileID: 5747887875168676641}
   m_Layer: 31
   m_Name: end_shu01
   m_TagString: Untagged
@@ -8699,7 +9729,7 @@ Transform:
   m_GameObject: {fileID: 1884861431545428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071069, w: 0.70710677}
-  m_LocalPosition: {x: -24.857544, y: 25.00003, z: 0}
+  m_LocalPosition: {x: -24.85, y: 24.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8786,6 +9816,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3242993456856672929, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &5747887875168676641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884861431545428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1901718023972054
 GameObject:
   m_ObjectHideFlags: 0
@@ -8798,6 +9848,7 @@ GameObject:
   - component: {fileID: 33161292841561254}
   - component: {fileID: 23592266226248200}
   - component: {fileID: 64112388051797262}
+  - component: {fileID: 1427771677211109252}
   m_Layer: 31
   m_Name: Bigblock_shu01
   m_TagString: Untagged
@@ -8901,6 +9952,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4901182433830952921, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1427771677211109252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901718023972054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1916947291218222
 GameObject:
   m_ObjectHideFlags: 0
@@ -8913,6 +9984,7 @@ GameObject:
   - component: {fileID: 33512111887987462}
   - component: {fileID: 23757727472958436}
   - component: {fileID: 64902101029490058}
+  - component: {fileID: 1403269185547326493}
   m_Layer: 31
   m_Name: end_shu01
   m_TagString: Untagged
@@ -9016,6 +10088,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3242993456856672929, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &1403269185547326493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916947291218222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1925546858587798
 GameObject:
   m_ObjectHideFlags: 0
@@ -9161,12 +10253,13 @@ GameObject:
   - component: {fileID: 33438705399951150}
   - component: {fileID: 23787692380061940}
   - component: {fileID: 8478024359387989044}
+  - component: {fileID: 8985684253035027176}
   m_Layer: 29
   m_Name: Bigblock_dimian01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4837703334452244
 Transform:
@@ -9261,6 +10354,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 59.999954, y: 59.999752, z: 0.0000011473896}
   m_Center: {x: -0.000022888184, y: 0.00001335144, z: 0.0000014379588}
+--- !u!114 &8985684253035027176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928768041176508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1942017295600304
 GameObject:
   m_ObjectHideFlags: 0
@@ -9273,6 +10386,7 @@ GameObject:
   - component: {fileID: 33634837370018404}
   - component: {fileID: 23979379163235964}
   - component: {fileID: 64161387410738056}
+  - component: {fileID: 8312240140192467182}
   m_Layer: 31
   m_Name: Monsterhole_dong05
   m_TagString: Untagged
@@ -9374,6 +10488,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6039418032172054960, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &8312240140192467182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942017295600304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1943457045741022
 GameObject:
   m_ObjectHideFlags: 0
@@ -9685,6 +10819,7 @@ GameObject:
   - component: {fileID: 33320522314138954}
   - component: {fileID: 23003903936183864}
   - component: {fileID: 64915676796056032}
+  - component: {fileID: 4898076490285599634}
   m_Layer: 31
   m_Name: Monsterhole_shu02
   m_TagString: Untagged
@@ -9788,6 +10923,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4891218059557487195, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &4898076490285599634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964920031086068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1980993461098450
 GameObject:
   m_ObjectHideFlags: 0
@@ -9800,12 +10955,13 @@ GameObject:
   - component: {fileID: 33552075825858136}
   - component: {fileID: 23763266733306080}
   - component: {fileID: 896069443631009570}
+  - component: {fileID: 6033039695913393159}
   m_Layer: 29
   m_Name: Bigblock_dimian01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 20
+  m_StaticEditorFlags: 4
   m_IsActive: 1
 --- !u!4 &4772056723721996
 Transform:
@@ -9900,6 +11056,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 59.999954, y: 59.999752, z: 0.0000011473896}
   m_Center: {x: -0.000022888184, y: 0.000009536743, z: 0.0000014379588}
+--- !u!114 &6033039695913393159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980993461098450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1983195978258724
 GameObject:
   m_ObjectHideFlags: 0
@@ -9912,6 +11088,7 @@ GameObject:
   - component: {fileID: 33493396242036328}
   - component: {fileID: 23776649081874110}
   - component: {fileID: 64689841522042344}
+  - component: {fileID: 6081127723206979332}
   m_Layer: 31
   m_Name: Monsterhole_shu02
   m_TagString: Untagged
@@ -9928,7 +11105,7 @@ Transform:
   m_GameObject: {fileID: 1983195978258724}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.51654, y: 12.372589, z: 0}
+  m_LocalPosition: {x: -39.5, y: 12.372589, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10015,3 +11192,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4891218059557487195, guid: c65d468125a93a5aeb18112b7c14f942, type: 3}
+--- !u!114 &6081127723206979332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983195978258724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

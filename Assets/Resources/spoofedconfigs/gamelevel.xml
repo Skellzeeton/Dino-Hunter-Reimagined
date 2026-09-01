@@ -14,13 +14,6 @@
 		<RewardMaterial material="100015" mincount="1" maxcount="1"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="100" iconoverride="8" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" bp_cfg="20101" gamewave="1002001,1002002" task="1001" sp_cfg_ground="20111" exp="63" gold="14" desc="Fend off 3 waves of Dinosaurs" name="1.Your First Challenge" issidelevel="true" forcetype="1,1" forceitem="2,4" forcelevel="2,5">
-		<MonsterNumLimit>
-			<limit type="1" maxnumber="12"/>
-		</MonsterNumLimit>
-		<RewardMaterial material="100015" mincount="1" maxcount="1"/>
-		<recommend recommendtype="1" recommandid="1" recommandlevel="1"/>
-	</gamelevel>
 	<gamelevel id="1003" iconoverride="8" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_toudan01" bp_cfg="150101" gamewave="1003001,1003002,1003003" task="1003" sp_cfg_ground="150111" cutscene="toudan01_jiaoxue" cutscene_ambience="Amb_Rainforest_Show" tpbegin_cfg="150301" tpend_cfg="150401" exp="99" gold="21" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 35">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
@@ -1228,7 +1221,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="600004,600005" mincount="-32,-32" maxcount="1,1"/>
 	</gamelevel>
-	<gamelevel id="100001" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest_night" scenename="SceneForest_Night" bp_cfg="20101" gamewave="100001001,100001002,100001003,100001004" task="100001" sp_cfg_ground="20111" exp="76" gold="60" desc="Hunt Killosaurus Rex x 1">
+	<gamelevel id="100001" BGM_ambience="Amb_Map01_Rainforest_night" scenename="SceneForest_Night" bp_cfg="20101" gamewave="100001001,100001002,100001003,100001004" task="100001" sp_cfg_ground="20111" exp="76" gold="60" desc="Hunt Killosaurus Rex x 1">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>
@@ -1240,16 +1233,23 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100011,100012,100013,700001" mincount="-2,-2,-2,-32" maxcount="1,1,1,1,1"/>
 	</gamelevel>
+	<gamelevel id="100" iconoverride="1" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shaguai02_dusk" bp_cfg="20101" gamewave="1001,1002,1003,1004,1005" task="100" sp_cfg_ground="20111" exp="210" gold="56" desc="Kill all dinos in 5:00" name="1.On a Rush" issidelevel="true" forcetype="1,1,1,3" forceitem="2,21,3,701" forcelevel="2,2,5,1">
+		<MonsterNumLimit>
+			<limit type="1" maxnumber="12"/>
+		</MonsterNumLimit>
+		<RewardMaterial material="100015" mincount="1" maxcount="1"/>
+		<recommend recommendtype="4" recommandid="1" recommandlevel="1"/>
+	</gamelevel>
 		
 		////icon 1 is the forest
-		////icon 2 is the volcano above ground lava map
+		////icon 2 is the volcano map
 		////icon 3 is the underground lava map
 		////icon 4 is the snow map
 		////icon 5 is the ice map
 		////icon 6 is the gorge/sky map
-		////icon 7 is the wave defense render (readded by me, from 1.0-1.2, 1.2.1 doesnt have it because it has the updated stage system)
-		////icon 8 is the egg mission render (readded by me, from 1.0-1.2, 1.2.1 doesnt have it because it has the updated stage system)
-		////icon 9 is the unused forest render from 0.5 (readded by me, it was removed in 1.0 because they added new renders which were just way less lazy and they fit way more, and just its less repetivive to have a lot of renders)
+		////icon 7 is the wave defense render
+		////icon 8 is the egg mission render
+		////icon 9 is the unused forest render from 0.5
 
 		<gamelevelgroup id="1" icon="1" name="1.Set Out On Your Journey" levellist="1001,1002,1003,1004,1005,1006,1007,1008,1009,1010"/>
 	<gamelevelgroup id="2" icon="2" name="2.Scorching Poison" levellist="2001,2002,2003,2004,2005,2006,2007,2008,2009,2010"/>

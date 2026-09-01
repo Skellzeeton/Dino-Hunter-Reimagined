@@ -14,6 +14,8 @@ public class CCharacterInfoLevel
 	
 	public string sEquipModel;
 
+	public string sHeadEquipModel;
+
 	public float fLifeBase;
 
 	public int nSkill;

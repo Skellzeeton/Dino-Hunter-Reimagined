@@ -55,7 +55,7 @@ public class LevelPointEx : MonoBehaviour
 
 	private string texture_survival01 = "furenwu_2";
 
-	private string texture_timed01 = "furenwu_7";
+	private string texture_timed01 = "furenwu_2";
 
 	private string texture_defended01 = "furenwu_3";
 

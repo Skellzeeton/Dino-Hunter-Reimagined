@@ -777,53 +777,181 @@ public class Role_Control : MonoBehaviour
 
 	public void LoadCharacterEquip(bool forceLoad = false)
 	{
-		if (role_now == null)
+		if (role_now == null) return;
+		iGameData gameData = iGameApp.GetInstance().m_GameData;
+		if (gameData == null) return;
+		CCharacterInfoLevel charLevelInfo = gameData.GetCharacterInfo(m_nCurrentCharacterID, 1);
+		if (charLevelInfo == null) return;
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		int effectiveHead = (dc != null && dc.AvatarHead > 0) ? dc.AvatarHead : charLevelInfo.nAvatarHead;
+		bool isRole107 = IsCurrentRole107();
+		if (isRole107 && effectiveHead == 101 && !string.IsNullOrEmpty(charLevelInfo.sHeadEquipModel))
 		{
-			return;
+			Transform headBone = role_now.Find("Bip01 Head");
+			if (headBone == null)
+				headBone = FindBoneRecursive(role_now, "Bip01 Head");
+			if (headBone == null)
+			{
+				Avatar avatar = role_now.GetComponent<Avatar>();
+				if (avatar != null && avatar.m_AvatarPart != null)
+				{
+					foreach (GameObject part in avatar.m_AvatarPart)
+					{
+						if (part != null && part.name.Contains("Head"))
+						{
+							headBone = part.transform;
+							break;
+						}
+					}
+				}
+			}
+			if (headBone != null)
+			{
+				List<GameObject> toDestroy = new List<GameObject>();
+				foreach (Transform child in headBone)
+				{
+					if (child.name.Contains("HeadEquip") || child.name.Contains(charLevelInfo.sHeadEquipModel))
+					{
+						toDestroy.Add(child.gameObject);
+					}
+				}
+				foreach (GameObject obj in toDestroy)
+				{
+					Destroy(obj);
+				}
+				string headEquipPath = "artist/model/equip/" + charLevelInfo.sHeadEquipModel;
+				GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
+				if (headEquipPrefab != null)
+				{
+					GameObject headEquipInstance = Instantiate(headEquipPrefab);
+					headEquipInstance.name = "HeadEquip_" + charLevelInfo.sHeadEquipModel;
+					headEquipInstance.transform.parent = headBone;
+					headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
+					headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;
+					headEquipInstance.transform.localScale = headEquipPrefab.transform.localScale;
+				}
+				else
+				{
+					Debug.LogWarning("Role_Control: Head equip prefab not found: " + headEquipPath);
+				}
+			}
+			else
+			{
+				Debug.LogWarning("Role_Control: Head bone not found on role " + role_now.name);
+			}
+		}
+		else
+		{
+			Transform headBone = role_now.Find("Bip01 Head");
+			if (headBone == null)
+				headBone = FindBoneRecursive(role_now, "Bip01 Head");
+			if (headBone != null)
+			{
+				List<GameObject> toDestroy = new List<GameObject>();
+				foreach (Transform child in headBone)
+				{
+					if (child.name.Contains("HeadEquip"))
+					{
+						toDestroy.Add(child.gameObject);
+					}
+				}
+				foreach (GameObject obj in toDestroy)
+				{
+					Destroy(obj);
+				}
+			}
 		}
 		if (!forceLoad && !HasArmorEquipped())
-		{
 			return;
-		}
-		iGameData gameData = iGameApp.GetInstance().m_GameData;
-		if (gameData == null)
-		{
-			return;
-		}
-		CCharacterInfoLevel charLevelInfo = gameData.GetCharacterInfo(m_nCurrentCharacterID, 1);
-		if (charLevelInfo == null)
-		{
-			return;
-		}
 		if (string.IsNullOrEmpty(charLevelInfo.sEquipModel))
-		{
 			return;
-		}
-		Transform spineBone = FindBoneRecursive(role_now, "Bip01 Spine");
+		Transform spineBone = role_now.Find("Bip01 Spine");
+		if (spineBone == null)
+			spineBone = FindBoneRecursive(role_now, "Bip01 Spine");
 		if (spineBone == null)
 		{
 			Debug.LogWarning("Role_Control: Bip01 Spine not found");
 			return;
 		}
+		foreach (Transform child in spineBone)
+			if (child.name.Contains("Equip") || child.name.Contains("equip"))
+				Destroy(child.gameObject);
 		string equipPath = "artist/model/equip/" + charLevelInfo.sEquipModel;
 		GameObject equipPrefab = Resources.Load<GameObject>(equipPath);
 		if (equipPrefab == null)
 		{
-			Debug.LogWarning("Role_Control: Equip prefab not found: " + equipPath);
+			Debug.LogWarning("Role_Control: Body equip prefab not found: " + equipPath);
 			return;
-		}
-		foreach (Transform child in spineBone)
-		{
-			if (child.name.Contains("Equip") || child.name.Contains("equip"))
-			{
-				Destroy(child.gameObject);
-			}
 		}
 		GameObject equipInstance = Instantiate(equipPrefab);
 		equipInstance.transform.parent = spineBone;
 		equipInstance.transform.localPosition = equipPrefab.transform.position;
 		equipInstance.transform.localRotation = equipPrefab.transform.rotation;
 		equipInstance.transform.localScale = equipPrefab.transform.localScale;
+	}
+
+	private bool IsCurrentRole107()
+	{
+		if (role_now == null) return false;
+		if (role_107 != null && role_now == role_107)
+			return true;
+		if (role_now.name.Contains("107"))
+			return true;
+		return false;
+	}
+
+	public void RefreshHeadEquip(int overrideHeadId = -1)
+	{
+		if (role_now == null) return;
+		iGameData gameData = iGameApp.GetInstance().m_GameData;
+		if (gameData == null) return;
+		CCharacterInfoLevel charLevelInfo = gameData.GetCharacterInfo(m_nCurrentCharacterID, 1);
+		if (charLevelInfo == null) return;
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc == null) return;
+		int effectiveHead;
+		if (overrideHeadId > 0)
+			effectiveHead = overrideHeadId;
+		else
+			effectiveHead = (dc.AvatarHead > 0) ? dc.AvatarHead : charLevelInfo.nAvatarHead;
+		bool isRole107 = IsCurrentRole107();
+		Transform headBone = role_now.Find("Bip01 Head");
+		if (headBone == null)
+			headBone = FindBoneRecursive(role_now, "Bip01 Head");
+		if (headBone != null)
+		{
+			List<GameObject> toDestroy = new List<GameObject>();
+			foreach (Transform child in headBone)
+			{
+				if (child.name.Contains("HeadEquip"))
+					toDestroy.Add(child.gameObject);
+			}
+			foreach (GameObject obj in toDestroy)
+				Destroy(obj);
+		}
+		if (isRole107 && effectiveHead == 101 && !string.IsNullOrEmpty(charLevelInfo.sHeadEquipModel))
+		{
+			if (headBone == null)
+			{
+				headBone = role_now.Find("Bip01 Head");
+				if (headBone == null)
+					headBone = FindBoneRecursive(role_now, "Bip01 Head");
+			}
+			if (headBone != null)
+			{
+				string headEquipPath = "artist/model/equip/" + charLevelInfo.sHeadEquipModel;
+				GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
+				if (headEquipPrefab != null)
+				{
+					GameObject headEquipInstance = Instantiate(headEquipPrefab);
+					headEquipInstance.name = "HeadEquip_" + charLevelInfo.sHeadEquipModel;
+					headEquipInstance.transform.parent = headBone;
+					headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
+					headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;
+					headEquipInstance.transform.localScale = headEquipPrefab.transform.localScale;
+				}
+			}
+		}
 	}
 
 	private Transform FindBoneRecursive(Transform parent, string boneName)
