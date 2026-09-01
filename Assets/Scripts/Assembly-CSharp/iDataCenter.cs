@@ -117,6 +117,30 @@ public class iDataCenter
 	public bool m_bInBlackName { get; set; }
 	public bool m_bInWhiteName { get; set; }
 
+	public bool m_bForcedLoadoutActive = false;
+
+	private int[] m_forcedSelectWeapons;
+
+	private Dictionary<int, int> m_forcedWeaponLevels;
+
+	private Dictionary<int, int> m_forcedAvatarLevels;
+
+	private int m_forcedAvatarHead, m_forcedAvatarUpper, m_forcedAvatarLower,
+
+	m_forcedAvatarHeadup, m_forcedAvatarNeck, m_forcedAvatarWrist,
+
+	m_forcedAvatarBadge, m_forcedAvatarStone;
+
+	private int[] m_backupSelectWeapons;
+
+	private Dictionary<int, int> m_backupWeaponLevels;
+
+	private Dictionary<int, int> m_backupAvatarLevels;
+
+	private int m_backupAvatarHead, m_backupAvatarUpper, m_backupAvatarLower,
+	m_backupAvatarHeadup, m_backupAvatarNeck, m_backupAvatarWrist,
+	m_backupAvatarBadge, m_backupAvatarStone;
+
 	public string GameVersion
 	{
 		get { return m_sGameVersion; }
@@ -1696,6 +1720,27 @@ public class iDataCenter
 
 	public void Save()
 	{
+		bool wasForced = m_bForcedLoadoutActive;
+		try
+		{
+			if (wasForced)
+			{
+				RestoreOriginal();
+			}
+			SaveInternal();
+		}
+		finally
+		{
+			if (wasForced)
+			{
+				ApplyForcedValues();
+				m_bForcedLoadoutActive = true;
+			}
+		}
+	}
+
+	private void SaveInternal()
+	{
 		try
 		{
 			SaveData data = BuildSaveData();
@@ -2377,6 +2422,101 @@ public class iDataCenter
 			return false;
 		}
 		return true;
+	}
+
+	private void ApplyForcedValues()
+	{
+		for (int i = 0; i < 3; i++) m_arrSelectWeapon[i] = m_forcedSelectWeapons[i];
+		m_dictWeapon.Clear();
+		foreach (var kvp in m_forcedWeaponLevels) m_dictWeapon[kvp.Key] = kvp.Value;
+		AvatarHead = m_forcedAvatarHead;
+		AvatarUpper = m_forcedAvatarUpper;
+		AvatarLower = m_forcedAvatarLower;
+		AvatarHeadup = m_forcedAvatarHeadup;
+		AvatarNeck = m_forcedAvatarNeck;
+		AvatarWrist = m_forcedAvatarWrist;
+		AvatarBadge = m_forcedAvatarBadge;
+		AvatarStone = m_forcedAvatarStone;
+		m_dictAvatar.Clear();
+		if (m_forcedAvatarLevels != null)
+			foreach (var kvp in m_forcedAvatarLevels) m_dictAvatar[kvp.Key] = kvp.Value;
+	}
+
+	private void RestoreOriginal()
+	{
+		Array.Copy(m_backupSelectWeapons, m_arrSelectWeapon, 3);
+		m_dictWeapon.Clear();
+		foreach (var kvp in m_backupWeaponLevels) m_dictWeapon[kvp.Key] = kvp.Value;
+		AvatarHead = m_backupAvatarHead;
+		AvatarUpper = m_backupAvatarUpper;
+		AvatarLower = m_backupAvatarLower;
+		AvatarHeadup = m_backupAvatarHeadup;
+		AvatarNeck = m_backupAvatarNeck;
+		AvatarWrist = m_backupAvatarWrist;
+		AvatarBadge = m_backupAvatarBadge;
+		AvatarStone = m_backupAvatarStone;
+		m_dictAvatar.Clear();
+		foreach (var kvp in m_backupAvatarLevels) m_dictAvatar[kvp.Key] = kvp.Value;
+	}
+
+	public bool IsForcedLoadoutActive() => m_bForcedLoadoutActive;
+
+	public void BeginForcedLoadout(int[] forcedSelectWeapons,
+			Dictionary<int, int> forcedWeaponLevels,
+			int forcedAvatarHead, int forcedAvatarUpper,
+			int forcedAvatarLower, int forcedAvatarHeadup,
+			int forcedAvatarNeck, int forcedAvatarWrist,
+			int forcedAvatarBadge, int forcedAvatarStone,
+			Dictionary<int, int> forcedAvatarLevels = null)
+	{
+		if (m_bForcedLoadoutActive) EndForcedLoadout();
+		m_backupSelectWeapons = new int[3];
+		Array.Copy(m_arrSelectWeapon, m_backupSelectWeapons, 3);
+		m_backupWeaponLevels = new Dictionary<int, int>(m_dictWeapon);
+		m_backupAvatarLevels = new Dictionary<int, int>(m_dictAvatar);
+		m_backupAvatarHead = AvatarHead;
+		m_backupAvatarUpper = AvatarUpper;
+		m_backupAvatarLower = AvatarLower;
+		m_backupAvatarHeadup = AvatarHeadup;
+		m_backupAvatarNeck = AvatarNeck;
+		m_backupAvatarWrist = AvatarWrist;
+		m_backupAvatarBadge = AvatarBadge;
+		m_backupAvatarStone = AvatarStone;
+		m_forcedSelectWeapons = (int[])forcedSelectWeapons.Clone();
+		m_forcedWeaponLevels = new Dictionary<int, int>(forcedWeaponLevels);
+		m_forcedAvatarLevels = forcedAvatarLevels != null ? new Dictionary<int, int>(forcedAvatarLevels) : null;
+		m_forcedAvatarHead = forcedAvatarHead;
+		m_forcedAvatarUpper = forcedAvatarUpper;
+		m_forcedAvatarLower = forcedAvatarLower;
+		m_forcedAvatarHeadup = forcedAvatarHeadup;
+		m_forcedAvatarNeck = forcedAvatarNeck;
+		m_forcedAvatarWrist = forcedAvatarWrist;
+		m_forcedAvatarBadge = forcedAvatarBadge;
+		m_forcedAvatarStone = forcedAvatarStone;
+		ApplyForcedValues();
+		m_bForcedLoadoutActive = true;
+	}
+
+	public void EndForcedLoadout()
+	{
+		if (!m_bForcedLoadoutActive) return;
+		Array.Copy(m_backupSelectWeapons, m_arrSelectWeapon, 3);
+		m_dictWeapon.Clear();
+		foreach (var kvp in m_backupWeaponLevels) m_dictWeapon[kvp.Key] = kvp.Value;
+		AvatarHead = m_backupAvatarHead;
+		AvatarUpper = m_backupAvatarUpper;
+		AvatarLower = m_backupAvatarLower;
+		AvatarHeadup = m_backupAvatarHeadup;
+		AvatarNeck = m_backupAvatarNeck;
+		AvatarWrist = m_backupAvatarWrist;
+		AvatarBadge = m_backupAvatarBadge;
+		AvatarStone = m_backupAvatarStone;
+		m_dictAvatar.Clear();
+		foreach (var kvp in m_backupAvatarLevels) m_dictAvatar[kvp.Key] = kvp.Value;
+		m_forcedSelectWeapons = null;
+		m_forcedWeaponLevels = null;
+		m_forcedAvatarLevels = null;
+		m_bForcedLoadoutActive = false;
 	}
 
 	public void RefreshServerDateTime(DateTime now)
