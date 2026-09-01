@@ -252,10 +252,10 @@
 	<gamewave id="3005002" trigger="0" triggervalue="4" delay="0" interval="25" number="8" israndom="false" mobcount="16" moblevel_default="17">
 		<mob mob_id="10,11" startpoint="0" random="1,1"/>
 	</gamewave>
-	<gamewave id="3005003" trigger="4" triggervalue="3005001,2" delay="0" interval="10" number="1" mobcount="1" moblevel_default="16">
+	<gamewave id="3005003" trigger="4" triggervalue="3005001,2" delay="0" interval="10" number="1" cutscene_BGM="BGM_Miniboss" mobcount="1" moblevel_default="16">
 		<mob mob_id="12" startpoint="7" random="1"/>
 	</gamewave>
-	<gamewave id="3005004" trigger="1" triggervalue="3005003,0,2,120102" delay="0" interval="50" number="24" mobcount="96" moblevel_default="17">
+	<gamewave id="3005004" trigger="1" triggervalue="3005003,0,2,120102" delay="0" loop="0" interval="50" number="24" mobcount="24" moblevel_default="17">
 		<mob mob_id="10,11" startpoint="0" random="1,1"/>
 	</gamewave>
 	<gamewave id="3006001" trigger="0" triggervalue="0" delay="0" interval="10" number="2" mobcount="8" moblevel_default="18">
@@ -306,7 +306,7 @@
 	<gamewave id="3010003" trigger="0" triggervalue="35" delay="0" interval="15" number="1" mobcount="3" moblevel_default="20">
 		<mob mob_id="10,18" startpoint="0" random="1,1"/>
 	</gamewave>
-	<gamewave id="3010004" trigger="0" triggervalue="30" delay="4" interval="10" number="1" cutscene="shangu_boss" cutscene_BGM="BGM_Boss" cutscene_ambience="Amb_Windvalley_Boss_Show" mobcount="1" moblevel_default="22">
+	<gamewave id="3010004" trigger="0" triggervalue="40" delay="4" interval="10" number="1" cutscene="shangu_boss" cutscene_BGM="BGM_Boss" cutscene_ambience="Amb_Windvalley_Boss_Show" mobcount="1" moblevel_default="22">
 		<mob mob_id="12" startpoint="1" random="1"/>
 	</gamewave>
 	<gamewave id="3010005" trigger="1" triggervalue="3010004,0,2,120103" delay="0" interval="8" number="1" mobcount="3" moblevel_default="21">
@@ -2129,5 +2129,26 @@
 	</gamewave>
 	<gamewave id="100002002" trigger="0" triggervalue="24" delay="0" interval="1" number="1" cutscene_BGM="BGM_Boss" mobcount="1">
 		<mob mob_id="13" startpoint="1" random="1"/>
+	</gamewave>
+	<gamewave id="1001" trigger="0" triggervalue="0" delay="6" interval="4" number="4" mobcount="24" moblevel_default="17">
+		<mob mob_id="1,2" startpoint="3" random="1,1"/>
+	</gamewave>
+	<gamewave id="1002" trigger="0" triggervalue="27" delay="0" interval="5" number="2" mobcount="12" moblevel_default="17">
+		<mob mob_id="17" startpoint="0" random="1"/>
+	</gamewave>
+	<gamewave id="1003" trigger="0" triggervalue="50" delay="5" interval="1" number="1" mobcount="1" moblevel_default="1">
+		<mob mob_id="90000" startpoint="3" random="1"/>
+	</gamewave>
+	<gamewave id="1004" trigger="1" triggervalue="1003,0,2,90103" delay="0" interval="4" number="2" mobcount="20" moblevel_default="16">
+		<mob mob_id="4,7" startpoint="0" random="1,1"/>
+	</gamewave>
+	<gamewave id="1005" trigger="1" triggervalue="1003,0,1,0" delay="5" interval="1" number="1" mobcount="1" moblevel_default="1">
+		<mob mob_id="90000" startpoint="0" random="1"/>
+	</gamewave>
+	<gamewave id="1006" trigger="1" triggervalue="1005,0,2,90102" delay="0" interval="5" number="1" mobcount="10" moblevel_default="18">
+		<mob mob_id="8" startpoint="0" random="1"/>
+	</gamewave>
+	<gamewave id="1007" trigger="1" triggervalue="1005,0,1,0" delay="0" interval="4" number="2" mobcount="10" moblevel_default="16">
+		<mob mob_id="4" startpoint="0" random="1"/>
 	</gamewave>
 </root>
