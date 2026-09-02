@@ -139,7 +139,7 @@ public class CCharBoss : CCharMob
 		}
 		if (m_BlackGear != null)
 		{
-			m_BlackGear.gameObject.active = false;
+			m_BlackGear.gameObject.SetActive(false);
 			m_BlackGearRenderer = m_BlackGear.GetComponent<Renderer>();
 		}
 	}
@@ -398,7 +398,7 @@ public class CCharBoss : CCharMob
 			SetLifeBarStyle(1, 1f);
 			if (m_BlackGear != null)
 			{
-				m_BlackGear.gameObject.active = true;
+				m_BlackGear.gameObject.SetActive(true);
 				CUISound.GetInstance().Play("UI_Armor_activate");
 			}
 			if (m_GameScene.m_nBlackMonsterCount == 0)
@@ -416,7 +416,7 @@ public class CCharBoss : CCharMob
 		SetLifeBarStyle(0, CurHP / MaxHP);
 		if (m_BlackGear != null)
 		{
-			m_BlackGear.gameObject.active = false;
+			m_BlackGear.gameObject.SetActive(false);
 			CUISound.GetInstance().Play("UI_Armor_deactivate");
 			CUISound.GetInstance().Play("UI_Armor_destruction");
 		}
