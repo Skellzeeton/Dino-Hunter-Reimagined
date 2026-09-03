@@ -3,27 +3,18 @@ using UnityEngine;
 public class UnlockBlink : MonoBehaviour
 {
 	public GameObject go_blink;
-
 	public TUIMeshSprite img_texture;
-
 	public TUILabel label_text;
-
 	public TUILabel label_content;
 
 	private bool open_blink;
-
 	private float fade_time = 0.5f;
-
 	private float now_time;
 
 	private string weapon_texture_path = "TUI/Weapon/";
-
 	private string NGUI_weapon_texture_path = "Artist/Textrues/Weapon/";
-
 	private string NGUI_weapon_altas_path = "Artist/Atlas/Weapon/";
-
 	private string skill_path = "TUI/Skill/";
-
 	private float rotationSpeed = 60f;
 
 	private void FixedUpdate()
@@ -50,17 +41,11 @@ public class UnlockBlink : MonoBehaviour
 		img_texture.CustomizeTexture = m_sprite.CustomizeTexture;
 		img_texture.CustomizeRect = m_sprite.CustomizeRect;
 		if (img_texture.GetComponent<Animation>() != null)
-		{
 			img_texture.GetComponent<Animation>().Play();
-		}
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
-		{
 			label_content.gameObject.SetActiveRecursive(false);
-		}
 	}
 
 	public void OpenBlinkWeapon(int id, string m_text, bool m_use_customize = false)
@@ -72,26 +57,16 @@ public class UnlockBlink : MonoBehaviour
 		{
 			string weaponTexture = TUIMappingInfo.Instance().GetWeaponTexture(id);
 			if (m_use_customize)
-			{
 				SetCustomizeTexture(img_texture, NGUI_weapon_texture_path + weaponTexture, true);
-			}
 			else
-			{
 				img_texture.texture = weaponTexture;
-			}
 			if (img_texture.GetComponent<Animation>() != null)
-			{
 				img_texture.GetComponent<Animation>().Play();
-			}
 		}
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
-		{
 			label_content.gameObject.SetActiveRecursive(false);
-		}
 	}
 
 	public void OpenBlinkWeapon(string m_text, bool m_use_customize, string sPath)
@@ -102,26 +77,16 @@ public class UnlockBlink : MonoBehaviour
 		if (img_texture != null)
 		{
 			if (m_use_customize)
-			{
 				SetCustomizeTexture(img_texture, sPath, true);
-			}
 			else
-			{
 				img_texture.texture = sPath;
-			}
 			if (img_texture.GetComponent<Animation>() != null)
-			{
 				img_texture.GetComponent<Animation>().Play();
-			}
 		}
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
-		{
 			label_content.gameObject.SetActiveRecursive(false);
-		}
 	}
 
 	public void OpenBlinkRole(int m_id, string m_text)
@@ -132,17 +97,11 @@ public class UnlockBlink : MonoBehaviour
 		string roleTexture = TUIMappingInfo.Instance().GetRoleTexture(m_id);
 		img_texture.texture = roleTexture;
 		if (img_texture.GetComponent<Animation>() != null)
-		{
 			img_texture.GetComponent<Animation>().Play();
-		}
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
-		{
 			label_content.gameObject.SetActiveRecursive(false);
-		}
 	}
 
 	public void OpenBlinkSkill(int m_id, string m_text, bool m_use_customize = false)
@@ -151,26 +110,18 @@ public class UnlockBlink : MonoBehaviour
 		now_time = 0f;
 		base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);
 		string skillTexture = TUIMappingInfo.Instance().GetSkillTexture(m_id);
-		if (m_use_customize)
+		if (string.IsNullOrEmpty(skillTexture))
 		{
-			SetCustomizeTexture(img_texture, skill_path + skillTexture);
+			Debug.LogWarning("Missing skill texture mapping for id: " + m_id);
+			return;
 		}
-		else if (img_texture != null)
-		{
-			img_texture.texture = skillTexture;
-		}
+		SetCustomizeTexture(img_texture, skill_path + skillTexture);
 		if (img_texture.GetComponent<Animation>() != null)
-		{
 			img_texture.GetComponent<Animation>().Play();
-		}
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
-		{
 			label_content.gameObject.SetActiveRecursive(false);
-		}
 	}
 
 	public void OpenBlinkSkill(string m_texture_name, string m_text, bool m_use_customize = false)
@@ -178,26 +129,13 @@ public class UnlockBlink : MonoBehaviour
 		open_blink = true;
 		now_time = 0f;
 		base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);
-		if (m_use_customize)
-		{
-			SetCustomizeTexture(img_texture, skill_path + m_texture_name);
-		}
-		else
-		{
-			img_texture.texture = m_texture_name;
-		}
+		SetCustomizeTexture(img_texture, skill_path + m_texture_name);
 		if (img_texture.GetComponent<Animation>() != null)
-		{
 			img_texture.GetComponent<Animation>().Play();
-		}
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
-		{
 			label_content.gameObject.SetActiveRecursive(false);
-		}
 	}
 
 	public void OpenBlinkTitle(string m_title_name, string m_text)
@@ -206,9 +144,7 @@ public class UnlockBlink : MonoBehaviour
 		now_time = 0f;
 		base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);
 		if (label_text != null)
-		{
 			label_text.Text = m_text;
-		}
 		if (label_content != null)
 		{
 			label_content.gameObject.SetActiveRecursive(true);
@@ -233,7 +169,7 @@ public class UnlockBlink : MonoBehaviour
 		m_sprite.CustomizeTexture = Resources.Load(m_path) as Texture;
 		if (m_sprite.CustomizeTexture == null)
 		{
-			Debug.LogWarning("lose texture! " + m_path);
+			Debug.LogWarning("Failed to load texture: " + m_path);
 			return;
 		}
 		if (!m_use_NGUI)

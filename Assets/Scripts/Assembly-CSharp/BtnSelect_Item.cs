@@ -18,6 +18,8 @@ public class BtnSelect_Item : MonoBehaviour
 
 	private string texture_new = "new2";
 
+	private string skill_path = "TUI/Skill/";
+
 	private void SetCustomizeTexture(TUIMeshSprite m_sprite, string m_path, bool m_use_NGUI = false, string pathforatlas = "")
 	{
 		m_sprite.texture = string.Empty;
@@ -36,6 +38,27 @@ public class BtnSelect_Item : MonoBehaviour
 		Rect rect = new Rect(0f, 0f, m_sprite.CustomizeTexture.width, m_sprite.CustomizeTexture.height);
 		Common.GetAtlasSpriteSize(pathforatlas, m_sprite.CustomizeTexture.name, ref rect);
 		m_sprite.CustomizeRect = rect;
+	}
+
+	private void LoadSkillTexture(TUIMeshSprite sprite, int skillId)
+	{
+		if (sprite == null)
+			return;
+		string textureName = TUIMappingInfo.Instance().GetSkillTexture(skillId);
+		Texture tex = Resources.Load(skill_path + textureName) as Texture;
+
+		if (tex != null)
+		{
+			sprite.UseCustomize = true;
+			sprite.CustomizeTexture = tex;
+			sprite.CustomizeRect = new Rect(0f, 0f, tex.width, tex.height);
+			sprite.texture = string.Empty;
+		}
+		else
+		{
+			sprite.texture = textureName;
+			Debug.LogWarning("Failed to load skill texture from Resources: " + skill_path + textureName);
+		}
 	}
 
 	public void SetClipRect(TUIRect rect)
@@ -87,8 +110,7 @@ public class BtnSelect_Item : MonoBehaviour
 		}
 		else if (info.IsSkill())
 		{
-			string skillTexture = TUIMappingInfo.Instance().GetSkillTexture(popup_info.texture_id);
-			img_item.texture = skillTexture;
+			LoadSkillTexture(img_item, popup_info.texture_id);
 		}
 		else if (info.IsRole())
 		{
@@ -119,15 +141,15 @@ public class BtnSelect_Item : MonoBehaviour
 			popup_info.m_MarkType = mark;
 			switch (mark)
 			{
-			case NewMarkType.New:
-				img_new.texture = texture_new;
-				break;
-			case NewMarkType.Mark:
-				img_new.texture = texture_mark;
-				break;
-			default:
-				img_new.texture = string.Empty;
-				break;
+				case NewMarkType.New:
+					img_new.texture = texture_new;
+					break;
+				case NewMarkType.Mark:
+					img_new.texture = texture_mark;
+					break;
+				default:
+					img_new.texture = string.Empty;
+					break;
 			}
 		}
 	}

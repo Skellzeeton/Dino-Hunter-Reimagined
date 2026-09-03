@@ -149,14 +149,21 @@ public class CWeaponBase
 		m_nWeaponLevel = nWeaponLevel;
 		OnInit();
 	}
-	
+
 	public void Equip(CCharPlayer player)
 	{
 		if (m_nBulletNumMax == 0 && m_pWeaponLvlInfo != null && m_pWeaponLvlInfo.nType != 1)
 		{
 			if (player != null && player.Property != null)
 			{
-				m_nBulletNumMax = (int)((float)m_pWeaponLvlInfo.nCapacity * (1f + player.Property.GetValue(kProEnum.All_Capacity) / 100f));
+				if (m_pWeaponLvlInfo.nType == 0)
+				{
+					m_nBulletNumMax = (int)((float)m_pWeaponLvlInfo.nCapacity * (1f + player.Property.GetValue(kProEnum.Crossbow_Capacity) / 100f));
+				}
+				else
+				{
+					m_nBulletNumMax = (int)((float)m_pWeaponLvlInfo.nCapacity * (1f + player.Property.GetValue(kProEnum.All_Capacity) / 100f));
+				}
 			}
 			else
 			{
@@ -182,9 +189,7 @@ public class CWeaponBase
 			gameObject.transform.localRotation = Quaternion.identity;
 			InitLight();
 		}
-	
 		OnEquip(player);
-
 		if (m_FireLight == null)
 		{
 			GameObject shootLightering = new GameObject("ShootLight");

@@ -4,27 +4,19 @@ using UnityEngine;
 public class ScrollList_SkillItem : MonoBehaviour
 {
 	public TUIMeshSprite img_bg;
-
 	public TUIMeshSprite img_frame;
-
 	public TUIMeshSprite img_frame_choose;
-
 	public TUIMeshSprite img_lock;
-
 	public TUIMeshSprite img_new;
-
 	public TUIMeshSprite img_duoren;
 
 	private bool be_choose;
-
 	private TUISkillInfo skill_info;
-
 	private string texture_mark = "new";
-
 	private string texture_new = "new2";
-
 	private NewMarkType new_mark_type;
 
+	private string skill_path = "TUI/Skill/";
 
 	public void DoChoose()
 	{
@@ -58,14 +50,7 @@ public class ScrollList_SkillItem : MonoBehaviour
 		{
 			img_lock.gameObject.SetActiveRecursive(false);
 		}
-		if (m_skill_info.active_skill)
-		{
-			img_bg.texture = TUIMappingInfo.Instance().GetSkillTexture(m_skill_info.id, true);
-		}
-		else
-		{
-			img_bg.texture = TUIMappingInfo.Instance().GetSkillTexture(m_skill_info.id);
-		}
+		LoadSkillTexture(m_skill_info.id, m_skill_info.active_skill);
 		if (img_duoren != null)
 		{
 			img_duoren.gameObject.SetActiveRecursive(false);
@@ -82,6 +67,33 @@ public class ScrollList_SkillItem : MonoBehaviour
 		else
 		{
 			SetNewMark(img_new, NewMarkType.None);
+		}
+	}
+
+	private void LoadSkillTexture(int skillId, bool isActiveSkill)
+	{
+		if (img_bg == null)
+			return;
+		string textureName;
+		if (isActiveSkill)
+		{
+			textureName = TUIMappingInfo.Instance().GetSkillTexture(skillId, true);
+		}
+		else
+		{
+			textureName = TUIMappingInfo.Instance().GetSkillTexture(skillId);
+		}
+		Texture tex = Resources.Load(skill_path + textureName) as Texture;
+		if (tex != null)
+		{
+			img_bg.UseCustomize = true;
+			img_bg.CustomizeTexture = tex;
+			img_bg.CustomizeRect = new Rect(0f, 0f, tex.width, tex.height);
+			img_bg.texture = string.Empty;
+		}
+		else
+		{
+			Debug.LogWarning("Failed to load skill texture: " + skill_path + textureName);
 		}
 	}
 
@@ -228,24 +240,24 @@ public class ScrollList_SkillItem : MonoBehaviour
 	{
 		switch (m_new_mark)
 		{
-		case NewMarkType.Mark:
-			if (m_sprite != null)
-			{
-				m_sprite.texture = texture_mark;
-			}
-			break;
-		case NewMarkType.New:
-			if (m_sprite != null)
-			{
-				m_sprite.texture = texture_new;
-			}
-			break;
-		case NewMarkType.None:
-			if (m_sprite != null)
-			{
-				m_sprite.texture = string.Empty;
-			}
-			break;
+			case NewMarkType.Mark:
+				if (m_sprite != null)
+				{
+					m_sprite.texture = texture_mark;
+				}
+				break;
+			case NewMarkType.New:
+				if (m_sprite != null)
+				{
+					m_sprite.texture = texture_new;
+				}
+				break;
+			case NewMarkType.None:
+				if (m_sprite != null)
+				{
+					m_sprite.texture = string.Empty;
+				}
+				break;
 		}
 		new_mark_type = m_new_mark;
 	}

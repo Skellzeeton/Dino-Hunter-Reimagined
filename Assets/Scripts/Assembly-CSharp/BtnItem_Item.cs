@@ -36,6 +36,8 @@ public class BtnItem_Item : MonoBehaviour
 
 	private string texture_new = "new2";
 
+	private string skill_path = "TUI/Skill/";
+
 	protected TUIPopupInfo m_PopupInfo;
 
 	protected NewMarkType m_NewMark;
@@ -90,16 +92,8 @@ public class BtnItem_Item : MonoBehaviour
 		}
 		else if (m_PopupInfo.IsSkill())
 		{
-			if (!iscustom)
-			{
-				img_normal.texture = text;
-				img_pressed.texture = text;
-			}
-			else
-			{
-				SetCustomizeTexture(img_normal, TUIMappingInfo.Instance().m_sPathCustomSkillTex + "/" + text, false, string.Empty);
-				SetCustomizeTexture(img_pressed, TUIMappingInfo.Instance().m_sPathCustomSkillTex + "/" + text, false, string.Empty);
-			}
+			LoadSkillTextureFromPath(img_normal, text);
+			LoadSkillTextureFromPath(img_pressed, text);
 			if (m_PopupInfo.m_PopupType == PopupType.Skills01)
 			{
 				string empty = string.Empty;
@@ -173,6 +167,25 @@ public class BtnItem_Item : MonoBehaviour
 		}
 	}
 
+	private void LoadSkillTextureFromPath(TUIMeshSprite sprite, string textureName)
+	{
+		if (sprite == null || string.IsNullOrEmpty(textureName))
+			return;
+		Texture tex = Resources.Load(skill_path + textureName) as Texture;
+		if (tex != null)
+		{
+			sprite.UseCustomize = true;
+			sprite.CustomizeTexture = tex;
+			sprite.CustomizeRect = new Rect(0f, 0f, tex.width, tex.height);
+			sprite.texture = string.Empty;
+		}
+		else
+		{
+			sprite.texture = textureName;
+			Debug.LogWarning("Failed to load skill texture from Resources: " + skill_path + textureName);
+		}
+	}
+
 	public void SetCustomizeTexture(TUIMeshSprite m_sprite, string m_path, bool m_use_NGUI = false, string pathforatlas = "")
 	{
 		m_sprite.texture = string.Empty;
@@ -224,15 +237,15 @@ public class BtnItem_Item : MonoBehaviour
 		{
 			switch (mark)
 			{
-			case NewMarkType.Mark:
-				img_new.texture = texture_mark;
-				break;
-			case NewMarkType.New:
-				img_new.texture = texture_new;
-				break;
-			default:
-				img_new.texture = string.Empty;
-				break;
+				case NewMarkType.Mark:
+					img_new.texture = texture_mark;
+					break;
+				case NewMarkType.New:
+					img_new.texture = texture_new;
+					break;
+				default:
+					img_new.texture = string.Empty;
+					break;
 			}
 		}
 	}

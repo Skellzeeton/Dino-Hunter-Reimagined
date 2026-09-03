@@ -319,7 +319,7 @@ public class PopupSkill : MonoBehaviour
 				}
 				label_skill_introduce.Text = item_choose.GetSkillIntroduceEx();
 				label_skill_introduce_unlock.Text = string.Empty;
-				unlock_blink.OpenBlinkSkill(item_choose.GetCustomizeTexture(), "New Skill Unlocked For Purchase!");
+				unlock_blink.OpenBlinkSkill(item_choose.GetSkillID(), "New Skill Unlocked For Purchase!");
 				if (scene_skill != null)
 				{
 					if (scene_skill.GetSFXOpen())
@@ -399,7 +399,7 @@ public class PopupSkill : MonoBehaviour
 				top_bar.SetGoldValue(num2);
 				item_choose.SkillBuy();
 				btn_click.SetStateUpdate();
-				unlock_blink.OpenBlinkSkill(item_choose.GetCustomizeTexture(), "Purchase complete!");
+				unlock_blink.OpenBlinkSkill(item_choose.GetSkillID(), "Purchase complete!");
 				if (scene_skill != null)
 				{
 					if (scene_skill.GetSFXOpen())
@@ -475,7 +475,7 @@ public class PopupSkill : MonoBehaviour
 					}
 					label_skill_introduce.Text = item_choose.GetSkillIntroduceEx();
 					label_skill_introduce_unlock.Text = string.Empty;
-					unlock_blink.OpenBlinkSkill(item_choose.GetCustomizeTexture(), "Upgrade complete!");
+					unlock_blink.OpenBlinkSkill(item_choose.GetSkillID(), "Upgrade complete!");
 					if (scene_skill != null)
 					{
 						if (scene_skill.GetSFXOpen())
