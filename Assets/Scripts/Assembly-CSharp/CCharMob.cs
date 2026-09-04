@@ -101,6 +101,8 @@ public class CCharMob : CCharBase
 
 	[NonSerialized] public bool m_bRecoveryActive = false;
 
+	[NonSerialized] public bool m_bIsFlyingMob = false;
+
 	private UnityEngine.AI.NavMeshHit m_CachedNavMeshHit;
 
 	public float m_fReadyToBlackLife;
@@ -198,17 +200,41 @@ public class CCharMob : CCharBase
 			if (m_fNavMeshCheckTime <= 0f)
 			{
 				m_fNavMeshCheckTime = NavMeshCheckInterval;
-				if (!IsOnNavMesh())
+				Vector3 navMeshPoint;
+				if (GetNearestNavMeshPoint(out navMeshPoint))
+				{
+					float verticalDifference = Mathf.Abs(base.Pos.y - navMeshPoint.y);
+					bool needsRecovery = false;
+					if (m_bIsFlyingMob)
+					{
+						Vector2 currentPos2D = new Vector2(base.Pos.x, base.Pos.z);
+						Vector2 navMeshPos2D = new Vector2(navMeshPoint.x, navMeshPoint.z);
+						float horizontalDistance = Vector2.Distance(currentPos2D, navMeshPos2D);
+						needsRecovery = horizontalDistance > NavMeshMaxDistance;
+					}
+					else
+					{
+						needsRecovery = verticalDifference > doFlyParameters.NavMeshVerticalThreshold;
+					}
+					if (needsRecovery)
+					{
+						if (!m_bRecoveryActive)
+						{
+							RecoverToNavMesh();
+						}
+					}
+					else
+					{
+						m_bIsOffNavMesh = false;
+						m_bRecoveryActive = false;
+					}
+				}
+				else
 				{
 					if (!m_bRecoveryActive)
 					{
 						RecoverToNavMesh();
 					}
-				}
-				else if (m_bIsOffNavMesh || m_bRecoveryActive)
-				{
-					m_bIsOffNavMesh = false;
-					m_bRecoveryActive = false;
 				}
 			}
 			if (m_bRecoveryActive)
@@ -796,10 +822,10 @@ public class CCharMob : CCharBase
 		{
 			SetBehavior(aIInfo.nBehavior + 100);
 		}
-
 		OnEnterAI(nCurAIID, nAI);
 		if (aIInfo.nBehavior == 2)
 		{
+			m_bIsFlyingMob = true;
 			InitAnimData_Sky();
 			if (m_ModelEntity != null && !base.m_GameScene.IsSkyScene())
 			{
@@ -810,10 +836,9 @@ public class CCharMob : CCharBase
 					component.enabled = false;
 				}
 			}
-
 			return;
 		}
-
+		m_bIsFlyingMob = false;
 		InitAnimData_Ground();
 		if (m_ModelEntity != null && !base.m_GameScene.IsSkyScene())
 		{
@@ -1087,8 +1112,11 @@ public class CCharMob : CCharBase
 		Vector3 nearestPoint;
 		if (!GetNearestNavMeshPoint(out nearestPoint))
 		{
-			//Debug.LogWarning($"Mob {base.UID} cannot find navmesh within {NavMeshMaxDistance} units!");
 			return false;
+		}
+		if (m_bIsFlyingMob)
+		{
+			nearestPoint.y = base.Pos.y;
 		}
 		float distanceToNavMesh = Vector3.Distance(base.Pos, nearestPoint);
 		if (distanceToNavMesh < NavMeshTeleportThreshold)

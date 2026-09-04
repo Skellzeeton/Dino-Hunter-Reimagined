@@ -1338,7 +1338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4860640244728794}
   - component: {fileID: 137475313885437912}
-  - component: {fileID: 111625835621386938}
+  - component: {fileID: 8507100033257326170}
   m_Layer: 26
   m_Name: role_003
   m_TagString: Untagged
@@ -1449,23 +1449,22 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.57194924, y: 0.20066857, z: -0.0000014305115}
     m_Extent: {x: 1.3996234, y: 1.1549355, z: 0.5384309}
   m_DirtyAABB: 0
---- !u!111 &111625835621386938
-Animation:
+--- !u!114 &8507100033257326170
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812923936583102}
   m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 7ebb72f9d66ebf541acfe617bf0b3096, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 7ebb72f9d66ebf541acfe617bf0b3096, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70e459bf0467c244970daf0086a7d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::iMaterialAlphaSpark
+  sTexName: _SkinColor
+  colorSrc: {r: 1, g: 1, b: 1, a: 1}
+  colorDst: {r: 0, g: 0, b: 0, a: 1}
+  fSpeed: 1
 --- !u!1 &1831095467100222
 GameObject:
   m_ObjectHideFlags: 0
