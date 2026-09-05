@@ -200,41 +200,17 @@ public class CCharMob : CCharBase
 			if (m_fNavMeshCheckTime <= 0f)
 			{
 				m_fNavMeshCheckTime = NavMeshCheckInterval;
-				Vector3 navMeshPoint;
-				if (GetNearestNavMeshPoint(out navMeshPoint))
-				{
-					float verticalDifference = Mathf.Abs(base.Pos.y - navMeshPoint.y);
-					bool needsRecovery = false;
-					if (m_bIsFlyingMob)
-					{
-						Vector2 currentPos2D = new Vector2(base.Pos.x, base.Pos.z);
-						Vector2 navMeshPos2D = new Vector2(navMeshPoint.x, navMeshPoint.z);
-						float horizontalDistance = Vector2.Distance(currentPos2D, navMeshPos2D);
-						needsRecovery = horizontalDistance > NavMeshMaxDistance;
-					}
-					else
-					{
-						needsRecovery = verticalDifference > doFlyParameters.NavMeshVerticalThreshold;
-					}
-					if (needsRecovery)
-					{
-						if (!m_bRecoveryActive)
-						{
-							RecoverToNavMesh();
-						}
-					}
-					else
-					{
-						m_bIsOffNavMesh = false;
-						m_bRecoveryActive = false;
-					}
-				}
-				else
+				if (!IsOnNavMesh())
 				{
 					if (!m_bRecoveryActive)
 					{
 						RecoverToNavMesh();
 					}
+				}
+				else if (m_bIsOffNavMesh || m_bRecoveryActive)
+				{
+					m_bIsOffNavMesh = false;
+					m_bRecoveryActive = false;
 				}
 			}
 			if (m_bRecoveryActive)
@@ -254,12 +230,10 @@ public class CCharMob : CCharBase
 				m_fUpdateMoveTime = 0.1f;
 			}
 		}
-
 		foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
 		{
 			ltSkill.Update(num);
 		}
-
 		foreach (SkillComboUserInfo item in m_ltSkillListAI)
 		{
 			item.Update(num);
@@ -868,6 +842,26 @@ public class CCharMob : CCharBase
 		}
 	}
 
+	public bool CheckAndRepositionIfTooClose(float minDistance = 1f)
+	{
+		if (m_Target == null || m_Target.isDead)
+			return false;
+		Vector3 toTarget = m_Target.Pos - base.Pos;
+		toTarget.y = 0f;
+		float dist = toTarget.magnitude;
+		if (dist >= minDistance)
+			return false;
+		Vector3 dirAway = -toTarget.normalized;
+		if (dirAway == Vector3.zero)
+			dirAway = base.transform.forward;
+		Vector3 newPos = m_Target.Pos + dirAway * minDistance;
+		newPos += dirAway * 0.5f;
+		m_v3PurposePoint = newPos;
+		m_bHasPurposePoint = true;
+		MoveTo(newPos);
+		return true;
+	}
+
 	public virtual void ResetMob()
 	{
 		if (m_LifeBar != null && base.m_GameScene != null)
@@ -891,6 +885,7 @@ public class CCharMob : CCharBase
 		m_bReadyToBlack = false;
 		m_bIsOffNavMesh = false;
 		m_bRecoveryActive = false;
+		m_bIsFlyingMob = false;
 		m_bHasPurposePoint = false;
 		m_ltPath.Clear();
 		m_ltPathHover.Clear();
@@ -1062,6 +1057,19 @@ public class CCharMob : CCharBase
 		{
 			sourcePosition = m_ltPath[m_ltPath.Count - 1];
 		}
+		if (m_Target != null && !m_Target.isDead)
+		{
+			Vector3 toDest = v3Dst - m_Target.Pos;
+			toDest.y = 0f;
+			float distToTarget = toDest.magnitude;
+			if (distToTarget < 1f)
+			{
+				Vector3 dir = toDest.normalized;
+				if (dir == Vector3.zero)
+					dir = (base.Pos - m_Target.Pos).normalized;
+				v3Dst = m_Target.Pos + dir * 1f;
+			}
+		}
 		UnityEngine.AI.NavMeshPath navMeshPath = new UnityEngine.AI.NavMeshPath();
 		if (!UnityEngine.AI.NavMesh.CalculatePath(sourcePosition, v3Dst, -1, navMeshPath))
 		{
@@ -1082,7 +1090,7 @@ public class CCharMob : CCharBase
 			return true;
 		}
 		if (UnityEngine.AI.NavMesh.SamplePosition(base.Pos, out m_CachedNavMeshHit, 1.0f,
-			    UnityEngine.AI.NavMesh.AllAreas))
+				UnityEngine.AI.NavMesh.AllAreas))
 		{
 			float distance = Vector3.Distance(base.Pos, m_CachedNavMeshHit.position);
 			return distance < 0.05f;
@@ -1098,7 +1106,7 @@ public class CCharMob : CCharBase
 			return true;
 		}
 		if (UnityEngine.AI.NavMesh.SamplePosition(base.Pos, out m_CachedNavMeshHit, NavMeshMaxDistance,
-			    UnityEngine.AI.NavMesh.AllAreas))
+				UnityEngine.AI.NavMesh.AllAreas))
 		{
 			nearestPoint = m_CachedNavMeshHit.position;
 			return true;
@@ -1112,11 +1120,8 @@ public class CCharMob : CCharBase
 		Vector3 nearestPoint;
 		if (!GetNearestNavMeshPoint(out nearestPoint))
 		{
+			//Debug.LogWarning($"Mob {base.UID} cannot find navmesh within {NavMeshMaxDistance} units!");
 			return false;
-		}
-		if (m_bIsFlyingMob)
-		{
-			nearestPoint.y = base.Pos.y;
 		}
 		float distanceToNavMesh = Vector3.Distance(base.Pos, nearestPoint);
 		if (distanceToNavMesh < NavMeshTeleportThreshold)
@@ -1137,16 +1142,15 @@ public class CCharMob : CCharBase
 	}
 
 	public void CheckRecoveryComplete()
-    {
-        if (!m_bRecoveryActive)
-            return;
-
-        if (m_ltPath.Count == 0 || Vector3.Distance(base.Pos, m_v3PurposePoint) < 0.06f)
-        {
-            m_bRecoveryActive = false;
-            m_bIsOffNavMesh = false;
-            m_bHasPurposePoint = false;
-        }
+	{
+		if (!m_bRecoveryActive)
+			return;
+		if (m_ltPath.Count == 0 || Vector3.Distance(base.Pos, m_v3PurposePoint) < 0.06f)
+		{
+			m_bRecoveryActive = false;
+			m_bIsOffNavMesh = false;
+			m_bHasPurposePoint = false;
+		}
 	}
 
 	private void ComputeEffectiveDrops()
