@@ -753,6 +753,7 @@ public class iGameSceneBase
 			}
 		}
 		m_User.InitChar(character.nID, character.nLevel, character.nExp, dataCenter.AvatarHead, dataCenter.AvatarUpper, dataCenter.AvatarLower, dataCenter.AvatarHeadup, dataCenter.AvatarNeck, dataCenter.AvatarWrist, dataCenter.AvatarBadge, dataCenter.AvatarStone);
+		m_User.m_bBoxUsedThisLevel = false;
 		if (m_User.Property != null)
 		{
 			if (m_bIsSkyScene)

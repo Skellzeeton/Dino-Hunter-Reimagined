@@ -34,7 +34,6 @@ public class CControlWindows : CControlBase
 		}
 	}
 
-
 	public override void Update(float deltaTime)
 	{
 		if (m_GameScene == null)
@@ -164,6 +163,22 @@ public class CControlWindows : CControlBase
 					return;
 				}
 				zero.x += 1f;
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.H))
+		{
+			iGameUIBase gameUI = m_GameScene.GetGameUI();
+			if (gameUI != null && gameUI.UIManager != null && gameUI.UIManager.mToolPanel != null)
+			{
+				gyUIPanelTool toolPanel = gameUI.UIManager.mToolPanel;
+				if (!toolPanel.IsMoveIn)
+				{
+					toolPanel.MoveIn();
+				}
+				else
+				{
+					toolPanel.OnClickToolPanel(0);
+				}
 			}
 		}
 		if (zero == Vector2.zero)

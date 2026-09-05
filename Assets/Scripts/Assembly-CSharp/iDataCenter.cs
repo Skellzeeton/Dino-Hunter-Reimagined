@@ -431,6 +431,35 @@ public class iDataCenter
 		set { m_DeadInCoopCount.Set(value); }
 	}
 
+	public int GetBoxCount(int charID)
+	{
+		var info = GetCharacter(charID);
+		return info != null ? info.nBoxCount : 0;
+	}
+
+	public void SetBoxCount(int charID, int count)
+	{
+		var info = GetCharacter(charID);
+		if (info != null) info.nBoxCount = count;
+	}
+
+	public void AddBox(int charID, int count = 1)
+	{
+		var info = GetCharacter(charID);
+		if (info != null) info.nBoxCount += count;
+	}
+
+	public bool UseBox(int charID)
+	{
+		var info = GetCharacter(charID);
+		if (info != null && info.nBoxCount > 0)
+		{
+			info.nBoxCount--;
+			return true;
+		}
+		return false;
+	}
+
 	public int CurrentSlot
 	{
 		get { return m_nCurrentSlot; }
@@ -796,6 +825,7 @@ public class iDataCenter
 		public int id;
 		public int level;
 		public int exp;
+		public int boxcount;
 	}
 
 	[Serializable]
@@ -1291,6 +1321,7 @@ public class iDataCenter
 			node.id = charInfo.nID;
 			node.level = charInfo.nLevel;
 			node.exp = charInfo.nExp;
+			node.boxcount = charInfo.nBoxCount;
 			data.character.nodes.Add(node);
 		}
 		data.weapon = new WeaponData();
@@ -1563,6 +1594,8 @@ public class iDataCenter
 				foreach (var node in data.character.nodes)
 				{
 					SetCharacter(node.id, node.level, node.exp);
+					CCharSaveInfo info = GetCharacter(node.id);
+					if (info != null) info.nBoxCount = node.boxcount;
 				}
 			}
 		}

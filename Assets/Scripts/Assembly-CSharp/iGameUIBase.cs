@@ -595,8 +595,6 @@ public class iGameUIBase : MonoBehaviour
 				m_UIManager.mPanelMaterial.SetIconBG(i, "kuangdj_" + itemInfo.nRare);
 			}
 		}
-		
-		
 		iDataCenter dataCenter = m_GameData.GetDataCenter();
 		if (dataCenter != null)
 		{
@@ -858,6 +856,10 @@ public class iGameUIBase : MonoBehaviour
 		{
 			m_UIManager.mWheelShoot.gameObject.SetActiveRecursive(true);
 		}
+		if (m_UIManager.mToolPanel != null)
+		{
+			m_UIManager.mToolPanel.gameObject.SetActiveRecursive(true);
+		}
 		if (m_UIManager.mTaskPlane != null)
 		{
 			m_UIManager.mTaskPlane.Show(true);
@@ -906,6 +908,10 @@ public class iGameUIBase : MonoBehaviour
 		if (m_UIManager.mWheelShoot != null)
 		{
 			m_UIManager.mWheelShoot.gameObject.SetActiveRecursive(false);
+		}
+		if (m_UIManager.mToolPanel != null)
+		{
+			m_UIManager.mToolPanel.gameObject.SetActiveRecursive(false);
 		}
 		if (m_UIManager.mTaskPlane != null)
 		{
@@ -1158,6 +1164,12 @@ public class iGameUIBase : MonoBehaviour
 		{
 			m_UIManager.mWheelShoot.gameObject.SetActiveRecursive(bShow);
 		}
+	}
+
+	public void RefreshToolPanel()
+	{
+		if (m_UIManager?.mToolPanel != null)
+			m_UIManager.mToolPanel.UpdateCount();
 	}
 
 	public void RegisterEvent()

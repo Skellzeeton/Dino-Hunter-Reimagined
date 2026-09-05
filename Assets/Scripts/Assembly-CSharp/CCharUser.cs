@@ -39,7 +39,8 @@ public class CCharUser : CCharPlayer
 	protected float m_moveSmoothRate = 8f;
 	protected float m_fMoveInputPower = 0f;
 	protected float m_fCurMoveFrameDistance = 0f;
-	
+	public bool m_bBoxUsedThisLevel = false;
+
 	public CharacterController m_Controller { get; private set; }
 
 	public override Vector3 ShootDir
@@ -100,7 +101,7 @@ public class CCharUser : CCharPlayer
 			m_lastYaw = m_ModelTransform.eulerAngles.y;
 		else
 			m_lastYaw = 0f;
-		
+
 		if (this.GetType().GetField("m_fYaw") != null)
 		{
 			try { m_lastYaw = (float)this.GetType().GetField("m_fYaw").GetValue(this); } catch { m_lastYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f); }
@@ -407,6 +408,38 @@ public new void FixedUpdate()
 		}
 	}
 
+	protected void ApplyLevelUp(int newLevel, int newExp)
+	{
+		float oldHP = m_fHP;
+		m_nLevel = newLevel;
+		m_nExp = newExp;
+		m_curCharacterInfoLevel = m_curCharacterInfo?.Get(m_nLevel);
+		if (m_curCharacterInfoLevel != null)
+		{
+			m_Property.Initialize(ID, m_nLevel);
+			m_Property.UpdateSkill(this);
+			m_Property.UpdateEquip(this);
+			m_fHPMax = m_Property.GetValue(kProEnum.HPMax);
+			float hpUp = m_Property.GetValue(kProEnum.HPMaxUp);
+			if (hpUp != -1f) m_fHPMax *= (1f + hpUp / 100f);
+			m_fHP = Mathf.Min(oldHP, m_fHPMax);
+		}
+		iGameUIBase gameUI = m_GameScene.GetGameUI();
+		if (gameUI != null)
+		{
+			gameUI.SetProtraitLevel(m_nLevel.ToString(), UID);
+			gameUI.SetProtraitExp(0, 0f, UID);
+			gameUI.SetProtraitLife(m_fHP / m_fHPMax, UID);
+		}
+		iDataCenter dataCenter = m_GameData?.GetDataCenter();
+		if (dataCenter != null)
+		{
+			dataCenter.AddBox(ID, 1);
+			gameUI?.RefreshToolPanel();
+		}
+		dataCenter?.SetCharacter(ID, m_nLevel, m_nExp);
+	}
+
 	public void SwitchWeapon(int nIndex)
 	{
 		CWeaponBase weapon = base.m_GameState.GetWeapon(nIndex);
@@ -660,7 +693,7 @@ public new void FixedUpdate()
 			}
 			if (num > 0)
 			{
-				InitChar(base.ID, base.Level, base.EXP, base.AvatarHead, base.AvatarUpper, base.AvatarLower, base.AvatarHeadup, base.AvatarNeck, base.AvatarWrist, base.AvatarBadge, base.AvatarStone);
+				ApplyLevelUp(m_nLevel, m_nExp);
 				m_bUpdateProBuff = true;
 				GameObject gameObject = base.m_GameScene.AddEffect(Vector3.zero, Vector3.one, 5f, 1300);
 				gameObject.transform.parent = GetBone(3);
