@@ -57,7 +57,7 @@ public class gyUIPanelTool : gyUICellPanel
 		m_bMoveIn = true;
 		m_fTimeCount = 0f;
 		TweenPosition tween = TweenPosition.Begin(gameObject, 0.5f, Vector3.zero);
-		tween.to = new Vector3(0f, 27f, 0f);
+		tween.to = new Vector3(-180f, 35f, 0f);
 		tween.method = UITweener.Method.BounceIn;
 	}
 
@@ -65,7 +65,7 @@ public class gyUIPanelTool : gyUICellPanel
 	{
 		m_bMoveIn = false;
 		TweenPosition tween = TweenPosition.Begin(gameObject, 0.5f, Vector3.zero);
-		tween.to = new Vector3(0f, -10f, 0f);
+		tween.to = new Vector3(-180f, -10f, 0f);
 		tween.method = UITweener.Method.EaseOut;
 	}
 
