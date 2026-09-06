@@ -141,6 +141,8 @@ public class iDataCenter
 	m_backupAvatarHeadup, m_backupAvatarNeck, m_backupAvatarWrist,
 	m_backupAvatarBadge, m_backupAvatarStone;
 
+	private int m_nDifficulty = 0;
+
 	public string GameVersion
 	{
 		get { return m_sGameVersion; }
@@ -460,6 +462,12 @@ public class iDataCenter
 		return false;
 	}
 
+	public int Difficulty
+	{
+		get { return m_nDifficulty; }
+		set { m_nDifficulty = value; }
+	}
+
 	public int CurrentSlot
 	{
 		get { return m_nCurrentSlot; }
@@ -605,6 +613,7 @@ public class iDataCenter
 		m_DeadInCoopCount.Set(0);
 		m_bInBlackName = false;
 		m_bInWhiteName = false;
+		m_nDifficulty = 0;
 	}
 
 	private string GetSavePath(string fileName)
@@ -650,11 +659,12 @@ public class iDataCenter
 		}
 	}
 
-	public void CreateNewSlot(int slot)
+	public void CreateNewSlot(int slot, int difficulty = 0)
 	{
 		if (slot < 0 || slot >= MAX_SLOTS) return;
 		CurrentSlot = slot;
 		Clear();
+		m_nDifficulty = difficulty;
 		m_bFirstTimePlay = true;
 		m_nTutorialVillageState = -1;
 		SetCharacter(1, 1, 0);
@@ -733,6 +743,7 @@ public class iDataCenter
 		public List<int> freeweapon;
 		public List<string> friends;
 		public List<int> titles;
+		public int difficulty;
 	}
 
 	public List<SaveSlotInfo> GetSaveSlotsInfo()
@@ -743,11 +754,13 @@ public class iDataCenter
 			SaveSlotInfo info = new SaveSlotInfo();
 			info.slotIndex = i;
 			info.exists = SlotExists(i);
+			info.difficulty = 0;
 			if (info.exists)
 			{
 				SaveData data = null;
 				string path = GetSavePath(string.Format(SAVE_FILE_FORMAT, i));
 				string decrypted = string.Empty;
+
 				if (TryReadEncryptedFile(path, ref decrypted))
 				{
 					try { data = JsonUtility.FromJson<SaveData>(decrypted); }
@@ -755,6 +768,7 @@ public class iDataCenter
 				}
 				if (data != null && IsValidSaveData(data))
 				{
+					info.difficulty = data.difficulty;
 					info.hunterLevel = data.hunterlvl;
 					info.latestLevel = data.latestlevel;
 					info.lastPlayed = GetLastModifiedTime(i);
@@ -803,6 +817,7 @@ public class iDataCenter
 		public float mapProgress;
 		public int gold;
 		public int crystals;
+		public int difficulty;
 	}
 
 	[Serializable]
@@ -1275,6 +1290,7 @@ public class iDataCenter
 		data.mvpincoop = m_MVPCount.Get();
 		data.isinblackname = m_bInBlackName;
 		data.isinwhitename = m_bInWhiteName;
+		data.difficulty = m_nDifficulty;
 		if (m_Photo != null)
 		{
 			data.photo = Convert.ToBase64String(m_Photo);
@@ -1522,6 +1538,7 @@ public class iDataCenter
 		m_MVPCount.Set(data.mvpincoop);
 		m_bInBlackName = data.isinblackname;
 		m_bInWhiteName = data.isinwhitename;
+		m_nDifficulty = data.difficulty;
 		if (!string.IsNullOrEmpty(data.photo))
 		{
 			try

@@ -77,18 +77,26 @@ public class PopupSaveManager : MonoBehaviour
 
     public void OnCreateSlot(int slotIndex)
     {
-        iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
-        if (dc == null) return;
-        var slots = dc.GetSaveSlotsInfo();
-        if (slotIndex < 0 || slotIndex >= slots.Count || slots[slotIndex].exists)
+        Scene_Main main = FindObjectOfType<Scene_Main>();
+        if (main != null)
         {
-            Debug.LogWarning("Slot " + slotIndex + " is not empty!");
-            return;
+            main.RequestCreateSlotWithDifficulty(slotIndex);
         }
-        dc.CreateNewSlot(slotIndex);
-        dc.SwitchToSlot(slotIndex);
-        SettingsManager.Instance.LastSaveSlot = slotIndex;
-        RefreshUI();
+        else
+        {
+            iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+            if (dc == null) return;
+            var slots = dc.GetSaveSlotsInfo();
+            if (slotIndex < 0 || slotIndex >= slots.Count || slots[slotIndex].exists)
+            {
+                Debug.LogWarning("Slot " + slotIndex + " is not empty!");
+                return;
+            }
+            dc.CreateNewSlot(slotIndex);
+            dc.SwitchToSlot(slotIndex);
+            SettingsManager.Instance.LastSaveSlot = slotIndex;
+            RefreshUI();
+        }
     }
 
     public void OnDeleteSlot(int slotIndex)

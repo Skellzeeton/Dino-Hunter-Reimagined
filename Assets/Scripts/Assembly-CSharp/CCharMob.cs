@@ -7,10 +7,8 @@ using gyEvent;
 using gyTaskSystem;
 using UnityEngine;
 
-public class CCharMob : CCharBase
-{
-	public class kHUDLifeStyleEnum
-	{
+public class CCharMob : CCharBase {
+	public class kHUDLifeStyleEnum {
 		public const int Normal = 0;
 
 		public const int Black = 1;
@@ -18,8 +16,7 @@ public class CCharMob : CCharBase
 		public const int Count = 2;
 	}
 
-	public class CHUDLifeStyle
-	{
+	public class CHUDLifeStyle {
 		public Color m_Color;
 
 		public Color m_ColorShallow;
@@ -57,39 +54,53 @@ public class CCharMob : CCharBase
 
 	public int m_nCurComboIndex;
 
-	[NonSerialized] public bool m_bHasPurposePoint;
+	[NonSerialized]
+	public bool m_bHasPurposePoint;
 
-	[NonSerialized] public Vector3 m_v3PurposePoint;
+	[NonSerialized]
+	public Vector3 m_v3PurposePoint;
 
-	[NonSerialized] public List<Vector3> m_ltPath;
+	[NonSerialized]
+	public List<Vector3> m_ltPath;
 
-	[NonSerialized] public int m_nDstHoverIndex;
+	[NonSerialized]
+	public int m_nDstHoverIndex;
 
-	[NonSerialized] public Vector3 m_v3DstHoverPoint;
+	[NonSerialized]
+	public Vector3 m_v3DstHoverPoint;
 
-	[NonSerialized] public float m_fHoverTime;
+	[NonSerialized]
+	public float m_fHoverTime;
 
 	public List<Vector3> m_ltPathHover;
 
-	[NonSerialized] public List<Vector3> m_LockedAttackPoints = new List<Vector3>();
+	[NonSerialized]
+	public List<Vector3> m_LockedAttackPoints = new List<Vector3>();
 
-	[NonSerialized] public kDeadMode m_DeadMode;
+	[NonSerialized]
+	public kDeadMode m_DeadMode;
 
 	public float m_fDeadDistance;
 
 	public Vector3 m_v3DeadDirection;
 
-	[NonSerialized] public Vector3 m_v3BirthPos;
+	[NonSerialized]
+	public Vector3 m_v3BirthPos;
 
-	[NonSerialized] public bool m_bShowTime;
+	[NonSerialized]
+	public bool m_bShowTime;
 
-	[NonSerialized] public bool m_bFreeze;
+	[NonSerialized]
+	public bool m_bFreeze;
 
-	[NonSerialized] public float m_fFreezeTime;
+	[NonSerialized]
+	public float m_fFreezeTime;
 
-	[NonSerialized] public bool m_bReadyToBlack;
+	[NonSerialized]
+	public bool m_bReadyToBlack;
 
-	[NonSerialized] private float m_fNavMeshCheckTime = 0f;
+	[NonSerialized]
+	private float m_fNavMeshCheckTime = 0f;
 
 	private const float NavMeshCheckInterval = 2.5f;
 
@@ -97,11 +108,14 @@ public class CCharMob : CCharBase
 
 	private const float NavMeshTeleportThreshold = 2.5f;
 
-	[NonSerialized] public bool m_bIsOffNavMesh = false;
+	[NonSerialized]
+	public bool m_bIsOffNavMesh = false;
 
-	[NonSerialized] public bool m_bRecoveryActive = false;
+	[NonSerialized]
+	public bool m_bRecoveryActive = false;
 
-	[NonSerialized] public bool m_bIsFlyingMob = false;
+	[NonSerialized]
+	public bool m_bIsFlyingMob = false;
 
 	private UnityEngine.AI.NavMeshHit m_CachedNavMeshHit;
 
@@ -135,24 +149,28 @@ public class CCharMob : CCharBase
 
 	public int MobType { get; set; }
 
-	public kMobBehaviour MobBehaviourMode
-	{
-		get { return m_MobBehaviourMode; }
-		set { m_MobBehaviourMode = value; }
+	public kMobBehaviour MobBehaviourMode {
+		get {
+			return m_MobBehaviourMode;
+		}
+		set {
+			m_MobBehaviourMode = value;
+		}
 	}
 
-	public float Hardiness
-	{
-		get { return m_fHardinessCur; }
+	public float Hardiness {
+		get {
+			return m_fHardinessCur;
+		}
 	}
 
-	public float HardinessMax
-	{
-		get { return m_fHardinessMax; }
+	public float HardinessMax {
+		get {
+			return m_fHardinessMax;
+		}
 	}
 
-	public new void Awake()
-	{
+	public new void Awake() {
 		base.Awake();
 		m_nType = kCharType.Mob;
 		base.CampType = kCampType.Monster;
@@ -181,13 +199,11 @@ public class CCharMob : CCharBase
 		m_dictUseSkill = new Dictionary<int, int>();
 	}
 
-	public new void Start()
-	{
+	public new void Start() {
 		base.Start();
 	}
 
-	public new void Update()
-	{
+	public new void Update() {
 		if (!m_bActive)
 		{
 			return;
@@ -230,26 +246,22 @@ public class CCharMob : CCharBase
 				m_fUpdateMoveTime = 0.1f;
 			}
 		}
-		foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
-		{
+		foreach (SkillComboUserInfo ltSkill in m_ltSkillList) {
 			ltSkill.Update(num);
 		}
-		foreach (SkillComboUserInfo item in m_ltSkillListAI)
-		{
+		foreach (SkillComboUserInfo item in m_ltSkillListAI) {
 			item.Update(num);
 		}
 	}
 
-	public new void LateUpdate()
-	{
+	public new void LateUpdate() {
 		if (m_bActive)
 		{
 			base.LateUpdate();
 		}
 	}
 
-	public override void Destroy()
-	{
+	public override void Destroy() {
 		if (m_LifeBar != null && base.m_GameScene != null)
 		{
 			iGameUIBase gameUI = base.m_GameScene.GetGameUI();
@@ -264,13 +276,11 @@ public class CCharMob : CCharBase
 		base.Destroy();
 	}
 
-	public CMobInfoLevel GetMobInfo()
-	{
+	public CMobInfoLevel GetMobInfo() {
 		return m_curMobInfoLevel;
 	}
 
-	public override void InitAnimData()
-	{
+	public override void InitAnimData() {
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Idle, "idle"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.MoveForward, "fly"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "attack01"));
@@ -278,13 +288,11 @@ public class CCharMob : CCharBase
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "damage"));
 	}
 
-	public virtual bool IsMobCanThink()
-	{
+	public virtual bool IsMobCanThink() {
 		return !base.isDead;
 	}
 
-	public virtual bool AddHardiness(float fDamage, string sBoneName = "")
-	{
+	public virtual bool AddHardiness(float fDamage, string sBoneName = "") {
 		m_fHardinessCur += fDamage;
 		if (m_fHardinessCur > 0f)
 		{
@@ -296,8 +304,7 @@ public class CCharMob : CCharBase
 		return true;
 	}
 
-	public override void AddHP(float fHP)
-	{
+	public override void AddHP(float fHP) {
 		m_fHP += fHP;
 		if (m_fHP > m_fHPMax)
 		{
@@ -314,8 +321,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public override void OnDead(kDeadMode nDeathMode)
-	{
+	public override void OnDead(kDeadMode nDeathMode) {
 		float value = m_Property.GetValue(kProEnum.Skill_MoribundTime);
 		if (value > 0f)
 		{
@@ -337,8 +343,7 @@ public class CCharMob : CCharBase
 			int dropItemCount = m_curMobInfoLevel.GetDropItemCount();
 			if (dropItemCount > 0)
 			{
-				for (int i = 0; i < dropItemCount; i++)
-				{
+				for (int i = 0; i < dropItemCount; i++) {
 					int dropItem = m_tmpDropGroupInfo.GetDropItem();
 					if (dropItem > 0)
 					{
@@ -346,12 +351,12 @@ public class CCharMob : CCharBase
 						Vector3 onUnitSphere = UnityEngine.Random.onUnitSphere;
 						onUnitSphere.y = 1f;
 						m_GameScene.AddItem(dropItem, GetBone(0).position,
-							onUnitSphere * UnityEngine.Random.Range(300f, 500f), -1f);
+								onUnitSphere * UnityEngine.Random.Range(300f, 500f), -1f);
 					}
 				}
 			}
 			if (m_nCarryGoldMax < 1 && m_nCarryCrystalMax < 1 &&
-			    UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldRate)
+			UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldRate)
 			{
 				GameObject poolObject = PrefabManager.GetPoolObject(302, 0f);
 				if (poolObject != null)
@@ -361,8 +366,8 @@ public class CCharMob : CCharBase
 					{
 						int num = 0;
 						num = ((!base.m_GameScene.m_bMutiplyGame)
-							? m_curMobInfoLevel.nGold
-							: MyUtils.formula_monstergold(m_curMobInfoLevel.nGold, base.Level));
+						? m_curMobInfoLevel.nGold
+						: MyUtils.formula_monstergold(m_curMobInfoLevel.nGold, base.Level));
 						if (UnityEngine.Random.Range(0, 101) <= m_curMobInfoLevel.nGoldBonusRate)
 						{
 							num *= 2;
@@ -482,7 +487,7 @@ public class CCharMob : CCharBase
 			}
 
 			if (base.m_GameScene.m_MGManager != null && base.m_GameScene.m_MGManager.IsWaveCompleted() &&
-			    base.m_GameScene.GetMobAliveCount() == 0)
+			base.m_GameScene.GetMobAliveCount() == 0)
 			{
 				base.m_GameScene.m_TaskManager.OnKillAllMonsters();
 			}
@@ -491,7 +496,7 @@ public class CCharMob : CCharBase
 		if (m_curMobInfoLevel != null)
 		{
 			CAchievementManager.GetInstance()
-				.AddAchievement(6, new object[2] { m_curMobInfoLevel.nRareType, m_curMobInfoLevel.nType });
+			.AddAchievement(6, new object[2] { m_curMobInfoLevel.nRareType, m_curMobInfoLevel.nType });
 		}
 		if (base.m_GameScene.IsWorldMonster(base.ID))
 		{
@@ -503,8 +508,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public int GetSkillNum()
-	{
+	public int GetSkillNum() {
 		if (m_ltSkillList == null)
 		{
 			return 0;
@@ -513,8 +517,7 @@ public class CCharMob : CCharBase
 		return m_ltSkillList.Count;
 	}
 
-	public SkillComboUserInfo GetSkill(int nIndex)
-	{
+	public SkillComboUserInfo GetSkill(int nIndex) {
 		if (nIndex < 0 || nIndex >= m_ltSkillList.Count)
 		{
 			return null;
@@ -523,16 +526,13 @@ public class CCharMob : CCharBase
 		return m_ltSkillList[nIndex];
 	}
 
-	public IEnumerable GetSkillEnumerator()
-	{
-		foreach (SkillComboUserInfo ltSkill in m_ltSkillList)
-		{
+	public IEnumerable GetSkillEnumerator() {
+		foreach (SkillComboUserInfo ltSkill in m_ltSkillList) {
 			yield return ltSkill;
 		}
 	}
 
-	public int GetAISkillNum()
-	{
+	public int GetAISkillNum() {
 		if (m_ltSkillListAI == null)
 		{
 			return 0;
@@ -541,8 +541,7 @@ public class CCharMob : CCharBase
 		return m_ltSkillListAI.Count;
 	}
 
-	public SkillComboUserInfo GetAISkill(int nIndex)
-	{
+	public SkillComboUserInfo GetAISkill(int nIndex) {
 		if (nIndex < 0 || nIndex >= m_ltSkillList.Count)
 		{
 			return null;
@@ -551,22 +550,18 @@ public class CCharMob : CCharBase
 		return m_ltSkillListAI[nIndex];
 	}
 
-	public IEnumerable GetAISkillEnumerator()
-	{
-		foreach (SkillComboUserInfo item in m_ltSkillListAI)
-		{
+	public IEnumerable GetAISkillEnumerator() {
+		foreach (SkillComboUserInfo item in m_ltSkillListAI) {
 			yield return item;
 		}
 	}
 
-	public override bool GetSkillPassiveList(ref List<int> ltSkillPassive)
-	{
+	public override bool GetSkillPassiveList(ref List<int> ltSkillPassive) {
 		bool result = base.GetSkillPassiveList(ref ltSkillPassive);
 		if (m_ltSkillPassiveAI != null)
 		{
 			result = true;
-			foreach (int item in m_ltSkillPassiveAI)
-			{
+			foreach (int item in m_ltSkillPassiveAI) {
 				ltSkillPassive.Add(item);
 			}
 		}
@@ -574,13 +569,11 @@ public class CCharMob : CCharBase
 		return result;
 	}
 
-	public void SetBehaviourMode(kMobBehaviour mode)
-	{
+	public void SetBehaviourMode(kMobBehaviour mode) {
 		MobBehaviourMode = mode;
 	}
 
-	public override bool OnHit(float fDmg, CWeaponInfoLevel pWeaponLvlInfo = null, string sBodyPart = "")
-	{
+	public override bool OnHit(float fDmg, CWeaponInfoLevel pWeaponLvlInfo = null, string sBodyPart = "") {
 		if (!base.OnHit(fDmg, pWeaponLvlInfo, sBodyPart))
 		{
 			return false;
@@ -593,8 +586,7 @@ public class CCharMob : CCharBase
 				kDeadMode kDeadMode2 = kDeadMode.Normal;
 				if (pWeaponLvlInfo != null && !IsBoss())
 				{
-					switch (pWeaponLvlInfo.nAttackMode)
-					{
+					switch (pWeaponLvlInfo.nAttackMode) {
 						case 1:
 						case 3:
 						case 4:
@@ -606,7 +598,7 @@ public class CCharMob : CCharBase
 				}
 
 				if (kDeadMode2 == kDeadMode.None && MobType == 1 && !(m_curTask is doUseSkillTask) &&
-				    !(m_curTask is doHurtTask))
+				!(m_curTask is doHurtTask))
 				{
 					kDeadMode2 = kDeadMode.FlyDead;
 				}
@@ -655,8 +647,7 @@ public class CCharMob : CCharBase
 		return true;
 	}
 
-	public virtual void InitMob(int nMobID, int nMobLevel)
-	{
+	public virtual void InitMob(int nMobID, int nMobLevel) {
 		base.ID = nMobID;
 		base.Level = nMobLevel;
 		m_curMobInfoLevel = base.m_GameData.GetMobInfo(nMobID, nMobLevel);
@@ -669,14 +660,13 @@ public class CCharMob : CCharBase
 		m_ltSkillList.Clear();
 		if (m_curMobInfoLevel.ltSkill != null)
 		{
-			for (int i = 0; i < m_curMobInfoLevel.ltSkill.Count; i++)
-			{
+			for (int i = 0; i < m_curMobInfoLevel.ltSkill.Count; i++) {
 				int nID = m_curMobInfoLevel.ltSkill[i].m_nID;
 				CSkillComboInfo skillComboInfo = base.m_GameData.GetSkillComboInfo(nID);
 				if (skillComboInfo != null)
 				{
 					SkillComboUserInfo item = new SkillComboUserInfo(nID, m_curMobInfoLevel.ltSkill[i].m_fRate,
-						skillComboInfo.fCoolDown);
+							skillComboInfo.fCoolDown);
 					m_ltSkillList.Add(item);
 				}
 			}
@@ -684,8 +674,7 @@ public class CCharMob : CCharBase
 		m_ltSkillPassive.Clear();
 		if (m_curMobInfoLevel.ltSkillPassive != null)
 		{
-			for (int j = 0; j < m_curMobInfoLevel.ltSkillPassive.Count; j++)
-			{
+			for (int j = 0; j < m_curMobInfoLevel.ltSkillPassive.Count; j++) {
 				int num = m_curMobInfoLevel.ltSkillPassive[j];
 				CSkillInfoLevel skillInfo = base.m_GameData.GetSkillInfo(num, 1);
 				if (skillInfo != null && skillInfo.nType == 1)
@@ -705,8 +694,7 @@ public class CCharMob : CCharBase
 				CDropGroupInfo dropGrouInfo = m_GameData.GetDropGrouInfo(m_effectiveDropGroup);
 				if (dropGrouInfo != null && dropGrouInfo.ltItem != null)
 				{
-					for (int k = 0; k < dropGrouInfo.ltItem.Count; k++)
-					{
+					for (int k = 0; k < dropGrouInfo.ltItem.Count; k++) {
 						m_tmpDropGroupInfo.Add(new CDropItem(dropGrouInfo.ltItem[k].nItemID,
 								dropGrouInfo.ltItem[k].fRate));
 					}
@@ -741,8 +729,7 @@ public class CCharMob : CCharBase
 		InitAssistAimInfo();
 	}
 
-	public virtual void InitHardiness(int nMobID, int nMobLevel)
-	{
+	public virtual void InitHardiness(int nMobID, int nMobLevel) {
 		CMobInfoLevel mobInfo = base.m_GameData.GetMobInfo(nMobID, nMobLevel);
 		if (mobInfo != null)
 		{
@@ -751,8 +738,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public virtual void InitAI(int nAIManager)
-	{
+	public virtual void InitAI(int nAIManager) {
 		CAIManagerInfo aIManagerInfo = base.m_GameData.GetAIManagerInfo(nAIManager);
 		if (aIManagerInfo != null)
 		{
@@ -760,8 +746,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public void SetAI(int nAI)
-	{
+	public void SetAI(int nAI) {
 		CAIInfo aIInfo = base.m_GameData.GetAIInfo(nAI);
 		if (aIInfo == null)
 		{
@@ -771,8 +756,7 @@ public class CCharMob : CCharBase
 		int nCurAIID = m_nCurAIID;
 		m_nCurAIID = nAI;
 		m_ltSkillListAI.Clear();
-		foreach (SkillComboRateInfo item2 in aIInfo.ltSkill)
-		{
+		foreach (SkillComboRateInfo item2 in aIInfo.ltSkill) {
 			CSkillComboInfo skillComboInfo = base.m_GameData.GetSkillComboInfo(item2.m_nID);
 			if (skillComboInfo != null)
 			{
@@ -782,8 +766,7 @@ public class CCharMob : CCharBase
 		}
 
 		m_ltSkillPassiveAI.Clear();
-		foreach (int item3 in aIInfo.ltSkillPassive)
-		{
+		foreach (int item3 in aIInfo.ltSkillPassive) {
 			m_ltSkillPassiveAI.Add(item3);
 		}
 
@@ -825,8 +808,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public void SetBehavior(int nBehaviorID)
-	{
+	public void SetBehavior(int nBehaviorID) {
 		Node behavior = base.m_GameData.GetBehavior(nBehaviorID);
 		if (behavior != null)
 		{
@@ -842,8 +824,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public bool CheckAndRepositionIfTooClose(float minDistance = 1f)
-	{
+	public bool CheckAndRepositionIfTooClose(float minDistance = 1f) {
 		if (m_Target == null || m_Target.isDead)
 			return false;
 		Vector3 toTarget = m_Target.Pos - base.Pos;
@@ -862,8 +843,7 @@ public class CCharMob : CCharBase
 		return true;
 	}
 
-	public virtual void ResetMob()
-	{
+	public virtual void ResetMob() {
 		if (m_LifeBar != null && base.m_GameScene != null)
 		{
 			iGameUIBase gameUI = base.m_GameScene.GetGameUI();
@@ -928,20 +908,17 @@ public class CCharMob : CCharBase
 		RestoreInitialTransformStates();
 	}
 
-	protected virtual void OnEnterAI(int nLastAI, int nAI)
-	{
+	protected virtual void OnEnterAI(int nLastAI, int nAI) {
 	}
 
-	public void SetLifeBarParam(float fHoldTime, float fFadeTime = 0.5f)
-	{
+	public void SetLifeBarParam(float fHoldTime, float fFadeTime = 0.5f) {
 		if (!(m_LifeBar == null))
 		{
 			m_LifeBar.SetTime(fHoldTime, fFadeTime);
 		}
 	}
 
-	public void SetLifeBarStyle(int nStyle, float fRate)
-	{
+	public void SetLifeBarStyle(int nStyle, float fRate) {
 		if (!(m_LifeBar == null) && nStyle >= 0 && nStyle < m_arrHUDLifeStyle.Length && m_nHUDLifeStyle != nStyle)
 		{
 			m_nHUDLifeStyle = nStyle;
@@ -951,8 +928,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	public bool IsCanBeatHardniess()
-	{
+	public bool IsCanBeatHardniess() {
 		if (m_bHurting || m_bMoribund)
 		{
 			return false;
@@ -963,8 +939,7 @@ public class CCharMob : CCharBase
 
 	//u can make dinos go crazy with this SetFreeze section
 
-	public void SetFreeze(bool bFreeze, float fTime = 0f)
-	{
+	public void SetFreeze(bool bFreeze, float fTime = 0f) {
 		if (ID == 60000)
 		{
 			//fTime = Mathf.Min(fTime, 3.25f);
@@ -976,30 +951,26 @@ public class CCharMob : CCharBase
 	}
 
 
-	public virtual void InitAssistAimInfo()
-	{
+	public virtual void InitAssistAimInfo() {
 		m_dictAssistAim.Add(1, Vector2.zero);
 		m_dictAssistAim.Add(2, Vector2.zero);
 	}
 
-	public bool CheckAssistAimInfo(ref CAssistAimInfo assistaiminfo)
-	{
+	public bool CheckAssistAimInfo(ref CAssistAimInfo assistaiminfo) {
 		if (base.isDead)
 		{
 			return false;
 		}
 
 		assistaiminfo.m_Target = this;
-		foreach (int key in m_dictAssistAim.Keys)
-		{
+		foreach (int key in m_dictAssistAim.Keys) {
 			assistaiminfo.m_ltBone.Add(GetBone(key));
 		}
 
 		return true;
 	}
 
-	public override float CalcProtect(CWeaponInfoLevel weaponinfolevel = null)
-	{
+	public override float CalcProtect(CWeaponInfoLevel weaponinfolevel = null) {
 		float num = m_Property.GetValue(kProEnum.Protect);
 		if (num < 0f)
 		{
@@ -1017,16 +988,13 @@ public class CCharMob : CCharBase
 		return num;
 	}
 
-	public virtual void InitAnimData_Ground()
-	{
+	public virtual void InitAnimData_Ground() {
 	}
 
-	public virtual void InitAnimData_Sky()
-	{
+	public virtual void InitAnimData_Sky() {
 	}
 
-	public void AddUseSkillRecord(int nSkillID)
-	{
+	public void AddUseSkillRecord(int nSkillID) {
 		if (!m_dictUseSkill.ContainsKey(nSkillID))
 		{
 			m_dictUseSkill.Add(nSkillID, 1);
@@ -1041,8 +1009,7 @@ public class CCharMob : CCharBase
 		dictionary[key2] = key + 1;
 	}
 
-	public int GetUserSkillCount(int nSkillID)
-	{
+	public int GetUserSkillCount(int nSkillID) {
 		if (!m_dictUseSkill.ContainsKey(nSkillID))
 		{
 			return 0;
@@ -1050,8 +1017,7 @@ public class CCharMob : CCharBase
 		return m_dictUseSkill[nSkillID];
 	}
 
-	public void MoveTo(Vector3 v3Dst)
-	{
+	public void MoveTo(Vector3 v3Dst) {
 		Vector3 sourcePosition = base.Pos;
 		if (m_ltPath.Count > 0)
 		{
@@ -1077,14 +1043,12 @@ public class CCharMob : CCharBase
 			return;
 		}
 		m_ltPath.Clear();
-		for (int i = 0; i < navMeshPath.corners.Length; i++)
-		{
+		for (int i = 0; i < navMeshPath.corners.Length; i++) {
 			m_ltPath.Add(navMeshPath.corners[i]);
 		}
 	}
 
-	public bool IsOnNavMesh()
-	{
+	public bool IsOnNavMesh() {
 		if (!m_bIsOffNavMesh && Vector3.Distance(base.Pos, m_CachedNavMeshHit.position) < 0.05f)
 		{
 			return true;
@@ -1098,8 +1062,7 @@ public class CCharMob : CCharBase
 		return false;
 	}
 
-	public bool GetNearestNavMeshPoint(out Vector3 nearestPoint)
-	{
+	public bool GetNearestNavMeshPoint(out Vector3 nearestPoint) {
 		if (m_CachedNavMeshHit.hit && Vector3.Distance(base.Pos, m_CachedNavMeshHit.position) < NavMeshMaxDistance)
 		{
 			nearestPoint = m_CachedNavMeshHit.position;
@@ -1115,8 +1078,7 @@ public class CCharMob : CCharBase
 		return false;
 	}
 
-	public bool RecoverToNavMesh()
-	{
+	public bool RecoverToNavMesh() {
 		Vector3 nearestPoint;
 		if (!GetNearestNavMeshPoint(out nearestPoint))
 		{
@@ -1141,8 +1103,7 @@ public class CCharMob : CCharBase
 		return true;
 	}
 
-	public void CheckRecoveryComplete()
-	{
+	public void CheckRecoveryComplete() {
 		if (!m_bRecoveryActive)
 			return;
 		if (m_ltPath.Count == 0 || Vector3.Distance(base.Pos, m_v3PurposePoint) < 0.06f)
@@ -1153,8 +1114,7 @@ public class CCharMob : CCharBase
 		}
 	}
 
-	private void ComputeEffectiveDrops()
-	{
+	private void ComputeEffectiveDrops() {
 		if (m_curMobInfoLevel == null)
 			return;
 		CMobInfo mobInfo = m_GameData.m_MobCenter.Get(base.ID);
@@ -1171,7 +1131,7 @@ public class CCharMob : CCharBase
 		}
 		CMobInfoLevel baseMobInfo = m_GameData.GetMobInfo(base.ID, 1);
 		if (baseMobInfo == null)
-			baseMobInfo = m_curMobInfoLevel; // fallback
+			baseMobInfo = m_curMobInfoLevel;
 		int baseDropGroup = baseMobInfo.nDropGroup;
 		int baseDropCount = (baseMobInfo.arrDropCount != null && baseMobInfo.arrDropCount.Length > 0)
 		? baseMobInfo.arrDropCount[0]
@@ -1193,8 +1153,7 @@ public class CCharMob : CCharBase
 		}
 		else
 		{
-			switch (quarter)
-			{
+			switch (quarter) {
 				case 0:
 					newDropGroup = baseDropGroup;
 					newDropCount = baseDropCount;
@@ -1239,14 +1198,34 @@ public class CCharMob : CCharBase
 		m_effectiveDropCount = newDropCount;
 	}
 
-	public void ApplyMissionModifications()
-	{
+	public void ApplyMissionModifications() {
 		float speed = m_Property.GetValue(kProEnum.MoveSpeed);
-		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.15f);
+		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.1f);
 		m_fHPMax *= 0.8f;
 		if (m_fHP > m_fHPMax) m_fHP = m_fHPMax;
 		m_fHardinessMax *= 0.8f;
 		if (m_fHardinessCur > m_fHardinessMax)
 			m_fHardinessCur = m_fHardinessMax;
+	}
+
+	public void ApplyDifficultyBuffs(iDataCenter dc) {
+		if (dc == null || dc.Difficulty != 1) return;
+		float damage = m_Property.GetValue(kProEnum.Damage);
+		m_Property.SetValueBase(kProEnum.Damage, damage * 1.15f);
+		float speed = m_Property.GetValue(kProEnum.MoveSpeed);
+		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.05f);
+		m_fHardinessMax *= 1.05f;
+		if (m_fHardinessCur == m_fHardinessMax)
+			m_fHardinessCur = m_fHardinessMax;
+		if (IsBoss())
+		{
+			float oldMaxHP = m_fHPMax;
+			float newMaxHP = oldMaxHP * 1.05f;
+			float ratio = m_fHP / oldMaxHP;
+			m_fHPMax = newMaxHP;
+			m_fHP = newMaxHP * ratio;
+			if (m_LifeBar != null)
+				m_LifeBar.SetLife(m_fHP / m_fHPMax);
+		}
 	}
 }

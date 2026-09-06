@@ -2278,6 +2278,7 @@ public class iGameSceneBase
 		{
 			component.ApplyMissionModifications();
 		}
+		component.ApplyDifficultyBuffs(m_DataCenter);
 		component.MobType = mobInfo.nType;
 		component.MobBehavior = behaviourID;
 		component.name = "mob_" + component.UID;

@@ -33,6 +33,8 @@ public class Scene_Main : MonoBehaviour
 
 	public PopupConfirmDelete popupConfirmDelete;
 
+	public PopupDifficultySelection difficultyPopup;
+
 	private bool m_bShowingSaveError = false;
 
 	private bool connect_success;
@@ -133,9 +135,11 @@ public class Scene_Main : MonoBehaviour
 	{
 		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
 		if (dc == null) return;
+
 		int lastSlot = SettingsManager.Instance.LastSaveSlot;
 		var slots = dc.GetSaveSlotsInfo();
 		bool slotExists = (lastSlot >= 0 && lastSlot < slots.Count && slots[lastSlot].exists);
+
 		if (slotExists)
 		{
 			dc.SwitchToSlot(lastSlot);
@@ -154,21 +158,41 @@ public class Scene_Main : MonoBehaviour
 					targetSlot = i;
 			}
 			if (targetSlot == -1)
-			{
 				targetSlot = 0;
-			}
-			dc.CreateNewSlot(targetSlot);
-			SettingsManager.Instance.LastSaveSlot = targetSlot;
-			if (savePopup != null)
-				savePopup.Show();
-			m_bSaveLoaded = true;
-			if (existingCount == 0)
+			if (difficultyPopup != null)
 			{
-				iGameApp.PendingPopupMessage = "No save was detected, the game has created a fresh save for you.";
-				if (popup_warning != null)
-					popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
+				difficultyPopup.Show((int chosenDifficulty) =>
+				{
+					dc.CreateNewSlot(targetSlot, chosenDifficulty);
+					SettingsManager.Instance.LastSaveSlot = targetSlot;
+					if (savePopup != null)
+						savePopup.Show();
+					m_bSaveLoaded = true;
+
+					if (existingCount == 0)
+					{
+						iGameApp.PendingPopupMessage = "No save was detected, the game has created a fresh save for you.";
+						if (popup_warning != null)
+							popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
+					}
+				});
+			}
+			else
+			{
+				dc.CreateNewSlot(targetSlot);
+				SettingsManager.Instance.LastSaveSlot = targetSlot;
+				if (savePopup != null)
+					savePopup.Show();
+				m_bSaveLoaded = true;
+				if (existingCount == 0)
+				{
+					iGameApp.PendingPopupMessage = "No save was detected, the game has created a fresh save for you.";
+					if (popup_warning != null)
+						popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
+				}
 			}
 		}
+
 		if (!string.IsNullOrEmpty(iGameApp.PendingPopupMessage) && popup_warning != null)
 		{
 			popup_warning.ShowPopupYes(iGameApp.PendingPopupMessage);
@@ -376,9 +400,8 @@ public class Scene_Main : MonoBehaviour
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
-			{
 				CUISound.GetInstance().Play("UI_Button");
-			}
+
 			int slot = ExtractSlotIndex(control);
 			if (savePopup != null)
 			{
@@ -451,5 +474,52 @@ public class Scene_Main : MonoBehaviour
 		}
 		Debug.LogWarning("ExtractSlotIndex: Could not find slot index for control: " + control.name);
 		return 0;
+	}
+
+	public void TUIEvent_SelectNormal(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3 && difficultyPopup != null)
+		{
+			difficultyPopup.SelectNormal();
+		}
+	}
+
+	public void TUIEvent_SelectHard(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3 && difficultyPopup != null)
+		{
+			difficultyPopup.SelectHard();
+		}
+	}
+
+	public void RequestCreateSlotWithDifficulty(int slotIndex)
+	{
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc == null) return;
+
+		var slots = dc.GetSaveSlotsInfo();
+		if (slotIndex < 0 || slotIndex >= slots.Count || slots[slotIndex].exists)
+		{
+			Debug.LogWarning("Slot " + slotIndex + " is not empty or invalid.");
+			return;
+		}
+
+		if (difficultyPopup != null)
+		{
+			difficultyPopup.Show((int chosenDifficulty) =>
+			{
+				dc.CreateNewSlot(slotIndex, chosenDifficulty);
+				SettingsManager.Instance.LastSaveSlot = slotIndex;
+				if (savePopup != null)
+					savePopup.RefreshUI();
+			});
+		}
+		else
+		{
+			dc.CreateNewSlot(slotIndex);
+			SettingsManager.Instance.LastSaveSlot = slotIndex;
+			if (savePopup != null)
+				savePopup.RefreshUI();
+		}
 	}
 }

@@ -34,14 +34,15 @@ public class SaveSlotEntry : MonoBehaviour
     public void UpdateSlotInfo(iDataCenter.SaveSlotInfo info, int currentSlot = -1)
     {
         slotExists = info.exists;
-
         if (labelSlotInfo != null)
         {
             if (info.exists)
             {
+                string difficultyText = info.difficulty == 1 ? "Hard" : "Normal";
                 string progressText = info.mapProgress.ToString("F1") + "%";
-                labelSlotInfo.Text = string.Format("Slot {0}\nChar: {1}\nMap: {2}\nGold: {3}\nCrystals: {4}",
+                labelSlotInfo.Text = string.Format("Slot {0}\n{1}\nChar: {2}\nMap: {3}\nGold: {4}\nCrystals: {5}",
                         info.slotIndex + 1,
+                        difficultyText,
                         info.characterName,
                         progressText,
                         info.gold,
