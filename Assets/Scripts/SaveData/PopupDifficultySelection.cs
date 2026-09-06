@@ -13,6 +13,7 @@ public class PopupDifficultySelection : MonoBehaviour
     {
         onSelected = callback;
         gameObject.SetActive(true);
+        base.GetComponent<Animation>().Play();
     }
 
     public void Hide()
@@ -24,14 +25,14 @@ public class PopupDifficultySelection : MonoBehaviour
     public void SelectNormal()
     {
         if (onSelected != null)
-            onSelected(0);
+            onSelected(1);
         Hide();
     }
 
     public void SelectHard()
     {
         if (onSelected != null)
-            onSelected(1);
+            onSelected(2);
         Hide();
     }
 }

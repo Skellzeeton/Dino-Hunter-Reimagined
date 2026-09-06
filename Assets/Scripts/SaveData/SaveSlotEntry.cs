@@ -38,7 +38,7 @@ public class SaveSlotEntry : MonoBehaviour
         {
             if (info.exists)
             {
-                string difficultyText = info.difficulty == 1 ? "Hard" : "Normal";
+                string difficultyText = info.difficulty == 2 ? "Hard" : (info.difficulty == 1 ? "Normal" : "Easy");
                 string progressText = info.mapProgress.ToString("F1") + "%";
                 labelSlotInfo.Text = string.Format("Slot {0}\n{1}\nChar: {2}\nMap: {3}\nGold: {4}\nCrystals: {5}",
                         info.slotIndex + 1,
@@ -67,5 +67,5 @@ public class SaveSlotEntry : MonoBehaviour
         }
         if (btnDelete != null)
             btnDelete.gameObject.SetActive(info.exists);
-        }
     }
+}

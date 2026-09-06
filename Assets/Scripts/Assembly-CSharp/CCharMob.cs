@@ -1209,7 +1209,7 @@ public class CCharMob : CCharBase {
 	}
 
 	public void ApplyDifficultyBuffs(iDataCenter dc) {
-		if (dc == null || dc.Difficulty != 1) return;
+		if (dc == null || dc.Difficulty != 2) return;
 		float damage = m_Property.GetValue(kProEnum.Damage);
 		m_Property.SetValueBase(kProEnum.Damage, damage * 1.15f);
 		float speed = m_Property.GetValue(kProEnum.MoveSpeed);

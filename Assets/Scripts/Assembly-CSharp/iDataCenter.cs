@@ -613,7 +613,7 @@ public class iDataCenter
 		m_DeadInCoopCount.Set(0);
 		m_bInBlackName = false;
 		m_bInWhiteName = false;
-		m_nDifficulty = 0;
+		m_nDifficulty = 1;
 	}
 
 	private string GetSavePath(string fileName)
@@ -659,7 +659,7 @@ public class iDataCenter
 		}
 	}
 
-	public void CreateNewSlot(int slot, int difficulty = 0)
+	public void CreateNewSlot(int slot, int difficulty = 1)
 	{
 		if (slot < 0 || slot >= MAX_SLOTS) return;
 		CurrentSlot = slot;
@@ -743,7 +743,7 @@ public class iDataCenter
 		public List<int> freeweapon;
 		public List<string> friends;
 		public List<int> titles;
-		public int difficulty;
+		public int difficulty = -1;
 	}
 
 	public List<SaveSlotInfo> GetSaveSlotsInfo()
@@ -768,7 +768,7 @@ public class iDataCenter
 				}
 				if (data != null && IsValidSaveData(data))
 				{
-					info.difficulty = data.difficulty;
+					info.difficulty = (data.difficulty == -1) ? 1 : data.difficulty;
 					info.hunterLevel = data.hunterlvl;
 					info.latestLevel = data.latestlevel;
 					info.lastPlayed = GetLastModifiedTime(i);
@@ -1538,7 +1538,7 @@ public class iDataCenter
 		m_MVPCount.Set(data.mvpincoop);
 		m_bInBlackName = data.isinblackname;
 		m_bInWhiteName = data.isinwhitename;
-		m_nDifficulty = data.difficulty;
+		m_nDifficulty = (data.difficulty == -1) ? 1 : data.difficulty;
 		if (!string.IsNullOrEmpty(data.photo))
 		{
 			try
