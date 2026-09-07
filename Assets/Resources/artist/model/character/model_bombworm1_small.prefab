@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Node: {fileID: 4260152429782294}
   m_fTime: 2
   m_Effect: {fileID: 0}
+  effectOverrides: []
 --- !u!114 &114877853247153622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,9 +409,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  soundOverrides:
+  - originalName: SVO_Blastbug_Idle
+    overrideName: SVO_Blastbug_Idle_Small
+  - originalName: Ani_Attack_Blastbug
+    overrideName: Ani_Attack_Blastbug_Small
 --- !u!114 &114267178278678836
 MonoBehaviour:
   m_ObjectHideFlags: 0

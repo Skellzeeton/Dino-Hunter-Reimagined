@@ -17,7 +17,6 @@ Shader "GGYY/Model/2COL_2TEX_AB+"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma target 3.5
             #pragma multi_compile_fog
             #include "UnityCG.cginc"
             sampler2D _MainTex, _SkinTex;
@@ -59,7 +58,6 @@ Shader "GGYY/Model/2COL_2TEX_AB+"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma target 3.5
             #pragma multi_compile_fog
             #include "UnityCG.cginc"
             #include "Lighting.cginc"

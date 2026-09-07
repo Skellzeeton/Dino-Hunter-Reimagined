@@ -1,15 +1,21 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(TAudioController))]
 public class iDinoHunterAudioController : MonoBehaviour
 {
 	public bool m_bBoss;
-	
-	public bool m_bLava;
-	
-	public bool m_bIce;
-	
-	public bool m_bZombie;
+
+	[System.Serializable]
+	public class SoundOverridePair
+	{
+		public string originalName;
+		public string overrideName;
+	}
+
+	[Header("Sound Overrides")]
+	[Tooltip("Map an original sound name to a replacement. Only matching sounds will be changed.")]
+	public List<SoundOverridePair> soundOverrides = new List<SoundOverridePair>();
 
 	protected TAudioController m_AudioController;
 
@@ -20,25 +26,21 @@ public class iDinoHunterAudioController : MonoBehaviour
 
 	public void PlayAudioByMobType(string sName)
 	{
-		if (!(m_AudioController == null) && !(base.transform.root == null))
+		if (m_AudioController == null || base.transform.root == null)
+			return;
+		string finalName = GetOverriddenName(sName);
+		if (m_bBoss)
+			finalName += "_Boss";
+		m_AudioController.PlayAudio(finalName);
+	}
+
+	private string GetOverriddenName(string originalName)
+	{
+		foreach (var pair in soundOverrides)
 		{
-			if (m_bBoss)
-			{
-				sName += "_Boss";
-			}
-			if (m_bLava)
-			{
-				sName += "_Lava";
-			}
-			if (m_bIce)
-			{
-				sName += "_Ice";
-			}
-			if (m_bZombie)
-			{
-				sName += "_Zombie";
-			}
-			m_AudioController.PlayAudio(sName);
+			if (pair.originalName == originalName)
+				return pair.overrideName;
 		}
+		return originalName;
 	}
 }

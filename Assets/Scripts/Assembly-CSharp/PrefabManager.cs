@@ -278,6 +278,7 @@ public class PrefabManager
 		m_dictData.Add(1921, "Artist/Effect/Skill/role_009&010_fx/role_009_atk02_02_pfb");
 		m_dictData.Add(1922, "Artist/Effect/Skill/role_009&010_fx/role_009_atk02_03_pfb");
 		m_dictData.Add(1925, "Artist/Effect/Skill/role_009&010_fx/role_010_atk01_pfb");
+		m_dictData.Add(1926, "Artist/Effect/Skill/role_009&010_fx/role_010_atk02_pfb");
 		m_dictData.Add(1930, "Artist/Effect/Skill/role_007_fx/role_007_atk01_pfb");
 		m_dictData.Add(1931, "Artist/Effect/Skill/role_007_fx/role_007_atk02_pfb");
 		m_dictData.Add(1932, "Artist/Effect/Skill/role_007_fx/role_007_atk03_pfb");

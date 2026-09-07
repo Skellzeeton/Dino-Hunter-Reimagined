@@ -490,6 +490,9 @@ MonoBehaviour:
   m_Node: {fileID: 4342256728326200}
   m_fTime: 2
   m_Effect: {fileID: 0}
+  effectOverrides:
+  - originalID: 1925
+    overrideID: 1926
 --- !u!114 &114961481445253730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,9 +534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  soundOverrides: []
 --- !u!114 &114432349197401120
 MonoBehaviour:
   m_ObjectHideFlags: 0

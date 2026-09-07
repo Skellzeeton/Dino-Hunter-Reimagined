@@ -9,7 +9,6 @@ Properties {
 		Tags { "RenderType" = "Opaque" }
 		CGPROGRAM
 #pragma surface surf Standard fullforwardshadows
-#pragma target 3.5
 		sampler2D _MainTex;
 		struct Input
 		{

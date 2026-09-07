@@ -8,7 +8,6 @@ SubShader {
     Tags { "RenderType"="Opaque" }
     CGPROGRAM
     #pragma surface surf Lambert noforwardadd nolightmap noshadow
-    #pragma target 3.5
 
     sampler2D _MainTex;
     fixed4 _Color;

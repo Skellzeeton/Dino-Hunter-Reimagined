@@ -426,6 +426,8 @@ public class PrefabPath
 
 	public const int boomwormboom = 1925;
 
+	public const int boomwormboomyellow = 1926;
+
 	public const int stegosaurus_attack01 = 1930;
 
 	public const int stegosaurus_attack02 = 1931;

@@ -161,9 +161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  soundOverrides:
+  - originalName: SVO_Shuangguanlong_Attack00
+    overrideName: SVO_Shuangguanlong_Attack00_Elite
 --- !u!1 &1063089949895702
 GameObject:
   m_ObjectHideFlags: 0
