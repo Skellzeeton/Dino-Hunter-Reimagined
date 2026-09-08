@@ -9,104 +9,81 @@ Shader "GGYY/Model/2COL_2TEX_AB+"
     }
     SubShader
     {
-        Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        Tags { "Queue"="Transparent" "RenderType"="Transparent" "RenderPipeline"="UniversalPipeline" }
+        Blend SrcAlpha OneMinusSrcAlpha
         Pass
         {
-            Tags { "LightMode"="ForwardBase" }
-            Blend SrcAlpha OneMinusSrcAlpha
-            CGPROGRAM
+            Tags { "LightMode"="UniversalForward" }
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fog
-            #include "UnityCG.cginc"
-            sampler2D _MainTex, _SkinTex;
-            fixed4 _MainColor, _SkinColor;
-            struct appdata
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            CBUFFER_START(UnityPerMaterial)
+                float4 _MainColor;
+                float4 _SkinColor;
+                float4 _MainTex_ST;
+                float4 _SkinTex_ST;
+            CBUFFER_END
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
+            TEXTURE2D(_SkinTex);
+            SAMPLER(sampler_SkinTex);
+            struct Attributes
             {
-                float4 vertex : POSITION;
-                float2 texcoord0 : TEXCOORD0;
+                float4 positionOS : POSITION;
+                float3 normalOS : NORMAL;
+                float2 uv : TEXCOORD0;
             };
-            struct v2f
+            struct Varyings
             {
-                float4 vertex : SV_POSITION;
-                float2 texcoord0 : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
+                float4 positionCS : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float3 positionWS : TEXCOORD1;
+                float3 normalWS : TEXCOORD2;
+                float fogCoord : TEXCOORD3;
             };
-            v2f vert(appdata v)
+            Varyings vert(Attributes input)
             {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.texcoord0 = v.texcoord0;
-                UNITY_TRANSFER_FOG(o, o.vertex);
-                return o;
+                Varyings output;
+                output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
+                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
+                output.normalWS = TransformObjectToWorldNormal(input.normalOS);
+                output.uv = input.uv;
+                output.fogCoord = ComputeFogFactor(output.positionCS.z);
+                return output;
             }
-            fixed4 frag(v2f i) : SV_Target
+            half4 frag(Varyings input) : SV_Target
             {
-                fixed4 color1 = tex2D(_MainTex, i.texcoord0) * _MainColor;
-                fixed4 color2 = tex2D(_SkinTex, i.texcoord0) * _SkinColor;
-                fixed4 combined = (color1 * color2 * 4.0 * color1.a * color2.a) + color1;
-                combined = saturate(combined);
-                UNITY_APPLY_FOG(i.fogCoord, combined.rgb);
-                return combined;
+                half4 color1 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv) * _MainColor;
+                half4 color2 = SAMPLE_TEXTURE2D(_SkinTex, sampler_SkinTex, input.uv) * _SkinColor;
+                half4 baseColor = saturate((color1 * color2 * 4.0 * color1.a * color2.a) + color1);
+                half3 albedo = baseColor.rgb;
+                half alpha = baseColor.a;
+                half3 additionalLightContribution = 0;
+                uint additionalLightsCount = GetAdditionalLightsCount();
+                for (uint i = 0; i < additionalLightsCount; i++)
+                {
+                    Light light = GetAdditionalLight(i, input.positionWS);
+                    float3 lightVector = light.direction;
+                    float distance = length(lightVector);
+                    float3 lightDir = lightVector / max(distance, 0.0001);
+                    float atten = 1.0 / (1.0 + distance * distance);
+                    float NdotL = max(0.0, dot(normalize(input.normalWS), lightDir));
+                    half3 lightContribution = light.color.rgb * NdotL * atten;
+                    float3 viewDir = normalize(GetCameraPositionWS() - input.positionWS);
+                    float fresnelTerm = pow(1.0 - abs(dot(normalize(input.normalWS), viewDir)), 1.0);
+                    half3 reflection = lightContribution * fresnelTerm * 0.75;
+                    additionalLightContribution += (albedo * lightContribution) + reflection;
+                }
+                half3 finalColor = albedo + additionalLightContribution;
+                finalColor = MixFog(finalColor, input.fogCoord);
+                return half4(finalColor, alpha);
             }
-            ENDCG
-        }
-        Pass
-        {
-            Tags { "LightMode"="ForwardAdd" }
-            Blend One One
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            #pragma multi_compile_fog
-            #include "UnityCG.cginc"
-            #include "Lighting.cginc"
-            sampler2D _MainTex, _SkinTex;
-            fixed4 _MainColor, _SkinColor;
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-                float2 texcoord0 : TEXCOORD0;
-            };
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-                float2 texcoord0 : TEXCOORD0;
-                float3 worldNormal : TEXCOORD1;
-                float3 worldPos : TEXCOORD2;
-                UNITY_FOG_COORDS(3)
-            };
-            v2f vert(appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.texcoord0 = v.texcoord0;
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-                UNITY_TRANSFER_FOG(o, o.vertex);
-                return o;
-            }
-            fixed4 frag(v2f i) : SV_Target
-            {
-                fixed4 color1 = tex2D(_MainTex, i.texcoord0) * _MainColor;
-                fixed4 color2 = tex2D(_SkinTex, i.texcoord0) * _SkinColor;
-                fixed4 baseColor = (color1 * color2 * 4.0 * color1.a * color2.a) + color1;
-                fixed3 albedo = saturate(baseColor).rgb;
-                float3 normal = normalize(i.worldNormal);
-                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos);
-                float distance = length(_WorldSpaceLightPos0.xyz - i.worldPos);
-                float atten = 1.0 / (1.0 + distance * distance);
-                float NdotL = max(0, dot(normal, lightDir));
-                float3 lightContribution = _LightColor0.rgb * NdotL * atten;
-                float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos);
-                float fresnelTerm = pow(1 - abs(dot(normal, viewDir)), 1.0);
-                float3 reflection = lightContribution * fresnelTerm * 0.75;
-                float3 finalColor = (albedo * lightContribution) + reflection;
-                UNITY_APPLY_FOG(i.fogCoord, finalColor);
-                return fixed4(finalColor, baseColor.a);
-            }
-            ENDCG
+            ENDHLSL
         }
     }
+    FallBack Off
 }

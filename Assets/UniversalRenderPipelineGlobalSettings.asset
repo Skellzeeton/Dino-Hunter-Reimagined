@@ -68,7 +68,20 @@ MonoBehaviour:
       - rid: 8742611860080034049
       - rid: 8742611860080034050
     m_RuntimeSettings:
-      m_List: []
+      m_List:
+      - rid: 8742611860080034019
+      - rid: 8742611860080034020
+      - rid: 8742611860080034023
+      - rid: 8742611860080034027
+      - rid: 8742611860080034029
+      - rid: 8742611860080034031
+      - rid: 8742611860080034032
+      - rid: 8742611860080034036
+      - rid: 8742611860080034039
+      - rid: 8742611860080034040
+      - rid: 8742611860080034041
+      - rid: 8742611860080034046
+      - rid: 8742611860080034050
   m_AssetVersion: 10
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
@@ -208,7 +221,7 @@ MonoBehaviour:
         asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_StripUnusedPostProcessingVariants: 0
+        m_StripUnusedPostProcessingVariants: 1
         m_StripUnusedVariants: 1
         m_StripScreenCoordOverrideVariants: 1
     - rid: 8742611860080034025
@@ -299,7 +312,7 @@ MonoBehaviour:
         asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_VolumeProfile: {fileID: 11400000, guid: 33bd8e3a736b33bedbd99e2a3816d589,
+        m_VolumeProfile: {fileID: 11400000, guid: bb5e33345285fd395b81ff082192d663,
           type: 2}
     - rid: 8742611860080034030
       type: {class: ScreenSpaceAmbientOcclusionPersistentResources, ns: UnityEngine.Rendering.Universal,
@@ -321,13 +334,13 @@ MonoBehaviour:
       type: {class: URPReflectionProbeSettings, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         version: 1
-        useReflectionProbeRotation: 1
+        useReflectionProbeRotation: 0
     - rid: 8742611860080034033
       type: {class: URPTerrainShaderSetting, ns: UnityEngine.Rendering.Universal,
         asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_IncludeTerrainShaders: 1
+        m_IncludeTerrainShaders: 0
     - rid: 8742611860080034034
       type: {class: Renderer2DResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
