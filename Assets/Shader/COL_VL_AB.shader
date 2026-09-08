@@ -7,102 +7,94 @@ Shader "Triniti/Character/COL_VL_AB"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" "Queue"="Geometry" }
         Pass
         {
-            Tags { "LightMode"="ForwardBase" }
-            CGPROGRAM
+            Tags { "LightMode"="UniversalForward" }
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fog
-            #include "UnityCG.cginc"
-            sampler2D _MainTex;
-            fixed4 _Color;
-            struct appdata
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+            CBUFFER_START(UnityPerMaterial)
+                float4 _Color;
+                float4 _MainTex_ST;
+            CBUFFER_END
+
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
+
+            struct Attributes
             {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-                float2 uv_MainTex : TEXCOORD0;
+                float4 positionOS : POSITION;
+                float3 normalOS : NORMAL;
+                float2 uv : TEXCOORD0;
             };
-            struct v2f
+
+            struct Varyings
             {
-                float2 uv_MainTex : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-                float3 worldNormal : TEXCOORD1;
-                float3 worldPos : TEXCOORD2;
-                UNITY_FOG_COORDS(3)
+                float4 positionCS : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float3 positionWS : TEXCOORD1;
+                float3 normalWS : TEXCOORD2;
+                float fogCoord : TEXCOORD3;
             };
-            v2f vert (appdata v)
+
+            Varyings vert(Attributes input)
             {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv_MainTex = v.uv_MainTex;
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-                UNITY_TRANSFER_FOG(o, o.vertex);
-                return o;
+                Varyings output;
+                output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
+                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
+                output.normalWS = TransformObjectToWorldNormal(input.normalOS);
+                output.uv = TRANSFORM_TEX(input.uv, _MainTex);
+                output.fogCoord = ComputeFogFactor(output.positionCS.z);
+                return output;
             }
-            fixed4 frag (v2f i) : SV_Target
+
+            half4 frag(Varyings input) : SV_Target
             {
-                fixed3 albedo = tex2D(_MainTex, i.uv_MainTex).rgb * _Color.rgb;
-                UNITY_APPLY_FOG(i.fogCoord, albedo);
-                return fixed4(albedo, 1);
+                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+                half3 albedo = texColor.rgb * _Color.rgb;
+
+                // Mimics the original ForwardBase pass: albedo without any lighting
+                half3 finalColor = albedo;
+
+                // Loop over all additional lights and add the same custom lighting
+                // as the original ForwardAdd pass (diffuse + Fresnel reflection)
+                uint additionalLightsCount = GetAdditionalLightsCount();
+                for (uint lightIndex = 0; lightIndex < additionalLightsCount; lightIndex++)
+                {
+                    Light light = GetAdditionalLight(lightIndex, input.positionWS);
+
+                    // For point/spot lights, light.direction is the vector from surface to light
+                    float3 lightVector = light.direction;
+                    float distance = length(lightVector);
+                    float3 lightDir = lightVector / max(distance, 0.0001);
+
+                    // Custom attenuation: 1 / (1 + d²) (same as original)
+                    float atten = 1.0 / (1.0 + distance * distance);
+
+                    float NdotL = max(0.0, dot(normalize(input.normalWS), lightDir));
+                    half3 lightContribution = light.color.rgb * NdotL * atten;
+
+                    float3 viewDir = normalize(GetCameraPositionWS() - input.positionWS);
+                    float fresnelTerm = pow(1.0 - abs(dot(normalize(input.normalWS), viewDir)), 0.5);
+                    half3 reflection = lightContribution * fresnelTerm * 0.5;
+
+                    finalColor += albedo * lightContribution + reflection;
+                }
+
+                // Apply fog (applied once to the combined result;
+                // the original applied it per pass – this is the only visible approximation)
+                finalColor = MixFog(finalColor, input.fogCoord);
+
+                return half4(finalColor, 1.0);
             }
-            ENDCG
-        }
-        Pass
-        {
-            Tags { "LightMode"="ForwardAdd" }
-            Blend One One
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            #pragma multi_compile_fog
-            #include "UnityCG.cginc"
-            #include "Lighting.cginc"
-            sampler2D _MainTex;
-            fixed4 _Color;
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-                float2 uv_MainTex : TEXCOORD0;
-            };
-            struct v2f
-            {
-                float2 uv_MainTex : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-                float3 worldNormal : TEXCOORD1;
-                float3 worldPos : TEXCOORD2;
-                UNITY_FOG_COORDS(3)
-            };
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv_MainTex = v.uv_MainTex;
-                o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-                UNITY_TRANSFER_FOG(o, o.vertex);
-                return o;
-            }
-            fixed4 frag (v2f i) : SV_Target
-            {
-                fixed3 albedo = tex2D(_MainTex, i.uv_MainTex).rgb * _Color.rgb;
-                float3 normal = normalize(i.worldNormal);
-                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos);
-                float distance = length(_WorldSpaceLightPos0.xyz - i.worldPos);
-                float atten = 1.0 / (1.0 + distance * distance);
-                float NdotL = max(0, dot(normal, lightDir));
-                float3 lightContribution = _LightColor0.rgb * NdotL * atten;
-                float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos);
-                float fresnelTerm = pow(1 - abs(dot(normal, viewDir)), 0.5);
-                float3 reflection = lightContribution * fresnelTerm * 0.5;
-                float3 finalColor = (albedo * lightContribution) + reflection;
-                UNITY_APPLY_FOG(i.fogCoord, finalColor);
-                return fixed4(finalColor, 0);
-            }
-            ENDCG
+            ENDHLSL
         }
     }
 }
