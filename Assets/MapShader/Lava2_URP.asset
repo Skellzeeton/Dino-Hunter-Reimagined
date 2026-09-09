@@ -16,6 +16,29 @@ MonoBehaviour:
   - {fileID: 6251423260260455990}
   - {fileID: 8411822720672858410}
   - {fileID: 6355699592145152397}
+  - {fileID: 2763078148510891438}
+--- !u!114 &2763078148510891438
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
+  m_Name: LiftGammaGain
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.LiftGammaGain
+  active: 1
+  lift:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
+  gamma:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: 0.05176786}
+  gain:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
 --- !u!114 &6251423260260455990
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -34,7 +57,7 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.1
+    m_Value: 1
   intensity:
     m_OverrideState: 1
     m_Value: 1.25
@@ -57,8 +80,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   maxIterations:
-    m_OverrideState: 0
-    m_Value: 6
+    m_OverrideState: 1
+    m_Value: 5
   dirtTexture:
     m_OverrideState: 0
     m_Value: {fileID: 0}

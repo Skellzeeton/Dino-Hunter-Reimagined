@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.05322818}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.10039771}
   gain:
     m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: 0}
@@ -35,10 +35,10 @@ MonoBehaviour:
   m_Name: menu post processing_URP
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
+  - {fileID: 7901757798665370362}
   - {fileID: 4368370522919843243}
   - {fileID: 1128633860309850899}
   - {fileID: -7434841133404688273}
-  - {fileID: 7901757798665370362}
 --- !u!114 &1128633860309850899
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -125,10 +125,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.1
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 1.25
+    m_Value: 0.5
   scatter:
     m_OverrideState: 1
     m_Value: 0.5
@@ -148,8 +148,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   maxIterations:
-    m_OverrideState: 0
-    m_Value: 6
+    m_OverrideState: 1
+    m_Value: 5
   dirtTexture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
