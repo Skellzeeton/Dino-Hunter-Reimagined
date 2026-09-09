@@ -15,6 +15,7 @@ public class CCharMobDilophosaurus : CCharMob
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Dilo_Damage_foot01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Dilo_Roar01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_5, "Dilo_Attack00"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Skill_Action_6, "Dilo_Bite"));
 	}
 	public override void InitAudioData()
 	{
