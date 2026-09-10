@@ -3,8 +3,7 @@ using EventCenter;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Scene_CoopMainMenu : MonoBehaviour
-{
+public class Scene_CoopMainMenu : MonoBehaviour {
 	public TUIFade m_fade;
 
 	private float m_fade_in_time;
@@ -49,8 +48,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 
 	protected List<string> m_ltFriends;
 
-	public void SetData(string sID, TUICoopPlayerInfo coopplayerinfo)
-	{
+	public void SetData(string sID, TUICoopPlayerInfo coopplayerinfo) {
 		if (m_dictData.ContainsKey(sID))
 		{
 			m_dictData[sID] = coopplayerinfo;
@@ -61,8 +59,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public TUICoopPlayerInfo GetData(string sID)
-	{
+	public TUICoopPlayerInfo GetData(string sID) {
 		if (!m_dictData.ContainsKey(sID))
 		{
 			return null;
@@ -70,8 +67,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		return m_dictData[sID];
 	}
 
-	private void Awake()
-	{
+	private void Awake() {
 		backup_info = new Dictionary<TUIEvent.SceneCoopMainMenuEventType, TUIGameInfo>();
 		m_dictData = new Dictionary<string, TUICoopPlayerInfo>();
 		m_ltFriends = new List<string>();
@@ -84,14 +80,12 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneCoopMainMenu>(TUIEvent_SetUIInfo);
 	}
 
-	private void Start()
-	{
+	private void Start() {
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_TopBar));
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_EnterInfo));
 	}
 
-	private void Update()
-	{
+	private void Update() {
 		m_fade_in_time += Time.deltaTime;
 		if (m_fade_in_time >= m_fade.fadeInTime && !do_fade_in)
 		{
@@ -116,13 +110,12 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		UpdateKeyboard();
 	}
 
-	private void OnDestroy()
-	{
+	private void OnDestroy() {
+		IphoneInputPlugin.GetInstance().Cancel();
 		global::EventCenter.EventCenter.Instance.Unregister<TUIEvent.BackEvent_SceneCoopMainMenu>(TUIEvent_SetUIInfo);
 	}
 
-	public void TUIEvent_SetUIInfo(object sender, TUIEvent.BackEvent_SceneCoopMainMenu m_event)
-	{
+	public void TUIEvent_SetUIInfo(object sender, TUIEvent.BackEvent_SceneCoopMainMenu m_event) {
 		if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_TopBar)
 		{
 			if (m_event.GetEventInfo() != null && m_event.GetEventInfo().GetPlayerInfo() != null)
@@ -262,8 +255,8 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			CGameNetManager.GetInstance().IsGaming = true;
 			//if (m_event.GetControlSuccess())
 			//{
-				DoSceneChange(m_event.GetWparam(), "Scene_CoopRoom");
-				return;
+			DoSceneChange(m_event.GetWparam(), "Scene_CoopRoom");
+			return;
 			//}
 			//m_fade_in_time = 0f;
 			//do_fade_in = false;
@@ -323,8 +316,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_CloseInfoCard(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_CloseInfoCard(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -336,12 +328,17 @@ public class Scene_CoopMainMenu : MonoBehaviour
 				popup_player_info.ShowInfoCard(false);
 				popup_player_info.ShowTitleList(false);
 			}
+			IphoneInputPlugin plugin = IphoneInputPlugin.GetInstance();
+			if (plugin.IsOpen)
+			{
+				OnKeyBoardDone(plugin.sValue);
+			}
+			plugin.Cancel();
 			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseInfoCard);
 		}
 	}
 
-	public void TUIEvent_ClickTitleList(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickTitleList(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -355,8 +352,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_CloseTitleList(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_CloseTitleList(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != 3)
 		{
 			return;
@@ -385,8 +381,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickBtnEquip(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickBtnEquip(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -397,8 +392,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickBtnFriends(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickBtnFriends(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -414,8 +408,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClosePopupFriends(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClosePopupFriends(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -430,8 +423,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickBtnRanking(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickBtnRanking(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -448,8 +440,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickAllRanking(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickAllRanking(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -464,8 +455,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickFriendsRanking(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickFriendsRanking(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -480,8 +470,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClosePopupRanking(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClosePopupRanking(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -496,8 +485,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickBtnStart(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickBtnStart(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -511,20 +499,17 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickBtnStartEndless(TUIControl control, int event_type)
-	{
+	public void TUIEvent_ClickBtnStartEndless(TUIControl control, int event_type) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
 			{
 				CUISound.GetInstance().Play("UI_Button");
-				//gameState.GameLevel = 20010;
 			}
 		}
 	}
 
-	public void TUIEvent_Back(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_Back(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -535,16 +520,14 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_MoveScreen(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_MoveScreen(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 2 && popup_player_info != null)
 		{
 			popup_player_info.SetRoleRotation(wparam, lparam);
 		}
 	}
 
-	public void TUIEvent_AllRankingDrag(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_AllRankingDrag(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == TUIScrollList.CommandDown)
 		{
 			change_drag = false;
@@ -564,8 +547,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_FriendsRankingDrag(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_FriendsRankingDrag(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == TUIScrollList.CommandDown)
 		{
 			change_drag = false;
@@ -585,8 +567,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_FriendsListDrag(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_FriendsListDrag(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == TUIScrollList.CommandDown)
 		{
 			change_drag = false;
@@ -606,15 +587,13 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_TitleChange(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_TitleChange(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != TUIScrollListEx.CommandChange)
 		{
 		}
 	}
 
-	public void TUIEvent_Start(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_Start(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -627,8 +606,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickStatus(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickStatus(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != 3)
 		{
 			return;
@@ -654,8 +632,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		OpenKeyBoard(status_input_text);
 	}
 
-	public void TUIEvent_HideUnlockBlink(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_HideUnlockBlink(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type == 3)
 		{
 			if (sfx_open_now)
@@ -667,8 +644,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_ClickBtnInfoCard(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_ClickBtnInfoCard(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != 3)
 		{
 			return;
@@ -697,14 +673,12 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_InfoCard, playerInfo.id));
 		}
 	}
-	
-	public void TUIEvent_ClickBtnNameChange(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+
+	public void TUIEvent_ClickBtnNameChange(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		SceneManager.LoadScene("Scene_CoopInputName");
 	}
 
-	public void TUIEvent_FriendsCardInfo(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_FriendsCardInfo(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != 3)
 		{
 			return;
@@ -734,8 +708,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void TUIEvent_RankingInfoCard(TUIControl control, int event_type, float wparam, float lparam, object data)
-	{
+	public void TUIEvent_RankingInfoCard(TUIControl control, int event_type, float wparam, float lparam, object data) {
 		if (event_type != 3)
 		{
 			return;
@@ -765,8 +738,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	public void DoSceneChange(int m_scene_id, string m_scene_normal)
-	{
+	public void DoSceneChange(int m_scene_id, string m_scene_normal) {
 		string sceneName = TUIMappingInfo.Instance().GetSceneName(m_scene_id);
 		if (sceneName != string.Empty)
 		{
@@ -783,104 +755,100 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	private void CheckBackupInfo()
-	{
+	private void CheckBackupInfo() {
 		if (backup_info == null)
 		{
 			return;
 		}
 		List<TUIEvent.SceneCoopMainMenuEventType> list = new List<TUIEvent.SceneCoopMainMenuEventType>();
-		foreach (KeyValuePair<TUIEvent.SceneCoopMainMenuEventType, TUIGameInfo> item in backup_info)
-		{
+		foreach (KeyValuePair<TUIEvent.SceneCoopMainMenuEventType, TUIGameInfo> item in backup_info) {
 			TUIGameInfo value = item.Value;
 			if (value == null)
 			{
 				continue;
 			}
-			switch (item.Key)
-			{
-			case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AllRanking:
-			{
-				if (!popup_player_info.GetRankingAniStop())
+			switch (item.Key) {
+				case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AllRanking:
 				{
+					if (!popup_player_info.GetRankingAniStop())
+					{
+						break;
+					}
+					TUICoopRankingInfo coop_ranking_info2 = value.coop_ranking_info;
+					if (coop_ranking_info2 != null)
+					{
+						Dictionary<string, TUICoopPlayerInfo> ranking_list2 = coop_ranking_info2.ranking_list;
+						if (ranking_list2 != null)
+						{
+							popup_player_info.SetRankingList(RankingType.All_All, ranking_list2, base.gameObject);
+						}
+						TUICoopPlayerInfo my_ranking_list2 = coop_ranking_info2.my_ranking_list;
+						if (my_ranking_list2 != null)
+						{
+							popup_player_info.SetRankingList(RankingType.All_Mine, my_ranking_list2, base.gameObject);
+						}
+					}
+					list.Add(item.Key);
 					break;
 				}
-				TUICoopRankingInfo coop_ranking_info2 = value.coop_ranking_info;
-				if (coop_ranking_info2 != null)
+				case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AddAllRanking:
 				{
-					Dictionary<string, TUICoopPlayerInfo> ranking_list2 = coop_ranking_info2.ranking_list;
-					if (ranking_list2 != null)
+					if (!popup_player_info.GetRankingAniStop())
 					{
-						popup_player_info.SetRankingList(RankingType.All_All, ranking_list2, base.gameObject);
+						break;
 					}
-					TUICoopPlayerInfo my_ranking_list2 = coop_ranking_info2.my_ranking_list;
-					if (my_ranking_list2 != null)
+					TUICoopRankingInfo coop_ranking_info = value.coop_ranking_info;
+					if (coop_ranking_info != null)
 					{
-						popup_player_info.SetRankingList(RankingType.All_Mine, my_ranking_list2, base.gameObject);
+						Dictionary<string, TUICoopPlayerInfo> ranking_list = coop_ranking_info.ranking_list;
+						if (ranking_list != null)
+						{
+							popup_player_info.AddRankingList(RankingType.All_All, ranking_list, base.gameObject);
+						}
+						TUICoopPlayerInfo my_ranking_list = coop_ranking_info.my_ranking_list;
+						if (my_ranking_list != null)
+						{
+							popup_player_info.AddRankingList(RankingType.All_Mine, my_ranking_list, base.gameObject);
+						}
 					}
-				}
-				list.Add(item.Key);
-				break;
-			}
-			case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AddAllRanking:
-			{
-				if (!popup_player_info.GetRankingAniStop())
-				{
+					list.Add(item.Key);
 					break;
 				}
-				TUICoopRankingInfo coop_ranking_info = value.coop_ranking_info;
-				if (coop_ranking_info != null)
-				{
-					Dictionary<string, TUICoopPlayerInfo> ranking_list = coop_ranking_info.ranking_list;
-					if (ranking_list != null)
+				case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Friends:
+					if (popup_player_info.GetFriendsAniStop())
 					{
-						popup_player_info.AddRankingList(RankingType.All_All, ranking_list, base.gameObject);
+						TUICoopFriendsInfo coop_friends_info = value.coop_friends_info;
+						if (coop_friends_info != null)
+						{
+							popup_player_info.SetFriendsList(coop_friends_info.m_dictFriends, base.gameObject);
+						}
+						list.Add(item.Key);
 					}
-					TUICoopPlayerInfo my_ranking_list = coop_ranking_info.my_ranking_list;
-					if (my_ranking_list != null)
+					break;
+				case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AddFriends:
+					if (popup_player_info.GetFriendsAniStop())
 					{
-						popup_player_info.AddRankingList(RankingType.All_Mine, my_ranking_list, base.gameObject);
+						TUICoopFriendsInfo coop_friends_info2 = value.coop_friends_info;
+						if (coop_friends_info2 != null)
+						{
+							popup_player_info.AddFriendsList(coop_friends_info2.m_dictFriends, base.gameObject);
+						}
+						list.Add(item.Key);
 					}
-				}
-				list.Add(item.Key);
-				break;
-			}
-			case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Friends:
-				if (popup_player_info.GetFriendsAniStop())
-				{
-					TUICoopFriendsInfo coop_friends_info = value.coop_friends_info;
-					if (coop_friends_info != null)
+					break;
+				case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_InfoCard:
+					if (popup_player_info.GetFriendsAniStop())
 					{
-						popup_player_info.SetFriendsList(coop_friends_info.m_dictFriends, base.gameObject);
+						if (value != null)
+						{
+							popup_player_info.SetInfoCard(value.coop_player_info);
+						}
+						list.Add(item.Key);
 					}
-					list.Add(item.Key);
-				}
-				break;
-			case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_AddFriends:
-				if (popup_player_info.GetFriendsAniStop())
-				{
-					TUICoopFriendsInfo coop_friends_info2 = value.coop_friends_info;
-					if (coop_friends_info2 != null)
-					{
-						popup_player_info.AddFriendsList(coop_friends_info2.m_dictFriends, base.gameObject);
-					}
-					list.Add(item.Key);
-				}
-				break;
-			case TUIEvent.SceneCoopMainMenuEventType.TUIEvent_InfoCard:
-				if (popup_player_info.GetFriendsAniStop())
-				{
-					if (value != null)
-					{
-						popup_player_info.SetInfoCard(value.coop_player_info);
-					}
-					list.Add(item.Key);
-				}
-				break;
+					break;
 			}
 		}
-		for (int i = 0; i < list.Count; i++)
-		{
+		for (int i = 0; i < list.Count; i++) {
 			if (backup_info.ContainsKey(list[i]))
 			{
 				backup_info[list[i]] = null;
@@ -888,8 +856,7 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 	}
 
-	private void ChangeUnlockItem()
-	{
+	private void ChangeUnlockItem() {
 		if (unlock_list == null || unlock_list.Count == 0)
 		{
 			return;
@@ -947,23 +914,42 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		unlock_list.Remove(tUIUnlockInfo);
 	}
 
-	public void OpenKeyBoard(string text)
-	{
+	public void OpenKeyBoard(string text) {
 		IphoneInputPlugin.GetInstance().Open("Enter your status(max 40 letters or numbers)", text, 40, OnKeyBoardDone, TouchScreenKeyboardType.ASCIICapable, "^[\\w\\?\\,\\.\\!\\@\\#\\$\\%\\^&\\*\\(\\)]${0,40}", false, true, true);
 	}
 
-	protected void OnKeyBoardDone(string sValue)
-	{
+	protected void OnKeyBoardDone(string sValue) {
 		status_input_text = sValue;
 		if (label_status != null)
 		{
 			label_status.Text = sValue;
 		}
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc.Signature != sValue) {
+			dc.Signature = sValue;
+			dc.Save();
+		}
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_StatusChange, sValue));
 	}
 
-	private void UpdateKeyboard()
-	{
-		IphoneInputPlugin.GetInstance().Update(Time.deltaTime);
+	private void UpdateKeyboard() {
+		IphoneInputPlugin plugin = IphoneInputPlugin.GetInstance();
+		bool wasOpen = plugin.IsOpen;
+		plugin.Update(Time.deltaTime);
+		if (plugin.IsOpen && label_status != null)
+		{
+			string current = plugin.sValue;
+			if (label_status.Text != current)
+			{
+				label_status.Text = current;
+			}
+		}
+		else if (wasOpen && !plugin.IsOpen && label_status != null)
+		{
+			if (label_status.Text != status_input_text)
+			{
+				label_status.Text = status_input_text;
+			}
+		}
 	}
 }
