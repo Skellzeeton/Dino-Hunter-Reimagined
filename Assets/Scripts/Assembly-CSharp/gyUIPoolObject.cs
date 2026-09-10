@@ -3,22 +3,14 @@ using UnityEngine;
 public class gyUIPoolObject : MonoBehaviour
 {
 	protected Transform m_NodeFree;
-
 	protected Transform m_NodePlay;
+	protected bool      m_bFree;
+	protected float     m_fBackTime;
+	protected float     m_fBackTimeCount;
 
-	protected bool m_bFree;
+	protected Vector3   m_v3BaseScale;
 
-	protected float m_fBackTime;
-
-	protected float m_fBackTimeCount;
-
-	public bool isFree
-	{
-		get
-		{
-			return m_bFree;
-		}
-	}
+	public bool isFree { get { return m_bFree; } }
 
 	private void Update()
 	{
@@ -28,7 +20,7 @@ public class gyUIPoolObject : MonoBehaviour
 			if (!(m_fBackTimeCount < m_fBackTime))
 			{
 				m_fBackTimeCount = 0f;
-				m_fBackTime = 0f;
+				m_fBackTime      = 0f;
 				TakeBack(0f);
 			}
 		}
@@ -38,6 +30,7 @@ public class gyUIPoolObject : MonoBehaviour
 	{
 		m_NodeFree = nodefree;
 		m_NodePlay = nodeplay;
+		m_v3BaseScale = base.transform.localScale;
 		TakeBack(0f);
 	}
 
@@ -53,12 +46,12 @@ public class gyUIPoolObject : MonoBehaviour
 
 	public void TakeBack(float fTime = 0f)
 	{
+		if (m_bFree) return;
 		if (fTime <= 0f)
 		{
 			m_bFree = true;
-			Vector3 localScale = base.transform.localScale;
-			base.transform.parent = m_NodeFree;
-			base.transform.localScale = localScale;
+			base.transform.parent        = m_NodeFree;
+			base.transform.localScale    = m_v3BaseScale;
 			base.transform.localPosition = Vector3.zero;
 			base.transform.localRotation = Quaternion.identity;
 			base.gameObject.SetActiveRecursive(false);

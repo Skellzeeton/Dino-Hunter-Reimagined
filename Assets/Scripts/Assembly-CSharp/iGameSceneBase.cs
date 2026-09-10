@@ -212,6 +212,10 @@ public class iGameSceneBase
 	
 	protected Dictionary<kAudioEnum, string> m_AudioData;
 
+	protected static readonly Stack<GameObject> s_stkTempSoundPool = new Stack<GameObject>();
+
+	protected static readonly List<TempSoundEntry> s_ltActiveTempSounds = new List<TempSoundEntry>();
+
 	protected iDataCenter m_DataCenter
 	{
 		get
@@ -576,7 +580,7 @@ public class iGameSceneBase
 		{
 			if (item != null)
 			{
-				Object.Destroy(item);
+				PrefabManager.Release(item);
 			}
 		}
 		m_ltItem.Clear();
@@ -584,7 +588,7 @@ public class iGameSceneBase
 		{
 			if (item2 != null)
 			{
-				Object.Destroy(item2);
+				PrefabManager.Release(item2);
 			}
 		}
 		m_ltSceneGameObject.Clear();
@@ -1516,6 +1520,7 @@ public class iGameSceneBase
 	public virtual void Update(float deltaTime)
 	{
 		EnforceTimeScale();
+		UpdateTempSoundPool();
 		if (m_Input != null)
 		{
 			m_Input.Update(deltaTime);
@@ -2545,12 +2550,7 @@ public class iGameSceneBase
 
 	public iSpawnBullet AddSpawn(int nUID, int nID, CWeaponInfoLevel weaponinfolvl, Vector3 v3Pos, Vector3 v3Force)
 	{
-		GameObject gameObject = PrefabManager.Get(nID);
-		if (gameObject == null)
-		{
-			return null;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
+		GameObject gameObject2 = PrefabManager.Spawn(nID);
 		if (gameObject2 == null)
 		{
 			return null;
@@ -2558,6 +2558,7 @@ public class iGameSceneBase
 		iSpawnBullet component = gameObject2.GetComponent<iSpawnBullet>();
 		if (component == null)
 		{
+			PrefabManager.Release(gameObject2);
 			return null;
 		}
 		component.InitializeFromWeapon(nUID, weaponinfolvl, v3Pos, v3Force);
@@ -2566,12 +2567,7 @@ public class iGameSceneBase
 
 	public iSpawnBullet AddSpawn(int nUID, int nID, CSkillInfoLevel skillinfolvl, Vector3 v3Pos, Vector3 v3Force)
 	{
-		GameObject gameObject = PrefabManager.Get(nID);
-		if (gameObject == null)
-		{
-			return null;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
+		GameObject gameObject2 = PrefabManager.Spawn(nID);
 		if (gameObject2 == null)
 		{
 			return null;
@@ -2579,6 +2575,7 @@ public class iGameSceneBase
 		iSpawnBullet component = gameObject2.GetComponent<iSpawnBullet>();
 		if (component == null)
 		{
+			PrefabManager.Release(gameObject2);
 			return null;
 		}
 		component.InitializeFromSkill(nUID, skillinfolvl, v3Pos, v3Force);
@@ -2587,39 +2584,24 @@ public class iGameSceneBase
 
 	public GameObject AddEffect(Vector3 v3Pos, Vector3 v3Dir, float fTime, int nPrefab)
 	{
-		GameObject gameObject = PrefabManager.Get(nPrefab);
-		if (gameObject == null)
-		{
-			return null;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject, v3Pos, Quaternion.identity);
-		if (gameObject2 == null)
-		{
-			return null;
-		}
+		GameObject gameObject2 = PrefabManager.Spawn(nPrefab, fTime);
+		if (gameObject2 == null) return null;
 		gameObject2.transform.position = v3Pos;
-		gameObject2.transform.forward = v3Dir;
-		Object.Destroy(gameObject2, fTime);
+		gameObject2.transform.forward  = v3Dir;
+		gameObject2.SetActiveRecursive(true);
 		return gameObject2;
 	}
 
 	public GameObject AddSceneGameObject(int nPrefab, Vector3 v3Pos, Vector3 v3Dir, float fDisappearTime = -1f)
 	{
-		Object @object = PrefabManager.Get(nPrefab);
-		if (@object == null)
-		{
-			return null;
-		}
-		GameObject gameObject = (GameObject)Object.Instantiate(@object, v3Pos, Quaternion.LookRotation(v3Dir));
-		if (gameObject == null)
-		{
-			return null;
-		}
-		if (fDisappearTime > 0f)
-		{
-			Object.Destroy(gameObject, fDisappearTime);
-		}
-		m_ltSceneGameObject.Add(gameObject);
+		float life = fDisappearTime > 0f ? fDisappearTime : 0f;
+		GameObject gameObject = PrefabManager.Spawn(nPrefab, life);
+		if (gameObject == null) return null;
+		gameObject.transform.position = v3Pos;
+		gameObject.transform.rotation = Quaternion.LookRotation(v3Dir);
+		gameObject.SetActiveRecursive(true);
+		if (fDisappearTime <= 0f)
+			m_ltSceneGameObject.Add(gameObject);
 		return gameObject;
 	}
 
@@ -2630,18 +2612,14 @@ public class iGameSceneBase
 		{
 			return;
 		}
-		GameObject gameObject = PrefabManager.Get(itemInfo.nModel);
-		if (gameObject == null)
-		{
-			return;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
+		float life = fDisappearTime > 0f ? fDisappearTime : 0f;
+		GameObject gameObject2 = PrefabManager.Spawn(itemInfo.nModel, life);
 		if (gameObject2 == null)
 		{
 			return;
 		}
 		gameObject2.transform.position = v3Pos;
-		gameObject2.transform.forward = v3Dir;
+		gameObject2.transform.forward  = v3Dir;
 		iItem component = gameObject2.GetComponent<iItem>();
 		if (component != null)
 		{
@@ -2654,43 +2632,28 @@ public class iGameSceneBase
 				component.m_ScreenTip.SetIcon("dan");
 			}
 		}
-		if (fDisappearTime > 0f)
-		{
-			Object.Destroy(gameObject2, fDisappearTime);
-		}
 		m_ltItem.Add(gameObject2);
 	}
 
-
 	public void AddObject(int nPrefabID, Vector3 v3Pos, Vector3 v3Dir)
 	{
-		GameObject gameObject = PrefabManager.Get(nPrefabID);
-		if (!(gameObject == null))
-		{
-			GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
-			if (!(gameObject2 == null))
-			{
-				gameObject2.transform.position = v3Pos;
-				gameObject2.transform.forward = v3Dir;
-				m_ltItem.Add(gameObject2);
-			}
-		}
+		GameObject gameObject2 = PrefabManager.Spawn(nPrefabID);
+		if (gameObject2 == null) return;
+		gameObject2.transform.position = v3Pos;
+		gameObject2.transform.forward  = v3Dir;
+		gameObject2.SetActiveRecursive(true);
+		m_ltItem.Add(gameObject2);
 	}
 
 	public void AddGold(int nGold, Vector3 v3Pos, Vector3 v3Dir, float fScaleRate)
 	{
-		GameObject gameObject = PrefabManager.Get(251);
-		if (gameObject == null)
-		{
-			return;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
+		GameObject gameObject2 = PrefabManager.Spawn(251);
 		if (gameObject2 == null)
 		{
 			return;
 		}
 		gameObject2.transform.position = v3Pos;
-		gameObject2.transform.forward = v3Dir;
+		gameObject2.transform.forward  = v3Dir;
 		gameObject2.transform.localScale *= fScaleRate;
 		iItem component = gameObject2.GetComponent<iItem>();
 		if (component != null)
@@ -2716,18 +2679,13 @@ public class iGameSceneBase
 
 	public void AddCrystal(int nCrystal, Vector3 v3Pos, Vector3 v3Dir, float fScaleRate)
 	{
-		GameObject gameObject = PrefabManager.Get(253);
-		if (gameObject == null)
-		{
-			return;
-		}
-		GameObject gameObject2 = (GameObject)Object.Instantiate(gameObject);
+		GameObject gameObject2 = PrefabManager.Spawn(253);
 		if (gameObject2 == null)
 		{
 			return;
 		}
 		gameObject2.transform.position = v3Pos;
-		gameObject2.transform.forward = v3Dir;
+		gameObject2.transform.forward  = v3Dir;
 		gameObject2.transform.localScale *= fScaleRate;
 		iItem component = gameObject2.GetComponent<iItem>();
 		if (component != null)
@@ -3369,21 +3327,60 @@ public class iGameSceneBase
 		return true;
 	}
 
-	public void PlayAudio(Vector3 v3Pos, string sAudio)
+	protected class TempSoundEntry
 	{
-		GameObject gameObject = new GameObject("tempsound");
-		if (gameObject != null)
+		public GameObject go;
+		public float fReturnTime;
+	}
+
+	protected void UpdateTempSoundPool()
+	{
+		if (s_ltActiveTempSounds.Count == 0) return;
+		float now = Time.time;
+		for (int i = s_ltActiveTempSounds.Count - 1; i >= 0; i--)
 		{
-			gameObject.transform.position = v3Pos;
-			TAudioController tAudioController = gameObject.AddComponent<TAudioController>();
-			if (tAudioController != null)
+			if (now >= s_ltActiveTempSounds[i].fReturnTime)
 			{
-				tAudioController.PlayAudio(sAudio);
-				Object.Destroy(gameObject, 2f);
+				GameObject go = s_ltActiveTempSounds[i].go;
+				s_ltActiveTempSounds.RemoveAt(i);
+				if (go != null)
+				{
+					go.SetActiveRecursive(false);
+					s_stkTempSoundPool.Push(go);
+				}
 			}
 		}
 	}
 
+	public void PlayAudio(Vector3 v3Pos, string sAudio)
+	{
+		if (string.IsNullOrEmpty(sAudio)) return;
+		GameObject gameObject = null;
+		while (s_stkTempSoundPool.Count > 0)
+		{
+			gameObject = s_stkTempSoundPool.Pop();
+			if (gameObject != null) break;
+			gameObject = null;
+		}
+		if (gameObject == null)
+		{
+			gameObject = new GameObject("tempsound");
+			gameObject.AddComponent<TAudioController>();
+		}
+		gameObject.transform.position = v3Pos;
+		TAudioController tAudioController = gameObject.GetComponent<TAudioController>();
+		if (tAudioController == null)
+			tAudioController = gameObject.AddComponent<TAudioController>();
+		if (tAudioController != null)
+		{
+			gameObject.SetActiveRecursive(true);
+			tAudioController.PlayAudio(sAudio);
+			TempSoundEntry entry = new TempSoundEntry();
+			entry.go = gameObject;
+			entry.fReturnTime = Time.time + 2f;
+			s_ltActiveTempSounds.Add(entry);
+		}
+	}
 	
 	public void SetGamePause(bool bPause)
 	{
@@ -3474,7 +3471,6 @@ public class iGameSceneBase
 				}
 			}
 		}
-
 		AddEffect(v3Pos, Vector3.forward, 2f, nEffectHit);
 		List<CCharBase> unitList = GetUnitList();
 		if (unitList == null)

@@ -135,7 +135,7 @@ public class iItem : MonoBehaviour
 		Clear();
 		StopItemAudio(sAppearAudio);
 		StopItemAudio(sLandAudio);
-		Object.Destroy(base.gameObject);
+		PrefabManager.Release(base.gameObject);
 	}
 
 	public virtual void Clear()

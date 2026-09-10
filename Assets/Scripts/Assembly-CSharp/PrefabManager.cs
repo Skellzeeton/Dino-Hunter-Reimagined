@@ -60,6 +60,42 @@ public class PrefabManager
 		return m_dictData[nPrefabPath];
 	}
 
+	public static bool IsNoPool(int nPrefabPath)
+	{
+		return NoPoolPrefabs != null && NoPoolPrefabs.Contains(nPrefabPath);
+	}
+
+	public static GameObject Spawn(int nPrefabPath, float fTime = 0f)
+	{
+		GameObject go;
+		if (IsNoPool(nPrefabPath))
+		{
+			GameObject prefab = Get(nPrefabPath);
+			if (prefab == null) return null;
+			go = (GameObject)Object.Instantiate(prefab);
+			if (go != null && fTime > 0f) Object.Destroy(go, fTime);
+			return go;
+		}
+		go = GetPoolObject(nPrefabPath, fTime);
+		if (go != null) go.SetActiveRecursive(true);
+		return go;
+	}
+
+	public static void Release(GameObject go)
+	{
+		if (go == null) return;
+
+		gyUIPoolObject poolObj = go.GetComponent<gyUIPoolObject>();
+		if (poolObj != null)
+		{
+			poolObj.TakeBack(0f);
+		}
+		else
+		{
+			Object.Destroy(go);
+		}
+	}
+
 	public static void Initialize()
 	{
 		m_dictData = new Dictionary<int, string>();
@@ -324,6 +360,11 @@ public class PrefabManager
 		m_dictData.Add(4000, "Artist/Custom/RoadSignPath");
 	}
 
+	public static readonly HashSet<int> NoPoolPrefabs = new HashSet<int>()
+	{
+		250,
+	};
+
 	private static GameObject Load(int nPrefabPath)
 	{
 		if (!m_dictData.ContainsKey(nPrefabPath))
@@ -393,15 +434,7 @@ public class PrefabManager
 
 	public static void PreLoad()
 	{
-		AddPool(302, 5);
-		AddPool(251, 5);
-		AddPool(252, 5);
-		AddPool(1301, 10);
-		AddPool(1302, 5);
-		AddPool(1303, 10);
-		AddPool(1304, 3);
 		AddPool(1351,2);
-		AddPool(253, 5);
 	}
 
 	public static void DestroyPreLoad()

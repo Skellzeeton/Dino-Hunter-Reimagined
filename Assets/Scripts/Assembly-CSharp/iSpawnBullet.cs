@@ -54,6 +54,8 @@ public class iSpawnBullet : MonoBehaviour
 
 	protected bool m_bHitDestroy;
 
+	protected Collider m_IgnoredOwnerCollider;
+
 	public int Owner
 	{
 		get
@@ -68,14 +70,15 @@ public class iSpawnBullet : MonoBehaviour
 		m_GameScene = iGameApp.GetInstance().m_GameScene;
 		m_GameLogic = m_GameScene.GetGameLogic();
 		m_bEmission = false;
-		m_arrParicleSystem = GetComponentsInChildren<ParticleSystem>();
+		m_arrParicleSystem = GetComponentsInChildren<ParticleSystem>(true);
 		if (m_arrParicleSystem != null)
 		{
-			ParticleSystem[] arrParicleSystem = m_arrParicleSystem;
-			foreach (ParticleSystem particleSystem in arrParicleSystem)
+			foreach (ParticleSystem particleSystem in m_arrParicleSystem)
 			{
-				var emission = particleSystem.emission; 
+				var emission = particleSystem.emission;
 				emission.enabled = false;
+				particleSystem.Clear(true);
+				particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 			}
 		}
 		m_bActive = false;
@@ -93,11 +96,13 @@ public class iSpawnBullet : MonoBehaviour
 			m_bEmission = true;
 			if (m_arrParicleSystem != null)
 			{
-				ParticleSystem[] arrParicleSystem = m_arrParicleSystem;
-				foreach (ParticleSystem particleSystem in arrParicleSystem)
+				foreach (ParticleSystem particleSystem in m_arrParicleSystem)
 				{
-					var emission = particleSystem.emission; 
+					if (particleSystem == null) continue;
+					var emission = particleSystem.emission;
 					emission.enabled = true;
+					particleSystem.Clear(true);
+					particleSystem.Play(true);
 				}
 			}
 		}
@@ -111,10 +116,41 @@ public class iSpawnBullet : MonoBehaviour
 			m_fDisappearTimeCount += Time.deltaTime;
 			if (m_fDisappearTimeCount >= m_fDisappearTime)
 			{
-				m_bActive = false;
-				Object.Destroy(base.gameObject);
+				ReleaseToPool();
 			}
 		}
+	}
+
+	protected void ResetRuntimeState()
+	{
+		m_bActive            = false;
+		m_bEmission          = false;
+		m_fDisappearTimeCount = 0f;
+		if (m_arrParicleSystem != null)
+		{
+			for (int i = 0; i < m_arrParicleSystem.Length; i++)
+			{
+				ParticleSystem ps = m_arrParicleSystem[i];
+				if (ps == null) continue;
+				var emission = ps.emission;
+				emission.enabled = false;
+				ps.Clear(true);
+				ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+			}
+		}
+		if (m_IgnoredOwnerCollider != null)
+		{
+			Collider myCol = GetComponent<Collider>();
+			if (myCol != null)
+				Physics.IgnoreCollision(myCol, m_IgnoredOwnerCollider, false);
+			m_IgnoredOwnerCollider = null;
+		}
+	}
+
+	protected void ReleaseToPool()
+	{
+		ResetRuntimeState();
+		PrefabManager.Release(base.gameObject);
 	}
 
 	protected CCharBase GetOwner(int nUID)
@@ -212,7 +248,7 @@ public class iSpawnBullet : MonoBehaviour
 		if (m_GameLogic != null && funcs != null)
 		{
 			m_GameLogic.CaculateFunc(actor, target, funcs, valsX, valsY, ref hitinfo);
-			m_GameLogic.m_fTotalDmg += damage; // damage is 0 for skills
+			m_GameLogic.m_fTotalDmg += damage;
 		}
 		if (CGameNetManager.GetInstance().IsConnected() && m_GameScene.IsMyself(actor))
 			CGameNetSender.GetInstance().SendMsg_BATTLE_DAMAGE_MOB(target.UID, m_GameLogic.m_fTotalDmg);
@@ -235,96 +271,100 @@ public class iSpawnBullet : MonoBehaviour
 
 	protected virtual void OnHitScene(CCharBase actor, Vector3 v3HitPos)
 	{
-		if (m_bHitDestroy)
+		bool shouldRelease = m_bHitDestroy;
+		if (shouldRelease)
 		{
 			m_GameScene.PlayAudio(v3HitPos, sAudioHit);
 			m_GameScene.AddEffect(v3HitPos, Vector3.forward, 2f, nEffHit);
-			Object.Destroy(base.gameObject);
 		}
-		if (actor == null || fAtkRange <= 0f || (!m_GameScene.IsMyself(actor) && !actor.IsMonster()))
+		if (actor != null && fAtkRange > 0f && (m_GameScene.IsMyself(actor) || actor.IsMonster()))
 		{
-			return;
-		}
-		List<CCharBase> unitList = m_GameScene.GetUnitList();
-		if (unitList == null)
-		{
-			return;
-		}
-		foreach (CCharBase item in unitList)
-		{
-			if (!(item == null) && !item.isDead && !(Vector3.Distance(v3HitPos, item.Pos) > fAtkRange))
+			List<CCharBase> unitList = m_GameScene.GetUnitList();
+			if (unitList != null)
 			{
-				OnHit(actor, item, v3HitPos, (item.Pos - v3HitPos).normalized);
+				foreach (CCharBase item in unitList)
+				{
+					if (!(item == null) && !item.isDead &&
+					!(Vector3.Distance(v3HitPos, item.Pos) > fAtkRange))
+					{
+						OnHit(actor, item, v3HitPos, (item.Pos - v3HitPos).normalized);
+					}
+				}
 			}
 		}
+		if (shouldRelease)
+			ReleaseToPool();
 	}
 
 	protected virtual void OnHitGround(CCharBase actor, Vector3 v3HitPos)
 	{
-		if (m_bHitDestroy)
+		bool shouldRelease = m_bHitDestroy;
+		if (shouldRelease)
 		{
 			m_GameScene.PlayAudio(v3HitPos, sAudioHit);
 			m_GameScene.AddEffect(v3HitPos, Vector3.forward, 2f, nEffHitGround);
 			m_GameScene.AddEffect(v3HitPos + new Vector3(0f, 0.01f, 0f), Vector3.forward, 2f, nHitMask);
-			Object.Destroy(base.gameObject);
 		}
-		if (actor == null || fAtkRange <= 0f || (!m_GameScene.IsMyself(actor) && !actor.IsMonster()))
+		if (actor != null && fAtkRange > 0f && (m_GameScene.IsMyself(actor) || actor.IsMonster()))
 		{
-			return;
-		}
-		List<CCharBase> unitList = m_GameScene.GetUnitList();
-		if (unitList == null)
-		{
-			return;
-		}
-		foreach (CCharBase item in unitList)
-		{
-			if (!(item == null) && !item.isDead && !actor.IsAlly(item) && !(Vector3.Distance(v3HitPos, item.Pos) > fAtkRange))
+			List<CCharBase> unitList = m_GameScene.GetUnitList();
+			if (unitList != null)
 			{
-				OnHit(actor, item, v3HitPos, (item.Pos - v3HitPos).normalized);
+				foreach (CCharBase item in unitList)
+				{
+					if (!(item == null) && !item.isDead && !actor.IsAlly(item) &&
+					!(Vector3.Distance(v3HitPos, item.Pos) > fAtkRange))
+					{
+						OnHit(actor, item, v3HitPos, (item.Pos - v3HitPos).normalized);
+					}
+				}
 			}
 		}
+		if (shouldRelease)
+			ReleaseToPool();
 	}
 
 	protected virtual void OnHitTarget(CCharBase actor, CCharBase target)
 	{
-        if (actor == target)
-            return;
-        if (m_bHitDestroy)
-		{
-			m_GameScene.PlayAudio(m_Transform.position, sAudioHit);
-			m_GameScene.AddEffect(m_Transform.position, Vector3.forward, 2f, nEffHit);
-			Object.Destroy(base.gameObject);
-		}
-		if (!m_GameScene.IsMyself(actor) && !actor.IsMonster())
-		{
+		if (actor == target)
 			return;
-		}
-		OnHit(actor, target, m_Transform.position, (target.Pos - m_Transform.position).normalized);
-		if (fAtkRange <= 0f)
+		Vector3 v3HitPos = m_Transform.position;
+		bool shouldRelease = m_bHitDestroy;
+		if (shouldRelease)
 		{
-			return;
+			m_GameScene.PlayAudio(v3HitPos, sAudioHit);
+			m_GameScene.AddEffect(v3HitPos, Vector3.forward, 2f, nEffHit);
 		}
-		List<CCharBase> unitList = m_GameScene.GetUnitList();
-		if (unitList == null)
+		if (m_GameScene.IsMyself(actor) || actor.IsMonster())
 		{
-			return;
-		}
-		foreach (CCharBase item in unitList)
-		{
-			if (!(item == null) && !item.isDead && !(target == item) && !actor.IsAlly(item) && !(Vector3.Distance(m_Transform.position, item.Pos) > fAtkRange))
+			OnHit(actor, target, v3HitPos, (target.Pos - v3HitPos).normalized);
+			if (fAtkRange > 0f)
 			{
-				OnHit(actor, item, m_Transform.position, (item.Pos - m_Transform.position).normalized);
+				List<CCharBase> unitList = m_GameScene.GetUnitList();
+				if (unitList != null)
+				{
+					foreach (CCharBase item in unitList)
+					{
+						if (!(item == null) && !item.isDead && !(target == item) &&
+						!actor.IsAlly(item) &&
+						!(Vector3.Distance(v3HitPos, item.Pos) > fAtkRange))
+						{
+							OnHit(actor, item, v3HitPos, (item.Pos - v3HitPos).normalized);
+						}
+					}
+				}
 			}
 		}
+		if (shouldRelease)
+			ReleaseToPool();
 	}
 
 	protected virtual void OnTrigger(Collider collider)
 	{
-		if (m_GameScene == null || m_GameScene.isPause)
-		{
+		if (!m_bActive)
 			return;
-		}
+		if (m_GameScene == null || m_GameScene.isPause)
+			return;
 		iSpawnBullet component = collider.transform.root.GetComponent<iSpawnBullet>();
 		if (component != null && component.Owner == m_nOwnerUID)
 		{
@@ -384,46 +424,47 @@ public class iSpawnBullet : MonoBehaviour
 		OnTrigger(collider);
 	}
 
-    public void InitializeFromSkill(int nUID, CSkillInfoLevel skilllvlinfo, Vector3 v3Pos, Vector3 v3Force)
-    {
-        m_nOwnerUID = nUID;
-        m_SpawnFrom = kSpawnFrom.FromSkill;
-        m_pSkillLvlInfo = skilllvlinfo;
-        m_v3VelocityBase = v3Force;
-        m_Transform.position = v3Pos;
-        m_Transform.forward = v3Force;
-        m_bActive = true;
-        m_HitTargets.Clear();
-        OnInit();
+	public void InitializeFromSkill(int nUID, CSkillInfoLevel skilllvlinfo, Vector3 v3Pos, Vector3 v3Force)
+	{
+		m_GameScene = iGameApp.GetInstance().m_GameScene;
+		m_GameLogic = m_GameScene != null ? m_GameScene.GetGameLogic() : null;
+		ResetRuntimeState();
+		m_HitTargets.Clear();
+		m_nOwnerUID      = nUID;
+		m_SpawnFrom      = kSpawnFrom.FromSkill;
+		m_pSkillLvlInfo  = skilllvlinfo;
+		m_v3VelocityBase = v3Force;
+		m_Transform.position = v3Pos;
+		m_Transform.forward  = v3Force;
+		m_bActive = true;
+		OnInit();
+		Collider ownerCollider = null;
+		Collider bulletCollider = GetComponent<Collider>();
+		CCharBase owner = GetOwner(nUID);
+		if (owner != null)
+			ownerCollider = owner.GetComponent<Collider>();
+		if (ownerCollider != null && bulletCollider != null)
+		{
+			Physics.IgnoreCollision(bulletCollider, ownerCollider, true);
+			m_IgnoredOwnerCollider = ownerCollider;
+		}
+	}
 
-        Collider ownerCollider = null;
-        Collider bulletCollider = null;
-
-        CCharBase owner = GetOwner(nUID);
-        if (owner != null)
-        {
-            ownerCollider = owner.GetComponent<Collider>();
-        }
-        bulletCollider = GetComponent<Collider>();
-
-        if (ownerCollider != null && bulletCollider != null)
-        {
-            Physics.IgnoreCollision(bulletCollider, ownerCollider, true);
-        }
-    }
-
-    public void InitializeFromWeapon(int nUID, CWeaponInfoLevel weaponlvlinfo, Vector3 v3Pos, Vector3 v3Force)
-    {
-        m_nOwnerUID = nUID;
-        m_SpawnFrom = kSpawnFrom.FromWeapon;
-        m_pWeaponLvlInfo = weaponlvlinfo;
-        m_v3VelocityBase = v3Force;
-        m_Transform.position = v3Pos;
-        m_Transform.forward = v3Force;
-        m_bActive = true;
-        m_HitTargets.Clear();
-        OnInit();
-    }
+	public void InitializeFromWeapon(int nUID, CWeaponInfoLevel weaponlvlinfo, Vector3 v3Pos, Vector3 v3Force)
+	{
+		m_GameScene = iGameApp.GetInstance().m_GameScene;
+		m_GameLogic = m_GameScene != null ? m_GameScene.GetGameLogic() : null;
+		ResetRuntimeState();
+		m_HitTargets.Clear();
+		m_nOwnerUID      = nUID;
+		m_SpawnFrom      = kSpawnFrom.FromWeapon;
+		m_pWeaponLvlInfo = weaponlvlinfo;
+		m_v3VelocityBase = v3Force;
+		m_Transform.position = v3Pos;
+		m_Transform.forward  = v3Force;
+		m_bActive = true;
+		OnInit();
+	}
 
     public virtual void SetForce(Vector3 v3Force)
 	{
