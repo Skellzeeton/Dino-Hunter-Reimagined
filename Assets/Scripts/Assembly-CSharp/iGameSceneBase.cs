@@ -138,6 +138,8 @@ public class iGameSceneBase
 
 	protected Dictionary<int, CCharMob> m_MobMap;
 
+	protected Dictionary<int, gyUIScreenTip> m_dictWorldMonsterScreenTips;
+
 	protected Dictionary<int, int> m_dictWaveMobNumber;
 
 	protected Dictionary<int, int> m_dictStealItem;
@@ -360,6 +362,10 @@ public class iGameSceneBase
 		if (m_MobMap == null)
 		{
 			m_MobMap = new Dictionary<int, CCharMob>();
+		}
+		if (m_dictWorldMonsterScreenTips == null)
+		{
+			m_dictWorldMonsterScreenTips = new Dictionary<int, gyUIScreenTip>();
 		}
 		if (m_PathWalkerManager == null)
 		{
@@ -624,6 +630,15 @@ public class iGameSceneBase
 				value.Destroy();
 			}
 			m_MobMap.Clear();
+		}
+		if (m_dictWorldMonsterScreenTips != null)
+		{
+			foreach (gyUIScreenTip tip in m_dictWorldMonsterScreenTips.Values)
+			{
+				if (tip != null && tip.gameObject != null)
+					Object.Destroy(tip.gameObject);
+			}
+			m_dictWorldMonsterScreenTips.Clear();
 		}
 		m_dictWaveMobNumber.Clear();
 		m_ltMonsterNumInfo.Clear();
@@ -1918,10 +1933,20 @@ public class iGameSceneBase
 							cCharMob.m_bShowTime = false;
 							int prefabId = (item3.nMobID == 20) ? 1954 : 1950;
 							AddEffect(cCharMob.GetBone(0).position, Vector3.forward, 2f, prefabId);
+							CMobInfoLevel mobInfo = cCharMob.GetMobInfo();
+							if (mobInfo != null && !string.IsNullOrEmpty(mobInfo.sIcon) && m_GameUI != null && m_User != null)
+							{
+								gyUIScreenTip screenTip = m_GameUI.CreateScreenTip(m_User.gameObject, cCharMob.gameObject);
+								if (screenTip != null)
+								{
+									screenTip.SetIcon(mobInfo.sIcon);
+									m_dictWorldMonsterScreenTips[cCharMob.UID] = screenTip;
+								}
+							}
 							if (CGameNetManager.GetInstance().IsConnected())
 							{
 								CGameNetSender.GetInstance()
-									.SendMsg_MGMANAGER_ADDMOB_SPECIAL(item3.nMobID, m_User.Level, uID, vector, v3Dir);
+								.SendMsg_MGMANAGER_ADDMOB_SPECIAL(item3.nMobID, m_User.Level, uID, vector, v3Dir);
 							}
 						}
 						break;
@@ -2384,6 +2409,17 @@ public class iGameSceneBase
 	public void RemoveMob(CCharMob charmob)
 	{
 		if (charmob == null) return;
+		if (m_dictWorldMonsterScreenTips != null &&
+		m_dictWorldMonsterScreenTips.TryGetValue(charmob.UID, out gyUIScreenTip tip))
+		{
+			if (tip != null)
+			{
+				tip.isActive = false;
+				if (tip.gameObject != null)
+					Object.Destroy(tip.gameObject);
+			}
+			m_dictWorldMonsterScreenTips.Remove(charmob.UID);
+		}
 		m_MobMap.Remove(charmob.UID);
 		charmob.ResetMob();
 		gyUIPoolObject poolObj = charmob.GetComponent<gyUIPoolObject>();

@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac49fa007734d3f4f9e24ab3093eb7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::iDinoHunterAudioController
-  m_bBoss: 1
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  m_bBoss: 0
+  soundOverrides:
+  - originalName: UI_Velo_Attention
+    overrideName: UI_Velo_Attention_Blue
