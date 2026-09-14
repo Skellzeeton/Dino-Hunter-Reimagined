@@ -12,7 +12,7 @@ Properties {
  _WindEdgeFlutterFreqScale ("Wind edge fultter freq scale", Float) = 0.5
  _offset ("         ", Float) = 0
 }
-SubShader { 
+SubShader {
  LOD 100
  Tags { "LIGHTMODE"="ForwardBase" "QUEUE"="Transparent" "RenderType"="Transparent" }
  Pass {

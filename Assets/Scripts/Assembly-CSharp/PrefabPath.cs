@@ -87,7 +87,11 @@ public class PrefabPath
 	public const int model_stegosaurus_boss = 10021;
 
 	public const int model_pterodactyl_boss = 10022;
-	
+
+	public const int model_stegosaur = 10025;
+
+	public const int model_stegosaurite = 10026;
+
 	public const int weapon_001 = 101;
 
 	public const int weapon_002 = 102;

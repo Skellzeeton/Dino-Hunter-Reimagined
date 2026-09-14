@@ -430,6 +430,8 @@
 		<skill id="110020" lvl="1" type="0" action="1" 			rangetype="0" rangetypevalue="0,15" skillmode="3" skillmodevalue="0.5" />	
 		<!-- �˵�����-->
 		<skill id="110021" lvl="1" type="0" action="10001" 	rangetype="1" rangetypevalue="0,15,0,0" skillmode="1" skillmodevalue="0.5" func="4,11" valuex="5,4" valuey="0"/>
+		<!-- Stegosaur attack -->
+		<skill id="110022" lvl="1" type="0" action="10001" 	rangetype="1" rangetypevalue="0,12,0,0" skillmode="1" skillmodevalue="0.5" func="5,4" valuex="100,6" valuey="0,0"/>
 		
 	
 		<!-- ��ײԤ�� -->
@@ -753,6 +755,8 @@
 		<combo id="110018" skilllist="40000,40003" coldown="4" freezetime="2" usecount='0'/>
 		<!-- ��ƨ -->
 		<combo id="110019" skilllist="40009,40010" coldown="8" freezetime="2.5" usecount='0'/>
+		<!--Stegosaur-->
+		<combo id="130001" skilllist="110020,110022" coldown="4" freezetime="2" usecount='0'/>
 
 
 		<!-- ***********************************˫�������������� start by 110000************************************************************************* -->
