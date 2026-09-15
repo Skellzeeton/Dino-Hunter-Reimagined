@@ -8,12 +8,8 @@ public class CCharBoss : CCharMob
 
 	public class CBodyPart
 	{
-		public float m_fHardinessCur;
-
-		public float m_fHardinessMax;
-
+		public int nPartID;
 		public List<kAnimEnum> m_ltAnim;
-
 		public float m_fDmgRate;
 
 		public kAnimEnum GetAnimRadnom()
@@ -27,6 +23,12 @@ public class CCharBoss : CCharMob
 	}
 
 	protected Dictionary<int, CBodyPart> m_dictBodyPart;
+
+	protected float m_bossHardinessCur;
+
+	protected float m_bossHardinessMax;
+
+	protected kAnimEnum m_lastHurtAnim = kAnimEnum.None;
 
 	protected CAIManagerInfo m_curAIManager;
 
@@ -150,22 +152,94 @@ public class CCharBoss : CCharMob
 		base.Destroy();
 	}
 
+	protected virtual float GetHardinessContributionMultiplier(int nPartID)
+	{
+		switch (nPartID)
+		{
+			case 1:
+				return 1.1f;
+			case 3:
+				return 0.95f;
+			case 2:
+			default:
+				return 1.0f;
+		}
+	}
+
+	protected virtual kAnimEnum GetHurtAnimForPart(int nPartID)
+	{
+		switch (nPartID)
+		{
+			case 1:
+				return ResolveHurtAnim(kAnimEnum.Mob_Hurt_Head);
+			case 3:
+				return ResolveHurtAnim(kAnimEnum.Mob_Hurt_Leg);
+			case 2:
+			default:
+				return kAnimEnum.Mob_Hurt;
+		}
+	}
+
+	protected kAnimEnum ResolveHurtAnim(kAnimEnum preferred)
+	{
+		if (IsHurtAnimValid(preferred))
+		{
+			return preferred;
+		}
+		return kAnimEnum.Mob_Hurt;
+	}
+
+	protected bool IsHurtAnimValid(kAnimEnum anim)
+	{
+		if (anim == kAnimEnum.None)
+		{
+			return false;
+		}
+		if (m_AnimManager == null)
+		{
+			return false;
+		}
+		return m_AnimManager.GetAnimLen(anim) > 0f;
+	}
+
 	public override void InitHardiness(int nMobID, int nMobLevel)
 	{
 		CMobInfoLevel mobInfo = m_GameData.GetMobInfo(nMobID, nMobLevel);
-		if (mobInfo == null || mobInfo.ltHardinessInfo == null)
+		if (mobInfo == null)
 		{
 			return;
 		}
-		foreach (CHardinessInfo item in mobInfo.ltHardinessInfo)
+		m_dictBodyPart.Clear();
+		float baseHardiness = mobInfo.fHardiness;
+		if (baseHardiness <= 0f && mobInfo.ltHardinessInfo != null && mobInfo.ltHardinessInfo.Count > 0)
 		{
-			CBodyPart cBodyPart = new CBodyPart();
-			cBodyPart.m_fHardinessMax = item.fHardiness;
-			cBodyPart.m_fHardinessCur = cBodyPart.m_fHardinessMax;
-			cBodyPart.m_ltAnim = new List<kAnimEnum>();
-			cBodyPart.m_ltAnim.Add((kAnimEnum)item.nAnimEnum);
-			cBodyPart.m_fDmgRate = item.fDmgRate;
-			m_dictBodyPart.Add(item.nPartID, cBodyPart);
+			baseHardiness = mobInfo.ltHardinessInfo[0].fHardiness;
+		}
+		m_bossHardinessMax = baseHardiness;
+		m_bossHardinessCur = baseHardiness;
+		if (mobInfo.ltHardinessInfo != null && mobInfo.ltHardinessInfo.Count > 0)
+		{
+			foreach (CHardinessInfo item in mobInfo.ltHardinessInfo)
+			{
+				CBodyPart part = new CBodyPart();
+				part.nPartID = item.nPartID;
+				part.m_ltAnim = new List<kAnimEnum>();
+				part.m_ltAnim.Add(GetHurtAnimForPart(item.nPartID));
+				part.m_fDmgRate = 100f;
+				m_dictBodyPart[item.nPartID] = part;
+			}
+		}
+		else
+		{
+			for (int i = 1; i <= 3; i++)
+			{
+				CBodyPart part = new CBodyPart();
+				part.nPartID = i;
+				part.m_ltAnim = new List<kAnimEnum>();
+				part.m_ltAnim.Add(GetHurtAnimForPart(i));
+				part.m_fDmgRate = 100f;
+				m_dictBodyPart[i] = part;
+			}
 		}
 	}
 
@@ -184,18 +258,25 @@ public class CCharBoss : CCharMob
 		{
 			return false;
 		}
-		info.m_fHardinessCur -= fValue * (info.m_fDmgRate / 100f);
-		if (info.m_fHardinessCur <= 0f)
+		float multiplier = GetHardinessContributionMultiplier(info.nPartID);
+		float change = fValue * (info.m_fDmgRate / 100f) * multiplier;
+		m_bossHardinessCur += change;
+		kAnimEnum newAnim = info.GetAnimRadnom();
+		if (newAnim != kAnimEnum.None)
 		{
-			info.m_fHardinessCur = info.m_fHardinessMax;
-			m_HurtAnim = info.GetAnimRadnom();
-			return true;
+			m_HurtAnim = newAnim;
 		}
-		if (info.m_fHardinessCur > info.m_fHardinessMax)
+		bool broken = false;
+		if (m_bossHardinessCur <= 0f)
 		{
-			info.m_fHardinessCur = info.m_fHardinessMax;
+			m_bossHardinessCur = m_bossHardinessMax;
+			broken = true;
 		}
-		return false;
+		if (m_bossHardinessCur > m_bossHardinessMax)
+		{
+			m_bossHardinessCur = m_bossHardinessMax;
+		}
+		return broken;
 	}
 
 	protected void UpdateAITrigger(float deltaTime)
@@ -342,6 +423,9 @@ public class CCharBoss : CCharMob
 		m_fMaxBlackLife = 0f;
 		m_nChangeAI = -1;
 		m_fLifeTime = 0f;
+		m_bossHardinessCur = 0f;
+		m_bossHardinessMax = 0f;
+		m_lastHurtAnim = kAnimEnum.None;
 		ClearBodyEffect();
 		m_curTriggerList.Clear();
 		m_tmpTriggerList.Clear();
