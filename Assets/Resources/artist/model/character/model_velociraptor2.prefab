@@ -1108,9 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  soundOverrides: []
 --- !u!111 &111912569721100580
 Animation:
   m_ObjectHideFlags: 0
@@ -1136,6 +1134,8 @@ Animation:
   - {fileID: 7400000, guid: 414571b7d0e788b40a92bcf6b51fc954, type: 2}
   - {fileID: 7400000, guid: 8181d6336dfd9274d850adf3e21438cc, type: 2}
   - {fileID: 7400000, guid: 6cd6ca4823f3b4d4884b09bd08b56c9f, type: 2}
+  - {fileID: 7400000, guid: f30fad6c84ccccb47aa2e3d9cfcbae5a, type: 2}
+  - {fileID: 7400000, guid: ae3981723db890848b42b19e12d59460, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0

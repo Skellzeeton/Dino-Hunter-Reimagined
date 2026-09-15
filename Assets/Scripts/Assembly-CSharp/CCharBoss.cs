@@ -216,7 +216,7 @@ public class CCharBoss : CCharMob
 			baseHardiness = mobInfo.ltHardinessInfo[0].fHardiness;
 		}
 		m_bossHardinessMax = baseHardiness;
-		m_bossHardinessCur = baseHardiness;
+		m_bossHardinessCur = 0f;
 		if (mobInfo.ltHardinessInfo != null && mobInfo.ltHardinessInfo.Count > 0)
 		{
 			foreach (CHardinessInfo item in mobInfo.ltHardinessInfo)
@@ -259,7 +259,7 @@ public class CCharBoss : CCharMob
 			return false;
 		}
 		float multiplier = GetHardinessContributionMultiplier(info.nPartID);
-		float change = fValue * (info.m_fDmgRate / 100f) * multiplier;
+		float change = Mathf.Abs(fValue) * (info.m_fDmgRate / 100f) * multiplier;
 		m_bossHardinessCur += change;
 		kAnimEnum newAnim = info.GetAnimRadnom();
 		if (newAnim != kAnimEnum.None)
@@ -267,14 +267,10 @@ public class CCharBoss : CCharMob
 			m_HurtAnim = newAnim;
 		}
 		bool broken = false;
-		if (m_bossHardinessCur <= 0f)
+		if (m_bossHardinessCur >= m_bossHardinessMax)
 		{
-			m_bossHardinessCur = m_bossHardinessMax;
+			m_bossHardinessCur = 0f;
 			broken = true;
-		}
-		if (m_bossHardinessCur > m_bossHardinessMax)
-		{
-			m_bossHardinessCur = m_bossHardinessMax;
 		}
 		return broken;
 	}

@@ -35,6 +35,7 @@ public class CCharBossTriceratops : CCharBoss
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Trice_Death01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Trice_Death01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Trice_Damage_body01"));
+		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt_Head, "Trice_Head_Damage01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Trice_Damage_body01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtBehind, "Trice_Damage_body01"));
 		m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Roar, "Trice_Roar01"));
