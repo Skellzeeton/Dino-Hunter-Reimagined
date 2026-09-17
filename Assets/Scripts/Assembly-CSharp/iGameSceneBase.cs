@@ -428,7 +428,7 @@ public class iGameSceneBase
 		{
 			if (MyUtils.isWindows)
 			{
-				m_Input = new CControlWindows();
+				m_Input = new CControlIphone();
 			}
 			else if (MyUtils.isIOS || MyUtils.isAndroid)
 			{

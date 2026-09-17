@@ -12,18 +12,15 @@ public class CControlWindows : CControlBase
 	public override void Initialize()
 	{
 		base.Initialize();
-		if (mouseSensitivity < minSensitivity)
+		float sens = SettingsManager.Instance.MouseSensitivity;
+		if (sens < SettingsManager.MinSensitivity || sens > SettingsManager.MaxSensitivity)
 		{
-			mouseSensitivity = 0.5f;
-			mouseSensitivity = SettingsManager.Instance.MouseSensitivity;
+			SettingsManager.Instance.MouseSensitivity = SettingsManager.DefaultSensitivity;
 		}
 	}
 
 	//private bool m_TutorialActive = false;
-	
-	private float mouseSensitivity;
-	private const float minSensitivity = 0.5f;
-	private const float maxSensitivity = 5f;
+
 	private float m_LastMeleeOnlyTipTime = -5f;
 
 	private void SetPause(bool pause)
@@ -39,58 +36,42 @@ public class CControlWindows : CControlBase
 		if (m_GameScene == null)
 		{
 			return;
-		} 
-		if (Input.GetKeyDown(KeyCode.Escape)) 
-		{ 
-			if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Gameing) 
+		}
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Gameing)
 			{
-				m_GameScene.SetGamePause(true); 
-				Cursor.lockState = CursorLockMode.None; 
+				m_GameScene.SetGamePause(true);
+				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
-				
+
 			}
 			else if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Pause)
 			{
-				m_GameScene.SetGamePause(false); 
-				Cursor.lockState = CursorLockMode.Locked; 
-				Cursor.visible = false; 
-			} 
+				m_GameScene.SetGamePause(false);
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+			}
 		}
 		/*if (Input.GetKeyDown(KeyCode.T))
-		{
-			if (!m_TutorialActive)
-			{
-				CSoundScene.GetInstance().StopBGM();
-				m_User.SetFire(false);
-				m_User.MoveStop();
-				Time.timeScale = 0f;
-				m_GameScene.StartTutorial();
-				m_TutorialActive = true;
-			}
-			else
-			{
-				CSoundScene.GetInstance().PlayBGM();
-				Time.timeScale = 1f;
-				m_GameScene.FinishTutorial();
-				m_TutorialActive = false;
-			}
-		}*/
-		if (Input.GetKeyDown(KeyCode.O))
-		{
-			mouseSensitivity = Mathf.Clamp(mouseSensitivity + 0.25f, minSensitivity, maxSensitivity);
-			SettingsManager.Instance.MouseSensitivity = mouseSensitivity;
-#if UNITY_EDITOR
-			Debug.Log("Sensitivity increased: " + mouseSensitivity);
-#endif
-		}
-		else if (Input.GetKeyDown(KeyCode.I))
-		{
-			mouseSensitivity = Mathf.Clamp(mouseSensitivity - 0.25f, minSensitivity, maxSensitivity);
-			SettingsManager.Instance.MouseSensitivity = mouseSensitivity;
-#if UNITY_EDITOR
-			Debug.Log("Sensitivity decreased: " + mouseSensitivity);
-#endif
-		}
+        {
+            if (!m_TutorialActive)
+            {
+                CSoundScene.GetInstance().StopBGM();
+                m_User.SetFire(false);
+                m_User.MoveStop();
+                Time.timeScale = 0f;
+                m_GameScene.StartTutorial();
+                m_TutorialActive = true;
+            }
+            else
+            {
+                CSoundScene.GetInstance().PlayBGM();
+                Time.timeScale = 1f;
+                m_GameScene.FinishTutorial();
+                m_TutorialActive = false;
+            }
+        }*/
 		if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.CutScene && Input.GetKeyDown(KeyCode.Space))
 			CCameraRoam.GetInstance().Stop();
 		if (m_User == null || (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing && m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime))
@@ -194,10 +175,11 @@ public class CControlWindows : CControlBase
 		}
 		if (Screen.lockCursor)
 		{
+			float sensitivityMultiplier = SettingsManager.SensitivityMultiplier;
 			float axis = Input.GetAxis("Mouse X");
 			if (axis != 0f)
 			{
-				m_Camera.Yaw(axis * 270f * Time.deltaTime * mouseSensitivity);
+				m_Camera.Yaw(axis * 135f * Time.deltaTime * sensitivityMultiplier);
 				if (m_User.IsCanAim())
 				{
 					m_User.SetYaw(m_Camera.GetYaw());
@@ -208,7 +190,7 @@ public class CControlWindows : CControlBase
 			float axis2 = Input.GetAxis("Mouse Y");
 			if (axis2 != 0f)
 			{
-				m_Camera.Pitch(axis2 * 270f * Time.deltaTime * mouseSensitivity);
+				m_Camera.Pitch(axis2 * 135f * Time.deltaTime * sensitivityMultiplier);
 			}
 			if (Input.GetMouseButton(1))
 			{
@@ -266,7 +248,7 @@ public class CControlWindows : CControlBase
 					num = 0;
 				}
 			}
-			
+
 			m_User.SwitchWeapon(num);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
@@ -296,7 +278,7 @@ public class CControlWindows : CControlBase
 					num = 2;
 				}
 			}
-			
+
 			m_User.SwitchWeapon(num);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}

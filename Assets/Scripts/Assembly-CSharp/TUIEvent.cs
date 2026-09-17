@@ -35,6 +35,7 @@ public class TUIEvent
 		TUIEvent_TakeAchievement,
 		TUIEvent_ChangeMusic,
 		TUIEvent_ChangeSFX,
+		TUIEvent_ChangeSensitivity,
 		TUIEvent_Forum,
 		TUIEvent_EnterIAP,
 		TUIEvent_EnterGold,

@@ -133,6 +133,24 @@ public class TUISlider : TUIControlImpl
 		return false;
 	}
 
+	public void ForceVisualUpdate()
+	{
+		if (null != mSprite)
+		{
+			mSprite.NeedLaterUpdate = true;
+			mSprite.ForceUpdate();
+		}
+		if (null != thumb && null != showClip)
+		{
+			Vector3 lp = thumb.localPosition;
+			if (direction == Direction.Horizontal)
+				lp.x = showClip.transform.localPosition.x + showClip.Size.x * 0.5f;
+			else
+				lp.y = showClip.transform.localPosition.y + showClip.Size.y * 0.5f;
+			thumb.localPosition = lp;
+		}
+	}
+
 	private void Start()
 	{
 		Set(rawValue);

@@ -98,7 +98,7 @@ public class Scene_MainMenu : MonoBehaviour
 	public Popup_Review popup_review;
 
 	public PopupNewHelp popup_new_help;
-	
+
 	private const float MinMusicVolume = 0f;
 	private const float MaxMusicVolume = 1f;
 
@@ -985,6 +985,29 @@ public class Scene_MainMenu : MonoBehaviour
             global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ChangeSFX));
         }
     }
+
+	public void TUIEvent_Sensitivity(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != TUISlider.OnSliderChange)
+			return;
+		float raw     = wparam * SettingsManager.MaxSensitivity;
+		float snapped = SettingsManager.ClampSensitivity(raw);
+		if (control is TUISlider slider)
+		{
+			float t = Mathf.Clamp01(snapped / SettingsManager.MaxSensitivity);
+			if (!Mathf.Approximately(slider.sliderValue, t))
+				slider.sliderValue = t;
+		}
+		float previous = SettingsManager.Instance.MouseSensitivity;
+		if (Mathf.Approximately(previous, snapped))
+			return;
+		SettingsManager.Instance.MouseSensitivity = snapped;
+		if (popup_option != null)
+			popup_option.RefreshSensitivity();
+		if (sfx_open_now)
+			CUISound.GetInstance().Play("UI_Count_oneshot");
+		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ChangeSensitivity));
+	}
 
     private void AdjustMusicVolume()
     {

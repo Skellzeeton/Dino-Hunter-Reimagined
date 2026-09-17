@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CControlIphone : CControlBase
 {
-	protected float m_fSlashSpeed;
-
 	protected Vector2 m_v2Slash;
+	private const float kMobileYawMaxSpeed = 300f;
+	private const float kMobilePitchMaxSpeed = 75f;
 
 	public CControlIphone()
 	{
@@ -16,13 +16,16 @@ public class CControlIphone : CControlBase
 	public override void Initialize()
 	{
 		base.Initialize();
-		m_fSlashSpeed = ((!Utils.IsPad()) ? 3f : 6f);
 		m_v2Slash = Vector2.zero;
 	}
 
 	public override void Update(float deltaTime)
 	{
-		if (m_GameScene != null && !(m_User == null) && m_User.IsCanAim() && (m_v2Slash.x != 0f || m_v2Slash.y != 0f))
+		if (m_GameScene == null || m_User == null)
+		{
+			return;
+		}
+		if (m_User.IsCanAim() && (m_v2Slash.x != 0f || m_v2Slash.y != 0f))
 		{
 			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
 			m_User.LookAt(ray.GetPoint(1000f));
@@ -31,21 +34,30 @@ public class CControlIphone : CControlBase
 
 	public override void LateUpdate(float deltaTime)
 	{
-		if (m_GameScene == null || m_User == null || !(m_v2Slash != Vector2.zero))
+		if (m_GameScene == null || m_User == null || m_v2Slash == Vector2.zero)
 		{
 			return;
 		}
-		if (m_v2Slash.x != 0f)
+		float sensitivityMultiplier = SettingsManager.SensitivityMultiplier;
+		Vector2 input = Vector2.ClampMagnitude(m_v2Slash, 1f);
+		if (Mathf.Abs(input.x) > 0.001f)
 		{
-			m_Camera.Yaw(m_v2Slash.x * m_fSlashSpeed / 2f * Time.deltaTime);
+			float yaw = input.x * kMobileYawMaxSpeed * sensitivityMultiplier * deltaTime;
+			m_Camera.Yaw(yaw);
 			if (m_User.IsCanAim())
 			{
 				m_User.SetYaw(m_Camera.GetYaw());
 			}
 		}
-		if (m_v2Slash.y != 0f)
+		if (Mathf.Abs(input.y) > 0.001f)
 		{
-			m_Camera.Pitch(m_v2Slash.y * m_fSlashSpeed * Time.deltaTime);
+			float pitch = input.y * kMobilePitchMaxSpeed * sensitivityMultiplier * deltaTime;
+			m_Camera.Pitch(pitch);
+		}
+		if (m_User.IsCanAim())
+		{
+			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
+			m_User.LookAt(ray.GetPoint(1000f));
 		}
 		m_v2Slash = Vector2.zero;
 	}
