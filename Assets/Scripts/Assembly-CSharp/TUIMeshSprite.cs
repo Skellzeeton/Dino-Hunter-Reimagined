@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [AddComponentMenu("TUI/Control/Mesh Sprite")]
 [RequireComponent(typeof(MeshFilter))]
@@ -56,6 +60,123 @@ public class TUIMeshSprite : TUINeedUpdateBase
 	private Material grayMat;
 
 	public bool NeedLaterUpdate;
+
+	// ---------------------------------------------------------------------
+	// Shared mesh cache
+	// ---------------------------------------------------------------------
+
+	private struct MeshKey : System.IEquatable<MeshKey>
+	{
+		public int texId;
+		public Vector4 uv;
+		public Rect rect;
+		public Color color;
+		public int pivot;
+		public bool hasHide;
+		public Rect hideRect;
+
+		public bool Equals(MeshKey o)
+		{
+			return texId == o.texId
+			&& uv == o.uv
+			&& rect == o.rect
+			&& color == o.color
+			&& pivot == o.pivot
+			&& hasHide == o.hasHide
+			&& (!hasHide || hideRect == o.hideRect);
+		}
+
+		public override bool Equals(object o)
+		{
+			return o is MeshKey k && Equals(k);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				int h = 17;
+				h = h * 31 + texId;
+				h = h * 31 + uv.GetHashCode();
+				h = h * 31 + rect.GetHashCode();
+				h = h * 31 + color.GetHashCode();
+				h = h * 31 + pivot;
+				h = h * 31 + (hasHide ? 1 : 0);
+				if (hasHide) h = h * 31 + hideRect.GetHashCode();
+				return h;
+			}
+		}
+	}
+
+	private static readonly Dictionary<MeshKey, Mesh> s_MeshCache = new Dictionary<MeshKey, Mesh>();
+	private static Mesh s_EmptyMesh;
+	private static bool s_Hooked;
+
+	private static Mesh EmptyMesh
+	{
+		get
+		{
+			if (s_EmptyMesh == null)
+			{
+				s_EmptyMesh = new Mesh();
+				s_EmptyMesh.name = "TUIMeshSprite_Empty";
+				s_EmptyMesh.hideFlags = HideFlags.DontSave;
+			}
+			return s_EmptyMesh;
+		}
+	}
+
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+	private static void InitializeHook()
+	{
+		if (s_Hooked)
+		{
+			return;      // <-- this early-out was already there for the event subscriptions…
+		}                //     …but ClearMeshCache() was sitting AFTER it, outside the guard.
+		s_Hooked = true;
+		SceneManager.sceneUnloaded += OnSceneUnloaded;
+#if UNITY_EDITOR
+		EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
+		ClearMeshCache();   // <-- moved INSIDE the guard
+	}
+
+	private static void OnSceneUnloaded(Scene scene)
+	{
+		ClearMeshCache();
+	}
+
+#if UNITY_EDITOR
+	private static void OnPlayModeStateChanged(PlayModeStateChange state)
+	{
+		if (state == PlayModeStateChange.EnteredEditMode)
+		{
+			ClearMeshCache();
+		}
+	}
+#endif
+
+	public static void ClearMeshCache()
+	{
+		foreach (Mesh m in s_MeshCache.Values)
+		{
+			if (m != null)
+			{
+				if (Application.isPlaying) Object.Destroy(m);
+				else Object.DestroyImmediate(m);
+			}
+		}
+		s_MeshCache.Clear();
+
+		if (s_EmptyMesh != null)
+		{
+			if (Application.isPlaying) Object.Destroy(s_EmptyMesh);
+			else Object.DestroyImmediate(s_EmptyMesh);
+			s_EmptyMesh = null;
+		}
+	}
+
+	// ---------------------------------------------------------------------
 
 	public TUITextureInfo texInfo
 	{
@@ -216,22 +337,17 @@ public class TUIMeshSprite : TUINeedUpdateBase
 
 	public void Start()
 	{
+		InitializeHook();
 		meshFilter = base.gameObject.GetComponent<MeshFilter>();
 		meshRender = base.gameObject.GetComponent<MeshRenderer>();
-		meshFilter.sharedMesh = new Mesh();
-		meshFilter.sharedMesh.hideFlags = HideFlags.DontSave;
+		meshFilter.sharedMesh = EmptyMesh;
 		meshRender.castShadows = false;
 		meshRender.receiveShadows = false;
 		UpdateMesh();
 	}
 
-	private void OnDestroy()
-	{
-		if ((bool)meshFilter && (bool)meshFilter.sharedMesh)
-		{
-			Object.DestroyImmediate(meshFilter.sharedMesh);
-		}
-	}
+	// NOTE: OnDestroy no longer destroys meshFilter.sharedMesh - meshes are now
+	// shared across instances and owned by the static cache (see ClearMeshCache).
 
 	private void LateUpdate()
 	{
@@ -267,7 +383,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 		{
 			if (null == customizeTexture)
 			{
-				meshFilter.sharedMesh.Clear();
+				meshFilter.sharedMesh = EmptyMesh;
 				return;
 			}
 			if (null == customizeMaterial)
@@ -282,7 +398,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 		{
 			if (null == texInfo || null == texInfo.material || null == texInfo.material.mainTexture)
 			{
-				meshFilter.sharedMesh.Clear();
+				meshFilter.sharedMesh = EmptyMesh;
 				return;
 			}
 			material = texInfo.material;
@@ -338,7 +454,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 				Rect rect3 = TUIRect.RectIntersect(rect2, rectLocal);
 				if (rect3.width <= 0f || rect3.height <= 0f)
 				{
-					meshFilter.sharedMesh.Clear();
+					meshFilter.sharedMesh = EmptyMesh;
 					return;
 				}
 				vector.x = num7 + num8 * rect3.xMin;
@@ -348,6 +464,19 @@ public class TUIMeshSprite : TUINeedUpdateBase
 				rect2 = rect3;
 			}
 		}
+
+		// ------------------------------------------------------------------
+		// Build the cache key now that all geometry inputs are known.
+		// ------------------------------------------------------------------
+		MeshKey key = default(MeshKey);
+		key.texId = material.mainTexture != null ? material.mainTexture.GetInstanceID() : 0;
+		key.uv = vector;
+		key.rect = rect2;
+		key.color = color;
+		key.pivot = (int)pivot;
+		key.hasHide = false;
+		key.hideRect = default(Rect);
+
 		if (null != m_hideClipObj)
 		{
 			TUIRect component = m_hideClipObj.GetComponent<TUIRect>();
@@ -357,6 +486,16 @@ public class TUIMeshSprite : TUINeedUpdateBase
 				Rect rect4 = TUIRect.RectIntersect(rect2, rectLocal2);
 				if (rect4.width > 0f && rect4.height > 0f)
 				{
+					key.hasHide = true;
+					key.hideRect = rectLocal2;
+
+					// Cache lookup for the hide-clip case.
+					if (s_MeshCache.TryGetValue(key, out Mesh cachedHide) && cachedHide != null)
+					{
+						meshFilter.sharedMesh = cachedHide;
+						return;
+					}
+
 					List<Vector3> list = new List<Vector3>();
 					List<Vector2> list2 = new List<Vector2>();
 					List<Color> list3 = new List<Color>();
@@ -378,10 +517,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 						list2.Add(new Vector2(zero.z, zero.y));
 						list2.Add(new Vector2(zero.z, zero.w));
 						list2.Add(new Vector2(zero.x, zero.w));
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
+						list3.Add(color); list3.Add(color); list3.Add(color); list3.Add(color);
 						list4.Add(num11 * 4);
 						list4.Add(num11 * 4 + 1);
 						list4.Add(num11 * 4 + 2);
@@ -406,10 +542,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 						list2.Add(new Vector2(zero2.z, zero2.y));
 						list2.Add(new Vector2(zero2.z, zero2.w));
 						list2.Add(new Vector2(zero2.x, zero2.w));
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
+						list3.Add(color); list3.Add(color); list3.Add(color); list3.Add(color);
 						list4.Add(num11 * 4);
 						list4.Add(num11 * 4 + 1);
 						list4.Add(num11 * 4 + 2);
@@ -434,10 +567,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 						list2.Add(new Vector2(zero3.z, zero3.y));
 						list2.Add(new Vector2(zero3.z, zero3.w));
 						list2.Add(new Vector2(zero3.x, zero3.w));
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
+						list3.Add(color); list3.Add(color); list3.Add(color); list3.Add(color);
 						list4.Add(num11 * 4);
 						list4.Add(num11 * 4 + 1);
 						list4.Add(num11 * 4 + 2);
@@ -462,10 +592,7 @@ public class TUIMeshSprite : TUINeedUpdateBase
 						list2.Add(new Vector2(zero4.z, zero4.y));
 						list2.Add(new Vector2(zero4.z, zero4.w));
 						list2.Add(new Vector2(zero4.x, zero4.w));
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
-						list3.Add(color);
+						list3.Add(color); list3.Add(color); list3.Add(color); list3.Add(color);
 						list4.Add(num11 * 4);
 						list4.Add(num11 * 4 + 1);
 						list4.Add(num11 * 4 + 2);
@@ -474,34 +601,54 @@ public class TUIMeshSprite : TUINeedUpdateBase
 						list4.Add(num11 * 4 + 3);
 						num11++;
 					}
-					meshFilter.sharedMesh.Clear();
-					meshFilter.sharedMesh.vertices = list.ToArray();
-					meshFilter.sharedMesh.uv = list2.ToArray();
-					meshFilter.sharedMesh.colors = list3.ToArray();
-					meshFilter.sharedMesh.triangles = list4.ToArray();
+
+					Mesh builtHide = new Mesh();
+					builtHide.hideFlags = HideFlags.DontSave;
+					builtHide.vertices = list.ToArray();
+					builtHide.uv = list2.ToArray();
+					builtHide.colors = list3.ToArray();
+					builtHide.triangles = list4.ToArray();
+
+					meshFilter.sharedMesh = builtHide;
+					s_MeshCache[key] = builtHide;
 					return;
 				}
 			}
 		}
+
+		// ------------------------------------------------------------------
+		// Cache lookup for the plain single-quad case.
+		// ------------------------------------------------------------------
+		if (s_MeshCache.TryGetValue(key, out Mesh cachedNormal) && cachedNormal != null)
+		{
+			meshFilter.sharedMesh = cachedNormal;
+			return;
+		}
+
 		Vector3 zero5 = Vector3.zero;
 		Matrix4x4 matrix4x = Layout(new Bounds(Vector3.zero, new Vector3(num5, num6, 0f)));
-		meshFilter.sharedMesh.Clear();
-		meshFilter.sharedMesh.vertices = new Vector3[4]
+
+		Mesh built = new Mesh();
+		built.hideFlags = HideFlags.DontSave;
+		built.vertices = new Vector3[4]
 		{
 			matrix4x.MultiplyPoint3x4(new Vector3(rect2.xMin, rect2.yMax, 0f) - zero5),
 			matrix4x.MultiplyPoint3x4(new Vector3(rect2.xMax, rect2.yMax, 0f) - zero5),
 			matrix4x.MultiplyPoint3x4(new Vector3(rect2.xMax, rect2.yMin, 0f) - zero5),
 			matrix4x.MultiplyPoint3x4(new Vector3(rect2.xMin, rect2.yMin, 0f) - zero5)
 		};
-		meshFilter.sharedMesh.uv = new Vector2[4]
+		built.uv = new Vector2[4]
 		{
 			new Vector2(vector.x, vector.y),
 			new Vector2(vector.z, vector.y),
 			new Vector2(vector.z, vector.w),
 			new Vector2(vector.x, vector.w)
 		};
-		meshFilter.sharedMesh.colors = new Color[4] { color, color, color, color };
-		meshFilter.sharedMesh.triangles = new int[6] { 0, 1, 2, 0, 2, 3 };
+		built.colors = new Color[4] { color, color, color, color };
+		built.triangles = new int[6] { 0, 1, 2, 0, 2, 3 };
+
+		meshFilter.sharedMesh = built;
+		s_MeshCache[key] = built;
 	}
 
 	private void SetGray(bool gray)
@@ -540,42 +687,42 @@ public class TUIMeshSprite : TUINeedUpdateBase
 		Vector3 zero = Vector3.zero;
 		switch (pivot)
 		{
-		case TUILabel.TUIPivot.Center:
-			zero.x = bounds.center.x * -1f;
-			zero.y = bounds.center.y * -1f;
-			break;
-		case TUILabel.TUIPivot.Left:
-			zero.x = bounds.min.x * -1f;
-			zero.y = bounds.center.y * -1f;
-			break;
-		case TUILabel.TUIPivot.Right:
-			zero.x = bounds.max.x * -1f;
-			zero.y = bounds.center.y * -1f;
-			break;
-		case TUILabel.TUIPivot.Top:
-			zero.x = bounds.center.x * -1f;
-			zero.y = bounds.max.y * -1f;
-			break;
-		case TUILabel.TUIPivot.Bottom:
-			zero.x = bounds.center.x * -1f;
-			zero.y = bounds.min.y * -1f;
-			break;
-		case TUILabel.TUIPivot.BottomLeft:
-			zero.x = bounds.min.x * -1f;
-			zero.y = bounds.min.y * -1f;
-			break;
-		case TUILabel.TUIPivot.TopLeft:
-			zero.x = bounds.min.x * -1f;
-			zero.y = bounds.max.y * -1f;
-			break;
-		case TUILabel.TUIPivot.TopRight:
-			zero.x = bounds.max.x * -1f;
-			zero.y = bounds.max.y * -1f;
-			break;
-		case TUILabel.TUIPivot.BottomRight:
-			zero.x = bounds.max.x * -1f;
-			zero.y = bounds.min.y * -1f;
-			break;
+			case TUILabel.TUIPivot.Center:
+				zero.x = bounds.center.x * -1f;
+				zero.y = bounds.center.y * -1f;
+				break;
+			case TUILabel.TUIPivot.Left:
+				zero.x = bounds.min.x * -1f;
+				zero.y = bounds.center.y * -1f;
+				break;
+			case TUILabel.TUIPivot.Right:
+				zero.x = bounds.max.x * -1f;
+				zero.y = bounds.center.y * -1f;
+				break;
+			case TUILabel.TUIPivot.Top:
+				zero.x = bounds.center.x * -1f;
+				zero.y = bounds.max.y * -1f;
+				break;
+			case TUILabel.TUIPivot.Bottom:
+				zero.x = bounds.center.x * -1f;
+				zero.y = bounds.min.y * -1f;
+				break;
+			case TUILabel.TUIPivot.BottomLeft:
+				zero.x = bounds.min.x * -1f;
+				zero.y = bounds.min.y * -1f;
+				break;
+			case TUILabel.TUIPivot.TopLeft:
+				zero.x = bounds.min.x * -1f;
+				zero.y = bounds.max.y * -1f;
+				break;
+			case TUILabel.TUIPivot.TopRight:
+				zero.x = bounds.max.x * -1f;
+				zero.y = bounds.max.y * -1f;
+				break;
+			case TUILabel.TUIPivot.BottomRight:
+				zero.x = bounds.max.x * -1f;
+				zero.y = bounds.min.y * -1f;
+				break;
 		}
 		identity.SetTRS(zero, Quaternion.identity, Vector3.one);
 		return identity;

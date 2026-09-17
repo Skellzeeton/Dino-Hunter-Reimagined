@@ -550,7 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40961ce9cd42bd948b7727eddf98587e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_v3Offset: {x: 0, y: 0, z: 0}
+  m_v3Offset: {x: 0, y: 0.01, z: 0}
   m_Material: {fileID: 2100000, guid: 225290e9b9b2ef946baa0609b2d2a457, type: 2}
   m_v2Size: {x: 2, y: 2}
 --- !u!114 &114889314602303776
@@ -579,9 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  soundOverrides: []
 --- !u!111 &111511964072092114
 Animation:
   m_ObjectHideFlags: 0
