@@ -6,6 +6,10 @@ public class Popup_Option : MonoBehaviour
 	public TUIButtonPush btn_sfx;
 	public TUISlider slider_sensitivity;
 	public TUILabel  label_sensitivity;
+	public TUISlider slider_music;
+	public TUISlider slider_sfx;
+	public TUILabel  label_music;
+	public TUILabel  label_sfx;
 	public Transform go_popup;
 
 	private bool music_open_now = true;
@@ -20,6 +24,8 @@ public class Popup_Option : MonoBehaviour
 		btn_sfx.m_bPressed = !sfx_open_now;
 		btn_sfx.Show();
 		RefreshSensitivity();
+		RefreshMusicVolume();
+		RefreshSFXVolume();
 	}
 
 	public void RefreshSensitivity()
@@ -33,6 +39,30 @@ public class Popup_Option : MonoBehaviour
 		}
 		if (label_sensitivity != null)
 			label_sensitivity.Text = value.ToString("0.###");
+	}
+
+	public void RefreshMusicVolume()
+	{
+		float value = SettingsManager.Instance.MusicVolume;
+		if (slider_music != null)
+		{
+			slider_music.sliderValue = Mathf.Clamp01(value);
+			slider_music.ForceVisualUpdate();
+		}
+		if (label_music != null)
+			label_music.Text = Mathf.RoundToInt(value * 100) + "%";
+	}
+
+	public void RefreshSFXVolume()
+	{
+		float value = SettingsManager.Instance.SoundVolume;
+		if (slider_sfx != null)
+		{
+			slider_sfx.sliderValue = Mathf.Clamp01(value);
+			slider_sfx.ForceVisualUpdate();
+		}
+		if (label_sfx != null)
+			label_sfx.Text = Mathf.RoundToInt(value * 100) + "%";
 	}
 
 	public void Show()
@@ -72,5 +102,7 @@ public class Popup_Option : MonoBehaviour
 		btn_sfx.m_bPressed = !sfx_open_now;
 		btn_sfx.Show();
 		RefreshSensitivity();
+		RefreshMusicVolume();
+		RefreshSFXVolume();
 	}
 }

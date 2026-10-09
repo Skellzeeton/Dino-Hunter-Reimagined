@@ -972,7 +972,6 @@ public class Scene_MainMenu : MonoBehaviour
     {
         if (event_type == 1 || event_type == 2)
         {
-            AdjustMusicVolume();
             global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ChangeMusic));
         }
     }
@@ -981,10 +980,55 @@ public class Scene_MainMenu : MonoBehaviour
     {
         if (event_type == 1 || event_type == 2)
         {
-            AdjustSFXVolume();
             global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneMainMenu(TUIEvent.SceneMainMenuEventType.TUIEvent_ChangeSFX));
         }
     }
+
+	public void TUIEvent_MusicVolume(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != TUISlider.OnSliderChange)
+			return;
+		float volume = Mathf.Round(wparam / 0.05f) * 0.05f;
+		volume = Mathf.Clamp(volume, 0.25f, 1.0f);
+		if (control is TUISlider slider)
+		{
+			if (!Mathf.Approximately(slider.sliderValue, volume))
+				slider.sliderValue = volume;
+		}
+		float previous = SettingsManager.Instance.MusicVolume;
+		if (Mathf.Approximately(previous, volume))
+			return;
+		SettingsManager.Instance.MusicVolume = volume;
+		TAudioManager.instance.musicVolume = volume;
+		if (popup_option != null)
+			popup_option.RefreshMusicVolume();
+		if (sfx_open_now)
+			CUISound.GetInstance().Play("UI_Count_oneshot");
+	}
+
+	public void TUIEvent_SFXVolume(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != TUISlider.OnSliderChange)
+			return;
+		float volume = Mathf.Round(wparam / 0.05f) * 0.05f;
+		volume = Mathf.Clamp(volume, 0.25f, 1.0f);
+
+		if (control is TUISlider slider)
+		{
+			if (!Mathf.Approximately(slider.sliderValue, volume))
+				slider.sliderValue = volume;
+		}
+		float previous = SettingsManager.Instance.SoundVolume;
+		if (Mathf.Approximately(previous, volume))
+			return;
+		SettingsManager.Instance.SoundVolume = volume;
+		TAudioManager.instance.soundVolume = volume;
+		currentSFXVolume = volume;
+		if (popup_option != null)
+			popup_option.RefreshSFXVolume();
+		if (sfx_open_now)
+			CUISound.GetInstance().Play("UI_Count_oneshot");
+	}
 
 	public void TUIEvent_Sensitivity(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
