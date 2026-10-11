@@ -38,6 +38,8 @@ public class Scene_Equip : MonoBehaviour
 
 	public TUILabel label_role_name;
 
+	public TUILabel label_character_name;
+
 	public LabelBattlePower m_BattlePower;
 
 	public Top_Bar top_bar;
@@ -67,6 +69,7 @@ public class Scene_Equip : MonoBehaviour
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneEquip(TUIEvent.SceneEquipEventType.TUIEvent_SkillSign));
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneEquip(TUIEvent.SceneEquipEventType.TUIEvent_WeaponSign));
 		DoNewHelp();
+		RefreshCharacterNameLabel();
 	}
 
 	private void Update()
@@ -174,6 +177,7 @@ public class Scene_Equip : MonoBehaviour
 				{
 					label_role_name.Text = m_event.GetEventInfo().player_info.avatar_name;
 				}
+				RefreshCharacterNameLabel();
 			}
 			else
 			{
@@ -231,6 +235,7 @@ public class Scene_Equip : MonoBehaviour
 						}
 					}
 					go_role.SetRoleFixedRotation(new Vector3(0f, -40f, 0f));
+					RefreshCharacterNameLabel();
 				}
 				m_ButtonRole.SetInfo(m_event.GetEventInfo().equip_info.role);
 				m_PopupShow_Role.SetRoleInfo(m_event.GetEventInfo().equip_info, base.gameObject);
@@ -361,6 +366,7 @@ public class Scene_Equip : MonoBehaviour
 				}
 			}
 			label_role_name.Text = text;
+			RefreshCharacterNameLabel();
 			m_PopupShow_Role.Equip();
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneEquipEventType.TUIEvent_SkillEquip)
@@ -1483,5 +1489,39 @@ public class Scene_Equip : MonoBehaviour
 				AndroidReturnPlugin.instance.SetSkipTutorialFunc(TUIEvent_OpenSkipTutorial);
 			}
 		}
+	}
+
+	private string GetCharacterNameByID(int roleID)
+	{
+		if (roleID <= 0) return null;
+		try
+		{
+			var gameApp = iGameApp.GetInstance();
+			if (gameApp == null || gameApp.m_GameData == null) return null;
+			var charCenter = gameApp.m_GameData.GetCharacterCenter();
+			if (charCenter == null) return null;
+			var charInfo = charCenter.Get(roleID);
+			if (charInfo == null) return null;
+			var levelInfo = charInfo.Get(1);
+			if (levelInfo != null && !string.IsNullOrEmpty(levelInfo.sName))
+				return levelInfo.sName;
+		}
+		catch (System.Exception e)
+		{
+			Debug.LogWarning("[Scene_Equip] GetCharacterNameByID failed: " + e.Message);
+		}
+		return null;
+	}
+
+	public void RefreshCharacterNameLabel()
+	{
+		if (label_character_name == null) return;
+		int roleID = -1;
+		if (top_bar != null) roleID = top_bar.GetRoleID();
+		string charName = GetCharacterNameByID(roleID);
+		if (string.IsNullOrEmpty(charName) && label_role_name != null)
+			charName = label_role_name.Text;
+		if (!string.IsNullOrEmpty(charName))
+			label_character_name.Text = charName;
 	}
 }

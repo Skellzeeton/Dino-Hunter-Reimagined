@@ -1209,23 +1209,28 @@ public class CCharMob : CCharBase {
 	}
 
 	public void ApplyDifficultyBuffs(iDataCenter dc) {
-		if (dc == null || dc.Difficulty != 2) return;
+		if (dc == null || dc.Difficulty != 2)
+			return;
 		float damage = m_Property.GetValue(kProEnum.Damage);
-		m_Property.SetValueBase(kProEnum.Damage, damage * 1.15f);
+		m_Property.SetValueBase(kProEnum.Damage, damage * 1.2f);
 		float speed = m_Property.GetValue(kProEnum.MoveSpeed);
 		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.05f);
-		m_fHardinessMax *= 1.05f;
-		if (m_fHardinessCur == m_fHardinessMax)
-			m_fHardinessCur = m_fHardinessMax;
-		if (IsBoss())
+		float oldHardinessMax = m_fHardinessMax;
+		m_fHardinessMax *= 1.1f;
+		if (Mathf.Approximately(oldHardinessMax, 0f))
 		{
-			float oldMaxHP = m_fHPMax;
-			float newMaxHP = oldMaxHP * 1.05f;
-			float ratio = m_fHP / oldMaxHP;
-			m_fHPMax = newMaxHP;
-			m_fHP = newMaxHP * ratio;
-			if (m_LifeBar != null)
-				m_LifeBar.SetLife(m_fHP / m_fHPMax);
+			m_fHardinessCur = m_fHardinessMax;
 		}
+		else
+		{
+			float hardinessRatio = m_fHardinessCur / oldHardinessMax;
+			m_fHardinessCur = m_fHardinessMax * hardinessRatio;
+		}
+		float oldMaxHP = m_fHPMax;
+		float newMaxHP = oldMaxHP * 1.05f;
+		float ratio = m_fHP / oldMaxHP;
+		m_fHPMax = newMaxHP;
+		m_fHP = newMaxHP * ratio;
+
 	}
 }

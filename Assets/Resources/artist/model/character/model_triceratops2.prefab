@@ -770,9 +770,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bBoss: 0
-  m_bLava: 0
-  m_bIce: 0
-  m_bZombie: 0
+  soundOverrides:
+  - originalName: Ani_Footstep_Dino02
+    overrideName: Ani_Footstep_Dino02_Heavy
 --- !u!1 &1608361941411236
 GameObject:
   m_ObjectHideFlags: 0
