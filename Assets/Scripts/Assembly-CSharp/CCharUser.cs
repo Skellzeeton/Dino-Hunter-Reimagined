@@ -4,8 +4,7 @@ using gyTaskSystem;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class CCharUser : CCharPlayer
-{
+public class CCharUser : CCharPlayer {
 	protected float m_fCurSpeedMax;
 	protected float m_fCurSpeedSideMax;
 	protected float m_fCurSpeed;
@@ -40,11 +39,15 @@ public class CCharUser : CCharPlayer
 	protected float m_fMoveInputPower = 0f;
 	protected float m_fCurMoveFrameDistance = 0f;
 	public bool m_bBoxUsedThisLevel = false;
+	private float m_fBloodDamageAccum = 0f;
+	private const int BLOOD_EFFECT_NORMAL = 1115;
+	private const int BLOOD_EFFECT_LARGE  = 1116;
+	private const float BLOOD_THRESHOLD_SMALL = 0.10f;
+	private const float BLOOD_THRESHOLD_LARGE = 0.25f;
 
 	public CharacterController m_Controller { get; private set; }
 
-	public override Vector3 ShootDir
-	{
+	public override Vector3 ShootDir {
 		get
 		{
 			iCameraTrail iCameraTrail2 = m_GameScene.GetCamera();
@@ -56,16 +59,14 @@ public class CCharUser : CCharPlayer
 		}
 	}
 
-	public float CurSkillCD
-	{
+	public float CurSkillCD {
 		get
 		{
 			return m_fSkillCD;
 		}
 	}
 
-	public int CurWeaponIndex
-	{
+	public int CurWeaponIndex {
 		get
 		{
 			return m_nCurWeaponIndex;
@@ -76,8 +77,7 @@ public class CCharUser : CCharPlayer
 		}
 	}
 
-	public new void Awake()
-	{
+	public new void Awake() {
 		base.Awake();
 		m_nType = kCharType.User;
 		m_curMoveDir = kCharMoveDir.None;
@@ -104,7 +104,11 @@ public class CCharUser : CCharPlayer
 
 		if (this.GetType().GetField("m_fYaw") != null)
 		{
-			try { m_lastYaw = (float)this.GetType().GetField("m_fYaw").GetValue(this); } catch { m_lastYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f); }
+			try {
+				m_lastYaw = (float)this.GetType().GetField("m_fYaw").GetValue(this);
+			} catch {
+				m_lastYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f);
+			}
 		}
 		else
 		{
@@ -117,18 +121,15 @@ public class CCharUser : CCharPlayer
 
 	}
 
-	public new void Start()
-	{
+	public new void Start() {
 		base.Start();
 	}
 
-	public override void Destroy()
-	{
+	public override void Destroy() {
 		base.Destroy();
 	}
 
-	public new void Update()
-	{
+	public new void Update() {
 		float deltaTime = Time.deltaTime;
 		base.Update();
 		if (base.isDead)
@@ -188,111 +189,112 @@ public class CCharUser : CCharPlayer
 		}
 	}
 
-public new void FixedUpdate()
-{
-    base.FixedUpdate();
-    float deltaTime = Time.deltaTime;
-    if (m_CharMoveState == kCharMoveState.None)
-        return;
-    float currentYaw = 0f;
-    var t = this.GetType();
-    var yawField = t.GetField("m_fYaw");
-    if (yawField != null)
-    {
-        try { currentYaw = (float)yawField.GetValue(this); }
-        catch { currentYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f); }
-    }
-    else
-    {
-        currentYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f);
-    }
-    float deltaYaw = Mathf.DeltaAngle(m_lastYaw, currentYaw);
-    float yawAngSpeed = 0f;
-    if (deltaTime > 0f) yawAngSpeed = Mathf.Abs(deltaYaw) / deltaTime;
-    float yawLerp = Mathf.Clamp01(m_angSmoothRate * deltaTime);
-    m_angSpeedSmoothed = Mathf.Lerp(m_angSpeedSmoothed, yawAngSpeed, yawLerp);
-    Vector2 currentMoveDir = m_v2MoveDir;
-    float moveAngleDeg = 0f;
-    if (currentMoveDir.sqrMagnitude > 0.0001f && m_lastMoveDir.sqrMagnitude > 0.0001f)
-    {
-        moveAngleDeg = Vector2.Angle(m_lastMoveDir, currentMoveDir);
-    }
-    else
-    {
-        moveAngleDeg = 0f;
-    }
-    float moveAngSpeed = 0f;
-    if (deltaTime > 0f) moveAngSpeed = Mathf.Abs(moveAngleDeg) / deltaTime;
-    float moveLerp = Mathf.Clamp01(m_moveSmoothRate * deltaTime);
-    m_moveAngleSpeedSmoothed = Mathf.Lerp(m_moveAngleSpeedSmoothed, moveAngSpeed, moveLerp);
-    if (currentMoveDir.sqrMagnitude > 0.000001f)
-        m_lastMoveDir = currentMoveDir;
-    float effectiveAngSpeed = m_yawWeight * m_angSpeedSmoothed + m_moveWeight * m_moveAngleSpeedSmoothed;
-    if (effectiveAngSpeed <= m_turnDeadzone)
-    {
-        effectiveAngSpeed = 0f;
-    }
-    else
-    {
-        effectiveAngSpeed = Mathf.Max(0f, effectiveAngSpeed - m_turnDeadzone);
-    }
-    float denom = Mathf.Max(0.0001f, (m_fTurnAngularFull - m_turnDeadzone));
-    float rawRatio = Mathf.Clamp01(effectiveAngSpeed / denom);
-    float curved = Mathf.Pow(rawRatio, m_turnCurve);
-    float penalty = curved * m_fTurnSlowMaxPercent;
-    float baseSpeed = m_Property.GetValue(kProEnum.MoveSpeed);
-    if (baseSpeed < 0f) baseSpeed = 0f;
-    float desiredMax = baseSpeed * (1f - penalty);
-    if (penalty > m_prevTurnPenalty + 0.001f)
-    {
-        m_fCurSpeedMax = desiredMax;
-        m_fCurSpeedSideMax = desiredMax;
+	public new void FixedUpdate() {
+		base.FixedUpdate();
+		float deltaTime = Time.deltaTime;
+		if (m_CharMoveState == kCharMoveState.None)
+			return;
+		float currentYaw = 0f;
+		var t = this.GetType();
+		var yawField = t.GetField("m_fYaw");
+		if (yawField != null)
+		{
+			try {
+				currentYaw = (float)yawField.GetValue(this);
+			}
+			catch {
+				currentYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f);
+			}
+		}
+		else
+		{
+			currentYaw = (m_ModelTransform != null ? m_ModelTransform.eulerAngles.y : 0f);
+		}
+		float deltaYaw = Mathf.DeltaAngle(m_lastYaw, currentYaw);
+		float yawAngSpeed = 0f;
+		if (deltaTime > 0f) yawAngSpeed = Mathf.Abs(deltaYaw) / deltaTime;
+		float yawLerp = Mathf.Clamp01(m_angSmoothRate * deltaTime);
+		m_angSpeedSmoothed = Mathf.Lerp(m_angSpeedSmoothed, yawAngSpeed, yawLerp);
+		Vector2 currentMoveDir = m_v2MoveDir;
+		float moveAngleDeg = 0f;
+		if (currentMoveDir.sqrMagnitude > 0.0001f && m_lastMoveDir.sqrMagnitude > 0.0001f)
+		{
+			moveAngleDeg = Vector2.Angle(m_lastMoveDir, currentMoveDir);
+		}
+		else
+		{
+			moveAngleDeg = 0f;
+		}
+		float moveAngSpeed = 0f;
+		if (deltaTime > 0f) moveAngSpeed = Mathf.Abs(moveAngleDeg) / deltaTime;
+		float moveLerp = Mathf.Clamp01(m_moveSmoothRate * deltaTime);
+		m_moveAngleSpeedSmoothed = Mathf.Lerp(m_moveAngleSpeedSmoothed, moveAngSpeed, moveLerp);
+		if (currentMoveDir.sqrMagnitude > 0.000001f)
+			m_lastMoveDir = currentMoveDir;
+		float effectiveAngSpeed = m_yawWeight * m_angSpeedSmoothed + m_moveWeight * m_moveAngleSpeedSmoothed;
+		if (effectiveAngSpeed <= m_turnDeadzone)
+		{
+			effectiveAngSpeed = 0f;
+		}
+		else
+		{
+			effectiveAngSpeed = Mathf.Max(0f, effectiveAngSpeed - m_turnDeadzone);
+		}
+		float denom = Mathf.Max(0.0001f, (m_fTurnAngularFull - m_turnDeadzone));
+		float rawRatio = Mathf.Clamp01(effectiveAngSpeed / denom);
+		float curved = Mathf.Pow(rawRatio, m_turnCurve);
+		float penalty = curved * m_fTurnSlowMaxPercent;
+		float baseSpeed = m_Property.GetValue(kProEnum.MoveSpeed);
+		if (baseSpeed < 0f) baseSpeed = 0f;
+		float desiredMax = baseSpeed * (1f - penalty);
+		if (penalty > m_prevTurnPenalty + 0.001f)
+		{
+			m_fCurSpeedMax = desiredMax;
+			m_fCurSpeedSideMax = desiredMax;
 
-        if (m_fCurSpeed > m_fCurSpeedMax) m_fCurSpeed = m_fCurSpeedMax;
-        if (m_fCurSpeedSide > m_fCurSpeedSideMax) m_fCurSpeedSide = m_fCurSpeedSideMax;
-    }
-    else
-    {
-        m_fCurSpeedMax = desiredMax;
-        m_fCurSpeedSideMax = desiredMax;
+			if (m_fCurSpeed > m_fCurSpeedMax) m_fCurSpeed = m_fCurSpeedMax;
+			if (m_fCurSpeedSide > m_fCurSpeedSideMax) m_fCurSpeedSide = m_fCurSpeedSideMax;
+		}
+		else
+		{
+			m_fCurSpeedMax = desiredMax;
+			m_fCurSpeedSideMax = desiredMax;
 
-        float accelRate = (kAccelerationTime > 0f) ? (baseSpeed / kAccelerationTime) : baseSpeed;
+			float accelRate = (kAccelerationTime > 0f) ? (baseSpeed / kAccelerationTime) : baseSpeed;
 
-        m_fCurSpeed = Mathf.MoveTowards(m_fCurSpeed, m_fCurSpeedMax, accelRate * deltaTime);
-        m_fCurSpeedSide = Mathf.MoveTowards(m_fCurSpeedSide, m_fCurSpeedSideMax, accelRate * deltaTime);
-    }
-    m_prevTurnPenalty = penalty;
-    m_lastYaw = currentYaw;
-    float num = 0f;
-    if (m_Property.GetValue(kProEnum.Char_MSEquip_Off) == 0f && m_curWeapon != null && m_curWeaponLvlInfo != null)
-    {
-	    num = m_curWeaponLvlInfo.fMSDownRateEquip;
-	    if (m_curWeapon.IsFire())
-	    {
-		    num += m_curWeaponLvlInfo.fMSDownRateShoot;
-	    }
-    }
-    float num2 = m_Property.GetValue(kProEnum.Char_MoveSpeedUp);
-    if (num2 < 0f) num2 = 0f;
-    float inputPower = Mathf.Clamp01(m_fMoveInputPower);
-    float moveMultiplier = 1f - num;
-    if (moveMultiplier < 0f)
-	    moveMultiplier = 0f;
-    float finalSpeed = (Mathf.Min(m_fCurSpeed, m_fCurSpeedSide) + num2);
-    finalSpeed *= moveMultiplier;
-    Vector2 finalMoveDir = m_v2MoveDir.normalized * inputPower;
-    Vector2 velocity = finalMoveDir * finalSpeed;
-    m_v2Move = velocity * deltaTime;
-    m_fCurMoveFrameDistance = velocity.magnitude;
-    Vector3 zero = Vector3.zero;
-    zero += m_ModelTransform.forward * m_v2Move.y;
-    zero += m_ModelTransform.right * m_v2Move.x;
-    zero.y = -20f * deltaTime;
-    CollisionFlags collisionFlags = m_Controller.Move(zero);
-    m_bUpdatePos = true;
-}
-
-
+			m_fCurSpeed = Mathf.MoveTowards(m_fCurSpeed, m_fCurSpeedMax, accelRate * deltaTime);
+			m_fCurSpeedSide = Mathf.MoveTowards(m_fCurSpeedSide, m_fCurSpeedSideMax, accelRate * deltaTime);
+		}
+		m_prevTurnPenalty = penalty;
+		m_lastYaw = currentYaw;
+		float num = 0f;
+		if (m_Property.GetValue(kProEnum.Char_MSEquip_Off) == 0f && m_curWeapon != null && m_curWeaponLvlInfo != null)
+		{
+			num = m_curWeaponLvlInfo.fMSDownRateEquip;
+			if (m_curWeapon.IsFire())
+			{
+				num += m_curWeaponLvlInfo.fMSDownRateShoot;
+			}
+		}
+		float num2 = m_Property.GetValue(kProEnum.Char_MoveSpeedUp);
+		if (num2 < 0f) num2 = 0f;
+		float inputPower = Mathf.Clamp01(m_fMoveInputPower);
+		float moveMultiplier = 1f - num;
+		if (moveMultiplier < 0f)
+			moveMultiplier = 0f;
+		float finalSpeed = (Mathf.Min(m_fCurSpeed, m_fCurSpeedSide) + num2);
+		finalSpeed *= moveMultiplier;
+		Vector2 finalMoveDir = m_v2MoveDir.normalized * inputPower;
+		Vector2 velocity = finalMoveDir * finalSpeed;
+		m_v2Move = velocity * deltaTime;
+		m_fCurMoveFrameDistance = velocity.magnitude;
+		Vector3 zero = Vector3.zero;
+		zero += m_ModelTransform.forward * m_v2Move.y;
+		zero += m_ModelTransform.right * m_v2Move.x;
+		zero.y = -20f * deltaTime;
+		CollisionFlags collisionFlags = m_Controller.Move(zero);
+		m_bUpdatePos = true;
+	}
 
 	public new void LateUpdate()
 	{
@@ -654,6 +656,32 @@ public new void FixedUpdate()
 				cTaskCollection.AddDamage(m_nCarryItemID, fDmg);
 			}
 		}
+		if (fDmg < 0f && m_fHPMax > 0f)
+		{
+			float damageAmount = -fDmg;
+			int bloodEffect = 0;
+			if (damageAmount >= m_fHPMax * BLOOD_THRESHOLD_LARGE)
+			{
+				bloodEffect = BLOOD_EFFECT_LARGE;
+				m_fBloodDamageAccum = 0f;
+			}
+			else
+			{
+				m_fBloodDamageAccum += damageAmount;
+				if (m_fBloodDamageAccum >= m_fHPMax * BLOOD_THRESHOLD_SMALL)
+				{
+					bloodEffect = BLOOD_EFFECT_NORMAL;
+					m_fBloodDamageAccum = 0f;
+				}
+			}
+			if (bloodEffect > 0 && base.m_GameScene != null && m_BloodEffectPos != null)
+			{
+				base.m_GameScene.AddHitEffect(
+						m_BloodEffectPos.position,
+						Vector3.forward,
+						bloodEffect);
+			}
+		}
 		return base.OnHit(fDmg, pWeaponLvlInfo, sBodyPart);
 	}
 
@@ -758,6 +786,7 @@ public new void FixedUpdate()
 	public override void Revive(float fHP)
 	{
 		base.Revive(fHP);
+		m_fBloodDamageAccum = 0f;
 		iGameUIBase gameUI = base.m_GameScene.GetGameUI();
 		if (m_bCarryTaskItem && gameUI != null)
 		{

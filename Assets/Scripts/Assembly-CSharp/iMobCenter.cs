@@ -126,6 +126,8 @@ public class iMobCenter : iBaseCenter
 		newLevel.arrDropCount = baseLevel.arrDropCount;
 		newLevel.ltHardinessInfo = baseLevel.ltHardinessInfo;
 		newLevel.bIgnoreKnock = baseLevel.bIgnoreKnock;
+		newLevel.nBloodEffectNormal = baseLevel.nBloodEffectNormal;
+		newLevel.nBloodEffectLarge  = baseLevel.nBloodEffectLarge;
 		newLevel.nMinBoost = mobInfo.GetMinBoost();
 		newLevel.nMaxBoost = mobInfo.GetMaxBoost();
 		string scaleType = mobInfo.GetScaleType();
@@ -346,6 +348,21 @@ public class iMobCenter : iBaseCenter
 				for (int l = 0; l < array.Length && l < mobInfoLevel.arrDropCount.Length; l++)
 				{
 					mobInfoLevel.arrDropCount[l] = int.Parse(array[l]);
+				}
+			}
+			if (MyUtils.GetAttribute(childNode, "bloodeffect", ref value))
+			{
+				string[] array = value.Split(',');
+				if (array.Length == 1)
+				{
+					int effect = int.Parse(array[0].Trim());
+					mobInfoLevel.nBloodEffectNormal = effect;
+					mobInfoLevel.nBloodEffectLarge  = effect;
+				}
+				else if (array.Length >= 2)
+				{
+					mobInfoLevel.nBloodEffectNormal = int.Parse(array[0].Trim());
+					mobInfoLevel.nBloodEffectLarge  = int.Parse(array[1].Trim());
 				}
 			}
 			mobInfoLevel.ltHardinessInfo.Clear();

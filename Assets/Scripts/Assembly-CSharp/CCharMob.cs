@@ -147,6 +147,10 @@ public class CCharMob : CCharBase {
 
 	protected Dictionary<int, int> m_dictUseSkill;
 
+	private const int BLOOD_EFFECT_NORMAL = 1115;
+
+	private const int BLOOD_EFFECT_LARGE  = 1116;
+
 	public int MobType { get; set; }
 
 	public kMobBehaviour MobBehaviourMode {
@@ -168,6 +172,42 @@ public class CCharMob : CCharBase {
 		get {
 			return m_fHardinessMax;
 		}
+	}
+
+	private int GetWeaponBloodEffect(CWeaponInfoLevel weaponInfo)
+	{
+		bool useLarge = false;
+		if (weaponInfo != null)
+		{
+			switch (weaponInfo.nType)
+			{
+				case 0:
+				case 3:
+				case 5:
+					useLarge = true;
+					break;
+			}
+		}
+		return useLarge ? GetMobBloodEffectLarge() : GetMobBloodEffectNormal();
+	}
+
+	private int GetMobBloodEffectNormal()
+	{
+		if (m_curMobInfoLevel != null && m_curMobInfoLevel.nBloodEffectNormal > 0)
+			return m_curMobInfoLevel.nBloodEffectNormal;
+		return BLOOD_EFFECT_NORMAL;
+	}
+
+	private int GetMobBloodEffectLarge()
+	{
+		if (m_curMobInfoLevel != null)
+		{
+			if (m_curMobInfoLevel.nBloodEffectLarge > 0)
+				return m_curMobInfoLevel.nBloodEffectLarge;
+			if (m_curMobInfoLevel.nBloodEffectNormal > 0)
+				return m_curMobInfoLevel.nBloodEffectNormal;
+		}
+		return BLOOD_EFFECT_LARGE;
 	}
 
 	public new void Awake() {
@@ -335,6 +375,11 @@ public class CCharMob : CCharBase {
 		base.isDead = true;
 		m_DeadMode = nDeathMode;
 		ResetAI();
+		// Death always spawns the large blood effect, regardless of weapon type.
+		if (base.m_GameScene != null)
+		{
+			base.m_GameScene.AddHitEffect(GetBone(1).position, Vector3.forward, GetMobBloodEffectLarge());
+		}
 		base.m_GameScene.m_fCombatRatingData_DamageTotal += base.MaxHP;
 		bool bGoldBonusTriggered = false;
 		bool bCrystalTriggered = false;
@@ -578,7 +623,6 @@ public class CCharMob : CCharBase {
 		{
 			return false;
 		}
-
 		if (m_fHP <= 0f)
 		{
 			if (CGameNetManager.GetInstance().IsRoomMaster())
@@ -596,13 +640,11 @@ public class CCharMob : CCharBase {
 							break;
 					}
 				}
-
 				if (kDeadMode2 == kDeadMode.None && MobType == 1 && !(m_curTask is doUseSkillTask) &&
 				!(m_curTask is doHurtTask))
 				{
 					kDeadMode2 = kDeadMode.FlyDead;
 				}
-
 				OnDead(kDeadMode2);
 				if (CGameNetManager.GetInstance().IsConnected())
 				{
@@ -619,8 +661,14 @@ public class CCharMob : CCharBase {
 				if (!CGameNetManager.GetInstance().IsConnected())
 				{
 				}
+				if (base.m_GameScene != null)
+				{
+					base.m_GameScene.AddHitEffect(
+							GetBone(1).position,
+							Vector3.forward,
+							GetWeaponBloodEffect(pWeaponLvlInfo));
+				}
 			}
-
 			if (m_nCarryGoldMax > 0 && m_nCarryGoldCur > 0)
 			{
 				int num = Mathf.FloorToInt((float)m_nCarryGoldMax * 0.5f * fDmg / m_fHPMax);
@@ -628,7 +676,6 @@ public class CCharMob : CCharBase {
 				{
 					num = 1;
 				}
-
 				m_nCarryGoldCur -= num;
 				GameObject poolObject = PrefabManager.GetPoolObject(302, 0f);
 				if (poolObject != null)
@@ -643,7 +690,6 @@ public class CCharMob : CCharBase {
 				}
 			}
 		}
-
 		return true;
 	}
 

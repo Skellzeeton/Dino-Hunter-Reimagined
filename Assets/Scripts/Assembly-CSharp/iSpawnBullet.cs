@@ -225,7 +225,6 @@ public class iSpawnBullet : MonoBehaviour
 				m_GameScene.AddDamageText(damage, target.GetBone(1).position, Color.red, bCritical);
 			else
 				m_GameScene.AddDamageText(damage, target.GetBone(1).position, bCritical);
-			m_GameScene.AddHitEffect(target.GetBone(1).position, Vector3.forward, 1116);
 		}
 		if (!actor.IsMonster() && !m_GameScene.IsMyself(actor))
 			return;

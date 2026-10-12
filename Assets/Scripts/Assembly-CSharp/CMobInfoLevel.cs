@@ -75,6 +75,10 @@ public class CMobInfoLevel
     
     public float nCrystalRate = 0.2f;
 
+    public int nBloodEffectNormal = 0;
+
+    public int nBloodEffectLarge  = 0;
+
     public int nDropGroup;
 
     public int[] arrDropCount;

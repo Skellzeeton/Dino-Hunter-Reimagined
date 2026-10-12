@@ -330,6 +330,10 @@ public class PrefabPath
 	
 	public const int hit_staff_weapon002 = 1117;
 
+	public const int hit_blood_green = 1118;
+
+	public const int hit_blood_yellow = 1119;
+
 	public const int weapon_008_effect = 1150;
 
 	public const int weapon_010_effect = 1151;

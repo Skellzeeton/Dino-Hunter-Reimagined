@@ -1160,7 +1160,7 @@ public class iGameSceneBase
 				}
 			}
 		}
-		PrefabManager.AddPool(1115, 50);
+		PrefabManager.AddPool(1115, 10);
 	}
 
 	private void EnforceTimeScale()
