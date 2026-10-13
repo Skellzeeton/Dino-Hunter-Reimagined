@@ -1001,6 +1001,23 @@ public class Scene_MainMenu : MonoBehaviour
 		}
 	}
 
+	public void TUIEvent_BtnAimAssist(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 1 || event_type == 2)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Button");
+			}
+			SettingsManager.Instance.AimAssistEnabled =
+			!SettingsManager.Instance.AimAssistEnabled;
+			if (popup_option != null)
+			{
+				popup_option.RefreshAimAssist();
+			}
+		}
+	}
+
 	public void TUIEvent_MusicVolume(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
 		if (event_type != TUISlider.OnSliderChange)

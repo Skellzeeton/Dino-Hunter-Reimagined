@@ -35,6 +35,7 @@ public class SettingsManager : MonoBehaviour
         public float mouseSensitivity = DefaultSensitivity;
         public int lastSaveSlot = 0;
         public bool postProcessingEnabled = true;
+        public bool aimAssistEnabled = false;
     }
 
     private SettingsData _data = new SettingsData();
@@ -118,6 +119,20 @@ public class SettingsManager : MonoBehaviour
                 _dirty = true;
                 Save();
                 PostProcessingChanged?.Invoke(value);
+            }
+        }
+    }
+
+    public bool AimAssistEnabled
+    {
+        get => _data.aimAssistEnabled;
+        set
+        {
+            if (_data.aimAssistEnabled != value)
+            {
+                _data.aimAssistEnabled = value;
+                _dirty = true;
+                Save();
             }
         }
     }

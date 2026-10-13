@@ -44,7 +44,6 @@ public class CControlWindows : CControlBase
 				m_GameScene.SetGamePause(true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
-
 			}
 			else if (m_GameScene.GameStatus == iGameSceneBase.kGameStatus.Pause)
 			{
@@ -169,14 +168,17 @@ public class CControlWindows : CControlBase
 		else
 		{
 			m_User.MoveByCompass(zero.x, zero.y);
-			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
-			m_User.LookAt(ray.GetPoint(1000f));
-
 		}
 		if (Screen.lockCursor)
 		{
-			float sensitivityMultiplier = SettingsManager.SensitivityMultiplier;
+			float aimAssist = m_GameScene.GetAimAssistTurnMultiplier();
+			float sensitivityMultiplier = SettingsManager.SensitivityMultiplier * aimAssist;
 			float axis = Input.GetAxis("Mouse X");
+			float axis2 = Input.GetAxis("Mouse Y");
+			if (axis != 0f || axis2 != 0f)
+			{
+				m_GameScene.NotifyPlayerAimInput();
+			}
 			if (axis != 0f)
 			{
 				m_Camera.Yaw(axis * 135f * Time.deltaTime * sensitivityMultiplier);
@@ -184,10 +186,8 @@ public class CControlWindows : CControlBase
 				{
 					m_User.SetYaw(m_Camera.GetYaw());
 					Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
-					m_User.LookAt(ray.GetPoint(1000f));
 				}
 			}
-			float axis2 = Input.GetAxis("Mouse Y");
 			if (axis2 != 0f)
 			{
 				m_Camera.Pitch(axis2 * 135f * Time.deltaTime * sensitivityMultiplier);
@@ -196,7 +196,6 @@ public class CControlWindows : CControlBase
 			{
 				if (m_User.IsCanAim() && (axis != 0f || axis2 != 0f))
 				{
-
 				}
 				if (Mathf.Abs(axis) > 0.1f || Mathf.Abs(axis2) > 0.1f)
 				{
@@ -248,7 +247,6 @@ public class CControlWindows : CControlBase
 					num = 0;
 				}
 			}
-
 			m_User.SwitchWeapon(num);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
@@ -379,6 +377,11 @@ public class CControlWindows : CControlBase
 			}
 		}
 #endif
+		if (m_User.IsCanAim())
+		{
+			Ray aimRay = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
+			m_User.LookAt(aimRay.GetPoint(1000f));
+		}
 	}
 
 	public override void LateUpdate(float deltaTime)

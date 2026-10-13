@@ -198,6 +198,8 @@ public class iGameSceneBase
 
 	protected float m_fAssistAimRate;
 
+	protected float m_fLastPlayerAimInputTime = -10f;
+
 	protected iBuilding m_Building;
 
 	protected float m_fCurEggLife;
@@ -3271,6 +3273,11 @@ public class iGameSceneBase
 		return list;
 	}
 
+	public void NotifyPlayerAimInput()
+	{
+		m_fLastPlayerAimInputTime = Time.time;
+	}
+
 	public bool IsAssistAim()
 	{
 		return m_AssistAimState != kAssistAimState.None;
@@ -3278,14 +3285,130 @@ public class iGameSceneBase
 
 	public void AssistAim_Start(float fDelayTime = 0.5f)
 	{
+		if (!SettingsManager.Instance.AimAssistEnabled)
+			return;
+		m_AssistAimState = kAssistAimState.Normal;
+		m_fAssistAimCount = 0f;
+		m_fAssistAimRate = fDelayTime;
 	}
 
 	public void AssistAim_Stop()
 	{
+		m_AssistAimState = kAssistAimState.None;
+		m_AssistTarget = null;
+		m_AssistBone = null;
+	}
+
+	public float GetAimAssistTurnMultiplier()
+	{
+		if (!SettingsManager.Instance.AimAssistEnabled)
+			return 1f;
+		if (IsUsingMeleeWeapon())
+			return 1f;
+		if (m_AssistTarget == null || m_AssistTarget.isDead)
+			return 1f;
+		return 0.75f;
+	}
+
+	protected bool IsUsingMeleeWeapon()
+	{
+		if (m_User == null) return true;
+		CWeaponBase weapon = m_User.GetWeapon();
+		if (weapon == null) return true;
+		if (weapon.CurWeaponLvlInfo == null) return true;
+		return weapon.CurWeaponLvlInfo.nType == 1;
 	}
 
 	protected void UpdateAssistAim(float deltaTime)
 	{
+		if (!SettingsManager.Instance.AimAssistEnabled)
+		{
+			m_AssistTarget = null;
+			m_AssistBone   = null;
+			return;
+		}
+		if (m_User == null || m_User.isDead)          { m_AssistTarget = null; m_AssistBone = null; return; }
+		if (m_CameraTrail == null)                     { m_AssistTarget = null; m_AssistBone = null; return; }
+		if (m_MobMap == null || m_MobMap.Count == 0)   { m_AssistTarget = null; m_AssistBone = null; return; }
+		if (!m_User.IsCanAim())                        { m_AssistTarget = null; m_AssistBone = null; return; }
+		if (IsUsingMeleeWeapon())
+		{
+			m_AssistTarget = null;
+			m_AssistBone   = null;
+			return;
+		}
+		Camera cam = m_CameraTrail.GetComponent<Camera>();
+		if (cam == null) return;
+		Vector3 camPos = cam.transform.position;
+		Vector3 camFwd = cam.transform.forward;
+		const float maxAngleDeg         = 22f;
+		const float maxScreenRadiusFrac = 0.35f;
+		const float maxDistance         = 80f;
+		const int occluderLayerMask = (1 << 29) | (1 << 31);
+		CCharMob  bestTarget = null;
+		Transform bestBone   = null;
+		float     bestScore  = float.MaxValue;
+		float halfW = Screen.width  * 0.5f;
+		float halfH = Screen.height * 0.5f;
+		foreach (CCharMob mob in m_MobMap.Values)
+		{
+			if (mob == null || mob.isDead) continue;
+			if (mob.gameObject == null || !mob.gameObject.activeInHierarchy) continue;
+			Transform bone = mob.GetBone(1);
+			Vector3 aimPoint = bone != null ? bone.position : mob.Pos;
+			Vector3 toMob = aimPoint - camPos;
+			float dist = toMob.magnitude;
+			if (dist < 0.5f || dist > maxDistance) continue;
+			float dot = Vector3.Dot(camFwd, toMob / dist);
+			if (dot <= 0.1f) continue;
+			float angleDeg = Mathf.Acos(Mathf.Clamp(dot, -1f, 1f)) * Mathf.Rad2Deg;
+			if (angleDeg > maxAngleDeg) continue;
+			Vector3 sp = cam.WorldToScreenPoint(aimPoint);
+			if (sp.z <= 0f) continue;
+			float nx = Mathf.Abs(sp.x - halfW) / halfW;
+			float ny = Mathf.Abs(sp.y - halfH) / halfH;
+			if (nx > maxScreenRadiusFrac || ny > maxScreenRadiusFrac) continue;
+			if (Physics.Raycast(camPos, toMob / dist, dist, occluderLayerMask, QueryTriggerInteraction.Ignore))
+				continue;
+			float screenDist = Mathf.Sqrt(nx * nx + ny * ny);
+			float score = screenDist * 50f + angleDeg + dist * 0.05f;
+			if (score < bestScore)
+			{
+				bestScore  = score;
+				bestTarget = mob;
+				bestBone   = bone;
+			}
+		}
+		if (bestTarget == null)
+		{
+			m_AssistTarget = null;
+			m_AssistBone   = null;
+			return;
+		}
+		m_AssistTarget = bestTarget;
+		m_AssistBone   = bestBone;
+		bool playerActive = m_User.IsFire()
+		|| (Time.time - m_fLastPlayerAimInputTime) <= 0.14f;
+		if (!playerActive)
+			return;
+		Vector3 aimPos = bestBone != null ? bestBone.position : bestTarget.Pos;
+		Vector3 toTgt  = (aimPos - camPos).normalized;
+		float yawToTgt   = Mathf.Atan2(toTgt.x, toTgt.z) * Mathf.Rad2Deg;
+		float yawCur     = Mathf.Atan2(camFwd.x, camFwd.z) * Mathf.Rad2Deg;
+		float deltaYaw   = Mathf.DeltaAngle(yawCur, yawToTgt);
+		float pitchToTgt = Mathf.Asin(Mathf.Clamp(toTgt.y, -1f, 1f)) * Mathf.Rad2Deg;
+		float pitchCur   = Mathf.Asin(Mathf.Clamp(camFwd.y, -1f, 1f)) * Mathf.Rad2Deg;
+		float deltaPitch = pitchToTgt - pitchCur;
+		if (Mathf.Abs(deltaYaw) > 18f || Mathf.Abs(deltaPitch) > 14f)
+			return;
+		float proximity     = 1f - Mathf.Clamp01(bestScore / 60f);
+		float pullDegPerSec = Mathf.Lerp(1.75f, 6.25f, proximity);
+		float yawStep   = Mathf.Clamp(deltaYaw,   -1f, 1f) * pullDegPerSec * deltaTime;
+		float pitchStep = Mathf.Clamp(deltaPitch, -1f, 1f) * pullDegPerSec * 0.65f * deltaTime;
+		yawStep   = Mathf.Clamp(yawStep,   -Mathf.Abs(deltaYaw),   Mathf.Abs(deltaYaw));
+		pitchStep = Mathf.Clamp(pitchStep, -Mathf.Abs(deltaPitch), Mathf.Abs(deltaPitch));
+		m_CameraTrail.Yaw(yawStep);
+		m_CameraTrail.Pitch(pitchStep);
 	}
 
 	protected void UpdateScreenTipsVisibility()

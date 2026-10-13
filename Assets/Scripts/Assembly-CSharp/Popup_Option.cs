@@ -4,21 +4,19 @@ public class Popup_Option : MonoBehaviour
 {
 	public TUIButtonPush btn_music;
 	public TUIButtonPush btn_sfx;
+	public TUIButtonPush btn_post_processing;
+	public TUIButtonPush btn_aim_assist;
 	public TUISlider slider_sensitivity;
 	public TUILabel  label_sensitivity;
 	public TUISlider slider_music;
 	public TUISlider slider_sfx;
 	public TUILabel  label_music;
 	public TUILabel  label_sfx;
-
-	public TUIButtonPush btn_post_processing;
-
 	public Transform go_popup;
-
 	private bool music_open_now = true;
 	private bool sfx_open_now = true;
-
 	private bool post_processing_enabled = true;
+	private bool aim_assist_enabled = false;
 
 	public void SetOption(bool m_music_open, bool m_sfx_open)
 	{
@@ -32,6 +30,7 @@ public class Popup_Option : MonoBehaviour
 		RefreshMusicVolume();
 		RefreshSFXVolume();
 		RefreshPostProcessing();
+		RefreshAimAssist();
 	}
 
 	public void RefreshSensitivity()
@@ -81,6 +80,16 @@ public class Popup_Option : MonoBehaviour
 		}
 	}
 
+	public void RefreshAimAssist()
+	{
+		aim_assist_enabled = SettingsManager.Instance.AimAssistEnabled;
+		if (btn_aim_assist != null)
+		{
+			btn_aim_assist.m_bPressed = !aim_assist_enabled;
+			btn_aim_assist.Show();
+		}
+	}
+
 	public void Show()
 	{
 		base.transform.localPosition = new Vector3(0f, 0f, base.transform.localPosition.z);
@@ -118,6 +127,16 @@ public class Popup_Option : MonoBehaviour
 		}
 	}
 
+	public void SetAimAssistNow()
+	{
+		aim_assist_enabled = !aim_assist_enabled;
+		if (btn_aim_assist != null)
+		{
+			btn_aim_assist.m_bPressed = !aim_assist_enabled;
+			btn_aim_assist.Show();
+		}
+	}
+
 	public bool GetMusicNow() => music_open_now;
 	public bool GetSFXNow()   => sfx_open_now;
 
@@ -125,6 +144,8 @@ public class Popup_Option : MonoBehaviour
 	{
 		return post_processing_enabled;
 	}
+
+	public bool GetAimAssistNow() => aim_assist_enabled;
 
 	public void RestoreOption()
 	{
@@ -136,5 +157,6 @@ public class Popup_Option : MonoBehaviour
 		RefreshMusicVolume();
 		RefreshSFXVolume();
 		RefreshPostProcessing();
+		RefreshAimAssist();
 	}
 }

@@ -27,6 +27,7 @@ public class CControlIphone : CControlBase
 		}
 		if (m_User.IsCanAim() && (m_v2Slash.x != 0f || m_v2Slash.y != 0f))
 		{
+			m_GameScene.NotifyPlayerAimInput();
 			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
 			m_User.LookAt(ray.GetPoint(1000f));
 		}
@@ -35,10 +36,9 @@ public class CControlIphone : CControlBase
 	public override void LateUpdate(float deltaTime)
 	{
 		if (m_GameScene == null || m_User == null || m_v2Slash == Vector2.zero)
-		{
 			return;
-		}
-		float sensitivityMultiplier = SettingsManager.SensitivityMultiplier;
+		float aimAssist = m_GameScene.GetAimAssistTurnMultiplier();
+		float sensitivityMultiplier = SettingsManager.SensitivityMultiplier * aimAssist;
 		Vector2 input = Vector2.ClampMagnitude(m_v2Slash, 1f);
 		if (Mathf.Abs(input.x) > 0.001f)
 		{
