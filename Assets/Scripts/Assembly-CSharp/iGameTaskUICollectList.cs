@@ -25,19 +25,13 @@ public class iGameTaskUICollectList : iGameTaskUIBase
 	public override void UpdateTask(float deltaTime)
 	{
 		if (m_TaskCollect == null)
-		{
 			return;
-		}
 		if (m_TaskTime != null)
-		{
 			m_TaskTime.SetTime(m_TaskCollect.TaskTime);
-		}
 		for (int i = 0; i < m_TaskCollect.m_ltCollections.Count; i++)
 		{
 			if (m_arrTaskUICollect[i] == null)
-			{
 				continue;
-			}
 			CTaskCollection.CCollect cCollect = m_TaskCollect.m_ltCollections[i];
 			if (cCollect != null)
 			{
@@ -47,7 +41,10 @@ public class iGameTaskUICollectList : iGameTaskUIBase
 				}
 				if (cCollect.isLifeChange)
 				{
-					m_arrTaskUICollect[i].SetPrecents(cCollect.m_fCurLife / cCollect.m_fMaxLife);
+					m_arrTaskUICollect[i].SetPrecents(
+							cCollect.m_fMaxLife > 0f ? cCollect.m_fCurLife / cCollect.m_fMaxLife : 0f
+					);
+					m_arrTaskUICollect[i].SetLife(cCollect.m_fCurLife, cCollect.m_fMaxLife);
 					cCollect.isLifeChange = false;
 				}
 			}

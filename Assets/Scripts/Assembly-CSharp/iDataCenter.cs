@@ -143,6 +143,11 @@ public class iDataCenter
 
 	private int m_nDifficulty = 0;
 
+	public static bool IsDecember()
+	{
+		return System.DateTime.Now.Month == 12;
+	}
+
 	public string GameVersion
 	{
 		get { return m_sGameVersion; }

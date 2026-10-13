@@ -1556,6 +1556,7 @@ public class iGameSceneBase
 		case kGameStatus.Gameing_IAP:
 			break;
 		}
+		UpdateScreenTipsVisibility();
 	}
 
 	public virtual void FixedUpdate(float deltaTime)
@@ -3285,6 +3286,46 @@ public class iGameSceneBase
 
 	protected void UpdateAssistAim(float deltaTime)
 	{
+	}
+
+	protected void UpdateScreenTipsVisibility()
+	{
+		bool forceHidden = !(m_Status == kGameStatus.Gameing || m_Status == kGameStatus.Pause);
+		if (m_ltItem != null)
+		{
+			for (int i = 0; i < m_ltItem.Count; i++)
+			{
+				GameObject item = m_ltItem[i];
+				if (item == null) continue;
+
+				iItem component = item.GetComponent<iItem>();
+				if (component != null && component.m_ScreenTip != null)
+				{
+					component.m_ScreenTip.SetForceHidden(forceHidden);
+				}
+			}
+		}
+		if (m_ltScreenTipTriggerEnd != null)
+		{
+			for (int i = 0; i < m_ltScreenTipTriggerEnd.Count; i++)
+			{
+				CPointScreenTip item = m_ltScreenTipTriggerEnd[i];
+				if (item != null && item.screentip != null)
+				{
+					item.screentip.SetForceHidden(forceHidden);
+				}
+			}
+		}
+		if (m_dictWorldMonsterScreenTips != null)
+		{
+			foreach (gyUIScreenTip tip in m_dictWorldMonsterScreenTips.Values)
+			{
+				if (tip != null)
+				{
+					tip.SetForceHidden(forceHidden);
+				}
+			}
+		}
 	}
 
 	public void ShowItemScreenTip(bool bShow)

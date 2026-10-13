@@ -15,23 +15,18 @@ public abstract class UIWidget : MonoBehaviour
 		BottomRight
 	}
 
-	[HideInInspector]
 	[SerializeField]
 	private Material mMat;
 
 	[SerializeField]
-	[HideInInspector]
 	private Texture mTex;
 
-	[HideInInspector]
 	[SerializeField]
 	private Color mColor = Color.white;
 
 	[SerializeField]
-	[HideInInspector]
 	private Pivot mPivot = Pivot.Center;
 
-	[HideInInspector]
 	[SerializeField]
 	private int mDepth;
 

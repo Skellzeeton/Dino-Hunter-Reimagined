@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class gyUIScreenTip : MonoBehaviour
-{
+public class gyUIScreenTip : MonoBehaviour {
 	public float m_fCloseDistance = 10f;
 
 	public GameObject m_Actor;
@@ -23,6 +22,16 @@ public class gyUIScreenTip : MonoBehaviour
 	protected gyUIAnimationBump m_AnimItem;
 
 	protected gyUIAnimationHop m_AnimArrow;
+
+	protected bool m_bForceHidden;
+
+	public void SetForceHidden(bool bHidden)
+	{
+		if (m_bForceHidden == bHidden)
+			return;
+		m_bForceHidden = bHidden;
+		base.gameObject.SetActiveRecursive(m_bActive && !m_bForceHidden);
+	}
 
 	public bool isActive
 	{
@@ -50,30 +59,57 @@ public class gyUIScreenTip : MonoBehaviour
 
 	private void Update()
 	{
-		if (m_bActive && !(m_Actor == null) && !(m_Target == null))
+		if (!m_bActive || m_Actor == null || m_Target == null)
+			return;
+		Vector3 forward = m_Actor.transform.forward;
+		forward.y = 0f;
+		Vector3 toTarget = m_Target.transform.position - m_Actor.transform.position;
+		Vector3 toTargetDir = toTarget.normalized;
+		toTargetDir.y = 0f;
+		bool isInFront = Vector3.Dot(forward, toTargetDir) > 0f;
+		Vector3 screenPos = Camera.main.WorldToScreenPoint(m_Target.transform.position);
+		float halfW = Screen.width * 0.5f;
+		float halfH = Screen.height * 0.5f;
+		Vector2 localPos = new Vector2(screenPos.x - halfW, screenPos.y - halfH);
+		float tipTopExtent = 0f;
+		if (m_Arrow != null)
+			tipTopExtent += m_Arrow.transform.localScale.x;
+		if (m_Item != null)
+			tipTopExtent += m_Item.transform.localScale.x + m_Item.transform.localScale.y * 0.5f;
+		float tipHalfWidth = 0f;
+		if (m_Item != null)
+			tipHalfWidth = m_Item.transform.localScale.x * 0.5f;
+		if (m_Arrow != null)
+			tipHalfWidth = Mathf.Max(tipHalfWidth, m_Arrow.transform.localScale.x * 0.5f);
+		float screenTop    = Screen.height - tipTopExtent;
+		float screenLeft   = tipHalfWidth;
+		float screenRight  = Screen.width - tipHalfWidth;
+		bool isOnScreen =
+		screenPos.z > 0f &&
+		screenPos.x >= screenLeft && screenPos.x <= screenRight &&
+		screenPos.y >= 0f        && screenPos.y <= screenTop;
+		if (isOnScreen && isInFront)
 		{
-			bool flag = false;
-			Vector3 forward = m_Actor.transform.forward;
-			forward.y = 0f;
-			Vector3 vector = m_Target.transform.position - m_Actor.transform.position;
-			Vector3 normalized = vector.normalized;
-			normalized.y = 0f;
-			float num = Vector3.Dot(forward, normalized);
-			if (num > 0f)
+			SetPos_InScreen(localPos);
+		}
+		else
+		{
+			Vector2 dir;
+			if (screenPos.z > 0f)
 			{
-				flag = true;
-			}
-			num = Mathf.Acos(num) * 57.29578f;
-			num *= (float)((Vector3.Cross(forward, normalized).y < 0f) ? 1 : (-1));
-			Vector2 v2ScreenPos = Quaternion.Euler(new Vector3(0f, 0f, num)) * new Vector3(0f, 1f, 0f);
-			if (vector.sqrMagnitude <= m_fCloseDistance && IsInScreen(m_Target.transform.position, ref v2ScreenPos) && flag)
-			{
-				SetPos_InScreen(v2ScreenPos);
+				dir = localPos.sqrMagnitude > 0.0001f ? localPos.normalized : Vector2.up;
 			}
 			else
 			{
-				SetPos_OutScreen(v2ScreenPos * 10000f);
+				Vector2 flipped = new Vector2(-localPos.x, -localPos.y);
+				if (flipped.sqrMagnitude < 0.0001f)
+				{
+					Vector3 fwd3 = Camera.main.transform.forward;
+					flipped = new Vector2(-fwd3.x, -fwd3.z);
+				}
+				dir = flipped.sqrMagnitude > 0.0001f ? flipped.normalized : Vector2.up;
 			}
+			SetPos_OutScreen(dir);
 		}
 	}
 
@@ -99,28 +135,29 @@ public class gyUIScreenTip : MonoBehaviour
 		}
 	}
 
-	protected void SetPos_OutScreen(Vector2 v2ScreenPos)
+	protected void SetPos_OutScreen(Vector2 dir)
 	{
-		if (!(v2ScreenPos == Vector2.zero))
-		{
-			float num = (float)Screen.width * 0.5f;
-			float num2 = (float)Screen.height * 0.5f;
-			Vector2 vector = new Vector2(Mathf.Abs(v2ScreenPos.x), Mathf.Abs(v2ScreenPos.y));
-			float num3 = 0f;
-			num3 = ((!(vector.y / vector.x > num2 / num)) ? (num / vector.x * v2ScreenPos.magnitude) : (num2 / vector.y * v2ScreenPos.magnitude));
-			base.transform.localPosition = v2ScreenPos.normalized * num3;
-			m_Arrow.transform.right = v2ScreenPos.normalized;
-			m_Arrow.transform.localPosition = -m_Arrow.transform.right * m_Arrow.transform.localScale.x / 2f;
-			m_Item.transform.localPosition = -m_Arrow.transform.right * (m_Arrow.transform.localScale.x + m_Item.transform.localScale.x / 2f);
-			if (m_AnimArrow != null)
-			{
-				m_AnimArrow.Stop();
-			}
-			if (m_AnimItem != null)
-			{
-				m_AnimItem.Stop();
-			}
-		}
+		if (dir.sqrMagnitude < 0.0001f)
+			dir = Vector2.up;
+		dir = dir.normalized;
+		float halfW = Screen.width * 0.5f;
+		float halfH = Screen.height * 0.5f;
+		float absX = Mathf.Abs(dir.x);
+		float absY = Mathf.Abs(dir.y);
+		float scale;
+		if (absX * halfH > absY * halfW)
+			scale = halfW / absX;
+		else
+			scale = halfH / absY;
+		Vector2 pos = dir * scale;
+		base.transform.localPosition = pos;
+		m_Arrow.transform.right = dir;
+		m_Arrow.transform.localPosition = -m_Arrow.transform.right * m_Arrow.transform.localScale.x / 2f;
+		m_Item.transform.localPosition = -m_Arrow.transform.right * (m_Arrow.transform.localScale.x + m_Item.transform.localScale.x / 2f);
+		if (m_AnimArrow != null)
+			m_AnimArrow.Stop();
+		if (m_AnimItem != null)
+			m_AnimItem.Stop();
 	}
 
 	protected void SetPos_InScreen(Vector2 v2ScreenPos)

@@ -174,6 +174,13 @@ public class CCharMob : CCharBase {
 		}
 	}
 
+	private void RefreshChristmasHat()
+	{
+		if (m_ChristmasHat == null)
+			return;
+		m_ChristmasHat.gameObject.SetActiveRecursive(iDataCenter.IsDecember());
+	}
+
 	private int GetWeaponBloodEffect(CWeaponInfoLevel weaponInfo)
 	{
 		bool useLarge = false;
@@ -294,10 +301,19 @@ public class CCharMob : CCharBase {
 		}
 	}
 
-	public new void LateUpdate() {
+	public new void LateUpdate()
+	{
 		if (m_bActive)
 		{
 			base.LateUpdate();
+		}
+		if (m_ChristmasHat != null)
+		{
+			bool shouldBeActive = iDataCenter.IsDecember();
+			if (m_ChristmasHat.gameObject.activeSelf != shouldBeActive)
+			{
+				m_ChristmasHat.gameObject.SetActiveRecursive(shouldBeActive);
+			}
 		}
 	}
 
@@ -375,7 +391,6 @@ public class CCharMob : CCharBase {
 		base.isDead = true;
 		m_DeadMode = nDeathMode;
 		ResetAI();
-		// Death always spawns the large blood effect, regardless of weapon type.
 		if (base.m_GameScene != null)
 		{
 			base.m_GameScene.AddHitEffect(GetBone(1).position, Vector3.forward, GetMobBloodEffectLarge());
@@ -773,6 +788,7 @@ public class CCharMob : CCharBase {
 			SetLifeBarStyle(0, 1f);
 		}
 		InitAssistAimInfo();
+		RefreshChristmasHat();
 	}
 
 	public virtual void InitHardiness(int nMobID, int nMobLevel) {
@@ -951,6 +967,7 @@ public class CCharMob : CCharBase {
 		if (m_EntityDrop != null)
 			m_EntityDrop.ResetEntityDrop();
 		if (m_ModelBody != null) m_ModelBody.localScale = Vector3.one;
+		RefreshChristmasHat();
 		RestoreInitialTransformStates();
 	}
 
@@ -983,7 +1000,7 @@ public class CCharMob : CCharBase {
 		return true;
 	}
 
-	//u can make dinos go crazy with this SetFreeze section
+	//Edit the "if (ID == blank)" section to disable cooldowns for specific dinosaurs
 
 	public void SetFreeze(bool bFreeze, float fTime = 0f) {
 		if (ID == 60000)

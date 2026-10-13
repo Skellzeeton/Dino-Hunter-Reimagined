@@ -88,6 +88,9 @@ public class CCharBase : MonoBehaviour
 	[SerializeField]
 	public iEntityDrop m_EntityDrop;
 
+	[SerializeField]
+	protected Transform m_ChristmasHat;
+
 	protected Renderer[] m_ModelRenderer;
 
 	protected float m_fPitchMin;

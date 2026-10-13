@@ -22,6 +22,8 @@ public class Role_Control : MonoBehaviour
 		Exit
 	}
 
+	private const string CHRISTMAS_HAT_MODEL = "ChristmasHat";
+
 	public Transform prefab_role_101;
 
 	public Transform prefab_role_102;
@@ -262,6 +264,11 @@ public class Role_Control : MonoBehaviour
 		}
 	}
 
+	private static bool IsArmorHiddenScene()
+	{
+		return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Scene_Tavern";
+	}
+
 	private string GetWeaponSoundName(WeaponType weapontype, bool isAttack = false)
 	{
 		if (!isAttack)
@@ -339,6 +346,25 @@ public class Role_Control : MonoBehaviour
 	{
 		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
 		return (dc.AvatarHead > 0 && dc.AvatarHead != 101) || (dc.AvatarUpper > 0 && dc.AvatarUpper != 301) || (dc.AvatarLower > 0 && dc.AvatarLower != 501);
+	}
+
+	private bool CanWearChristmasHat()
+	{
+		if (role_now == null)
+			return true;
+
+		if (role_now == role_102 || role_now == role_105)
+			return false;
+
+		return true;
+	}
+
+	private string GetEffectiveHeadEquipModel(CCharacterInfoLevel info)
+	{
+		if (info == null) return string.Empty;
+		if (iDataCenter.IsDecember() && CanWearChristmasHat())
+			return CHRISTMAS_HAT_MODEL;
+		return info.sHeadEquipModel;
 	}
 
 	public void SetRotation(float wparam, float lparam)
@@ -784,8 +810,10 @@ public class Role_Control : MonoBehaviour
 		if (charLevelInfo == null) return;
 		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
 		int effectiveHead = (dc != null && dc.AvatarHead > 0) ? dc.AvatarHead : charLevelInfo.nAvatarHead;
-		bool isRole107 = IsCurrentRole107();
-		if (isRole107 && effectiveHead == 101 && !string.IsNullOrEmpty(charLevelInfo.sHeadEquipModel))
+		string effectiveHeadEquipModel = GetEffectiveHeadEquipModel(charLevelInfo);
+		bool isChristmasOverride = (effectiveHeadEquipModel == CHRISTMAS_HAT_MODEL);
+		bool bypassHeadCheck = isChristmasOverride && IsArmorHiddenScene();
+		if ((effectiveHead == 101 || bypassHeadCheck) && !string.IsNullOrEmpty(effectiveHeadEquipModel))
 		{
 			Transform headBone = role_now.Find("Bip01 Head");
 			if (headBone == null)
@@ -810,21 +838,21 @@ public class Role_Control : MonoBehaviour
 				List<GameObject> toDestroy = new List<GameObject>();
 				foreach (Transform child in headBone)
 				{
-					if (child.name.Contains("HeadEquip") || child.name.Contains(charLevelInfo.sHeadEquipModel))
+					if (child.name.Contains("HeadEquip") ||
+					child.name.Contains(effectiveHeadEquipModel) ||
+					child.name.Contains(CHRISTMAS_HAT_MODEL))
 					{
 						toDestroy.Add(child.gameObject);
 					}
 				}
 				foreach (GameObject obj in toDestroy)
-				{
 					Destroy(obj);
-				}
-				string headEquipPath = "artist/model/equip/" + charLevelInfo.sHeadEquipModel;
+				string headEquipPath = "artist/model/equip/" + effectiveHeadEquipModel;
 				GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
 				if (headEquipPrefab != null)
 				{
 					GameObject headEquipInstance = Instantiate(headEquipPrefab);
-					headEquipInstance.name = "HeadEquip_" + charLevelInfo.sHeadEquipModel;
+					headEquipInstance.name = "HeadEquip_" + effectiveHeadEquipModel;
 					headEquipInstance.transform.parent = headBone;
 					headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
 					headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;
@@ -850,15 +878,14 @@ public class Role_Control : MonoBehaviour
 				List<GameObject> toDestroy = new List<GameObject>();
 				foreach (Transform child in headBone)
 				{
-					if (child.name.Contains("HeadEquip"))
+					if (child.name.Contains("HeadEquip") ||
+					child.name.Contains(CHRISTMAS_HAT_MODEL))
 					{
 						toDestroy.Add(child.gameObject);
 					}
 				}
 				foreach (GameObject obj in toDestroy)
-				{
 					Destroy(obj);
-				}
 			}
 		}
 		if (!forceLoad && !HasArmorEquipped())
@@ -914,7 +941,9 @@ public class Role_Control : MonoBehaviour
 			effectiveHead = overrideHeadId;
 		else
 			effectiveHead = (dc.AvatarHead > 0) ? dc.AvatarHead : charLevelInfo.nAvatarHead;
-		bool isRole107 = IsCurrentRole107();
+		string effectiveHeadEquipModel = GetEffectiveHeadEquipModel(charLevelInfo);
+		bool isChristmasOverride = (effectiveHeadEquipModel == CHRISTMAS_HAT_MODEL);
+		bool bypassHeadCheck = isChristmasOverride && IsArmorHiddenScene();
 		Transform headBone = role_now.Find("Bip01 Head");
 		if (headBone == null)
 			headBone = FindBoneRecursive(role_now, "Bip01 Head");
@@ -923,28 +952,27 @@ public class Role_Control : MonoBehaviour
 			List<GameObject> toDestroy = new List<GameObject>();
 			foreach (Transform child in headBone)
 			{
-				if (child.name.Contains("HeadEquip"))
+				if (child.name.Contains("HeadEquip") ||
+				child.name.Contains(CHRISTMAS_HAT_MODEL))
+				{
 					toDestroy.Add(child.gameObject);
+				}
 			}
 			foreach (GameObject obj in toDestroy)
 				Destroy(obj);
 		}
-		if (isRole107 && effectiveHead == 101 && !string.IsNullOrEmpty(charLevelInfo.sHeadEquipModel))
+		if ((effectiveHead == 101 || bypassHeadCheck) && !string.IsNullOrEmpty(effectiveHeadEquipModel))
 		{
 			if (headBone == null)
-			{
-				headBone = role_now.Find("Bip01 Head");
-				if (headBone == null)
-					headBone = FindBoneRecursive(role_now, "Bip01 Head");
-			}
+				headBone = FindBoneRecursive(role_now, "Bip01 Head");
 			if (headBone != null)
 			{
-				string headEquipPath = "artist/model/equip/" + charLevelInfo.sHeadEquipModel;
+				string headEquipPath = "artist/model/equip/" + effectiveHeadEquipModel;
 				GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
 				if (headEquipPrefab != null)
 				{
 					GameObject headEquipInstance = Instantiate(headEquipPrefab);
-					headEquipInstance.name = "HeadEquip_" + charLevelInfo.sHeadEquipModel;
+					headEquipInstance.name = "HeadEquip_" + effectiveHeadEquipModel;
 					headEquipInstance.transform.parent = headBone;
 					headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
 					headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;

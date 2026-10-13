@@ -4,19 +4,18 @@ using UnityEngine;
 public class iGameTaskUIDefence : iGameTaskUIBase
 {
 	public UIFilledSprite mSpritePrecents;
-
 	public UILabel mLabelCurWave;
-
 	public UILabel mLabelMaxWave;
-
+	public UILabel m_LabelLife;
 	protected float m_fLabelCurWaveScale;
-
 	protected CTaskDefence m_TaskDefence;
 
 	private void Awake()
 	{
 		base.Height = 25f;
 		m_fLabelCurWaveScale = mLabelCurWave.transform.localScale.x;
+		if (m_LabelLife != null && base.Height < m_LabelLife.transform.localScale.y)
+			base.Height = m_LabelLife.transform.localScale.y;
 	}
 
 	public override void UpdateTask(float deltaTime)
@@ -24,9 +23,7 @@ public class iGameTaskUIDefence : iGameTaskUIBase
 		if (m_TaskDefence != null)
 		{
 			if (m_TaskTime != null)
-			{
 				m_TaskTime.SetTime(m_TaskDefence.TaskTime);
-			}
 			if (m_TaskDefence.isUpdateData)
 			{
 				m_TaskDefence.isUpdateData = false;
@@ -35,7 +32,10 @@ public class iGameTaskUIDefence : iGameTaskUIBase
 			if (m_TaskDefence.isLifeChange)
 			{
 				m_TaskDefence.isLifeChange = false;
-				SetPrecents(m_TaskDefence.m_fCurLife / m_TaskDefence.m_fMaxLife);
+				SetPrecents(
+						m_TaskDefence.m_fMaxLife > 0f ? m_TaskDefence.m_fCurLife / m_TaskDefence.m_fMaxLife : 0f
+				);
+				SetLife(m_TaskDefence.m_fCurLife, m_TaskDefence.m_fMaxLife);
 			}
 		}
 	}
@@ -47,24 +47,33 @@ public class iGameTaskUIDefence : iGameTaskUIBase
 		{
 			SetCurNum(m_TaskDefence.m_nCurWave);
 			SetMaxNum(m_TaskDefence.m_nMaxWave);
-			SetPrecents(m_TaskDefence.m_fCurLife / m_TaskDefence.m_fMaxLife);
+			SetPrecents(
+					m_TaskDefence.m_fMaxLife > 0f ? m_TaskDefence.m_fCurLife / m_TaskDefence.m_fMaxLife : 0f
+			);
+			SetLife(m_TaskDefence.m_fCurLife, m_TaskDefence.m_fMaxLife);
 			AddTimeLimitUI(m_TaskDefence.TaskTime);
 		}
 	}
 
 	public void SetPrecents(float fPrecents)
 	{
-		if (!(mSpritePrecents == null))
-		{
+		if (mSpritePrecents != null)
 			mSpritePrecents.fillAmount = fPrecents;
-		}
+	}
+
+	public void SetLife(float fCurLife, float fMaxLife)
+	{
+		if (m_LabelLife == null)
+			return;
+		m_LabelLife.text = Mathf.CeilToInt(fCurLife) + "/" + Mathf.CeilToInt(fMaxLife);
 	}
 
 	public void SetCurNum(int nNum)
 	{
-		if (!(mLabelCurWave == null))
+		if (mLabelCurWave != null)
 		{
 			mLabelCurWave.text = nNum.ToString();
+
 			TweenScale tweenScale = TweenScale.Begin(mLabelCurWave.gameObject, 0.5f, Vector3.zero);
 			tweenScale.from = new Vector3(m_fLabelCurWaveScale, m_fLabelCurWaveScale, 0f) * 1.5f;
 			tweenScale.to = new Vector3(m_fLabelCurWaveScale, m_fLabelCurWaveScale, 0f);
@@ -73,9 +82,7 @@ public class iGameTaskUIDefence : iGameTaskUIBase
 
 	public void SetMaxNum(int nNum)
 	{
-		if (!(mLabelMaxWave == null))
-		{
+		if (mLabelMaxWave != null)
 			mLabelMaxWave.text = nNum.ToString();
-		}
 	}
 }

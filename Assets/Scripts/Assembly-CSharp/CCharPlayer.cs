@@ -168,6 +168,8 @@ public class CCharPlayer : CCharBase
 
 	protected gyUIPlayerHUD m_NetPlayerHUD;
 
+	private const string CHRISTMAS_HAT_MODEL = "ChristmasHat";
+
 	public int AvatarHead
 	{
 		get
@@ -323,6 +325,24 @@ public class CCharPlayer : CCharBase
 		{
 			m_nAvatarStone = value;
 		}
+	}
+
+	private bool CanWearChristmasHat()
+	{
+		int effectiveId = base.ID;
+
+		iDataCenter dc = iGameApp.GetInstance().m_GameData.GetDataCenter();
+		if (dc != null)
+		{
+			bool hasArmor =
+			(dc.AvatarHead  > 0 && dc.AvatarHead  != 101) ||
+			(dc.AvatarUpper > 0 && dc.AvatarUpper != 301) ||
+			(dc.AvatarLower > 0 && dc.AvatarLower != 501);
+			if (hasArmor)
+				effectiveId = 7;
+		}
+		int model = effectiveId >= 100 ? effectiveId : effectiveId + 100;
+		return model != 102 && model != 105;
 	}
 
 	public Vector3 MoveDir
@@ -622,25 +642,34 @@ public class CCharPlayer : CCharBase
 		CCharacterInfoLevel levelOneInfo = null;
 		if (m_curCharacterInfo != null)
 			levelOneInfo = m_curCharacterInfo.Get(1);
-		if (levelOneInfo != null &&
-		!string.IsNullOrEmpty(levelOneInfo.sHeadEquipModel) &&
-		m_nAvatarHead == 101)
+		if (levelOneInfo != null)
 		{
-			Transform headBone = m_ModelHead;
-			if (headBone != null)
+			string headEquipModel = levelOneInfo.sHeadEquipModel;
+			if (iDataCenter.IsDecember() && CanWearChristmasHat())
+				headEquipModel = CHRISTMAS_HAT_MODEL;
+			if (!string.IsNullOrEmpty(headEquipModel) && m_nAvatarHead == 101)
 			{
-				string headEquipPath = "artist/model/equip/" + levelOneInfo.sHeadEquipModel;
-				GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
-				if (headEquipPrefab != null)
+				Transform headBone = m_ModelHead;
+				if (headBone != null)
 				{
 					foreach (Transform child in headBone)
-						if (child.name.Contains("Equip") || child.name.Contains("equip"))
+					{
+						if (child.name.Contains("Equip") || child.name.Contains("equip") ||
+						child.name.Contains(CHRISTMAS_HAT_MODEL))
+						{
 							Destroy(child.gameObject);
-					GameObject headEquipInstance = Object.Instantiate(headEquipPrefab);
-					headEquipInstance.transform.parent = headBone;
-					headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
-					headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;
-					headEquipInstance.transform.localScale = headEquipPrefab.transform.localScale;
+						}
+					}
+					string headEquipPath = "artist/model/equip/" + headEquipModel;
+					GameObject headEquipPrefab = Resources.Load<GameObject>(headEquipPath);
+					if (headEquipPrefab != null)
+					{
+						GameObject headEquipInstance = Object.Instantiate(headEquipPrefab);
+						headEquipInstance.transform.parent = headBone;
+						headEquipInstance.transform.localPosition = headEquipPrefab.transform.position;
+						headEquipInstance.transform.localRotation = headEquipPrefab.transform.rotation;
+						headEquipInstance.transform.localScale = headEquipPrefab.transform.localScale;
+					}
 				}
 			}
 		}
