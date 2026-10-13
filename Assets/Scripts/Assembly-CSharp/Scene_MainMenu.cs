@@ -984,6 +984,23 @@ public class Scene_MainMenu : MonoBehaviour
         }
     }
 
+	public void TUIEvent_BtnPostProcessing(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 1 || event_type == 2)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Button");
+			}
+			SettingsManager.Instance.PostProcessingEnabled =
+			!SettingsManager.Instance.PostProcessingEnabled;
+			if (popup_option != null)
+			{
+				popup_option.RefreshPostProcessing();
+			}
+		}
+	}
+
 	public void TUIEvent_MusicVolume(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
 		if (event_type != TUISlider.OnSliderChange)

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Camera_Village : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class Camera_Village : MonoBehaviour
     public float angle_max = 305f;
     public float border_min = 80f;
     public float border_max = 305f;
-
     private float target_angle;
     private bool open_closer;
     private Vector3 target_position;
@@ -16,13 +16,16 @@ public class Camera_Village : MonoBehaviour
     private bool open_scroll = true;
     private float closer_move_speed = 0.8f;
     private float closer_angle_speed = 2f;
-
-    public GameObject toggleTarget; // 👈 Assign this in Inspector
+    public GameObject toggleTarget;
+    private UniversalAdditionalCameraData m_URPCameraData;
 
     private void Start()
     {
         target_angle = transform.rotation.eulerAngles.y;
         closer_angle = transform.rotation.eulerAngles.y;
+        m_URPCameraData = GetComponent<UniversalAdditionalCameraData>();
+        ApplyPostProcessing(SettingsManager.Instance.PostProcessingEnabled);
+        SettingsManager.PostProcessingChanged += ApplyPostProcessing;
     }
 
     private void LateUpdate()
@@ -36,6 +39,14 @@ public class Camera_Village : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F2))
         {
             ToggleTargetObject();
+        }
+    }
+
+    private void ApplyPostProcessing(bool enabled)
+    {
+        if (m_URPCameraData != null)
+        {
+            m_URPCameraData.renderPostProcessing = enabled;
         }
     }
 
@@ -159,5 +170,10 @@ public class Camera_Village : MonoBehaviour
             bool isActive = toggleTarget.activeSelf;
             toggleTarget.SetActive(!isActive);
         }
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.PostProcessingChanged -= ApplyPostProcessing;
     }
 }

@@ -34,6 +34,7 @@ public class SettingsManager : MonoBehaviour
         public float soundVolume = 1f;
         public float mouseSensitivity = DefaultSensitivity;
         public int lastSaveSlot = 0;
+        public bool postProcessingEnabled = true;
     }
 
     private SettingsData _data = new SettingsData();
@@ -102,6 +103,23 @@ public class SettingsManager : MonoBehaviour
         v = Mathf.Clamp(v, MinSensitivity, MaxSensitivity);
         v = Mathf.Round(v * 1000f) / 1000f;
         return v;
+    }
+
+    public static event Action<bool> PostProcessingChanged;
+
+    public bool PostProcessingEnabled
+    {
+        get => _data.postProcessingEnabled;
+        set
+        {
+            if (_data.postProcessingEnabled != value)
+            {
+                _data.postProcessingEnabled = value;
+                _dirty = true;
+                Save();
+                PostProcessingChanged?.Invoke(value);
+            }
+        }
     }
 
     public int LastSaveSlot

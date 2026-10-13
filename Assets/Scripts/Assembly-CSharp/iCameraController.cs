@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class iCameraController : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class iCameraController : MonoBehaviour
 	protected float m_fShakeRangeDamping;
 
 	protected GameObject m_AudioLister;
+
+	private UniversalAdditionalCameraData m_URPCameraData;
 
 	public Vector3 Position
 	{
@@ -52,6 +55,9 @@ public class iCameraController : MonoBehaviour
 		m_bShake = false;
 		m_AudioLister = new GameObject("Main Camera Listener");
 		m_AudioLister.AddComponent<AudioListener>();
+		m_URPCameraData = GetComponent<UniversalAdditionalCameraData>();
+		ApplyPostProcessing(SettingsManager.Instance.PostProcessingEnabled);
+		SettingsManager.PostProcessingChanged += ApplyPostProcessing;
 	}
 
 	private void Update()
@@ -82,6 +88,14 @@ public class iCameraController : MonoBehaviour
 		m_Transform.rotation = m_qtRotation;
 	}
 
+	private void ApplyPostProcessing(bool enabled)
+	{
+		if (m_URPCameraData != null)
+		{
+			m_URPCameraData.renderPostProcessing = enabled;
+		}
+	}
+
 	public bool IsShake()
 	{
 		return m_bShake;
@@ -101,5 +115,10 @@ public class iCameraController : MonoBehaviour
 		{
 			m_AudioLister.active = bActive;
 		}
+	}
+
+	private void OnDestroy()
+	{
+		SettingsManager.PostProcessingChanged -= ApplyPostProcessing;
 	}
 }
