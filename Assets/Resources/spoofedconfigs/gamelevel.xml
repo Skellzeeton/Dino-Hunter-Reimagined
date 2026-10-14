@@ -18,14 +18,14 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100025,100016,700006" mincount="1,5,1" maxcount="1,5,1"/>
+		<RewardMaterial material="100025,100016,800001" mincount="1,5,1" maxcount="1,5,1"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="1004" BGM="BGM_Map01" BGM_ambience="Amb_Map01_Rainforest" scenename="SceneForest" bp_cfg="20101" gamewave="1004001,1004002,1004003" task="1004" sp_cfg_ground="20111" exp="103" gold="21" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100005,100016" mincount="1,4" maxcount="1,4,1"/>
+		<RewardMaterial material="100028,100016" mincount="1,4" maxcount="1,4,1"/>
 		<recommend recommendtype="1" recommandid="2" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="1005" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Boss" bp_cfg="20101" gamewave="1005001,1005002" task="1005" sp_cfg_ground="20111" exp="138" gold="42" desc="Hunt Tyrant King x 1">
@@ -60,7 +60,7 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="18"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100010" mincount="5" maxcount="7"/>
+		<RewardMaterial material="100010,100021" mincount="5,4" maxcount="7,5"/>
 		<recommend recommendtype="1" recommandid="3" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="1010" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="170" gold="56" desc="Hunt Triterrortops x 1"  hp_cfg_def="40501">
@@ -81,14 +81,14 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100025,100017" mincount="4,2" maxcount="6,3"/>
+		<RewardMaterial material="100030,100017" mincount="4,2" maxcount="6,3"/>
 		<recommend recommendtype="1" recommandid="3" recommandlevel="2"/>
 	</gamelevel>
 	<gamelevel id="2003" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40102" gamewave="2003001,2003002,2003003" task="2003" sp_cfg_ground="40112" tpbegin_cfg="40302" tpend_cfg="40402" exp="108" gold="21" desc="Snatch and defend a Dino Egg&#xA;EGG HP: 45"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100004,100017,700006" mincount="4,3,1" maxcount="4,3,2"/>
+		<RewardMaterial material="100004,100017,800001" mincount="4,3,1" maxcount="4,3,2"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="3"/>
 	</gamelevel>
 	<gamelevel id="2004" BGM="BGM_Map03" BGM_ambience="Amb_Map03_Volcano" scenename="SceneLava2" bp_cfg="40101" gamewave="2004001,2004002" task="2004" sp_cfg_ground="40111" exp="90" gold="15" desc="Kill all dinos"  hp_cfg_def="40501">
@@ -109,21 +109,21 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="28"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100005" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100005,100023" mincount="4,4" maxcount="6,5"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="2"/>
 	</gamelevel>
 	<gamelevel id="2007" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2007001,2007002,2007003" task="2007" sp_cfg_ground="30111" exp="96" gold="30" desc="Survive a Horde of Dinosaurs for 2:00"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="8"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100005" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100005,100023" mincount="4,4" maxcount="6,5"/>
 		<recommend recommendtype="1" recommandid="1" recommandlevel="3"/>
 	</gamelevel>
 	<gamelevel id="2008" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30102" gamewave="2008001,2008002" task="2008" sp_cfg_ground="30112" tpbegin_cfg="30302" tpend_cfg="30402" exp="96" gold="21" desc="Snatch and defend one Dino Egg&#xA;EGG HP: 25">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="16"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100025,700006" mincount="4,1" maxcount="6,1"/>
+		<RewardMaterial material="100025,800001" mincount="4,1" maxcount="6,1"/>
 		<recommend recommendtype="1" recommandid="4" recommandlevel="3"/>
 	</gamelevel>
 	<gamelevel id="2009" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2009001,2009002,2009003,2009004" task="2009" sp_cfg_ground="30111" exp="99" gold="25" desc="Kill all dinos&#xA;Melee weapons only" limitmelee="true" hp_cfg_def="40501">
@@ -144,26 +144,26 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008" mincount="4" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="6" recommandlevel="1" islimit="true"/>
 	</gamelevel>
 	<gamelevel id="3002" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge_Dusk" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3002001,3002002,3002003" task="3002" sp_cfg_ground="10111" exp="105" gold="30" desc="Kill all dinos" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008,100009" mincount="4,2" maxcount="6,4"/>
 	</gamelevel>
 	<gamelevel id="3003" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3003001,3003002,3003003" task="3003" sp_cfg_ground="10111" exp="154" gold="30" desc="Survive a Horde of Dinosaurs for 3:00" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="32"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008,100009" mincount="4,3" maxcount="6,5"/>
 	</gamelevel>
 	<gamelevel id="3004" BGM="BGM_Timed" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3004001,3004002,3004003,3004004" task="3004" sp_cfg_ground="10111" exp="154" gold="45" desc="Kill all dinos in under 2:15" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="40"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100008" mincount="4" maxcount="6,1,1"/>
+		<RewardMaterial material="100008,100027" mincount="4,3" maxcount="6,5"/>
 	</gamelevel>
 	<gamelevel id="3005" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3005001,3005002,3005003,3005004" task="3005" sp_cfg_ground="10111" exp="216" gold="45" desc=" Hunt Pterodactyl x 12&#xA;Hunt Teradactyl x 8" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
@@ -175,25 +175,25 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100021" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100029" mincount="4" maxcount="6"/>
 	</gamelevel>
 	<gamelevel id="3007" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3007001,3007002,3007003" task="3007" sp_cfg_ground="10111" exp="117" gold="32" desc="Kill all dinos" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100021" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100029,100009" mincount="4" maxcount="6"/>
 	</gamelevel>
 	<gamelevel id="3008" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3008001,3008002,3008003" task="3008" sp_cfg_ground="10111" exp="117" gold="32" desc="Survive a Horde of Dinosaurs for 2:20" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100022" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100029,100026" mincount="4,4" maxcount="6,6"/>
 	</gamelevel>
 	<gamelevel id="3009" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3009001,3009002,3009003,3009004" task="3009" sp_cfg_ground="10111" exp="120" gold="32" desc="Kill all dinos" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100022" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100029,100009" mincount="4" maxcount="6"/>
 	</gamelevel>
 	<gamelevel id="3010" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3010001,3010002,3010003,3010004,3010005" task="3010" sp_cfg_ground="10111" exp="252" gold="64" desc="Hunt Terrordactyl x 1" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>

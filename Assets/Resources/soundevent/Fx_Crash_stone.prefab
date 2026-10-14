@@ -54,8 +54,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 30
-  MaxDistance: 60
+  MinDistance: 20
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSfx: 1
+  alwaysPreload: 0
   audioClips:
   - {fileID: 8300000, guid: ef136222dd28bca4c9bc019885005455, type: 3}
   probability: []
@@ -165,5 +166,3 @@ MonoBehaviour:
   maxIntervalTime: 0
   intervalRangeMin: 0
   intervalRangeMax: 0
-  forceDeleteOnSceneChange: 0
-  preserveOnSceneChange: 0
