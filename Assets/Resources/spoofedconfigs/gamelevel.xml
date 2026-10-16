@@ -152,54 +152,63 @@
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,100009" mincount="4,2" maxcount="6,4"/>
+		<recommend recommendtype="1" recommandid="11" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="3003" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3003001,3003002,3003003" task="3003" sp_cfg_ground="10111" exp="154" gold="30" desc="Survive a Horde of Dinosaurs for 3:00" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="32"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,100009" mincount="4,3" maxcount="6,5"/>
+		<recommend recommendtype="1" recommandid="11" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="3004" BGM="BGM_Timed" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3004001,3004002,3004003,3004004" task="3004" sp_cfg_ground="10111" exp="154" gold="45" desc="Kill all dinos in under 2:15" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="40"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100008,100027" mincount="4,3" maxcount="6,5"/>
+		<recommend recommendtype="1" recommandid="14" recommandlevel="2"/>
 	</gamelevel>
 	<gamelevel id="3005" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3005001,3005002,3005003,3005004" task="3005" sp_cfg_ground="10111" exp="216" gold="45" desc=" Hunt Pterodactyl x 12&#xA;Hunt Teradactyl x 8" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="200007,200008" mincount="1,1" maxcount="1,1"/>
+		<recommend recommendtype="1" recommandid="21" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="3006" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3006001,3006002,3006003" task="3006" sp_cfg_ground="10111" exp="152" gold="30" desc="Survive a Horde of Dinosaurs for 2:00" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100029" mincount="4" maxcount="6"/>
+		<recommend recommendtype="1" recommandid="5" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="3007" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3007001,3007002,3007003" task="3007" sp_cfg_ground="10111" exp="117" gold="32" desc="Kill all dinos" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100029,100009" mincount="4" maxcount="6"/>
+		<recommend recommendtype="1" recommandid="21" recommandlevel="2"/>
 	</gamelevel>
 	<gamelevel id="3008" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3008001,3008002,3008003" task="3008" sp_cfg_ground="10111" exp="117" gold="32" desc="Survive a Horde of Dinosaurs for 2:20" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100029,100026" mincount="4,4" maxcount="6,6"/>
+		<recommend recommendtype="3" recommandid="702" recommandlevel="3"/>
 	</gamelevel>
 	<gamelevel id="3009" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3009001,3009002,3009003,3009004" task="3009" sp_cfg_ground="10111" exp="120" gold="32" desc="Kill all dinos" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="10"/>
+			<limit type="1" maxnumber="20"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100029,100009" mincount="4" maxcount="6"/>
+		<RewardMaterial material="100029,100009,100027" mincount="4,3,3" maxcount="6,5,5"/>
+		<recommend recommendtype="1" recommandid="21" recommandlevel="2"/>
 	</gamelevel>
 	<gamelevel id="3010" BGM="BGM_Map02" BGM_ambience="Amb_Map02_WindValley" scenename="SceneGorge" isskyscene="true" nav_plane="225" bp_cfg="10101" gamewave="3010001,3010002,3010003,3010004,3010005" task="3010" sp_cfg_ground="10111" exp="252" gold="64" desc="Hunt Terrordactyl x 1" sp_cfg_sky="10201" hp_cfg_def="10501">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="10"/>
+			<limit type="1" maxnumber="20"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100007" mincount="1" maxcount="1"/>
+		<recommend recommendtype="1" recommandid="21" recommandlevel="3"/>
 	</gamelevel>
 	<gamelevel id="4001" BGM="BGM_Map02" BGM_ambience="Amb_Map04_Snowfield" cutscene_ambience="Amb_Glacier_Show" scenename="SceneIce" bp_cfg="220101" gamewave="4001001,4001002,4001003" task="4001" sp_cfg_ground="220111" cutscene="bingchuan01_open" exp="63" gold="16" desc="Kill all dinos" sp_cfg_sky="220201" hp_cfg_def="220501">
 		<MonsterNumLimit>
@@ -225,7 +234,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100023" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="4005" BGM="BGM_Boss" BGM_ambience="Amb_Map04_Snowfield" scenename="SceneIce" bp_cfg="220101" gamewave="4005001,4005002,4005003,4005004,4005005" task="4005" sp_cfg_ground="220111" exp="69" gold="16" desc="Hunt Spine King x 1" sp_cfg_sky="220201" hp_cfg_def="220501">
+	<gamelevel id="4005" BGM="BGM_Boss" BGM_ambience="Amb_Map04_Snowfield" scenename="SceneIce" bp_cfg="220101" gamewave="4005001,4005002,4005003,4005004,4005005" task="4005" sp_cfg_ground="220111" exp="69" gold="16" desc="Hunt Megaraptor x 1" sp_cfg_sky="220201" hp_cfg_def="220501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
@@ -249,7 +258,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100024" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="4009" BGM="BGM_Map02" BGM_ambience="Amb_Map04_Snowfield" scenename="SceneIce" bp_cfg="220102" gamewave="4009001,4009002,4009003,4009004" task="4009" sp_cfg_ground="220112" tpbegin_cfg="220302" tpend_cfg="220402" exp="75" gold="16" desc="Get dino egg x 3" sp_cfg_sky="220201" hp_cfg_def="220501">
+	<gamelevel id="4009" BGM="BGM_Map02" BGM_ambience="Amb_Map04_Snowfield" scenename="SceneIce" bp_cfg="220102" gamewave="4009001,4009002,4009003,4009004" task="4009" sp_cfg_ground="220112" tpbegin_cfg="220302" tpend_cfg="220402" exp="75" gold="16" desc="Kill all dinos\nCannon weapons only" sp_cfg_sky="220201" hp_cfg_def="220501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
