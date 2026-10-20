@@ -4,6 +4,8 @@ public class GameLevelInfo
 {
 	public int nID;
 
+	public int nOverride = -1;
+
 	public string sSceneName = string.Empty;
 
 	public bool bIsSkyScene;

@@ -149,7 +149,7 @@ public class CCharMob : CCharBase {
 
 	private const int BLOOD_EFFECT_NORMAL = 1115;
 
-	private const int BLOOD_EFFECT_LARGE  = 1116;
+	private const int BLOOD_EFFECT_LARGE = 1116;
 
 	public int MobType { get; set; }
 
@@ -174,20 +174,17 @@ public class CCharMob : CCharBase {
 		}
 	}
 
-	private void RefreshChristmasHat()
-	{
+	private void RefreshChristmasHat() {
 		if (m_ChristmasHat == null)
 			return;
 		m_ChristmasHat.gameObject.SetActiveRecursive(iDataCenter.IsDecember());
 	}
 
-	private int GetWeaponBloodEffect(CWeaponInfoLevel weaponInfo)
-	{
+	private int GetWeaponBloodEffect(CWeaponInfoLevel weaponInfo) {
 		bool useLarge = false;
 		if (weaponInfo != null)
 		{
-			switch (weaponInfo.nType)
-			{
+			switch (weaponInfo.nType) {
 				case 0:
 				case 3:
 				case 5:
@@ -198,15 +195,13 @@ public class CCharMob : CCharBase {
 		return useLarge ? GetMobBloodEffectLarge() : GetMobBloodEffectNormal();
 	}
 
-	private int GetMobBloodEffectNormal()
-	{
+	private int GetMobBloodEffectNormal() {
 		if (m_curMobInfoLevel != null && m_curMobInfoLevel.nBloodEffectNormal > 0)
 			return m_curMobInfoLevel.nBloodEffectNormal;
 		return BLOOD_EFFECT_NORMAL;
 	}
 
-	private int GetMobBloodEffectLarge()
-	{
+	private int GetMobBloodEffectLarge() {
 		if (m_curMobInfoLevel != null)
 		{
 			if (m_curMobInfoLevel.nBloodEffectLarge > 0)
@@ -301,8 +296,7 @@ public class CCharMob : CCharBase {
 		}
 	}
 
-	public new void LateUpdate()
-	{
+	public new void LateUpdate() {
 		if (m_bActive)
 		{
 			base.LateUpdate();
@@ -1271,29 +1265,79 @@ public class CCharMob : CCharBase {
 			m_fHardinessCur = m_fHardinessMax;
 	}
 
-	public void ApplyDifficultyBuffs(iDataCenter dc) {
-		if (dc == null || dc.Difficulty != 2)
-			return;
-		float damage = m_Property.GetValue(kProEnum.Damage);
-		m_Property.SetValueBase(kProEnum.Damage, damage * 1.2f);
-		float speed = m_Property.GetValue(kProEnum.MoveSpeed);
-		m_Property.SetValueBase(kProEnum.MoveSpeed, speed * 1.05f);
-		float oldHardinessMax = m_fHardinessMax;
-		m_fHardinessMax *= 1.1f;
-		if (Mathf.Approximately(oldHardinessMax, 0f))
-		{
-			m_fHardinessCur = m_fHardinessMax;
-		}
-		else
-		{
-			float hardinessRatio = m_fHardinessCur / oldHardinessMax;
-			m_fHardinessCur = m_fHardinessMax * hardinessRatio;
-		}
-		float oldMaxHP = m_fHPMax;
-		float newMaxHP = oldMaxHP * 1.05f;
-		float ratio = m_fHP / oldMaxHP;
-		m_fHPMax = newMaxHP;
-		m_fHP = newMaxHP * ratio;
+	private struct DifficultyModifiers {
+		public float HealthMul;
+		public float HardinessMul;
+		public float DamageMul;
+		public float SpeedMul;
 
+		public DifficultyModifiers(float health, float hardiness, float damage, float speed) {
+			HealthMul = health;
+			HardinessMul = hardiness;
+			DamageMul = damage;
+			SpeedMul = speed;
+		}
+
+		public static readonly DifficultyModifiers Neutral =
+		new DifficultyModifiers(1f, 1f, 1f, 1f);
+
+		public bool IsNeutral {
+			get
+			{
+				return HealthMul == 1f && HardinessMul == 1f
+				&& DamageMul == 1f && SpeedMul == 1f;
+			}
+		}
+	}
+
+	private static readonly Dictionary<int, DifficultyModifiers> s_DifficultyModifiers =
+	new Dictionary<int, DifficultyModifiers>
+	{
+		{ 0, new DifficultyModifiers(0.95f, 0.9f, 0.85f, 0.95f) },
+		{ 1, DifficultyModifiers.Neutral },
+		{ 2, new DifficultyModifiers(1.05f, 1.10f, 1.20f, 1.05f) },
+		{ 3, new DifficultyModifiers(1.075f, 1.15f, 1.35f, 1.05f) },
+		{ 4, new DifficultyModifiers(1.1f, 1.25f, 1.5f, 1.075f) },
+	};
+
+	public void ApplyDifficultyBuffs(iDataCenter dc) {
+		if (dc == null)
+			return;
+		DifficultyModifiers mods;
+		if (!s_DifficultyModifiers.TryGetValue(dc.Difficulty, out mods))
+			return;
+		if (mods.IsNeutral)
+			return;
+		if (mods.DamageMul != 1f)
+		{
+			float damage = m_Property.GetValue(kProEnum.Damage);
+			m_Property.SetValueBase(kProEnum.Damage, damage * mods.DamageMul);
+		}
+		if (mods.SpeedMul != 1f)
+		{
+			float speed = m_Property.GetValue(kProEnum.MoveSpeed);
+			m_Property.SetValueBase(kProEnum.MoveSpeed, speed * mods.SpeedMul);
+		}
+		if (mods.HardinessMul != 1f)
+		{
+			float oldHardinessMax = m_fHardinessMax;
+			m_fHardinessMax *= mods.HardinessMul;
+			if (Mathf.Approximately(oldHardinessMax, 0f))
+			{
+				m_fHardinessCur = m_fHardinessMax;
+			}
+			else
+			{
+				float hardinessRatio = m_fHardinessCur / oldHardinessMax;
+				m_fHardinessCur = m_fHardinessMax * hardinessRatio;
+			}
+		}
+		if (mods.HealthMul != 1f)
+		{
+			float oldMaxHP = m_fHPMax;
+			float ratio = oldMaxHP > 0f ? (m_fHP / oldMaxHP) : 1f;
+			m_fHPMax = oldMaxHP * mods.HealthMul;
+			m_fHP = m_fHPMax * ratio;
+		}
 	}
 }

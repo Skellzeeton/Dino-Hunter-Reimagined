@@ -476,6 +476,14 @@ public class Scene_Main : MonoBehaviour
 		return 0;
 	}
 
+	public void TUIEvent_SelectEasy(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3 && difficultyPopup != null)
+		{
+			difficultyPopup.SelectEasy();
+		}
+	}
+
 	public void TUIEvent_SelectNormal(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
 		if (event_type == 3 && difficultyPopup != null)
@@ -489,6 +497,22 @@ public class Scene_Main : MonoBehaviour
 		if (event_type == 3 && difficultyPopup != null)
 		{
 			difficultyPopup.SelectHard();
+		}
+	}
+
+	public void TUIEvent_SelectElite(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3 && difficultyPopup != null)
+		{
+			difficultyPopup.SelectElite();
+		}
+	}
+
+	public void TUIEvent_SelectNightmare(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3 && difficultyPopup != null)
+		{
+			difficultyPopup.SelectNightmare();
 		}
 	}
 

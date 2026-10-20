@@ -56,12 +56,26 @@
 		<RewardMaterial material="100010" mincount="5" maxcount="6"/>
 		<recommend recommendtype="1" recommandid="20" recommandlevel="2"/>
 	</gamelevel>
-	<gamelevel id="1009" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest_night" scenename="Yulin_ultimate02_night" bp_cfg="250101" gamewave="1009001,1009002,1009003,1009004" task="1009" sp_cfg_ground="250111" exp="78" gold="28" desc="Kill all dinos in under 4:15 minutes">
+	<gamelevel id="1009" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest_night" scenename="Yulin_ultimate02_night" bp_cfg="250101" gamewave="1009001,1009002,1009003,1009004" task="1009" sp_cfg_ground="250111" exp="78" gold="28" desc="Kill all dinos in under 3:00 minutes">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="18"/>
+			<limit type="1" maxnumber="20"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100010,100021" mincount="5,4" maxcount="7,5"/>
 		<recommend recommendtype="1" recommandid="3" recommandlevel="1"/>
+    </gamelevel>
+    <gamelevel id="1009" override="0" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest_night" scenename="Yulin_ultimate02_night" bp_cfg="250101" gamewave="1009001,1009002,1009003,1009004" task="1009" sp_cfg_ground="250111" exp="78" gold="28" desc="Kill all dinos in under 3:15 minutes">
+        <MonsterNumLimit>
+            <limit type="1" maxnumber="20"/>
+        </MonsterNumLimit>
+        <RewardMaterial material="100010,100021" mincount="5,4" maxcount="7,5"/>
+        <recommend recommendtype="1" recommandid="3" recommandlevel="1"/>
+    </gamelevel>
+    <gamelevel id="1009" override="2" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest_night" scenename="Yulin_ultimate02_night" bp_cfg="250101" gamewave="1009001,1009002,1009003,1009004" task="1009" sp_cfg_ground="250111" exp="78" gold="28" desc="Kill all dinos in under 2:45 minutes">
+        <MonsterNumLimit>
+            <limit type="1" maxnumber="20"/>
+        </MonsterNumLimit>
+        <RewardMaterial material="100010,100021" mincount="5,4" maxcount="7,5"/>
+        <recommend recommendtype="1" recommandid="3" recommandlevel="1"/>
 	</gamelevel>
 	<gamelevel id="1010" iconoverride="9" BGM="" BGM_ambience="Amb_Raining" scenename="SceneForest_Rainy" bp_cfg="20101" gamewave="1010001,1010002,1010003,1010004" task="1010" sp_cfg_ground="20111" exp="170" gold="56" desc="Hunt Triterrortops x 1"  hp_cfg_def="40501">
 		<MonsterNumLimit> 
@@ -134,6 +148,13 @@
 		<recommend recommendtype="1" recommandid="2" recommandlevel="3"/>
 	</gamelevel>
 	<gamelevel id="2010" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2010001,2010002,2010003,2010004,2010005,2010006,2010007,2010008,2010009" task="2010" sp_cfg_ground="30111" exp="204" gold="75" desc="Hunt Old Killosaurus Rex x 2"  hp_cfg_def="40501">
+		<MonsterNumLimit>
+			<limit type="1" maxnumber="24"/>
+		</MonsterNumLimit>
+		<RewardMaterial material="100002" mincount="1" maxcount="1"/>
+		<recommend recommendtype="1" recommandid="1" recommandlevel="5"/>
+	</gamelevel>
+	<gamelevel id="2010" override="0" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="2010001,2010003,2010004,2010005,2010006,2010007,2010008" task="2010" sp_cfg_ground="30111" exp="204" gold="75" desc="Hunt Killosaurus Rex x 1&#xA;Hunt Overgrown Triceratops x 1"  hp_cfg_def="40501">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="24"/>
 		</MonsterNumLimit>
@@ -1242,7 +1263,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100011,100012,100013,700001" mincount="-2,-2,-2,-32" maxcount="1,1,1,1,1"/>
 	</gamelevel>
-	<gamelevel id="100" iconoverride="1" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shaguai02_dusk" bp_cfg="60101" gamewave="1001,1002,1003,1004,1005,1006,1007" task="100" sp_cfg_ground="60111" exp="210" gold="40" desc="Kill all dinos in 3:45" name="1.On a Rush" issidelevel="true" forcetype="1,1,1,3" forceitem="2,21,3,701" forcelevel="2,4,5,2">
+	<gamelevel id="100" iconoverride="1" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shaguai02_dusk" bp_cfg="60101" gamewave="1001,1002,1003,1004,1005,1006,1007" task="100" sp_cfg_ground="60111" exp="420" gold="80" desc="Kill all dinos in 3:45" name="1.On a Rush" issidelevel="true" forcetype="1,1,1,3" forceitem="2,21,3,701" forcelevel="2,4,5,2">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="80"/>
 		</MonsterNumLimit>

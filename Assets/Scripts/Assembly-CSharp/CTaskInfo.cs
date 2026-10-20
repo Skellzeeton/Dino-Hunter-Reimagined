@@ -2,6 +2,8 @@ public class CTaskInfo
 {
 	public int nID;
 
+	public int nOverride = -1;
+
 	public int nType;
 
 	public int[] arrFail;

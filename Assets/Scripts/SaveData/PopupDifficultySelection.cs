@@ -22,6 +22,13 @@ public class PopupDifficultySelection : MonoBehaviour
         onSelected = null;
     }
 
+    public void SelectEasy()
+    {
+        if (onSelected != null)
+            onSelected(0);
+        Hide();
+    }
+
     public void SelectNormal()
     {
         if (onSelected != null)
@@ -33,6 +40,20 @@ public class PopupDifficultySelection : MonoBehaviour
     {
         if (onSelected != null)
             onSelected(2);
+        Hide();
+    }
+
+    public void SelectElite()
+    {
+        if (onSelected != null)
+            onSelected(3);
+        Hide();
+    }
+
+    public void SelectNightmare()
+    {
+        if (onSelected != null)
+            onSelected(4);
         Hide();
     }
 }
