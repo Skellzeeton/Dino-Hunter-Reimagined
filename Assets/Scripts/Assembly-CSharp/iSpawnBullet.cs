@@ -20,9 +20,9 @@ public class iSpawnBullet : MonoBehaviour
 
 	public int nHitMask = -1;
 
-    private HashSet<int> m_HitTargets = new HashSet<int>();
+	private HashSet<int> m_HitTargets = new HashSet<int>();
 
-    public Vector3 v3RotateSpeed = new Vector3(0f, 0f, 0f);
+	public Vector3 v3RotateSpeed = new Vector3(0f, 0f, 0f);
 
 	public string sAudioHit = string.Empty;
 
@@ -168,6 +168,8 @@ public class iSpawnBullet : MonoBehaviour
 		if (target == null || target.isDead || m_HitTargets.Contains(target.UID))
 			return;
 		if (actor == target)
+			return;
+		if (actor != null && actor.IsAlly(target))
 			return;
 		m_HitTargets.Add(target.UID);
 		float damage = 0f;
@@ -389,11 +391,11 @@ public class iSpawnBullet : MonoBehaviour
 		if (component2 != null)
 		{
 			if (owner == component2)
-			{
 				return;
-			}
 			if (!component2.isDead)
 			{
+				if (owner.IsAlly(component2))
+					return;
 				OnHitTarget(owner, component2);
 				return;
 			}
@@ -465,7 +467,7 @@ public class iSpawnBullet : MonoBehaviour
 		OnInit();
 	}
 
-    public virtual void SetForce(Vector3 v3Force)
+	public virtual void SetForce(Vector3 v3Force)
 	{
 		m_v3VelocityBase = v3Force;
 	}

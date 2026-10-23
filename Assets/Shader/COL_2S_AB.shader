@@ -14,6 +14,7 @@ SubShader {
   #pragma vertex vert
   #pragma fragment frag
   #pragma multi_compile_instancing
+  #pragma multi_compile_fog
   #include "UnityCG.cginc"
   sampler2D _MainTex;
   float4 _MainTex_ST;
@@ -30,6 +31,7 @@ SubShader {
       float4 pos   : SV_POSITION;
       float2 uv    : TEXCOORD0;
       fixed4 color : COLOR;
+      UNITY_FOG_COORDS(1)
       UNITY_VERTEX_INPUT_INSTANCE_ID
   };
   v2f vert (appdata v) {
@@ -39,6 +41,7 @@ SubShader {
       o.pos   = UnityObjectToClipPos(v.vertex);
       o.uv    = TRANSFORM_TEX(v.uv, _MainTex);
       o.color = v.color * UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+      UNITY_TRANSFER_FOG(o, o.pos);
       return o;
   }
   fixed4 frag (v2f i) : SV_Target {
@@ -46,6 +49,7 @@ SubShader {
       fixed4 c = tex2D(_MainTex, i.uv);
       c.rgb *= i.color.rgb;
       c.a   *= i.color.a;
+      UNITY_APPLY_FOG(i.fogCoord, c);
       return c;
   }
   ENDCG

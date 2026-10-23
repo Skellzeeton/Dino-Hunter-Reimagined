@@ -1290,6 +1290,24 @@ public class CCharMob : CCharBase {
 		}
 	}
 
+	public static float GetDifficultySpeedMultiplier(iDataCenter dc)
+	{
+		if (dc == null) return 1f;
+		DifficultyModifiers mods;
+		if (!s_DifficultyModifiers.TryGetValue(dc.Difficulty, out mods))
+			return 1f;
+		return mods.SpeedMul;
+	}
+
+	public float DifficultySpeedMultiplier
+	{
+		get
+		{
+			if (m_GameData == null) return 1f;
+			return GetDifficultySpeedMultiplier(m_GameData.GetDataCenter());
+		}
+	}
+
 	private static readonly Dictionary<int, DifficultyModifiers> s_DifficultyModifiers =
 	new Dictionary<int, DifficultyModifiers>
 	{

@@ -65,7 +65,7 @@ public class iWeaponCenter : iBaseCenter
 			"{color:00ABFFFF}Melee weapons are incredible crowd control weapons and boss killers, but they're very heavy and hard to use.{color}",
 			"{color:870096FF}Rifles are great because they increase your speed, although they lack damage and cannot crit.{color}",
 			"{color:009600FF}Shotguns are overall good crowd control weapons, though they deal noticeably less DPS than weapons like Crossbows.{color}",
-			"{color:000096FF}Flamethrowers deal crowd control damage and set enemies on fire, dealing extra damage over time. Good for weakening enemies.{color}",
+			"{color:000096FF}Flamethrowers deal crowd control damage and set enemies on fire, dealing damage over time, and slowing them, though their DPS is low. Good for support.{color}",
 			"{color:D1FF00FF}Cannons are amazing for crowd control, but their weight makes them hard to use and they cannot crit while lacking DPS.{color}"
 		};
 
