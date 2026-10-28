@@ -91,6 +91,7 @@ public class TUIMappingInfo
 		stash_dictionary[100002] = "shuangguanlong_BOSS_duzhi1";
 		stash_dictionary[100028] = "shuangguanlong_gongyou_longpi2";
 		stash_dictionary[100003] = "shuangguanlong_gongyou_longpi1";
+		stash_dictionary[100034] = "shuangguanlong_gongyou_BOSS_longpi1";
 		stash_dictionary[100004] = "shuangguanlong_putong_duzhi1";
 		stash_dictionary[100005] = "shuangguanlong_bianyi_duzhi1";
 		stash_dictionary[100006] = "yilong_gongyou_longzhua1";
@@ -106,6 +107,8 @@ public class TUIMappingInfo
 		stash_dictionary[100016] = "xunmenglong_putong_duanwei1";
 		stash_dictionary[100017] = "xunmenglong_bianyi_duanwei1";
 		stash_dictionary[100018] = "jibeilong_BOSS_weici1";
+		stash_dictionary[100032] = "jianlong_duanwei1";
+		stash_dictionary[100033] = "jianlong_duanwei2";
 		stash_dictionary[100019] = "jianlong_BOSS_beici1";
 		stash_dictionary[100020] = "shuangqiyilong_boss_toujiao1";
 		stash_dictionary[100021] = "shangu_gongyou_tiekuangshi1";
@@ -136,6 +139,7 @@ public class TUIMappingInfo
 		stash_dictionary[200016] = "jianlong_BOSS_beici3";
 		stash_dictionary[200021] = "shuangguanlong_gongyou_longpi4";
 		stash_dictionary[200017] = "shuangguanlong_gongyou_longpi3";
+		stash_dictionary[200021] = "shuangguanlong_gongyou_BOSS_longpi3";
 		stash_dictionary[200018] = "yilong_gongyou_longzhua3";
 		stash_dictionary[200019] = "sanjiaolong_gongyou_linke3";
 		stash_dictionary[200020] = "xunmenglong_gongyou_longgu3";

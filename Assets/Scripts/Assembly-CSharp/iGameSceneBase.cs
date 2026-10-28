@@ -3069,6 +3069,36 @@ public class iGameSceneBase
 		return m_curTriggerManagerEnd;
 	}
 
+	private static string GetBaseBarricadeSceneName(string sceneName)
+	{
+		if (string.IsNullOrEmpty(sceneName))
+		{
+			return sceneName;
+		}
+		string result = sceneName;
+		bool stripped = true;
+		while (stripped)
+		{
+			stripped = false;
+			foreach (string suffix in s_barricadeVariantSuffixes)
+			{
+				if (result.Length > suffix.Length &&
+				result.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+				{
+					result = result.Substring(0, result.Length - suffix.Length);
+					stripped = true;
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	private static readonly string[] s_barricadeVariantSuffixes = new string[]
+	{
+		"_Dusk", "_Night", "_Boss", "_Rainy", "_Day"
+	};
+
 	public void InitTask(int nTaskID)
 	{
 		CTaskInfo taskInfo = m_GameData.GetTaskInfo(nTaskID);
@@ -3195,29 +3225,41 @@ public class iGameSceneBase
 				break;
 			}
 			case 3:
-		{
-			CTaskInfoDefence cTaskInfoDefence = taskInfo as CTaskInfoDefence;
-			if (cTaskInfoDefence == null)
 			{
-				break;
-			}
-			Object @object = Resources.Load("Artist/Custom/" + CurGameLevelInfo.sSceneName + "_ZhaLan");
-			if (!(@object != null))
-			{
-				break;
-			}
-			GameObject gameObject = Object.Instantiate(@object) as GameObject;
-			if (gameObject != null)
-			{
-				m_Building = gameObject.GetComponent<iBuilding>();
-				if (m_Building != null)
+				CTaskInfoDefence cTaskInfoDefence = taskInfo as CTaskInfoDefence;
+				if (cTaskInfoDefence == null)
 				{
-					m_Building.Initialize(cTaskInfoDefence.fLife);
-					m_Building.SetHP(cTaskInfoDefence.fLife);
+					break;
 				}
+				string sceneNameForBarricade = CurGameLevelInfo.sSceneName;
+				string baseSceneNameForBarricade = GetBaseBarricadeSceneName(sceneNameForBarricade);
+				Object @object = null;
+				if (!string.IsNullOrEmpty(baseSceneNameForBarricade))
+				{
+					@object = Resources.Load("Artist/Custom/" + baseSceneNameForBarricade + "_Barricade");
+				}
+				if (@object == null &&
+				!string.IsNullOrEmpty(sceneNameForBarricade) &&
+				!string.Equals(sceneNameForBarricade, baseSceneNameForBarricade, StringComparison.OrdinalIgnoreCase))
+				{
+					@object = Resources.Load("Artist/Custom/" + sceneNameForBarricade + "_Barricade");
+				}
+				if (@object == null)
+				{
+					break;
+				}
+				GameObject gameObject = Object.Instantiate(@object) as GameObject;
+				if (gameObject != null)
+				{
+					m_Building = gameObject.GetComponent<iBuilding>();
+					if (m_Building != null)
+					{
+						m_Building.Initialize(cTaskInfoDefence.fLife);
+						m_Building.SetHP(cTaskInfoDefence.fLife);
+					}
+				}
+				break;
 			}
-			break;
-		}
 		case 2:
 			break;
 		}

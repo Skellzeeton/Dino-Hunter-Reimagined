@@ -252,7 +252,7 @@ public class CCharMob : CCharBase {
 		}
 		base.Update();
 		float num = Time.deltaTime * m_fTimeScale;
-		if (CGameNetManager.GetInstance().IsRoomMaster() && !base.isDead)
+		if (CGameNetManager.GetInstance().IsRoomMaster() && !base.isDead && !m_bIsFlyingMob)
 		{
 			m_fNavMeshCheckTime -= num;
 			if (m_fNavMeshCheckTime <= 0f)
@@ -275,6 +275,10 @@ public class CCharMob : CCharBase {
 			{
 				CheckRecoveryComplete();
 			}
+		}
+		else if (m_bIsFlyingMob)
+		{
+			CancelNavMeshRecovery();
 		}
 		if (m_Behavior != null)
 		{
@@ -802,13 +806,14 @@ public class CCharMob : CCharBase {
 		}
 	}
 
-	public void SetAI(int nAI) {
+	public void SetAI(int nAI)
+	{
 		CAIInfo aIInfo = base.m_GameData.GetAIInfo(nAI);
 		if (aIInfo == null)
 		{
 			return;
 		}
-
+		bool wasFlying = m_bIsFlyingMob;
 		int nCurAIID = m_nCurAIID;
 		m_nCurAIID = nAI;
 		m_ltSkillListAI.Clear();
@@ -839,6 +844,8 @@ public class CCharMob : CCharBase {
 		if (aIInfo.nBehavior == 2)
 		{
 			m_bIsFlyingMob = true;
+			CancelNavMeshRecovery();
+			m_fNavMeshCheckTime = 0f;
 			InitAnimData_Sky();
 			if (m_ModelEntity != null && !base.m_GameScene.IsSkyScene())
 			{
@@ -852,6 +859,11 @@ public class CCharMob : CCharBase {
 			return;
 		}
 		m_bIsFlyingMob = false;
+		if (wasFlying)
+		{
+			m_fNavMeshCheckTime = 0f;
+			CancelNavMeshRecovery();
+		}
 		InitAnimData_Ground();
 		if (m_ModelEntity != null && !base.m_GameScene.IsSkyScene())
 		{
@@ -1158,6 +1170,12 @@ public class CCharMob : CCharBase {
 		m_bRecoveryActive = true;
 		ResetAI();
 		return true;
+	}
+
+	private void CancelNavMeshRecovery()
+	{
+		m_bRecoveryActive = false;
+		m_bIsOffNavMesh = false;
 	}
 
 	public void CheckRecoveryComplete() {
