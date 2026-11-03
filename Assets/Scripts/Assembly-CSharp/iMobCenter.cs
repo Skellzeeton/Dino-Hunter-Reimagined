@@ -116,6 +116,7 @@ public class iMobCenter : iBaseCenter
 		newLevel.ltSkillPassive = baseLevel.ltSkillPassive;
 		newLevel.nAIManagerID = baseLevel.nAIManagerID;
 		newLevel.nBypassAutoAI = baseLevel.nBypassAutoAI;
+		newLevel.nHasArmor = baseLevel.nHasArmor;
 		newLevel.fMoveSpeedRate = baseLevel.fMoveSpeedRate;
 		newLevel.fRushSpeedRate = baseLevel.fRushSpeedRate;
 		newLevel.isWaitRot = baseLevel.isWaitRot;

@@ -143,6 +143,8 @@ public class TUIMappingInfo
 		stash_dictionary[200018] = "yilong_gongyou_longzhua3";
 		stash_dictionary[200019] = "sanjiaolong_gongyou_linke3";
 		stash_dictionary[200020] = "xunmenglong_gongyou_longgu3";
+		stash_dictionary[200022] = "ankylosaur_plates_02";
+		stash_dictionary[200023] = "ankylosaur_plates_04";
 		stash_dictionary[300001] = "bawanglong_BOSS_beijia1";
 		stash_dictionary[300002] = "shuangguanlong_BOSS_guan1";
 		stash_dictionary[300003] = "shuangguanlong_putong_guan1";

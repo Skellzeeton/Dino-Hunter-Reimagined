@@ -686,6 +686,44 @@ public class iGameSceneBase
 		StartGame();
 	}
 
+	public static int FindWeaponOfType(iGameState state, int curIndex, int targetType, int direction)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			curIndex += direction;
+			if (curIndex >= 3) curIndex = 0;
+			if (curIndex < 0)  curIndex = 2;
+			CWeaponBase w = state.GetWeapon(curIndex);
+			if (w != null && w.CurWeaponLvlInfo != null && w.CurWeaponLvlInfo.nType == targetType)
+				return curIndex;
+		}
+		return -1;
+	}
+
+	public bool IsWeaponLimited()
+	{
+		return m_curGameLevelInfo != null && m_curGameLevelInfo.m_nLimitWeaponType >= 0;
+	}
+
+	public int GetWeaponLimitType()
+	{
+		return m_curGameLevelInfo != null ? m_curGameLevelInfo.m_nLimitWeaponType : -1;
+	}
+
+	public static string GetWeaponTypeName(int type)
+	{
+		switch (type)
+		{
+			case 0: return "Crossbow";
+			case 1: return "Melee";
+			case 2: return "Rifle";
+			case 3: return "Shotgun";
+			case 4: return "Flamethrower";
+			case 5: return "Cannon";
+			default: return "Weapon";
+		}
+	}
+
 	public virtual void StartGame()
 	{
 		if (m_curGameLevelInfo == null)
@@ -789,35 +827,32 @@ public class iGameSceneBase
 			}
 		}
 		bool flag = false;
-		if (!CurGameLevelInfo.m_bLimitMelee)
+		int limitType = CurGameLevelInfo.m_nLimitWeaponType;
+		bool equipped = false;
+		for (int j = 0; j < 3; j++)
 		{
-			for (int j = 0; j < 3; j++)
+			CWeaponBase weapon = m_GameState.GetWeapon(j);
+			if (weapon == null || weapon.CurWeaponLvlInfo == null) continue;
+			bool shouldEquip = limitType >= 0
+			? weapon.CurWeaponLvlInfo.nType == limitType
+			: weapon.CurWeaponLvlInfo.nType != 1;
+			if (shouldEquip)
 			{
-				CWeaponBase weapon = m_GameState.GetWeapon(j);
-				if (weapon != null && weapon.CurWeaponLvlInfo != null && weapon.CurWeaponLvlInfo.nType != 1)
-				{
-					m_User.SwitchWeapon(j);
-					flag = true;
-					break;
-				}
-			/*	if (!CurGameLevelInfo.m_bLimitRifle)
-				{
-					for (int j = 0; a < 3; j++)
-					{
-						CWeaponBase weapon = m_GameState.GetWeapon(j);
-					if (weapon != null && weapon.CurWeaponLvlInfo != null && weapon.CurWeaponLvlInfo.nType != 2)
-						{
-							m_User.SwitchWeapon(j);
-							flag = true;
-							break;
-						}
-					}
-			/*	}*/
+				m_User.SwitchWeapon(j);
+				equipped = true;
+				break;
 			}
 		}
-		if (!flag)
+		if (!equipped)
 		{
 			m_User.SwitchWeapon(0);
+		}
+		bool bMeleeView = false;
+		CWeaponBase equippedWeapon = m_User.GetWeapon();
+		if (equippedWeapon != null && equippedWeapon.CurWeaponLvlInfo != null &&
+		equippedWeapon.CurWeaponLvlInfo.nType == 1)
+		{
+			bMeleeView = true;
 		}
 		m_User.SetMoveMode(m_bIsSkyScene ? kCharMoveMode.Fly : kCharMoveMode.Ground);
 		if (m_GameUI != null)
@@ -868,7 +903,7 @@ public class iGameSceneBase
 		}
 		CSoundScene.GetInstance().PlayBGM(m_curGameLevelInfo.sBGM);
 		CSoundScene.GetInstance().PlayAmbienceBGM(m_curGameLevelInfo.sBGMAmbience);
-		m_CameraTrail.Initialize(m_User, !flag);
+		m_CameraTrail.Initialize(m_User, bMeleeView);
 		m_CameraTrail.SetRotateLimit(-10f, 60f, 0f, 0f);
 		m_CameraTrail.Active = true;
 		m_GameState.nLastLevel = character.nLevel;

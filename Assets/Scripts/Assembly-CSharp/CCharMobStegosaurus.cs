@@ -7,6 +7,7 @@ public class CCharMobStegosaurus : CCharMob
         m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Rush, "Stego_Forward01"));
         m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Attack, "Stego_Attack02"));
         m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Dead, "Stego_Death01"));
+        m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHitFly, "Stego_Death01"));
         m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_DeadHeadShoot, "Stego_Death01"));
         m_AnimData.Add(new CAnimInfo(kAnimEnum.Mob_Hurt, "Stego_Damage_body01"));
         m_AnimData.Add(new CAnimInfo(kAnimEnum.BigHurtFront, "Stego_Damage_body01"));

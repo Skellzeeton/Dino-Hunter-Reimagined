@@ -1527,27 +1527,31 @@ public class iGameUIBase : MonoBehaviour
 	protected void Event_SwitchWeapon()
 	{
 		if (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing &&
-		    m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
+		m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
 		{
 			return;
 		}
-
 		CCharUser user = m_GameScene.GetUser();
-		if (user == null || user.isDead || m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+		if (user == null || user.isDead)
 		{
-			if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+			return;
+		}
+		if (m_GameScene.IsWeaponLimited())
+		{
+			int targetType = m_GameScene.GetWeaponLimitType();
+			int next = iGameSceneBase.FindWeaponOfType(m_GameState, user.CurWeaponIndex, targetType, 1);
+			if (next == -1 || next == user.CurWeaponIndex)
 			{
-				m_LastMeleeOnlyTipTime = Time.time;
-
-				iGameUIBase gameUI = m_GameScene.GetGameUI();
-				if (gameUI != null)
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
 				{
-					gameUI.ShowTip("No! Melee only!");
+					m_LastMeleeOnlyTipTime = Time.time;
+					ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+					CUISound.GetInstance().Play("UI_Error");
 				}
-
-				CUISound.GetInstance().Play("UI_Error");
+				return;
 			}
-
+			CUISound.GetInstance().Play("UI_Weapon_change");
+			user.SwitchWeapon(next);
 			return;
 		}
 		CUISound.GetInstance().Play("UI_Weapon_change");
@@ -1556,43 +1560,44 @@ public class iGameUIBase : MonoBehaviour
 		while (num != curWeaponIndex && m_GameState.GetWeapon(num) == null)
 		{
 			num++;
-			if (num >= 3)
-			{
-				num = 0;
-			}
+			if (num >= 3) num = 0;
 		}
-		curWeaponIndex = num;
-		user.SwitchWeapon(curWeaponIndex);
+		user.SwitchWeapon(num);
 	}
-	
+
 	private void Event_SwitchWeaponPrevious()
 	{
-		iGameSceneBase scene = iGameApp.GetInstance().m_GameScene as iGameSceneBase;
-
 		if (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing &&
-		    m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
+		m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime)
 		{
 			return;
 		}
-
 		CCharUser user = m_GameScene.GetUser();
-		if (user == null || user.isDead || m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+		if (user == null || user.isDead)
 		{
-			if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
-			{
-				m_LastMeleeOnlyTipTime = Time.time;
-				iGameUIBase gameUI = m_GameScene.GetGameUI();
-				if (gameUI != null)
-					gameUI.ShowTip("No! Melee only!");
-				CUISound.GetInstance().Play("UI_Error");
-			}
 			return;
 		}
-
+		if (m_GameScene.IsWeaponLimited())
+		{
+			int targetType = m_GameScene.GetWeaponLimitType();
+			int next = iGameSceneBase.FindWeaponOfType(m_GameState, user.CurWeaponIndex, targetType, -1);
+			if (next == -1 || next == user.CurWeaponIndex)
+			{
+				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				{
+					m_LastMeleeOnlyTipTime = Time.time;
+					ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+					CUISound.GetInstance().Play("UI_Error");
+				}
+				return;
+			}
+			CUISound.GetInstance().Play("UI_Weapon_change");
+			user.SwitchWeapon(next);
+			return;
+		}
 		CUISound.GetInstance().Play("UI_Weapon_change");
 		user.Event_SwitchWeaponPrevious(null);
 	}
-
 
 	protected void Event_UseSkill()
 	{

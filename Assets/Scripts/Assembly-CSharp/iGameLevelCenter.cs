@@ -92,10 +92,8 @@ public class iGameLevelCenter : iBaseCenter
 					gameLevelInfo.sBGMAmbience = value;
 				if (MyUtils.GetAttribute(childNode, "proccess", ref value))
 					gameLevelInfo.m_nProccess = int.Parse(value);
-				if (MyUtils.GetAttribute(childNode, "limitmelee", ref value))
-					gameLevelInfo.m_bLimitMelee = bool.Parse(value);
-				if (MyUtils.GetAttribute(childNode, "limitrifle", ref value))
-					gameLevelInfo.m_bLimitRifle = bool.Parse(value);
+				if (MyUtils.GetAttribute(childNode, "limitweapon", ref value))
+					gameLevelInfo.m_nLimitWeaponType = int.Parse(value);
 				string forceTypeStr = "", forceItemStr = "", forceLevelStr = "";
 				if (MyUtils.GetAttribute(childNode, "forceitem", ref forceItemStr))
 				{

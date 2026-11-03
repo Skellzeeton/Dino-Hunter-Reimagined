@@ -74,9 +74,7 @@ public class GameLevelInfo
 
 	public int m_nProccess;
 
-	public bool m_bLimitMelee;
-	
-	public bool m_bLimitRifle;
+	public int m_nLimitWeaponType = -1;
 
 	public List<int> forceItemTypes  = new List<int>();
 	public List<int> forceItemIds    = new List<int>();

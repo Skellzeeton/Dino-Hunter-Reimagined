@@ -223,17 +223,30 @@ public class CControlWindows : CControlBase
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+			if (m_GameScene.IsWeaponLimited())
 			{
-				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				int targetType = m_GameScene.GetWeaponLimitType();
+				CWeaponBase w = m_GameState.GetWeapon(0);
+				if (w == null || w.CurWeaponLvlInfo == null)
+					return;
+				if (w.CurWeaponLvlInfo.nType != targetType)
 				{
-					m_LastMeleeOnlyTipTime = Time.time;
-					iGameUIBase gameUI = m_GameScene.GetGameUI();
-					if (gameUI != null)
+					if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
 					{
-						gameUI.ShowTip("No! Melee only!");
-						CUISound.GetInstance().Play("UI_Error");
+						m_LastMeleeOnlyTipTime = Time.time;
+						iGameUIBase gameUI = m_GameScene.GetGameUI();
+						if (gameUI != null)
+						{
+							gameUI.ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+							CUISound.GetInstance().Play("UI_Error");
+						}
 					}
+					return;
+				}
+				if (m_User.CurWeaponIndex != 0)
+				{
+					m_User.SwitchWeapon(0);
+					CUISound.GetInstance().Play("UI_Weapon_change");
 				}
 				return;
 			}
@@ -242,28 +255,33 @@ public class CControlWindows : CControlBase
 			while (num != curWeaponIndex && m_GameState.GetWeapon(num) == null)
 			{
 				num--;
-				if (num < 0)
-				{
-					num = 0;
-				}
+				if (num < 0) num = 0;
 			}
 			m_User.SwitchWeapon(num);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+			if (m_GameScene.IsWeaponLimited())
 			{
-				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				int targetType = m_GameScene.GetWeaponLimitType();
+				int next = iGameSceneBase.FindWeaponOfType(m_GameState, m_User.CurWeaponIndex, targetType, -1);
+				if (next == -1 || next == m_User.CurWeaponIndex)
 				{
-					m_LastMeleeOnlyTipTime = Time.time;
-					iGameUIBase gameUI = m_GameScene.GetGameUI();
-					if (gameUI != null)
+					if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
 					{
-						gameUI.ShowTip("No! Melee only!");
-						CUISound.GetInstance().Play("UI_Error");
+						m_LastMeleeOnlyTipTime = Time.time;
+						iGameUIBase gameUI = m_GameScene.GetGameUI();
+						if (gameUI != null)
+						{
+							gameUI.ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+							CUISound.GetInstance().Play("UI_Error");
+						}
 					}
+					return;
 				}
+				m_User.SwitchWeapon(next);
+				CUISound.GetInstance().Play("UI_Weapon_change");
 				return;
 			}
 			int curWeaponIndex = m_User.CurWeaponIndex;
@@ -271,28 +289,37 @@ public class CControlWindows : CControlBase
 			while (num != curWeaponIndex && m_GameState.GetWeapon(num) == null)
 			{
 				num--;
-				if (num < 0)
-				{
-					num = 2;
-				}
+				if (num < 0) num = 2;
 			}
-
 			m_User.SwitchWeapon(num);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+			if (m_GameScene.IsWeaponLimited())
 			{
-				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				int targetType = m_GameScene.GetWeaponLimitType();
+				CWeaponBase w = m_GameState.GetWeapon(1);
+				if (w == null || w.CurWeaponLvlInfo == null)
+					return;
+				if (w.CurWeaponLvlInfo.nType != targetType)
 				{
-					m_LastMeleeOnlyTipTime = Time.time;
-					iGameUIBase gameUI = m_GameScene.GetGameUI();
-					if (gameUI != null)
+					if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
 					{
-						gameUI.ShowTip("No! Melee only!");
-						CUISound.GetInstance().Play("UI_Error");
+						m_LastMeleeOnlyTipTime = Time.time;
+						iGameUIBase gameUI = m_GameScene.GetGameUI();
+						if (gameUI != null)
+						{
+							gameUI.ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+							CUISound.GetInstance().Play("UI_Error");
+						}
 					}
+					return;
+				}
+				if (m_User.CurWeaponIndex != 1)
+				{
+					m_User.SwitchWeapon(1);
+					CUISound.GetInstance().Play("UI_Weapon_change");
 				}
 				return;
 			}
@@ -301,28 +328,33 @@ public class CControlWindows : CControlBase
 			while (num2 != curWeaponIndex2 && m_GameState.GetWeapon(num2) == null)
 			{
 				num2++;
-				if (num2 >= 1)
-				{
-					num2 = 0;
-				}
+				if (num2 >= 1) num2 = 0;
 			}
 			m_User.SwitchWeapon(num2);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+			if (m_GameScene.IsWeaponLimited())
 			{
-				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				int targetType = m_GameScene.GetWeaponLimitType();
+				int next = iGameSceneBase.FindWeaponOfType(m_GameState, m_User.CurWeaponIndex, targetType, 1);
+				if (next == -1 || next == m_User.CurWeaponIndex)
 				{
-					m_LastMeleeOnlyTipTime = Time.time;
-					iGameUIBase gameUI = m_GameScene.GetGameUI();
-					if (gameUI != null)
+					if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
 					{
-						gameUI.ShowTip("No! Melee only!");
-						CUISound.GetInstance().Play("UI_Error");
+						m_LastMeleeOnlyTipTime = Time.time;
+						iGameUIBase gameUI = m_GameScene.GetGameUI();
+						if (gameUI != null)
+						{
+							gameUI.ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+							CUISound.GetInstance().Play("UI_Error");
+						}
 					}
+					return;
 				}
+				m_User.SwitchWeapon(next);
+				CUISound.GetInstance().Play("UI_Weapon_change");
 				return;
 			}
 			int curWeaponIndex2 = m_User.CurWeaponIndex;
@@ -330,27 +362,37 @@ public class CControlWindows : CControlBase
 			while (num2 != curWeaponIndex2 && m_GameState.GetWeapon(num2) == null)
 			{
 				num2++;
-				if (num2 >= 3)
-				{
-					num2 = 0;
-				}
+				if (num2 >= 3) num2 = 0;
 			}
 			m_User.SwitchWeapon(num2);
 			CUISound.GetInstance().Play("UI_Weapon_change");
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
-			if (m_GameScene.CurGameLevelInfo.m_bLimitMelee)
+			if (m_GameScene.IsWeaponLimited())
 			{
-				if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
+				int targetType = m_GameScene.GetWeaponLimitType();
+				CWeaponBase w = m_GameState.GetWeapon(2);
+				if (w == null || w.CurWeaponLvlInfo == null)
+					return;
+				if (w.CurWeaponLvlInfo.nType != targetType)
 				{
-					m_LastMeleeOnlyTipTime = Time.time;
-					iGameUIBase gameUI = m_GameScene.GetGameUI();
-					if (gameUI != null)
+					if (Time.time - m_LastMeleeOnlyTipTime >= 5f)
 					{
-						gameUI.ShowTip("No! Melee only!");
-						CUISound.GetInstance().Play("UI_Error");
+						m_LastMeleeOnlyTipTime = Time.time;
+						iGameUIBase gameUI = m_GameScene.GetGameUI();
+						if (gameUI != null)
+						{
+							gameUI.ShowTip("No! " + iGameSceneBase.GetWeaponTypeName(targetType) + " only!");
+							CUISound.GetInstance().Play("UI_Error");
+						}
 					}
+					return;
+				}
+				if (m_User.CurWeaponIndex != 2)
+				{
+					m_User.SwitchWeapon(2);
+					CUISound.GetInstance().Play("UI_Weapon_change");
 				}
 				return;
 			}
@@ -359,10 +401,7 @@ public class CControlWindows : CControlBase
 			while (num3 != curWeaponIndex3 && m_GameState.GetWeapon(num3) == null)
 			{
 				num3++;
-				if (num3 >= 2)
-				{
-					num3 = 0;
-				}
+				if (num3 >= 2) num3 = 0;
 			}
 			m_User.SwitchWeapon(num3);
 			CUISound.GetInstance().Play("UI_Weapon_change");
