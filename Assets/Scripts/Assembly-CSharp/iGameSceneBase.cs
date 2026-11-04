@@ -2088,30 +2088,40 @@ public class iGameSceneBase
 		{
 			WaveInfo wave = m_GameData.GetWaveInfo(waveID);
 			if (wave == null) continue;
-
-			HashSet<int> distinctMobIDs = new HashSet<int>();
-			foreach (WaveMobInfo wmi in wave.m_ltWaveMobInfo)
-				distinctMobIDs.Add(wmi.nID);
-
-			int contributionPerMob = 0;
-			if (wave.m_bRandom)
-				contributionPerMob = wave.m_nMobCount;
-			else
-				contributionPerMob = 1;
+			int loopMult = 1;
 			if (wave.m_nLoop > 0)
-				contributionPerMob *= wave.m_nLoop;
+				loopMult = wave.m_nLoop;
 			else if (wave.m_nLoop == 0)
 			{
-				foreach (int mobID in distinctMobIDs)
+				HashSet<int> distinct = new HashSet<int>();
+				foreach (WaveMobInfo wmi in wave.m_ltWaveMobInfo)
+					distinct.Add(wmi.nID);
+				foreach (int mobID in distinct)
 					infiniteLoopMobs.Add(mobID);
-				contributionPerMob = 1;
 			}
-			foreach (int mobID in distinctMobIDs)
+			if (wave.IsPredefinedWave())
 			{
-				if (mobTotalCounts.ContainsKey(mobID))
-					mobTotalCounts[mobID] += contributionPerMob;
-				else
-					mobTotalCounts[mobID] = contributionPerMob;
+				foreach (WaveMobInfo wmi in wave.m_ltWaveMobInfo)
+				{
+					if (mobTotalCounts.ContainsKey(wmi.nID))
+						mobTotalCounts[wmi.nID] += loopMult;
+					else
+						mobTotalCounts[wmi.nID] = loopMult;
+				}
+			}
+			else
+			{
+				HashSet<int> distinctMobIDs = new HashSet<int>();
+				foreach (WaveMobInfo wmi in wave.m_ltWaveMobInfo)
+					distinctMobIDs.Add(wmi.nID);
+				int contributionPerMob = wave.m_nMobCount * loopMult;
+				foreach (int mobID in distinctMobIDs)
+				{
+					if (mobTotalCounts.ContainsKey(mobID))
+						mobTotalCounts[mobID] += contributionPerMob;
+					else
+						mobTotalCounts[mobID] = contributionPerMob;
+				}
 			}
 		}
 		Dictionary<int, int> additionalSplits = new Dictionary<int, int>();

@@ -38,6 +38,13 @@ public class WaveInfo
 		nDefaultMobLevel = 1;
 	}
 
+	public bool IsPredefinedWave()
+	{
+		if (!m_bRandom) return true;
+		if (m_ltWaveMobInfo == null || m_ltWaveMobInfo.Count == 0) return false;
+		return m_nMobCount <= 0;
+	}
+
 	public WaveMobInfo GetWaveMobInfo(int nIndex)
 	{
 		if (m_ltWaveMobInfo == null || nIndex < 0 || nIndex >= m_ltWaveMobInfo.Count)
@@ -51,21 +58,20 @@ public class WaveInfo
 			return null;
 		if (m_ltWaveMobInfo.Count == 1)
 			return m_ltWaveMobInfo[0];
-		int[] array = new int[m_ltWaveMobInfo.Count];
+		int totalWeight = 0;
+		for (int i = 0; i < m_ltWaveMobInfo.Count; i++)
+			totalWeight += m_ltWaveMobInfo[i].nRandom;
+		if (totalWeight <= 0)
+			return m_ltWaveMobInfo[Random.Range(0, m_ltWaveMobInfo.Count)];
+		int roll = Random.Range(1, totalWeight + 1);
+		int cumulative = 0;
 		for (int i = 0; i < m_ltWaveMobInfo.Count; i++)
 		{
-			if (i == 0)
-				array[i] = m_ltWaveMobInfo[i].nRandom;
-			else
-				array[i] = array[i - 1] + m_ltWaveMobInfo[i].nRandom;
+			cumulative += m_ltWaveMobInfo[i].nRandom;
+			if (roll <= cumulative)
+				return m_ltWaveMobInfo[i];
 		}
-		int num = Random.Range(1, array[m_ltWaveMobInfo.Count - 1] + 1);
-		for (int j = 0; j < m_ltWaveMobInfo.Count; j++)
-		{
-			if (num <= array[j])
-				return m_ltWaveMobInfo[j];
-		}
-		return null;
+		return m_ltWaveMobInfo[m_ltWaveMobInfo.Count - 1];
 	}
 
 	public int GetWaveMobInfoCount()
@@ -75,8 +81,8 @@ public class WaveInfo
 
 	public int GetWaveMobCount()
 	{
-		if (m_bRandom)
-			return m_nMobCount;
-		return m_ltWaveMobInfo?.Count ?? 0;
+		if (IsPredefinedWave())
+			return m_ltWaveMobInfo?.Count ?? 0;
+		return m_nMobCount;
 	}
 }

@@ -143,12 +143,11 @@ public class CMonsterGenerate
 
 	public bool GenerateMob(int nIndex)
 	{
-		WaveMobInfo waveMobInfo = null;
-		waveMobInfo = ((!m_curWaveInfo.m_bRandom) ? m_curWaveInfo.GetWaveMobInfo(nIndex) : m_curWaveInfo.GetWaveMobInfoRandom());
+		WaveMobInfo waveMobInfo = m_curWaveInfo.IsPredefinedWave()
+		? m_curWaveInfo.GetWaveMobInfo(nIndex)
+		: m_curWaveInfo.GetWaveMobInfoRandom();
 		if (waveMobInfo == null)
-		{
 			return false;
-		}
 		Vector3 v3Pos = Vector3.zero;
 		Vector3 onUnitSphere = Random.onUnitSphere;
 		onUnitSphere.y = 0f;

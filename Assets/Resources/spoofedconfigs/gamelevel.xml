@@ -1277,19 +1277,26 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100011,100012,100013,700001" mincount="-2,-2,-2,-32" maxcount="1,1,1,1,1"/>
 	</gamelevel>
-	<gamelevel id="100" iconoverride="1" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shaguai02_dusk" bp_cfg="60101" gamewave="1001,1002,1003,1004,1005,1006,1007" task="100" sp_cfg_ground="60111" exp="420" gold="80" desc="Kill all dinos in 3:45 minutes&#xA;This level uses a FORCED PRESET Loadout." name="1.On a Rush" issidelevel="true" forcetype="1,1,1,3" forceitem="2,21,3,701" forcelevel="2,4,5,2">
+	<gamelevel id="101" iconoverride="1" BGM="BGM_Timed" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shaguai02_dusk" bp_cfg="60101" gamewave="1001,1002,1003,1004,1005,1006,1007" task="101" sp_cfg_ground="60111" exp="420" gold="80" desc="Kill all dinos in 3:45 minutes&#xA;This level uses a PRESET Loadout." name="1.On a Rush" issidelevel="true" forcetype="1,1,1,3" forceitem="2,21,3,701" forcelevel="2,4,5,2">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="80"/>
 		</MonsterNumLimit>
 		<RewardMaterial material="100021" mincount="6" maxcount="7"/>
 		<recommend recommendtype="2" recommandid="1" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="101" iconoverride="1" BGM="BGM_Wavedefense" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei02" bp_cfg="100101" gamewave="1011,1012,1013,1014" task="101" tpend_cfg="100401" sp_cfg_ground="100111" exp="420" gold="80" desc="Fend off 4 waves of Dinosaurs&#xA;This level uses a FORCED PRESET Loadout." name="2.Assault of the Dinosaurs" issidelevel="true" forcetype="1,1,1,3" forceitem="6,16,11,701" forcelevel="1,5,5,2">
+	<gamelevel id="102" iconoverride="1" BGM="BGM_Wavedefense" BGM_ambience="Amb_Map01_Rainforest" scenename="Yulin_shouwei02" bp_cfg="100101" gamewave="1011,1012,1013,1014" task="102" tpend_cfg="100401" sp_cfg_ground="100111" exp="420" gold="80" desc="Fend off 4 waves of Dinosaurs&#xA;This level uses a PRESET Loadout." name="2.Assault of the Dinosaurs" issidelevel="true" forcetype="1,1,1,3" forceitem="6,16,11,701" forcelevel="1,5,1,2">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="80"/>
+			<limit type="1" maxnumber="100"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100021" mincount="6" maxcount="7"/>
+		<RewardMaterial material="100024" mincount="6" maxcount="7"/>
 		<recommend recommendtype="2" recommandid="1" recommandlevel="1"/>
+	</gamelevel>
+	<gamelevel id="103" iconoverride="8" BGM="BGM_Map05" BGM_ambience="Amb_Raining" scenename="Yulin_toudan02_night_rainy" bp_cfg="160101" gamewave="1021,1022,1023,1024,1025" task="103" sp_cfg_ground="160111" tpbegin_cfg="160301" tpend_cfg="160401" exp="340" gold="60" desc="Snatch and defend two Dino Eggs&#xA;This level uses a PRESET Loadout." name="3.Eggvasion" issidelevel="true" forcetype="1,1,1,3,3,3" forceitem="6,21,16,702,302,502" forcelevel="5,3,5,5,1,1">
+		<MonsterNumLimit>
+			<limit type="1" maxnumber="32"/>
+		</MonsterNumLimit>
+		<RewardMaterial material="100024" mincount="6" maxcount="7"/>
+		<recommend recommendtype="1" recommandid="4" recommandlevel="1"/>
 	</gamelevel>
 		
 		////icon 1 is the forest

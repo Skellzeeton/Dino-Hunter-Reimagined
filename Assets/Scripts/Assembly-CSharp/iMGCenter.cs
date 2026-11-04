@@ -65,55 +65,60 @@ public class iMGCenter : iBaseCenter
 				waveInfo.m_nMobCount = int.Parse(value);
 			if (MyUtils.GetAttribute(childNode, "moblevel_default", ref value))
 				waveInfo.nDefaultMobLevel = int.Parse(value);
-			foreach (XmlNode childNode2 in childNode.ChildNodes) {
+			waveInfo.m_ltWaveMobInfo.Clear();
+			foreach (XmlNode childNode2 in childNode.ChildNodes)
+			{
 				if (childNode2.Name != "mob")
 					continue;
-				waveInfo.m_ltWaveMobInfo.Clear();
 				if (!MyUtils.GetAttribute(childNode2, "mob_id", ref value))
 					continue;
+				int startIdx = waveInfo.m_ltWaveMobInfo.Count;
 				string[] array = value.Split(',');
 				if (array != null && array.Length > 0)
 				{
-					for (int j = 0; j < array.Length; j++) {
+					for (int j = 0; j < array.Length; j++)
+					{
 						WaveMobInfo waveMobInfo = new WaveMobInfo();
 						waveMobInfo.nID = int.Parse(array[j]);
 						waveInfo.m_ltWaveMobInfo.Add(waveMobInfo);
 					}
 				}
+				int addedCount = waveInfo.m_ltWaveMobInfo.Count - startIdx;
 				if (MyUtils.GetAttribute(childNode2, "mob_level", ref value))
 				{
 					array = value.Split(',');
-					if (array != null && array.Length > 0)
+					if (array != null)
 					{
-						for (int k = 0; k < array.Length && k < waveInfo.m_ltWaveMobInfo.Count; k++)
-							waveInfo.m_ltWaveMobInfo[k].nLevel = int.Parse(array[k]);
+						for (int k = 0; k < array.Length && k < addedCount; k++)
+							waveInfo.m_ltWaveMobInfo[startIdx + k].nLevel = int.Parse(array[k]);
 					}
 				}
 				if (MyUtils.GetAttribute(childNode2, "spawnmode", ref value))
 				{
 					array = value.Split(',');
-					if (array != null && array.Length > 0)
+					if (array != null)
 					{
-						for (int l = 0; l < array.Length && l < waveInfo.m_ltWaveMobInfo.Count; l++)
-							waveInfo.m_ltWaveMobInfo[l].SpawnMode = int.Parse(array[l]);
+						for (int l = 0; l < array.Length && l < addedCount; l++)
+							waveInfo.m_ltWaveMobInfo[startIdx + l].SpawnMode = int.Parse(array[l]);
 					}
 				}
 				if (MyUtils.GetAttribute(childNode2, "startpoint", ref value))
 				{
 					array = value.Split(',');
-					if (array != null && array.Length > 0)
+					if (array != null)
 					{
-						for (int m = 0; m < array.Length && m < waveInfo.m_ltWaveMobInfo.Count; m++)
-							waveInfo.m_ltWaveMobInfo[m].nStartPoint = int.Parse(array[m]);
+						for (int m = 0; m < array.Length && m < addedCount; m++)
+							waveInfo.m_ltWaveMobInfo[startIdx + m].nStartPoint = int.Parse(array[m]);
 					}
 				}
-				if (!MyUtils.GetAttribute(childNode2, "random", ref value))
-					continue;
-				array = value.Split(',');
-				if (array != null && array.Length > 0)
+				if (MyUtils.GetAttribute(childNode2, "random", ref value))
 				{
-					for (int n = 0; n < array.Length && n < waveInfo.m_ltWaveMobInfo.Count; n++)
-						waveInfo.m_ltWaveMobInfo[n].nRandom = int.Parse(array[n]);
+					array = value.Split(',');
+					if (array != null)
+					{
+						for (int n = 0; n < array.Length && n < addedCount; n++)
+							waveInfo.m_ltWaveMobInfo[startIdx + n].nRandom = int.Parse(array[n]);
+					}
 				}
 			}
 			if (overrideDifficulties == null)
