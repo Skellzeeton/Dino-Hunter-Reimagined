@@ -94,11 +94,13 @@ public enum kProEnum
 	Split40 = 4000,
 	Mob_Gold_Carry = 4001,
 	Mob_Crystal_Carry = 4002,
+	Mob_Heal = 4003,
 	Split50 = 5000,
 	Skill_MoribundTime = 5001,
 	Skill_MoribundDefence = 5002,
 	Skill_DeathBoomDmg = 5003,
 	Skill_DeathBoomRng = 5004,
 	Skill_DeathSplitID = 5005,
-	Skill_DeathSplitCount = 5006
+	Skill_DeathSplitCount = 5006,
+
 }

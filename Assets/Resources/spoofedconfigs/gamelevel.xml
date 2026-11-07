@@ -353,7 +353,7 @@
 		</MonsterNumLimit>
 		<RewardMaterial material="100024" mincount="4" maxcount="6"/>
 	</gamelevel>
-	<gamelevel id="5010" BGM="BGM_Map02" BGM_ambience="Amb_Map04_Snowfield" scenename="SceneSnow_Night" bp_cfg="200101" gamewave="5010001,5010002,5010003,5010004,5010005,5010006" task="5010" sp_cfg_ground="200111" exp="93" gold="28" desc="Hunt Triterrortops x 2">
+	<gamelevel id="5010" BGM="BGM_Map02" BGM_ambience="Amb_Map04_Snowfield" scenename="SceneSnow_Night" bp_cfg="200101" gamewave="5010001,5010002,5010003,5010004,5010005,5010006,5010007" task="5010" sp_cfg_ground="200111" exp="93" gold="28" desc="Hunt Triterrortops x 2">
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="10"/>
 		</MonsterNumLimit>
@@ -1288,15 +1288,22 @@
 		<MonsterNumLimit>
 			<limit type="1" maxnumber="100"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100024" mincount="6" maxcount="7"/>
+		<RewardMaterial material="100021" mincount="6" maxcount="7"/>
 		<recommend recommendtype="2" recommandid="1" recommandlevel="1"/>
 	</gamelevel>
-	<gamelevel id="103" iconoverride="8" BGM="BGM_Map05" BGM_ambience="Amb_Raining" scenename="Yulin_toudan02_night_rainy" bp_cfg="160101" gamewave="1021,1022,1023,1024,1025" task="103" sp_cfg_ground="160111" tpbegin_cfg="160301" tpend_cfg="160401" exp="340" gold="60" desc="Snatch and defend two Dino Eggs&#xA;This level uses a PRESET Loadout." name="3.Eggvasion" issidelevel="true" forcetype="1,1,1,3,3,3" forceitem="6,21,16,702,302,502" forcelevel="5,3,5,5,1,1">
+	<gamelevel id="103" iconoverride="8" BGM="BGM_Map05" BGM_ambience="Amb_Raining" scenename="Yulin_toudan02_night_rainy" bp_cfg="160101" gamewave="1021,1022,1023,1024,1025" task="103" sp_cfg_ground="160111" tpbegin_cfg="160301" tpend_cfg="160401" exp="340" gold="60" desc="Snatch and defend two Dino Eggs&#xA;This level uses a PRESET Loadout." name="3.Eggvasion" issidelevel="true" forcetype="1,1,1,3,3,3" forceitem="6,21,16,702,302,502" forcelevel="5,5,5,5,1,1">
 		<MonsterNumLimit>
-			<limit type="1" maxnumber="32"/>
+			<limit type="1" maxnumber="44"/>
 		</MonsterNumLimit>
-		<RewardMaterial material="100024" mincount="6" maxcount="7"/>
-		<recommend recommendtype="1" recommandid="4" recommandlevel="1"/>
+		<RewardMaterial material="100021" mincount="6" maxcount="7"/>
+		<recommend recommendtype="2" recommandid="1" recommandlevel="1"/>
+	</gamelevel>
+	<gamelevel id="104" iconoverride="3" BGM="BGM_Map03" BGM_ambience="Amb_Map05_Underground" scenename="SceneLava" bp_cfg="30101" gamewave="1031,1032,1033,1034,1035,1036,1037,1038" task="1001" sp_cfg_ground="30111" exp="420" gold="80" desc="Kill all dinos&#xA;This level uses a PRESET Loadout." name="4.Scorched Lands" issidelevel="true" forcetype="1,1,3" forceitem="16,14,702" forcelevel="4,4,3">
+		<MonsterNumLimit>
+			<limit type="1" maxnumber="24"/>
+		</MonsterNumLimit>
+		<RewardMaterial material="100023" mincount="6" maxcount="7"/>
+		<recommend recommendtype="2" recommandid="4" recommandlevel="1" islimit="true"/>
 	</gamelevel>
 		
 		////icon 1 is the forest

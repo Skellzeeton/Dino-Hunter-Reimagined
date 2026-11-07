@@ -141,6 +141,22 @@ public class CCharMob : CCharBase {
 
 	protected int m_nCrystalDropAmount;
 
+	private const float HEAL_COOLDOWN_AFTER_HIT = 2.5f;
+
+	private const float HEAL_BUILDUP_TIME      = 25f;
+
+	[NonSerialized] private float m_fHealCooldownTimer = 0f;
+
+	[NonSerialized] private float m_fHealBuildupTimer  = 0f;
+
+	[NonSerialized] private float m_fHealTickTimer     = 0f;
+
+	public float m_fHealBasePct      = 0f;
+
+	public float m_fHealMaxPct       = 0f;
+
+	public float m_fHealTickInterval = 1f;
+
 	protected CHUDLifeStyle[] m_arrHUDLifeStyle;
 
 	protected int m_nHUDLifeStyle;
@@ -297,6 +313,36 @@ public class CCharMob : CCharBase {
 		}
 		foreach (SkillComboUserInfo item in m_ltSkillListAI) {
 			item.Update(num);
+		}
+		if (!base.isDead && !m_bMoribund && !m_bDestroy && m_Property != null)
+		{
+			if (m_fHealCooldownTimer > 0f)
+			{
+				m_fHealCooldownTimer -= num;
+				if (m_fHealCooldownTimer < 0f)
+					m_fHealCooldownTimer = 0f;
+			}
+			else if (m_fHealBasePct > 0f && m_fHealMaxPct > 0f && m_fHPMax > 0f)
+			{
+				m_fHealBuildupTimer += num;
+				m_fHealTickTimer    += num;
+				float interval = m_fHealTickInterval > 0.01f ? m_fHealTickInterval : 1f;
+				if (m_fHealTickTimer >= interval)
+				{
+					if (m_fHP < m_fHPMax)
+					{
+						float t   = Mathf.Clamp01(m_fHealBuildupTimer / HEAL_BUILDUP_TIME);
+						float pct = Mathf.Lerp(m_fHealBasePct, m_fHealMaxPct, t);
+						AddHP(m_fHPMax * (pct / 100f));
+					}
+					m_fHealTickTimer -= interval;
+					if (m_fHealTickTimer < 0f) m_fHealTickTimer = 0f;
+				}
+			}
+			else
+			{
+				m_fHealTickTimer = 0f;
+			}
 		}
 	}
 
@@ -667,6 +713,9 @@ public class CCharMob : CCharBase {
 		}
 		else
 		{
+			m_fHealCooldownTimer = HEAL_COOLDOWN_AFTER_HIT;
+			m_fHealBuildupTimer  = 0f;
+			m_fHealTickTimer     = 0f;
 			if (CGameNetManager.GetInstance().IsRoomMaster() && IsCanBeatHardniess() && AddHardiness(fDmg, sBodyPart))
 			{
 				m_bHurting = true;
@@ -960,6 +1009,9 @@ public class CCharMob : CCharBase {
 		m_AnimManager.StopAll();
 		m_nCarryGoldCur = m_nCarryGoldMax;
 		m_nCarryCrystalCur = m_nCarryCrystalMax;
+		m_fHealCooldownTimer = 0f;
+		m_fHealBuildupTimer  = 0f;
+		m_fHealTickTimer     = 0f;
 		foreach (SkillComboUserInfo skill in m_ltSkillList)
 			skill.ResetCoolDown();
 		foreach (SkillComboUserInfo skill in m_ltSkillListAI)

@@ -7,6 +7,7 @@ public class CProMob : CProBase
 		RegisterPro(kProEnum.FreezeTimeMinuseRate);
 		RegisterPro(kProEnum.Mob_Gold_Carry);
 		RegisterPro(kProEnum.Mob_Crystal_Carry);
+		RegisterPro(kProEnum.Mob_Heal);
 		RegisterPro(kProEnum.Skill_MoribundTime);
 		RegisterPro(kProEnum.Skill_MoribundDefence);
 		RegisterPro(kProEnum.Skill_DeathBoomDmg);
@@ -36,8 +37,7 @@ public class CProMob : CProBase
 		}
 	}
 
-	public override void UpdateSkill(CCharBase charbase)
-	{
+	public override void UpdateSkill(CCharBase charbase) {
 		if (!charbase.IsMob() && !charbase.IsBoss())
 		{
 			return;
@@ -47,32 +47,45 @@ public class CProMob : CProBase
 		{
 			return;
 		}
-		foreach (CProValue value in m_dictPro.Values)
-		{
+		foreach (CProValue value in m_dictPro.Values) {
 			value.m_fValueAffectFromSkill = 0f;
 			value.UpdateValue();
 		}
+		cCharMob.m_fHealBasePct = 0f;
+		cCharMob.m_fHealMaxPct = 0f;
+		cCharMob.m_fHealTickInterval = 1f;
 		List<int> ltSkillPassive = new List<int>();
 		if (!cCharMob.GetSkillPassiveList(ref ltSkillPassive) || ltSkillPassive == null)
 		{
 			return;
 		}
-		foreach (int item in ltSkillPassive)
-		{
+		foreach (int item in ltSkillPassive) {
 			CSkillInfoLevel skillInfo = m_GameData.GetSkillInfo(item, 1);
 			if (skillInfo == null || skillInfo.nType != 1)
 			{
 				continue;
 			}
-			for (int i = 0; i < 3; i++)
-			{
+			for (int i = 0; i < 3; i++) {
 				int num = skillInfo.arrFunc[i];
 				int nValue = skillInfo.arrValueX[i];
 				int nValue2 = skillInfo.arrValueY[i];
-				int num2 = num;
-				if (num2 == 1)
+				if (num == 1)
 				{
-					ProFuncSkill((kProEnum)MyUtils.Low32(nValue), MyUtils.Low32(nValue2), MyUtils.High32(nValue), MyUtils.High32(nValue2));
+					kProEnum proEnum = (kProEnum)MyUtils.Low32(nValue);
+					if (proEnum == kProEnum.Mob_Heal)
+					{
+						cCharMob.m_fHealBasePct = skillInfo.arrValueY[0];
+						cCharMob.m_fHealMaxPct = skillInfo.arrValueY[1];
+						float interval = skillInfo.arrValueY[2];
+						cCharMob.m_fHealTickInterval = interval > 0.01f ? interval : 1f;
+					}
+					else
+					{
+						ProFuncSkill(proEnum,
+								MyUtils.Low32(nValue2),
+								MyUtils.High32(nValue),
+								MyUtils.High32(nValue2));
+					}
 				}
 			}
 		}
