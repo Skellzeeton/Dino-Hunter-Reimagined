@@ -25,6 +25,8 @@ public class Scene_MainMenu : MonoBehaviour
 
 	public Popup_DailyMissions popup_daily_missions;
 
+	public Popup_TutorialHall popup_tutorial_hall;
+
 	public Top_Bar top_bar;
 
 	public Transform go_forge;
@@ -632,6 +634,14 @@ public class Scene_MainMenu : MonoBehaviour
 				popup_daily_bonus.Hide();
 			}
 		}
+		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_ShowTutorialHall)
+		{
+			if (popup_tutorial_hall != null)
+			{
+				popup_tutorial_hall.Show();
+				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_CloseTutorialHall);
+			}
+		}
 		else if (m_event.GetEventName() == TUIEvent.SceneMainMenuEventType.TUIEvent_ClickDailyLoginBonus)
 		{
 			if (m_event.GetControlSuccess())
@@ -952,6 +962,66 @@ public class Scene_MainMenu : MonoBehaviour
 				popup_daily_missions.Show();
 				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_CloseDailyMissions);
 			}
+		}
+	}
+
+	public void TUIEvent_ShowTutorialHall(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Button");
+			}
+			if (popup_tutorial_hall != null)
+			{
+				popup_tutorial_hall.Show();
+				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_CloseTutorialHall);
+			}
+		}
+	}
+
+	public void TUIEvent_TutorialHallPrevious(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != 3 || popup_tutorial_hall == null) return;
+
+		if (sfx_open_now)
+		{
+			CUISound.GetInstance().Play("UI_Button");
+		}
+		popup_tutorial_hall.Previous();
+	}
+
+	public void TUIEvent_TutorialHallNext(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type != 3 || popup_tutorial_hall == null) return;
+		if (sfx_open_now)
+		{
+			CUISound.GetInstance().Play("UI_Button");
+		}
+		if (popup_tutorial_hall.IsLastPage)
+		{
+			return;
+		}
+		else
+		{
+			popup_tutorial_hall.Next();
+		}
+	}
+
+	public void TUIEvent_CloseTutorialHall(TUIControl control, int event_type, float wparam, float lparam, object data)
+	{
+		if (event_type == 3 || event_type == -1)
+		{
+			if (sfx_open_now)
+			{
+				CUISound.GetInstance().Play("UI_Cancle");
+			}
+			if (popup_tutorial_hall != null)
+			{
+				popup_tutorial_hall.Hide();
+			}
+			AndroidReturnPlugin.instance.ClearFunc(TUIEvent_CloseTutorialHall);
 		}
 	}
 

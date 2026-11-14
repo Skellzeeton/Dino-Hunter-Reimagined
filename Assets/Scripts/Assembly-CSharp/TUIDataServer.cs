@@ -6862,11 +6862,8 @@
 					TUIWeaponLevelInfo tUIWeaponLevelInfo = new TUIWeaponLevelInfo();
 					tUIWeaponAttributeInfo.AddWeaponInfo(nLevel, tUIWeaponLevelInfo);
 					tUIWeaponLevelInfo.m_Price = new TUIPriceInfo(cAvatarInfoLevel2.nPurchasePrice, cAvatarInfoLevel2.isCrystalPurchase ? UnitType.Crystal : UnitType.Gold);
-
-					// Generate description using the new builder
 					tUIWeaponLevelInfo.m_sLevelupDesc = m_GameData.m_AvatarCenter.GetLevelUpDesc(cAvatarInfo.m_nID, nLevel);
 					tUIWeaponLevelInfo.m_sDesc = m_GameData.m_AvatarCenter.GetDesc(cAvatarInfo.m_nID, nLevel);
-
 					for (int j = 0; j < 3; j++)
 					{
 						if (cAvatarInfoLevel2.arrFunc[j] == 1)

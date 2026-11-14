@@ -2,25 +2,55 @@ using UnityEngine;
 
 public class CWeaponShoot : CWeaponBase
 {
+    private static readonly RaycastHit[] s_hitBuffer = new RaycastHit[32];
+
 	protected override void OnEquip(CCharPlayer player)
 	{
 		RefreshBulletUI(player);
 	}
 
-    protected override void OnFire(CCharPlayer player) {
-        if (!player.IsCanAttack())
-            return;
+    private static bool IsDeadMobCollider(RaycastHit h)
+    {
+        if (h.transform.gameObject.layer != 26)
+            return false;
+        CCharMob mob = h.transform.root.GetComponent<CCharMob>();
+        return mob != null && mob.isDead;
+    }
+
+    private static bool TryGetFirstValidHit(Ray ray, float maxDist, out RaycastHit result)
+    {
+        int n = Physics.RaycastNonAlloc(ray, s_hitBuffer, maxDist, -1543503872);
+        if (n <= 0) { result = default; return false; }
+        for (int i = 0; i < n; i++)
+        {
+            int best = i;
+            for (int j = i + 1; j < n; j++)
+                if (s_hitBuffer[j].distance < s_hitBuffer[best].distance) best = j;
+            if (best != i)
+            {
+                RaycastHit t = s_hitBuffer[i];
+                s_hitBuffer[i] = s_hitBuffer[best];
+                s_hitBuffer[best] = t;
+            }
+            if (IsDeadMobCollider(s_hitBuffer[i])) continue;
+            result = s_hitBuffer[i];
+            return true;
+        }
+        result = default;
+        return false;
+    }
+
+    protected override void OnFire(CCharPlayer player)
+    {
+        if (!player.IsCanAttack()) return;
         if (base.IsBulletEmpty)
         {
             if (m_pWeaponLvlInfo != null)
             {
-                switch (m_pWeaponLvlInfo.nType) {
-                    case 2:
-                        player.PlayAudio("Weapon_nobullet_gun");
-                        break;
-                    case 0:
-                        player.PlayAudio("Weapon_nobullet_crossbow");
-                        break;
+                switch (m_pWeaponLvlInfo.nType)
+                {
+                    case 2: player.PlayAudio("Weapon_nobullet_gun"); break;
+                    case 0: player.PlayAudio("Weapon_nobullet_crossbow"); break;
                 }
             }
             Stop(player);
@@ -40,37 +70,24 @@ public class CWeaponShoot : CWeaponBase
         Vector3 muzzlePos = muzzle.position;
         Ray camRay = Camera.main.ScreenPointToRay(m_GameState.GetScreenCenterV3());
         RaycastHit aimHit;
-
         Vector3 targetPoint;
-
-        if (Physics.Raycast(camRay, out aimHit, maxDist, -1543503872))
-        {
+        if (TryGetFirstValidHit(camRay, maxDist, out aimHit))
             targetPoint = aimHit.point;
-        }
         else
-        {
             targetPoint = camRay.origin + camRay.direction * maxDist;
-        }
-
         Ray camToMuzzle = new Ray(camRay.origin, (muzzlePos - camRay.origin).normalized);
         RaycastHit obstruction;
         float muzzleDistance = Vector3.Distance(camRay.origin, muzzlePos);
-
-        if (Physics.Raycast(camToMuzzle, out obstruction, muzzleDistance, -1543503872))
-        {
+        if (TryGetFirstValidHit(camToMuzzle, muzzleDistance, out obstruction))
             muzzlePos = obstruction.point - camToMuzzle.direction * 0.1f;
-        }
         Vector3 cameraForward = camRay.direction.normalized;
         Vector3 muzzleToTarget = (targetPoint - muzzlePos).normalized;
-        float camAlignment = Vector3.Dot(cameraForward, muzzleToTarget);
-        if (camAlignment < 0.75f)
-        {
+        if (Vector3.Dot(cameraForward, muzzleToTarget) < 0.75f)
             targetPoint = muzzlePos + cameraForward * maxDist;
-        }
         Vector3 shootDir = (targetPoint - muzzlePos).normalized;
         Ray weaponRay = new Ray(muzzlePos, shootDir);
         RaycastHit hit;
-        if (!Physics.Raycast(weaponRay, out hit, maxDist, -1543503872))
+        if (!TryGetFirstValidHit(weaponRay, maxDist, out hit))
         {
             m_GameScene.AddFireEffect(muzzle, shootDir, m_pWeaponLvlInfo.nFire, 2f);
             player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
@@ -78,9 +95,8 @@ public class CWeaponShoot : CWeaponBase
         }
         float travelDist = (hit.point - muzzlePos).magnitude;
         if (travelDist > 2f)
-        {
             m_GameScene.AddBulletTrack(muzzlePos, hit.point, m_pWeaponLvlInfo.nBullet);
-        }
+
         m_GameScene.AddFireEffect(muzzle, shootDir, m_pWeaponLvlInfo.nFire, 2f);
         player.PlayAudio(m_pWeaponLvlInfo.sAudioFire);
         if (hit.transform.gameObject.layer == 31 || hit.transform.gameObject.layer == 29)
@@ -96,19 +112,16 @@ public class CWeaponShoot : CWeaponBase
                 if (!base.isNetPlayerShoot)
                     OnHitMob(player, mob, hit.point, hit.normal, hit.transform.name);
                 mob.PlayAudio(kAudioEnum.HitBody);
-                switch (m_pWeaponLvlInfo.nElementType) {
+                switch (m_pWeaponLvlInfo.nElementType)
+                {
                     case 1: mob.PlayAudio("Fx_Impact_fire"); break;
                     case 2: mob.PlayAudio("Fx_Impact_electric"); break;
                     case 3: mob.PlayAudio("Fx_Impact_freeze"); break;
                 }
                 if (mob is CCharBoss && ((CCharBoss)mob).isInBlack)
-                {
                     m_GameScene.AddHitEffect(hit.point, hit.normal, 1953);
-                }
                 else
-                {
                     m_GameScene.AddHitEffect(hit.point, hit.normal, m_pWeaponLvlInfo.nHit);
-                }
             }
         }
     }

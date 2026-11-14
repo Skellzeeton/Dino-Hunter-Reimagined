@@ -53,6 +53,7 @@ public class TUIEvent
 		TUIEvent_ShowDailyLoginBonus,
 		TUIEvent_ClickDailyLoginBonus,
 		TUIEvent_DailyMissionsInfo,
+		TUIEvent_ShowTutorialHall,
 		TUIEvent_TakeDailyMissionsReward,
 		TUIEvent_HadDailyMissionsReward,
 		TUIEvent_ShowUnlockItem,
